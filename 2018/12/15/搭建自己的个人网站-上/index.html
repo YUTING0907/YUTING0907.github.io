@@ -210,7 +210,7 @@ Are you sure you want to continue connecting (yes/no)
 </code></pre><p>这里我踩坑了，<br><img src="https://img-blog.csdnimg.cn/20181215190012218.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODEyMDM0OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p>然后上百度、google各种找解决办法，后来发现是因为<br>Your versions of node and npm are years old and no longer supported。版本太低了，后来更新node.js版本就好了.<br><a href="https://github.com/npm/npm/issues/8488" target="_blank" rel="noopener">npm install 报错解决办法</a><br>这里放上更新node.js的方法<br>方法一：执行下列代码</p>
 <pre><code>npm install npm@latest -g
-</code></pre><p>但我的电脑出现了如下报错，如有朋友出现更新错误，课移步方法二。<br>C:\Users\lenovo\AppData\Roaming\npm\node_modules\npm\bin\npm-cli.js:79<br>      let notifier = require(‘update-notifier’)({pkg})<br>      ^^^<br>方法二:<br>1.到node官网（<a href="https://nodejs.org/en/）下载最新版或者官网推荐版本，我下载的是10.14.1。" target="_blank" rel="noopener">https://nodejs.org/en/）下载最新版或者官网推荐版本，我下载的是10.14.1。</a></p>
+</code></pre><p>但我的电脑出现了如下报错，如有朋友出现更新错误，课移步方法二。<br>C:\Users\lenovo\AppData\Roaming\npm\node_modules\npm\bin\npm-cli.js:79<br>      let notifier = require(‘update-notifier’)({pkg})<br>      ^^^<br>方法二:<br>1.到node官网（<a href="https://nodejs.org/en/）" target="_blank" rel="noopener">https://nodejs.org/en/）</a><br>下载最新版或者官网推荐版本，我下载的是10.14.1。</p>
 <p>2.将下载的文件安装到之前安装node.js的地方<br>通过where node命令查看node路径<br><img src="https://img-blog.csdnimg.cn/20181215203621849.png" alt="在这里插入图片描述"></p>
 <p>将刚刚下载的文件放到上面查到的路径中<br>双击刚刚下载的文件,点击next 具体安装方法和之前第一次安装一样，但是【<strong>注意在选择路径的时候要选成上面查到的node路径中</strong>】</p>
 <p>3.安装完成。通过npm -v和node -v查看当前版本号</p>
