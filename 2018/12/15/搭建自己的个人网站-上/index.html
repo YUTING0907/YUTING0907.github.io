@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YUTING在 Github 上的个人博客">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="YUTING" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        搭建自己的个人网站(上)｜YUTING&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://YUTING0907.github.io/2018/12/15/搭建自己的个人网站-上/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YUTING
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="5.gif">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('5.gif')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>搭建自己的个人网站(上)</h1>
+                    
+                    <span class="meta">
+                         作者 Echo Yu
+                        <span>
+                          日期 2018-12-15
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            搭建自己的个人网站(上)
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>本篇个人网站搭建系列博文是基于:GitHub+Hexo。<br>难度指数：♥♥<br>系统环境：win8</p>
+<p><strong>前言：</strong>真正搭建这个网站框架的时间也就花了两个晚上，不需要你有多么深厚的编程基础，可能会遇到一些坑，就需要你遇到问题解决问题的能力了，还有搜功，因为很多你遇到的额问题很多人都遇到了，太阳底下没有新鲜事儿，会搜索基本解决了大多数问题。</p>
+<h3 id="第一步：准备必要的软件"><a href="#第一步：准备必要的软件" class="headerlink" title="第一步：准备必要的软件"></a>第一步：准备必要的软件</h3><p><strong>1.Git下载</strong><br>     <a href="https://git-scm.com/downloads" target="_blank" rel="noopener">Git</a>,选择适合自己电脑的环境，一路Next下来就行了。</p>
+<p><strong>2、安装node.js</strong><br>    <a href="http://nodejs.cn/" target="_blank" rel="noopener">node.js</a>,也是基于自己的电脑环境选择下载，下载最新版本，在Windows安装时务必选择全部组件，包括勾选<code>Add to Path</code>。安装完成后，在Windows环境下，打开命令行提示符，输入<code>node -v</code>，得到看到版本号正常输出，则安装完成。<br>           <img src="https://img-blog.csdnimg.cn/20181215173610105.png" alt="在这里插入图片描述"></p>
+<h3 id="第二步：Github注册与配置"><a href="#第二步：Github注册与配置" class="headerlink" title="第二步：Github注册与配置"></a>第二步：Github注册与配置</h3><h4 id="1-注册Github"><a href="#1-注册Github" class="headerlink" title="1.注册Github"></a>1.注册Github</h4><p>点击→<a href="https://github.com" target="_blank" rel="noopener">https://github.com</a>右上角sign up<br><img src="https://img-blog.csdnimg.cn/20181215174803907.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODEyMDM0OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>注册完成后，记住自己的用户名，因为后续个人网站的网址个人格式为：username.github.io<br>这个username就是你的github用户名。<br>这里我的GitHub账号是：YUTING0907<br>个人网站：YUTING0907.github.io<br>你后续也可以自己绑定域名，叫个更炫酷的名字XXX.com</p>
+<h4 id="2-创建Repository"><a href="#2-创建Repository" class="headerlink" title="2.创建Repository"></a>2.创建Repository</h4><p>登陆GitHub，点击右上角的+，会出现New repository创建一个与你博客相关你的Repository进行管理，之后你的博客都会在GitHub的这个Repository里同步更新。<br><img src="https://img-blog.csdnimg.cn/20181215180236876.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODEyMDM0OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>Repository的名字是username.github.io，比如我的YUTING.github.io已经创建。其余可以先不填，点击Create repository</p>
+<h4 id="3-配置SSH-Keys"><a href="#3-配置SSH-Keys" class="headerlink" title="3.配置SSH Keys"></a>3.配置SSH Keys</h4><p>SSH Keys用来使本地git项目与GitHub联系，这样能在GitHub上的博客项目是最新更新的。</p>
+<p>检查SSH Keys的设置<br><strong>I. 开始–所有应用–找到git bash</strong></p>
+<p><strong>II. 检查你电脑里现有的SSH Key</strong><br>   $ cd ~/.ssh<br>如果显示 No such file or directory，说明这是你第一次用git<br><img src="https://img-blog.csdnimg.cn/2018121518243162.png" alt="在这里插入图片描述"></p>
+<p><strong>III. 接下来生成新的SSH Key:</strong><br>$ ssh-keygen -t rsa -C “邮件地址”<br>Generating public/private rsa key pair.<br>Enter file in which to save the key (/Users/your_user_directory/.ssh/id_rsa):&lt;回车就好&gt;</p>
+<p>这里的邮箱地址，输入注册 Github 的邮箱地址</p>
+<p> 然后系统会要你输入密码：<br>Enter passphrase (empty for no passphrase):&lt;设置密码&gt;<br>Enter same passphrase again:&lt;再次输入密码&gt;</p>
+<p>再回车，这里会提示你输入一个密码，作为你提交项目时使用</p>
+<p><strong>注意：</strong>输入密码的时候没有输入痕迹的，不要以为什么也没有输入。<br>最后看到这样的界面，就成功设置ssh key了：<br><img src="https://img-blog.csdnimg.cn/20181215182441568.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODEyMDM0OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h4 id="IV-添加SSH-Key到GitHub上"><a href="#IV-添加SSH-Key到GitHub上" class="headerlink" title="IV. 添加SSH Key到GitHub上"></a>IV. 添加SSH Key到GitHub上</h4><p>在本地文件夹找到id_rsa.pub文件，看上面的图片第四行的位置告诉你存在哪里了，没有的话可能是隐藏了，勾选一下文件扩展名 隐藏的项目。</p>
+<p>回到你的GitHub主页，右上角点击头像选中Setting</p>
+<p>继续选中左边菜单栏的SSH and GPG keys</p>
+<p>Title最好写，随便写。否则可能出现各种各样的二逼问题<br>Key部分就是放刚才复制的内容了，点击Add SSH key</p>
+<h4 id="V-测试"><a href="#V-测试" class="headerlink" title="V.测试"></a>V.测试</h4><p>git bash里输入代码：<code>$ ssh -T git@github.com</code> </p>
+<pre><code>The authenticity of host &apos;GitHub.com (52.74.227.119)&apos; can&apos;t be established.
+RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.
+Are you sure you want to continue connecting (yes/no)
+</code></pre><p>输入yes，回车<br>按照提示输入刚才设置的密码，回车<br>You’ve successfully authenticated…<br>设置成功！</p>
+<h4 id="VI-设置用户信息"><a href="#VI-设置用户信息" class="headerlink" title="VI.设置用户信息"></a>VI.设置用户信息</h4><pre><code>$ git config --global user.name &quot;YUTING0907&quot; 
+</code></pre><p>//输入注册时的username</p>
+<pre><code>$ git config --global user.email  &quot;YUTING9597@163.COM&quot; 
+</code></pre><p>//填写注册邮箱<br>把名称和邮箱替换成你自己的,SSH Key就配置成功啦！<br>本机已成功连接到 github。</p>
+<h3 id="第三步：搭建Hexo博客"><a href="#第三步：搭建Hexo博客" class="headerlink" title="第三步：搭建Hexo博客"></a>第三步：搭建Hexo博客</h3><p><strong>利用npm命令安装hexo</strong><br>npm Node Package Manager是随同NodeJS一起安装的包管理工具，想了解更多可以自行去百度。</p>
+<pre><code>$ npm install -g hexo
+</code></pre><p>安装完成后，在本地创建一个与 Repository中博客项目同名的文件夹username.github.io(如D:/YUTING0907.github.io)在文件夹上点击鼠标右键,选择 Git bash here（可以代替命令行指示符的存在~）,【这一步的作用是因为以后博客部署和更新都要在此文件夹下】</p>
+<p><strong>hexo初始化</strong></p>
+<pre><code>hexo init
+</code></pre><p><strong>安装依赖包</strong></p>
+<pre><code>$ npm install
+</code></pre><p>这里我踩坑了，<br><img src="https://img-blog.csdnimg.cn/20181215190012218.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODEyMDM0OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>然后上百度、google各种找解决办法，后来发现是因为<br>Your versions of node and npm are years old and no longer supported。版本太低了，后来更新node.js版本就好了.<br><a href="https://github.com/npm/npm/issues/8488" target="_blank" rel="noopener">npm install 报错解决办法</a><br>这里放上更新node.js的方法<br>方法一：执行下列代码</p>
+<pre><code>npm install npm@latest -g
+</code></pre><p>但我的电脑出现了如下报错，如有朋友出现更新错误，课移步方法二。<br>C:\Users\lenovo\AppData\Roaming\npm\node_modules\npm\bin\npm-cli.js:79<br>      let notifier = require(‘update-notifier’)({pkg})<br>      ^^^<br>方法二:<br>1.到node官网（<a href="https://nodejs.org/en/）下载最新版或者官网推荐版本，我下载的是10.14.1。" target="_blank" rel="noopener">https://nodejs.org/en/）下载最新版或者官网推荐版本，我下载的是10.14.1。</a></p>
+<p>2.将下载的文件安装到之前安装node.js的地方<br>通过where node命令查看node路径<br><img src="https://img-blog.csdnimg.cn/20181215203621849.png" alt="在这里插入图片描述"></p>
+<p>将刚刚下载的文件放到上面查到的路径中<br>双击刚刚下载的文件,点击next 具体安装方法和之前第一次安装一样，但是【<strong>注意在选择路径的时候要选成上面查到的node路径中</strong>】</p>
+<p>3.安装完成。通过npm -v和node -v查看当前版本号</p>
+<p><strong>确保git部署</strong></p>
+<pre><code>$ npm install hexo-deployer-git --save
+</code></pre><p><strong>本地查看</strong><br>做到这里恭喜你😀，现在已经搭建好本地的 Hexo 博客了，执行完下面的命令就可以到浏览器输入 localhost:4000 查看到啦！<br>$ hexo g   //生成更新网站<br>$ hexo s   //这一步是让你可以在本地localhost:4000可以浏览网站，一个服务预览的作用，退出服务按ctrl+c<br>$ hexo d //部署网站</p>
+<p>【小提醒】如果在配置 SSH key 时设置了密码，执行 hexo d 命令上传文件时需要输入密码进行确认，会出现一个小框框，让你输入密码，你输入密码即可部署更新。</p>
+<p>执行完 hexo init 命令后会给一个默认的主题：landscape</p>
+<h3 id="最后一步：将博客部署到username-github-io"><a href="#最后一步：将博客部署到username-github-io" class="headerlink" title="最后一步：将博客部署到username.github.io"></a>最后一步：将博客部署到username.github.io</h3><p><strong>复制SSH码</strong></p>
+<p>进入 Github 个人主页中的 Repository，复制新建的独立博客项目username.github.io的 SSH码<br><img src="https://img-blog.csdnimg.cn/20181215205840612.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zODEyMDM0OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p><strong>编辑整站配置文件</strong><br>打开 D:/username.github.io/_config.yml,把刚刚复制的 SSH码粘贴到repository：后面</p>
+<pre><code>deploy:
+  type: git
+  repository: git@github.com:username/username.github.io.git
+  branch: master
+</code></pre><p>冒号后一定要空一格。否则会报FATAL can not read a block mapping entry的错。</p>
+<p>当当当当~~到这里你已经拥有一个属于自己的网站，可能有点简陋，但是整个框架已经搭起来了。期待下一篇把网站拾掇得更好吧。</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2018/12/12/article/" data-toggle="tooltip" data-placement="top" title="2019 do better">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一步：准备必要的软件"><span class="toc-text">第一步：准备必要的软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二步：Github注册与配置"><span class="toc-text">第二步：Github注册与配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-注册Github"><span class="toc-text">1.注册Github</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-创建Repository"><span class="toc-text">2.创建Repository</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-配置SSH-Keys"><span class="toc-text">3.配置SSH Keys</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IV-添加SSH-Key到GitHub上"><span class="toc-text">IV. 添加SSH Key到GitHub上</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#V-测试"><span class="toc-text">V.测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#VI-设置用户信息"><span class="toc-text">VI.设置用户信息</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三步：搭建Hexo博客"><span class="toc-text">第三步：搭建Hexo博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最后一步：将博客部署到username-github-io"><span class="toc-text">最后一步：将博客部署到username.github.io</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/YUTING">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/yu-ting-66-78">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/ytfantastic">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/YUTING">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://github.com/YUTING0907">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YUTING 2018
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://YUTING0907.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/image/20181215001153.jpg">
+</body>
+
+</html>
