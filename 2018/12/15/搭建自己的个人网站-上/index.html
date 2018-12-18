@@ -133,7 +133,60 @@
 </script>
 
 <!-- Main Content -->
-<p>本篇个人网站搭建系列博文是基于:GitHub+Hexo。<br>难度指数：♥♥<br>系统环境：win8</p>
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="http://pjqhk6p7v.bkt.clouddn.com/5.gif">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://pjqhk6p7v.bkt.clouddn.com/5.gif?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>搭建自己的个人网站(上)</h1>
+                    
+                    <span class="meta">
+                         作者 yuting
+                        <span>
+                          日期 2018-12-15
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#node" title="node">node</a>
+                        
+                        <a class="tag" href="/tags/#hexo" title="hexo">hexo</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            搭建自己的个人网站(上)
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>本篇个人网站搭建系列博文是基于:GitHub+Hexo。<br>难度指数：♥♥<br>系统环境：win8</p>
 <p><strong>前言：</strong>真正搭建这个网站框架的时间也就花了两个晚上，不需要你有多么深厚的编程基础，可能会遇到一些坑，就需要你遇到问题解决问题的能力了，还有搜功，因为很多你遇到的问题很多人都遇到了，太阳底下没有新鲜事儿，会搜索基本解决了大多数问题。</p>
 <h3 id="第一步：准备必要的软件"><a href="#第一步：准备必要的软件" class="headerlink" title="第一步：准备必要的软件"></a>第一步：准备必要的软件</h3><p><strong>1.Git下载</strong><br>     <a href="https://git-scm.com/downloads" target="_blank" rel="noopener">Git</a>,选择适合自己电脑的环境，一路Next下来就行了。</p>
 <p><strong>2、安装node.js</strong><br>    <a href="http://nodejs.cn/" target="_blank" rel="noopener">node.js</a>,也是基于自己的电脑环境选择下载，下载最新版本，在Windows安装时务必选择全部组件，包括勾选<code>Add to Path</code>。安装完成后，在Windows环境下，打开命令行提示符，输入<code>node -v</code>，看到版本号正常输出，则安装完成。<br>           <img src="http://pjqhk6p7v.bkt.clouddn.com/node_v.png" alt="在这里插入图片描述"></p>
@@ -192,6 +245,104 @@ Are you sure you want to continue connecting (yes/no)
 <p>搭建参考：<br><a href="http://codewithzhangyi.com/archives/" target="_blank" rel="noopener">如何搭建自己的个人网站</a></p>
 <p><a href="https://blog.csdn.net/H_duolalu/article/details/80215580" target="_blank" rel="noopener">更新node</a></p>
 <p><a href="https://github.com/npm/npm/issues/8488" target="_blank" rel="noopener">npm install错误</a></p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2018/12/16/搭建自己的个人网站-下/" data-toggle="tooltip" data-placement="top" title="搭建自己的网站(下)">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2018/12/12/article/" data-toggle="tooltip" data-placement="top" title="2019 do better">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+                    <!-- Valine -->
+                    <div class="vcomments"></div>
+                    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+                    <script src="//cdn.jsdelivr.net/npm/valine"></script>
+                    <script>
+                        var GUEST = ['nick','mail','link'];
+                        var meta = '';
+                        meta = meta.split(',').filter(function (item) {
+                            return GUEST.indexOf(item)>-1;
+                        });
+                        var notify = 'false' == true ? true : false;
+                        var verify = 'false' == true ? true : false;
+                        new Valine({
+                            el: '.vcomments',
+                            notify: notify,
+                            verify: verify,
+                            app_id: "KPXIfOuMVwWIv2Skprm5gYB4-gzGzoHsz",
+                            app_key: "f92SiTdYRrLO0zwfdQnRyXW1",
+                            placeholder: "Just go go",
+                            avatar:"mm",
+                            meta:meta
+                        });
+                    </script>
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一步：准备必要的软件"><span class="toc-text">第一步：准备必要的软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二步：Github注册与配置"><span class="toc-text">第二步：Github注册与配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-注册Github"><span class="toc-text">1.注册Github</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-创建Repository"><span class="toc-text">2.创建Repository</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-配置SSH-Keys"><span class="toc-text">3.配置SSH Keys</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IV-添加SSH-Key到GitHub上"><span class="toc-text">IV. 添加SSH Key到GitHub上</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#V-测试"><span class="toc-text">V.测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#VI-设置用户信息"><span class="toc-text">VI.设置用户信息</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三步：搭建Hexo博客"><span class="toc-text">第三步：搭建Hexo博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最后一步：将博客部署到username-github-io"><span class="toc-text">最后一步：将博客部署到username.github.io</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#node" title="node">node</a>
+                        
+                        <a class="tag" href="/tags/#hexo" title="hexo">hexo</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
 
 <!-- Footer -->
 <!-- Footer -->
