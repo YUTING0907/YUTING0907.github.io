@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        搭建自己的个人网站(上)｜YUTING&#39;s blog
+        搭建自己的个人网站(彩蛋)｜YUTING&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://YUTING0907.github.io/2018/12/15/搭建自己的个人网站-上/">
+    <link rel="canonical" href="http://YUTING0907.github.io/2018/12/26/搭建自己的个人网站-彩蛋/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -162,12 +162,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>搭建自己的个人网站(上)</h1>
+                    <h1>搭建自己的个人网站(彩蛋)</h1>
                     
                     <span class="meta">
                          作者 yuting
                         <span>
-                          日期 2018-12-15
+                          日期 2018-12-26
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -183,7 +183,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            搭建自己的个人网站(上)
+            搭建自己的个人网站(彩蛋)
         </span>
     </div>
 </header>
@@ -194,79 +194,40 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>本篇个人网站搭建系列博文是基于:GitHub+Hexo。<br>难度指数：♥♥<br>系统环境：win8</p>
-<p><strong>前言：</strong>真正搭建这个网站框架的时间也就花了两个晚上，不需要你有多么深厚的编程基础，可能会遇到一些坑，就需要你遇到问题解决问题的能力了，还有搜功，因为很多你遇到的问题很多人都遇到了，太阳底下没有新鲜事儿，会搜索基本解决了大多数问题。</p>
-<h3 id="第一步：准备必要的软件"><a href="#第一步：准备必要的软件" class="headerlink" title="第一步：准备必要的软件"></a>第一步：准备必要的软件</h3><p><strong>1.Git下载</strong><br>     <a href="https://git-scm.com/downloads" target="_blank" rel="noopener">Git</a>,选择适合自己电脑的环境，一路Next下来就行了。</p>
-<p><strong>2、安装node.js</strong><br>    <a href="http://nodejs.cn/" target="_blank" rel="noopener">node.js</a>,也是基于自己的电脑环境选择下载，下载最新版本，在Windows安装时务必选择全部组件，包括勾选<code>Add to Path</code>。安装完成后，在Windows环境下，打开命令行提示符，输入<code>node -v</code>，看到版本号正常输出，则安装完成。<br>           <img src="http://pjqhk6p7v.bkt.clouddn.com/node_v.png" alt="在这里插入图片描述"></p>
-<h3 id="第二步：Github注册与配置"><a href="#第二步：Github注册与配置" class="headerlink" title="第二步：Github注册与配置"></a>第二步：Github注册与配置</h3><h4 id="1-注册Github"><a href="#1-注册Github" class="headerlink" title="1.注册Github"></a>1.注册Github</h4><p>点击→<a href="https://github.com" target="_blank" rel="noopener">https://github.com</a>右上角sign up<br><img src="http://pjqhk6p7v.bkt.clouddn.com/github_sign_up.png" alt="在这里插入图片描述"><br>注册完成后，记住自己的用户名，因为后续个人网站的网址格式为：username.github.io<br>这个username就是你的github用户名。<br>这里我的GitHub账号是：YUTING0907<br>个人网站：YUTING0907.github.io<br>你后续也可以自己绑定域名，叫个更炫酷的名字XXX.com</p>
-<h4 id="2-创建Repository"><a href="#2-创建Repository" class="headerlink" title="2.创建Repository"></a>2.创建Repository</h4><p>登陆GitHub，点击右上角的+，会出现New repository创建一个与你博客相关你的Repository进行管理，之后你的博客都会在GitHub的这个Repository里同步更新。<br><img src="http://pjqhk6p7v.bkt.clouddn.com/repository.png" alt="在这里插入图片描述"></p>
-<p>Repository的名字是username.github.io，比如我的YUTING0907.github.io。其余可以先不填，点击Create repository</p>
-<h4 id="3-配置SSH-Keys"><a href="#3-配置SSH-Keys" class="headerlink" title="3.配置SSH Keys"></a>3.配置SSH Keys</h4><p>SSH Keys用来使本地git项目与GitHub联系，这样能在GitHub上的博客项目是最新更新的。</p>
-<p>检查SSH Keys的设置<br><strong>I. 开始–所有应用–找到git bash</strong></p>
-<p><strong>II. 检查你电脑里现有的SSH Key</strong><br>   $ cd ~/.ssh<br>如果显示 No such file or directory，说明这是你第一次用git<br><img src="http://pjqhk6p7v.bkt.clouddn.com/ssh_key.png" alt="在这里插入图片描述"></p>
-<p><strong>III. 接下来生成新的SSH Key:</strong><br>$ ssh-keygen -t rsa -C “邮件地址”<br>Generating public/private rsa key pair.<br>Enter file in which to save the key (/Users/your_user_directory/.ssh/id_rsa):&lt;回车就好&gt;</p>
-<p>这里的邮箱地址，输入注册 Github 的邮箱地址</p>
-<p> 然后系统会要你输入密码：<br>Enter passphrase (empty for no passphrase):&lt;设置密码&gt;<br>Enter same passphrase again:&lt;再次输入密码&gt;</p>
-<p>再回车，这里会提示你输入一个密码，作为你提交项目时使用</p>
-<p><strong>注意：</strong>输入密码的时候没有输入痕迹的，不要以为什么也没有输入。<br>最后看到这样的界面，就成功设置ssh key了：<br><img src="http://pjqhk6p7v.bkt.clouddn.com/ssh_set_up.png" alt="在这里插入图片描述"></p>
-<h4 id="IV-添加SSH-Key到GitHub上"><a href="#IV-添加SSH-Key到GitHub上" class="headerlink" title="IV. 添加SSH Key到GitHub上"></a>IV. 添加SSH Key到GitHub上</h4><p>在本地文件夹找到id_rsa.pub文件，看上面的图片第四行的位置告诉你存在哪里了，没有的话可能是隐藏了，勾选一下文件扩展名 隐藏的项目。</p>
-<p>回到你的GitHub主页，右上角点击头像选中Setting</p>
-<p>继续选中左边菜单栏的SSH and GPG keys</p>
-<p>Title最好写，随便写。否则可能出现各种各样的二逼问题<br>Key部分就是放刚才复制的内容了，点击Add SSH key</p>
-<h4 id="V-测试"><a href="#V-测试" class="headerlink" title="V.测试"></a>V.测试</h4><p>git bash里输入代码：<code>$ ssh -T git@github.com</code> </p>
-<pre><code>The authenticity of host &apos;GitHub.com (52.74.227.119)&apos; can&apos;t be established.
-RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.
-Are you sure you want to continue connecting (yes/no)
-</code></pre><p>输入yes，回车<br>按照提示输入刚才设置的密码，回车<br>You’ve successfully authenticated…<br>设置成功！</p>
-<h4 id="VI-设置用户信息"><a href="#VI-设置用户信息" class="headerlink" title="VI.设置用户信息"></a>VI.设置用户信息</h4><pre><code>$ git config --global user.name &quot;YUTING0907&quot; 
-</code></pre><p>//输入注册时的username</p>
-<pre><code>$ git config --global user.email  &quot;YUTING9597@163.COM&quot; 
-</code></pre><p>//填写注册邮箱<br>把名称和邮箱替换成你自己的,SSH Key就配置成功啦！<br>本机已成功连接到 github。</p>
-<h3 id="第三步：搭建Hexo博客"><a href="#第三步：搭建Hexo博客" class="headerlink" title="第三步：搭建Hexo博客"></a>第三步：搭建Hexo博客</h3><p><strong>利用npm命令安装hexo</strong><br>npm Node Package Manager是随同NodeJS一起安装的包管理工具，想了解更多可以自行去百度。</p>
-<pre><code>$ npm install -g hexo
-</code></pre><p>安装完成后，在本地创建一个与 Repository中博客项目同名的文件夹username.github.io(如D:/YUTING0907.github.io)在文件夹上点击鼠标右键,选择 Git bash here（可以代替命令行指示符的存在~）,【这一步的作用是因为以后博客部署和更新都要在此文件夹下】</p>
-<p><strong>hexo初始化</strong></p>
-<pre><code>hexo init
-</code></pre><p><strong>安装依赖包</strong></p>
-<pre><code>$ npm install
-</code></pre><p>这里我踩坑了，<br><img src="http://pjqhk6p7v.bkt.clouddn.com/npm_install_error.png" alt="在这里插入图片描述"></p>
-<p>然后上百度、google各种找解决办法，后来发现是因为<br>Your versions of node and npm are years old and no longer supported。版本太低了，后来更新node.js版本就好了.<br><a href="https://github.com/npm/npm/issues/8488" target="_blank" rel="noopener">npm install 报错解决办法</a><br>这里放上更新node.js的方法<br>方法一：执行下列代码</p>
-<pre><code>npm install npm@latest -g
-</code></pre><p>但我的电脑出现了如下报错，如有朋友出现更新错误，课移步方法二。<br>C:\Users\lenovo\AppData\Roaming\npm\node_modules\npm\bin\npm-cli.js:79<br>      let notifier = require(‘update-notifier’)({pkg})<br>      ^^^<br>方法二:<br>1.到node官网（<a href="https://nodejs.org/en/）" target="_blank" rel="noopener">https://nodejs.org/en/）</a><br>下载最新版或者官网推荐版本，我下载的是10.14.1。</p>
-<p>2.将下载的文件安装到之前安装node.js的地方<br>通过where node命令查看node路径<br><img src="http://pjqhk6p7v.bkt.clouddn.com/where_node.png" alt="在这里插入图片描述"></p>
-<p>将刚刚下载的文件放到上面查到的路径中<br>双击刚刚下载的文件,点击next 具体安装方法和之前第一次安装一样，但是【<strong>注意在选择路径的时候要选成上面查到的node路径中</strong>】</p>
-<p>3.安装完成。通过npm -v和node -v查看当前版本号</p>
-<p><strong>确保git部署</strong></p>
-<pre><code>$ npm install hexo-deployer-git --save
-</code></pre><p><strong>本地查看</strong><br>做到这里恭喜你😀，现在已经搭建好本地的 Hexo 博客了，执行完下面的命令就可以到浏览器输入 localhost:4000 查看到啦！<br>$ hexo g   //生成更新网站<br>$ hexo s   //这一步是让你可以在本地localhost:4000可以浏览网站，一个服务预览的作用，退出服务按ctrl+c<br>$ hexo d //部署网站</p>
-<p>【小提醒】如果在配置 SSH key 时设置了密码，执行 hexo d 命令上传文件时需要输入密码进行确认，会出现一个小框框，让你输入密码，你输入密码即可部署更新。</p>
-<p>执行完 hexo init 命令后会给一个默认的主题：landscape</p>
-<h3 id="最后一步：将博客部署到username-github-io"><a href="#最后一步：将博客部署到username-github-io" class="headerlink" title="最后一步：将博客部署到username.github.io"></a>最后一步：将博客部署到username.github.io</h3><p><strong>复制SSH码</strong></p>
-<p>进入 Github 个人主页中的 Repository，复制新建的独立博客项目username.github.io的 SSH码<br><img src="http://pjqhk6p7v.bkt.clouddn.com/repo.png" alt="在这里插入图片描述"></p>
-<p><strong>编辑整站配置文件</strong><br>打开 D:/username.github.io/_config.yml,把刚刚复制的 SSH码粘贴到repository：后面</p>
-<pre><code>deploy:
-  type: git
-  repository: git@github.com:username/username.github.io.git
-  branch: master
-</code></pre><p>冒号后一定要空一格。否则会报FATAL can not read a block mapping entry的错。</p>
-<p>当当当当~~到这里你已经拥有一个属于自己的网站，可能有点简陋，但是整个框架已经搭起来了。期待下一篇把网站拾掇得更好吧。</p>
-<p>搭建参考：<br><a href="http://codewithzhangyi.com/archives/" target="_blank" rel="noopener">如何搭建自己的个人网站</a></p>
-<p><a href="https://blog.csdn.net/H_duolalu/article/details/80215580" target="_blank" rel="noopener">更新node</a></p>
-<p><a href="https://github.com/npm/npm/issues/8488" target="_blank" rel="noopener">npm install错误</a></p>
+                <p>本篇彩蛋是基于上两篇个人网站搭建系列博文增加新的功能（评论、打赏）<br>以Anisina主题为例</p>
+<p>难度指数：♥♥<br>系统环境：win8</p>
+<h2 id="评论功能"><a href="#评论功能" class="headerlink" title="评论功能"></a>评论功能</h2><p>本文采用的是valine评论系统，首先你需要注册一个<a href="https://leancloud.cn/" target="_blank" rel="noopener">leancloud</a>账户,然后创建一个应用来存储管理评论内容,注册和创建新应用完了之后，就完成了准备工作。</p>
+<p><strong>1.准备工作就绪后，然后修改 Anisina主题配置文件 _config.yml</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># Valine comment system https://valine.js.org</span><br><span class="line">valine: </span><br><span class="line">  enable: true</span><br><span class="line">  appid:  KPXIfOuMVwWIv2Skprm5gYB</span><br><span class="line">  appkey: f92SiTdYRrLO0zwfdQ</span><br><span class="line">  verify: false #验证码</span><br><span class="line">  notify: false #评论回复提醒</span><br><span class="line">  avatar: mm #评论列表默认头像样式</span><br><span class="line">  placeholder: Just go go #评论框占位符</span><br><span class="line">  </span><br><span class="line">CDN:</span><br><span class="line">  valine: http://unpkg.com/valine@1.2.0-beta1/dist/Valine.min.js</span><br></pre></td></tr></table></figure>
+<p>这里的appid，appkey可在创建的新应用的设置里面查看<br>新应用名称&gt;设置&gt;应用Key<br><img src="http://pjqhk6p7v.bkt.clouddn.com/leanCloud%28key%29.png" alt=""></p>
+<p><strong>2.修改 Anisina/layout/_partial/article.ejs</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if (!index &amp;&amp; post.comments)&#123; %&gt;</span><br><span class="line">    &lt;% if (theme.duoshuo.on) &#123; %&gt;</span><br><span class="line">      &lt;%- partial(&apos;comments/duoshuo&apos;, &#123;</span><br><span class="line">          key: post.path,</span><br><span class="line">          title: post.title,</span><br><span class="line">          url: config.url+url_for(post.path),</span><br><span class="line">          &#125;) %&gt;</span><br><span class="line">    &lt;% &#125; else if (theme.youyan.on) &#123; %&gt;</span><br><span class="line">        &lt;%- partial(&apos;comments/youyan&apos;) %&gt;</span><br><span class="line">    &lt;% &#125; else if (theme.disqus.on) &#123; %&gt;</span><br><span class="line">        &lt;%- partial(&apos;comments/disqus&apos;, &#123;</span><br><span class="line">            shortname: theme.disqus.shortname</span><br><span class="line">          &#125;) %&gt;</span><br><span class="line">    &lt;% &#125; else if (config.disqus_shortname) &#123; %&gt;</span><br><span class="line">        &lt;%- partial(&apos;comments/disqus&apos;, &#123;</span><br><span class="line">            shortname: config.disqus_shortname</span><br><span class="line">          &#125;) %&gt;</span><br><span class="line">   &lt;% &#125; else if (theme.valine.on)&#123; %&gt;</span><br><span class="line">       &lt;%- partial(&apos;comments/valine&apos;, &#123;</span><br><span class="line">           key: post.slug,</span><br><span class="line">           title: post.title,</span><br><span class="line">           url: config.url+url_for(post.path)</span><br><span class="line">       &#125;) %&gt;</span><br><span class="line">    &lt;% &#125; %&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>3.创建 layout/_partial/comments/valine.ejs 文件</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;section id=&quot;comments&quot; style=&quot;margin: 2em; padding: 2em; background: rgba(255, 255, 255, 0.5)&quot;&gt;</span><br><span class="line">    &lt;div id=&quot;vcomment&quot; class=&quot;comment&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script src=&quot;//cdn1.lncld.net/static/js/3.0.4/av-min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;&lt;%- theme.CDN.valine %&gt;&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">      new Valine(&#123;</span><br><span class="line">        el: &apos;#vcomment&apos;,</span><br><span class="line">        notify: &apos;&lt;%= theme.valine.notify %&gt;&apos;,</span><br><span class="line">        verify: &apos;&lt;%= theme.valine.verify %&gt;&apos;,</span><br><span class="line">        app_id: &quot;&lt;%= theme.valine.appid %&gt;&quot;,</span><br><span class="line">        app_key: &quot;&lt;%= theme.valine.appkey %&gt;&quot;,</span><br><span class="line">        placeholder: &quot;&lt;%= theme.valine.placeholder %&gt;&quot;,</span><br><span class="line">        avatar: &quot;&lt;%= theme.valine.avatar %&gt;&quot;</span><br><span class="line">      &#125;);</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/section&gt;</span><br></pre></td></tr></table></figure>
+<p>完成，部署hexo后就可以看到评论功能新增上去了</p>
+<h2 id="打赏功能"><a href="#打赏功能" class="headerlink" title="打赏功能"></a>打赏功能</h2><p>效果可以先预览一下</p>
 <iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 
 " style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe>
+
+
+<p><strong>1.首先到我的github页去Fork 一下这个项目donate-page-yu</strong><br><a href="https://github.com/YUTING0907" target="_blank" rel="noopener">https://github.com/YUTING0907</a><br>这个我是Fork 了TinyJay的repositories </p>
+<p><strong>2.然后在donate-page-yu/simple/images/下</strong> 修改你的支付宝，微信收款等其他收款码，当然你也可以不修改, 扫我的收款码就可以了~</p>
+<p><strong>3.进入这个路径：donate-page/simple/index.html,复制该路径，然后进入</strong><a href="http://raw.githack.com/" target="_blank" rel="noopener">http://raw.githack.com/</a> <strong>生成对应的访问链接。</strong><br><img src="http://pjqhk6p7v.bkt.clouddn.com/iframe_raw.png" alt=""></p>
+<p><strong>4.修改iframe</strong></p>
+<p>将下面的代码中src对应的网页指向改为刚刚生成的网页，之后讲下面的iframe代码块放到文章中就可以了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src=&quot;https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html </span><br><span class="line">&quot; style=&quot;overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;&quot;  </span><br><span class="line">frameborder=&quot;0&quot; scrolling=&quot;no&quot;&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure>
+<iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 
+" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe>
+
+
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2018/12/16/搭建自己的个人网站-下/" data-toggle="tooltip" data-placement="top" title="搭建自己的个人网站(下)">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2018/12/12/article/" data-toggle="tooltip" data-placement="top" title="2019 do better">Next Post &rarr;</a>
+                        <a href="/2018/12/23/一个人越过越年轻是喜还是悲/" data-toggle="tooltip" data-placement="top" title="一个人越过越年轻是喜还是悲">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -309,7 +270,7 @@ Are you sure you want to continue connecting (yes/no)
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一步：准备必要的软件"><span class="toc-text">第一步：准备必要的软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二步：Github注册与配置"><span class="toc-text">第二步：Github注册与配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-注册Github"><span class="toc-text">1.注册Github</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-创建Repository"><span class="toc-text">2.创建Repository</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-配置SSH-Keys"><span class="toc-text">3.配置SSH Keys</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IV-添加SSH-Key到GitHub上"><span class="toc-text">IV. 添加SSH Key到GitHub上</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#V-测试"><span class="toc-text">V.测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#VI-设置用户信息"><span class="toc-text">VI.设置用户信息</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三步：搭建Hexo博客"><span class="toc-text">第三步：搭建Hexo博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最后一步：将博客部署到username-github-io"><span class="toc-text">最后一步：将博客部署到username.github.io</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#评论功能"><span class="toc-text">评论功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#打赏功能"><span class="toc-text">打赏功能</span></a></li></ol>
                 </div>
             </div>
         </div>
