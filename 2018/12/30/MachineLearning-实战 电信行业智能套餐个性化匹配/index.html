@@ -198,15 +198,33 @@
 <h2 id="赛事说明"><a href="#赛事说明" class="headerlink" title="赛事说明"></a>赛事说明</h2><p>赛事链接<a href="https://www.datafountain.cn/competitions/311/details/data-evaluation" target="_blank" rel="noopener">面向电信行业存量用户的智能套餐个性化匹配模型</a></p>
 <p>可以参看链接，里面有详细的训练集数据说明，里面包含了如下信息：<br>数据说明<br>作品要求<br>评分方式</p>
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>我复现了top1的解决方案，以下是top1的解决方案：</p>
-<p><strong>1.数据探查</strong><br>根据赛事说明，该比赛是一个多分类的问题，对应着有11种套餐，首先看看这11种套餐的分布情况，可以看出它们的分布较为不均。</p>
+<h3 id="1-数据探查"><a href="#1-数据探查" class="headerlink" title="1.数据探查"></a><strong>1.数据探查</strong></h3><h5 id="分类label"><a href="#分类label" class="headerlink" title="分类label"></a><strong>分类label</strong></h5><p>根据赛事说明，该比赛是一个多分类的问题，对应着有11种套餐，首先看看这11种套餐的分布情况，可以看出它们的分布较为不均。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">#导入数据</span><br><span class="line">path = &apos;D:/Pywork/2018_CCF_BDCI_CHINA_TOP1/project/preliminary_training_set/train_all.csv&apos;</span><br><span class="line"></span><br><span class="line">def import_data(path):</span><br><span class="line">    train_data = pd.read_csv(path, low_memory=False)</span><br><span class="line">    return train_data</span><br><span class="line"></span><br><span class="line">train_data = import_data(path)</span><br><span class="line"></span><br><span class="line"># current_service 条形图</span><br><span class="line">def service_view(train_data,categories):</span><br><span class="line">    data_by_service = train_data.groupby(categories).size().reset_index(name=&apos;counts&apos;)</span><br><span class="line">    data_by_service[categories] = data_by_service[categories].astype(str)</span><br><span class="line">    print(data_by_service)</span><br><span class="line">    # 随机生成几种颜色，reshape第二个参数-1指随着N变化，第一维度填满有剩就来填第二维</span><br><span class="line">    # 生成的是随机的N组三通道(r,g,b)的颜色</span><br><span class="line">    N = 7</span><br><span class="line">    colors = np.random.rand(N * 3).reshape(N, -1)</span><br><span class="line">    fig, ax = plt.subplots()</span><br><span class="line"></span><br><span class="line">    ax.bar(data_by_service[categories], data_by_service[&apos;counts&apos;], color=colors)</span><br><span class="line">    plt.xticks(rotation=270)</span><br><span class="line">    plt.xlabel(categories)</span><br><span class="line">    plt.ylabel(&apos;counts&apos;)</span><br><span class="line">    plt.show()</span><br><span class="line">str = &apos;current_service&apos;</span><br><span class="line">service_view(train_data,str)</span><br></pre></td></tr></table></figure>
 <p><img src="http://pjqhk6p7v.bkt.clouddn.com/curr_service_count.png" alt=""></p>
-<p>而多分类问题，典型的评价指标为<strong>macro-f1</strong><br>首先针对每个套餐类别，统计分别统计TP（预测答案正确），FP（错将其他类预测为本类），FN（本类标签预测为其他类标）。计算<strong>Precision</strong>(精确率)和<strong>Recall</strong>(召回率)</p>
+<p>多分类问题，典型的评价指标为<strong>macro-f1</strong>：首先针对每个套餐类别，统计分别统计TP（预测答案正确），FP（错将其他类预测为本类），FN（本类标签预测为其他类标）。计算<strong>Precision</strong>(精确率)和<strong>Recall</strong>(召回率)</p>
 <p><img src="http://pjqhk6p7v.bkt.clouddn.com/TP_.png" alt=""></p>
 <p>举个具体场景的例子：</p>
 <p>假如某个班级有男生80人,女生20人,共计100人.<br>目标是找出所有女生.<br>现在某人挑选出50个人,其中20人是女生,另外还错误的把30个男生也当作女生挑选出来了.<br>作为评估者的你需要来评估(evaluation)下他的工作<br>|相关(Relevant),正类  | 无关(NonRelevant),负类 |<br>|–|–|<br>| true positives(TP 正类判定为正类) | false positives(FP 负类判定为正类,”存伪”) |<br>| false negatives(FN 正类判定为负类,”去真”)| true negatives(TN 负类判定为负类) |<br>通过表格可以得出：<br>TP:20<br>FP:30<br>FN:0<br>TN:50</p>
-<p>精确率(precision)P = \frac{TP}{TP+FP},<br>召回率(recall)的公式是：R=\frac{TP}{TP+NP},</p>
-<p>首先我们可以计算<strong>精确率(precision)</strong>:很容易，我们可以得到,他把其中70(20女+50男)人判定正确了,而总人数是100人，所以它的accuracy就是70 %(70 / 100).<br><strong>召回率(recall):</strong>它计算的是所有”正确被检索的item(TP)”占所有”应该检索到的item(TP+FN)”的比例,所以它的recall为100%.<br>如果单看某一个指标，预测结果是不会被正确衡量的。比如在以上例子中，如果我全部判断为女生，则召回率可以达到100%，单看召回率它是一个非常准确的预测，但此时你能说该模型的预测效果好吗，很显然不能。所以必须结合P,R一起看。结合起来最常见的方法应该就是F-Measure了，有些地方也叫做F-Score：<br>F=\frac{(a^2+1)P*R} {a^2(P+R)}<br>当参数a=1时，就是最常见的F1了：<br>F1 = \frac{2PR} {P+R} </p>
+<p>精确率(precision)$$P = \frac{TP}{TP+FP}$$<br>召回率(recall)的公式是：$$R=\frac{TP}{TP+NP}$$,</p>
+<p>首先我们可以计算<strong>精确率(precision)</strong>:很容易，我们可以得到,他把其中70(20女+50男)人判定正确了,而总人数是100人，所以它的accuracy就是70%(70 / 100).</p>
+<p><strong>召回率(recall)</strong>:它计算的是所有”正确被检索的item(TP)”占所有”应该检索到的item(TP+FN)”的比例,所以它的recall为100%.<br>如果单看某一个指标，预测结果是不会被正确衡量的。比如在以上例子中，如果我全部判断为女生，则召回率可以达到100%，单看召回率它是一个非常准确的预测，但此时你能说该模型的预测效果好吗，很显然不能。所以必须结合P,R一起看。结合起来最常见的方法应该就是F-Measure了，有些地方也叫做F-Score：<br>$$F=\frac{(a^2+1)P*R} {a^2(P+R)}$$<br>当参数a=1时，就是最常见的F1了：<br>$$F1 = \frac{2PR} {P+R} $$</p>
+<p>回到赛题，在得到每个类别下的F1-score后，对各个类别的F1-score求均值，得到最后的评测结果，计算方式如下：<br>$$score=\frac 1n\sum{f1_k}$$</p>
+<h5 id="原始特征与标签相关性"><a href="#原始特征与标签相关性" class="headerlink" title="原始特征与标签相关性"></a>原始特征与标签相关性</h5><p>以下是关于原始特征<strong>service_type和label相关性的观察图表</strong>：<br><img src="http://pjqhk6p7v.bkt.clouddn.com/service_type.png" alt=""><br>可以明显的看出一个规律，service_type可以将套餐分为两个部分，这两个部分是没有交叉的，其中一类有8个，另外一类有3个。这给我们比赛带来一个思路是，可以分模型预测。</p>
+<p><strong>关于age和label相关性的观察图表：</strong><br><img src="http://pjqhk6p7v.bkt.clouddn.com/age.png" alt=""></p>
+<p>我们可以看到对于年龄来讲，基本上符合电信用户群体的分布,但是有很多0岁的异常值，对于异常值,可以先不做处理，或填充-1.</p>
+<p><strong>关于gender和label相关性的观察图表：</strong><br><img src="http://pjqhk6p7v.bkt.clouddn.com/gender.png" alt=""><br>我们观察到性别中有0 的缺省值，对于这部分，我们使用了两种方法处理，一种是填充service_type对应字段的众数，和原始值。最终选取了原始值.</p>
+<h3 id="2-特征工程"><a href="#2-特征工程" class="headerlink" title="2.特征工程"></a><strong>2.特征工程</strong></h3><p>(1)关联规则<br>受max-encoding的方法的启发，对有关联关系的话费字段，1_total_fee, 2_total_fee, 3_total_fee, 4_total_fee四个字段的构建关联规则，这样可以利用整体信息，对话费字段这个强特征进行降维编码。使得其数据更加具有代表性<br>(2) 业务特征<br>业务特征的部分，我们深入研究了联通的套餐消费场景，从比赛的一开始，首先就通过联通官网以及消费论坛认真的开始调研工作，深入了解了联通的各种套餐特点和用户群差别。通过熟悉套餐的特性，我们可以为各种特定用户群推荐适宜他们的套餐，比如腾讯天王卡玩腾讯游戏看腾讯视频不花钱是深度腾讯用户的福音，蚂蚁大宝卡则可以赠送2g无差别流量给高流量消费者。联通传统套餐的各种优惠活动，比如预充值冲100返流量和话费，适合平时那些流量和话费不够用的用户，充值返话费则适合那些薅羊毛的用户。对此我们针对用户的流量和通话做了一系列特征，比例、差值，求和等，力求尽可能的描绘出一幅用户画像。<br>提出了以下几种针对业务的特征：</p>
+<ol>
+<li>话费减去16元是否是整数</li>
+<li>流量的有效数字是否是27的整数倍</li>
+<li>话费的有效数字能否被15乘除</li>
+<li>话费是否是整数（用户可能未超套餐）</li>
+<li>连续两个月套餐的差值能否被5,10,15,27，30等计费单元整除</li>
+<li>四个月话费的最小值</li>
+<li>计算流量的平均单价</li>
+<li>计算通话时间的平均单价</li>
+<li>等等…</li>
+</ol>
 <iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 
 " style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe>
 
@@ -261,7 +279,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#赛事说明"><span class="toc-text">赛事说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-text">解决方案</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#赛事说明"><span class="toc-text">赛事说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-数据探查"><span class="toc-text">1.数据探查</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#分类label"><span class="toc-text">分类label</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#原始特征与标签相关性"><span class="toc-text">原始特征与标签相关性</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-特征工程"><span class="toc-text">2.特征工程</span></a></li></ol>
                 </div>
             </div>
         </div>
