@@ -87,15 +87,15 @@
                     
                         
 							
-                        <li>
-                            <a href="/categories/">categories</a>
-                        </li>
+								
 							
 						
                     
                         
 							
-								
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
 							
 						
                     
@@ -173,9 +173,13 @@
             <!-- 标签云 -->
             <div id="tag_cloud" class="tags">
                 
-                <a href="#movies" title="movies" rel="1">movies</a>
+                <a href="#Machine Learning" title="Machine Learning" rel="1">Machine Learning</a>
+                
+                <a href="#XGBoost" title="XGBoost" rel="1">XGBoost</a>
                 
                 <a href="#life" title="life" rel="3">life</a>
+                
+                <a href="#movies" title="movies" rel="1">movies</a>
                 
                 <a href="#node" title="node" rel="3">node</a>
                 
@@ -188,14 +192,31 @@
             <!-- 标签列表 -->
             
             <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="movies">
-                    <span class="tag-text">movies</span>
+                <span class="fa fa-tag listing-seperator" id="Machine Learning">
+                    <span class="tag-text">Machine Learning</span>
                 </span>
                 
                 <div class="post-preview">
-                    <a href="/2018/12/23/一个人越过越年轻是喜还是悲/">
+                    <a href="/2018/12/30/Machine-Learning-实战-电信行业智能套餐个性化匹配/">
                         <h2 class="post-title">
-                            一个人越过越年轻是喜还是悲
+                            Machine Learning-实战 电信行业智能套餐个性化匹配
+                        </h2>
+                        
+                    </a>
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="XGBoost">
+                    <span class="tag-text">XGBoost</span>
+                </span>
+                
+                <div class="post-preview">
+                    <a href="/2018/12/30/Machine-Learning-实战-电信行业智能套餐个性化匹配/">
+                        <h2 class="post-title">
+                            Machine Learning-实战 电信行业智能套餐个性化匹配
                         </h2>
                         
                     </a>
@@ -210,16 +231,6 @@
                 </span>
                 
                 <div class="post-preview">
-                    <a href="/2018/12/23/一个人越过越年轻是喜还是悲/">
-                        <h2 class="post-title">
-                            一个人越过越年轻是喜还是悲
-                        </h2>
-                        
-                    </a>
-                </div>
-                <hr>
-                
-                <div class="post-preview">
                     <a href="/2018/12/12/article/">
                         <h2 class="post-title">
                             2019 do better
@@ -230,9 +241,36 @@
                 <hr>
                 
                 <div class="post-preview">
+                    <a href="/2018/12/23/一个人越过越年轻是喜还是悲/">
+                        <h2 class="post-title">
+                            一个人越过越年轻是喜还是悲
+                        </h2>
+                        
+                    </a>
+                </div>
+                <hr>
+                
+                <div class="post-preview">
                     <a href="/2018/12/28/你对一万小时定律有什么误解/">
                         <h2 class="post-title">
                             你对一万小时定律有什么误解?
+                        </h2>
+                        
+                    </a>
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="movies">
+                    <span class="tag-text">movies</span>
+                </span>
+                
+                <div class="post-preview">
+                    <a href="/2018/12/23/一个人越过越年轻是喜还是悲/">
+                        <h2 class="post-title">
+                            一个人越过越年轻是喜还是悲
                         </h2>
                         
                     </a>
@@ -478,10 +516,19 @@
   _st('install','','2.0.0');
 </script>
 
-<div class="theme-info">
-  <div class="powered-by"></div>
-  <span class="post-count">博客全站共{{ totalcount(site) }}字</span>
-</div>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+
+{% if theme.footer.counter %}
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+{% endif %}
 
 <!--wechat title img-->
 <img class="wechat-title-img" src="/image/20181215001153.jpg">
