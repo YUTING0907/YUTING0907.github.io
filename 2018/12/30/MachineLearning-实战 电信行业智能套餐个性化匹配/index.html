@@ -204,12 +204,13 @@
 <p>多分类问题，典型的评价指标为<strong>macro-f1</strong>：首先针对每个套餐类别，统计分别统计TP（预测答案正确），FP（错将其他类预测为本类），FN（本类标签预测为其他类标）。计算<strong>Precision</strong>(精确率)和<strong>Recall</strong>(召回率)</p>
 <p><img src="http://pjqhk6p7v.bkt.clouddn.com/TP_.png" alt=""></p>
 <p>举个具体场景的例子：</p>
-<p>假如某个班级有男生80人,女生20人,共计100人.<br>目标是找出所有女生.<br>现在某人挑选出50个人,其中20人是女生,另外还错误的把30个男生也当作女生挑选出来了.<br>作为评估者的你需要来评估(evaluation)下他的工作<br>|相关(Relevant),正类  | 无关(NonRelevant),负类 |<br>|–|–|<br>| true positives(TP 正类判定为正类) | false positives(FP 负类判定为正类,”存伪”) |<br>| false negatives(FN 正类判定为负类,”去真”)| true negatives(TN 负类判定为负类) |<br>通过表格可以得出：<br>TP:20<br>FP:30<br>FN:0<br>TN:50</p>
-<p>精确率(precision)$$P = \frac{TP}{TP+FP}$$<br>召回率(recall)的公式是：$$R=\frac{TP}{TP+NP}$$,</p>
+<p>假如某个班级有男生80人,女生20人,共计100人.<br>目标是找出所有女生.<br>现在某人挑选出50个人,其中20人是女生,另外还错误的把30个男生也当作女生挑选出来了.<br>作为评估者的你需要来评估(evaluation)下他的工作<br>|相关(Relevant),正类  | 无关(NonRelevant),负类 |<br>|—|—|<br>| true positives(TP 正类判定为正类) | false positives(FP 负类判定为正类,”存伪”) |<br>| false negatives(FN 正类判定为负类,”去真”)| true negatives(TN 负类判定为负类) |<br>通过表格可以得出：<br>TP:20<br>FP:30<br>FN:0<br>TN:50</p>
+<p>精确率(precision)<script type="math/tex">P = \frac{TP}{TP+FP}</script><br>召回率(recall)的公式是：<script type="math/tex">R=\frac{TP}{TP+NP}</script>,</p>
 <p>首先我们可以计算<strong>精确率(precision)</strong>:很容易，我们可以得到,他把其中70(20女+50男)人判定正确了,而总人数是100人，所以它的accuracy就是70%(70 / 100).</p>
-<p><strong>召回率(recall)</strong>:它计算的是所有”正确被检索的item(TP)”占所有”应该检索到的item(TP+FN)”的比例,所以它的recall为100%.<br>如果单看某一个指标，预测结果是不会被正确衡量的。比如在以上例子中，如果我全部判断为女生，则召回率可以达到100%，单看召回率它是一个非常准确的预测，但此时你能说该模型的预测效果好吗，很显然不能。所以必须结合P,R一起看。结合起来最常见的方法应该就是F-Measure了，有些地方也叫做F-Score：<br>$$F=\frac{(a^2+1)P*R} {a^2(P+R)}$$<br>当参数a=1时，就是最常见的F1了：<br>$$F1 = \frac{2PR} {P+R} $$</p>
-<p>回到赛题，在得到每个类别下的F1-score后，对各个类别的F1-score求均值，得到最后的评测结果，计算方式如下：<br>$$score=\frac 1n\sum{f1_k}$$</p>
-<h5 id="原始特征与标签相关性"><a href="#原始特征与标签相关性" class="headerlink" title="原始特征与标签相关性"></a>原始特征与标签相关性</h5><p>以下是关于原始特征<strong>service_type和label相关性的观察图表</strong>：<br><img src="http://pjqhk6p7v.bkt.clouddn.com/service_type.png" alt=""><br>可以明显的看出一个规律，service_type可以将套餐分为两个部分，这两个部分是没有交叉的，其中一类有8个，另外一类有3个。这给我们比赛带来一个思路是，可以分模型预测。</p>
+<p><strong>召回率(recall)</strong>:它计算的是所有”正确被检索的item(TP)”占所有”应该检索到的item(TP+FN)”的比例,所以它的recall为100%.<br>如果单看某一个指标，预测结果是不会被正确衡量的。比如在以上例子中，如果我全部判断为女生，则召回率可以达到100%，单看召回率它是一个非常准确的预测，但此时你能说该模型的预测效果好吗，很显然不能。所以必须结合P,R一起看。结合起来最常见的方法应该就是F-Measure了，有些地方也叫做F-Score：</p>
+<script type="math/tex; mode=display">F=\frac{(a^2+1)P*R} {a^2(P+R)}</script><p>当参数a=1时，就是最常见的F1了：</p>
+<script type="math/tex; mode=display">F1 = \frac{2PR} {P+R}</script><p>回到赛题，在得到每个类别下的F1-score后，对各个类别的F1-score求均值，得到最后的评测结果，计算方式如下：</p>
+<script type="math/tex; mode=display">score=\frac 1n\sum{f1_k}</script><h5 id="原始特征与标签相关性"><a href="#原始特征与标签相关性" class="headerlink" title="原始特征与标签相关性"></a>原始特征与标签相关性</h5><p>以下是关于原始特征<strong>service_type和label相关性的观察图表</strong>：<br><img src="http://pjqhk6p7v.bkt.clouddn.com/service_type.png" alt=""><br>可以明显的看出一个规律，service_type可以将套餐分为两个部分，这两个部分是没有交叉的，其中一类有8个，另外一类有3个。这给我们比赛带来一个思路是，可以分模型预测。</p>
 <p><strong>关于age和label相关性的观察图表：</strong><br><img src="http://pjqhk6p7v.bkt.clouddn.com/age.png" alt=""></p>
 <p>我们可以看到对于年龄来讲，基本上符合电信用户群体的分布,但是有很多0岁的异常值，对于异常值,可以先不做处理，或填充-1.</p>
 <p><strong>关于gender和label相关性的观察图表：</strong><br><img src="http://pjqhk6p7v.bkt.clouddn.com/gender.png" alt=""><br>我们观察到性别中有0 的缺省值，对于这部分，我们使用了两种方法处理，一种是填充service_type对应字段的众数，和原始值。最终选取了原始值.</p>
@@ -256,7 +257,7 @@
                     <script src="//cdn.jsdelivr.net/npm/valine"></script>
                     <script>
                         var GUEST = ['nick','mail','link'];
-                        var meta = '';
+                        var meta = 'undefined';
                         meta = meta.split(',').filter(function (item) {
                             return GUEST.indexOf(item)>-1;
                         });
@@ -446,6 +447,34 @@
 </script>
 
 
+<!-- mathjax -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+        processEscapes: true
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    }});
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
 
 <!-- Google Analytics -->
 
@@ -469,6 +498,22 @@
 
 <!--wechat title img-->
 <img class="wechat-title-img" src="/image/20181215001153.jpg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
 </body>
 
 </html>

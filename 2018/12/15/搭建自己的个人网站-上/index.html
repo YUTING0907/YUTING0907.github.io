@@ -214,7 +214,7 @@
 <p>继续选中左边菜单栏的SSH and GPG keys</p>
 <p>Title最好写，随便写。否则可能出现各种各样的二逼问题<br>Key部分就是放刚才复制的内容了，点击Add SSH key</p>
 <h4 id="V-测试"><a href="#V-测试" class="headerlink" title="V.测试"></a>V.测试</h4><p>git bash里输入代码：<code>$ ssh -T git@github.com</code> </p>
-<pre><code>The authenticity of host &apos;GitHub.com (52.74.227.119)&apos; can&apos;t be established.
+<pre><code>The authenticity of host &#39;GitHub.com (52.74.227.119)&#39; can&#39;t be established.
 RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.
 Are you sure you want to continue connecting (yes/no)
 </code></pre><p>输入yes，回车<br>按照提示输入刚才设置的密码，回车<br>You’ve successfully authenticated…<br>设置成功！</p>
@@ -286,7 +286,7 @@ Are you sure you want to continue connecting (yes/no)
                     <script src="//cdn.jsdelivr.net/npm/valine"></script>
                     <script>
                         var GUEST = ['nick','mail','link'];
-                        var meta = '';
+                        var meta = 'undefined';
                         meta = meta.split(',').filter(function (item) {
                             return GUEST.indexOf(item)>-1;
                         });
@@ -499,6 +499,22 @@ Are you sure you want to continue connecting (yes/no)
 
 <!--wechat title img-->
 <img class="wechat-title-img" src="/image/20181215001153.jpg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
 </body>
 
 </html>

@@ -172,9 +172,9 @@
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#life" title="life">life</a>
-                        
                         <a class="tag" href="/tags/#movies" title="movies">movies</a>
+                        
+                        <a class="tag" href="/tags/#life" title="life">life</a>
                         
                     </div>
                 </div>
@@ -240,7 +240,7 @@
                     <script src="//cdn.jsdelivr.net/npm/valine"></script>
                     <script>
                         var GUEST = ['nick','mail','link'];
-                        var meta = '';
+                        var meta = 'undefined';
                         meta = meta.split(',').filter(function (item) {
                             return GUEST.indexOf(item)>-1;
                         });
@@ -285,9 +285,9 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#life" title="life">life</a>
-                        
                         <a class="tag" href="/tags/#movies" title="movies">movies</a>
+                        
+                        <a class="tag" href="/tags/#life" title="life">life</a>
                         
                     </div>
                 </section>
@@ -453,6 +453,22 @@
 
 <!--wechat title img-->
 <img class="wechat-title-img" src="/image/20181215001153.jpg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
 </body>
 
 </html>
