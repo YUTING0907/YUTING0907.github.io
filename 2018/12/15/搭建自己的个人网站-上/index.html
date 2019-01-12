@@ -197,18 +197,18 @@
                 <p>本篇个人网站搭建系列博文是基于:GitHub+Hexo。<br>难度指数：♥♥<br>系统环境：win8</p>
 <p><strong>前言：</strong>真正搭建这个网站框架的时间也就花了两个晚上，不需要你有多么深厚的编程基础，可能会遇到一些坑，就需要你遇到问题解决问题的能力了，还有搜功，因为很多你遇到的问题很多人都遇到了，太阳底下没有新鲜事儿，会搜索基本解决了大多数问题。</p>
 <h3 id="第一步：准备必要的软件"><a href="#第一步：准备必要的软件" class="headerlink" title="第一步：准备必要的软件"></a>第一步：准备必要的软件</h3><p><strong>1.Git下载</strong><br>     <a href="https://git-scm.com/downloads" target="_blank" rel="noopener">Git</a>,选择适合自己电脑的环境，一路Next下来就行了。</p>
-<p><strong>2、安装node.js</strong><br>    <a href="http://nodejs.cn/" target="_blank" rel="noopener">node.js</a>,也是基于自己的电脑环境选择下载，下载最新版本，在Windows安装时务必选择全部组件，包括勾选<code>Add to Path</code>。安装完成后，在Windows环境下，打开命令行提示符，输入<code>node -v</code>，看到版本号正常输出，则安装完成。<br>           <img src="http://pjqhk6p7v.bkt.clouddn.com/node_v.png" alt="在这里插入图片描述"></p>
-<h3 id="第二步：Github注册与配置"><a href="#第二步：Github注册与配置" class="headerlink" title="第二步：Github注册与配置"></a>第二步：Github注册与配置</h3><h4 id="1-注册Github"><a href="#1-注册Github" class="headerlink" title="1.注册Github"></a>1.注册Github</h4><p>点击→<a href="https://github.com" target="_blank" rel="noopener">https://github.com</a>右上角sign up<br><img src="http://pjqhk6p7v.bkt.clouddn.com/github_sign_up.png" alt="在这里插入图片描述"><br>注册完成后，记住自己的用户名，因为后续个人网站的网址格式为：username.github.io<br>这个username就是你的github用户名。<br>这里我的GitHub账号是：YUTING0907<br>个人网站：YUTING0907.github.io<br>你后续也可以自己绑定域名，叫个更炫酷的名字XXX.com</p>
-<h4 id="2-创建Repository"><a href="#2-创建Repository" class="headerlink" title="2.创建Repository"></a>2.创建Repository</h4><p>登陆GitHub，点击右上角的+，会出现New repository创建一个与你博客相关你的Repository进行管理，之后你的博客都会在GitHub的这个Repository里同步更新。<br><img src="http://pjqhk6p7v.bkt.clouddn.com/repository.png" alt="在这里插入图片描述"></p>
+<p><strong>2、安装node.js</strong><br>    <a href="http://nodejs.cn/" target="_blank" rel="noopener">node.js</a>,也是基于自己的电脑环境选择下载，下载最新版本，在Windows安装时务必选择全部组件，包括勾选<code>Add to Path</code>。安装完成后，在Windows环境下，打开命令行提示符，输入<code>node -v</code>，看到版本号正常输出，则安装完成。<br>           <img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/rm7.QvW1mxRhb6sdXnYhiskAulDc0JF9F0bBkPmX50s!/b/dFYBAAAAAAAA&amp;bo=4AAqAAAAAAADF*g!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
+<h3 id="第二步：Github注册与配置"><a href="#第二步：Github注册与配置" class="headerlink" title="第二步：Github注册与配置"></a>第二步：Github注册与配置</h3><h4 id="1-注册Github"><a href="#1-注册Github" class="headerlink" title="1.注册Github"></a>1.注册Github</h4><p>点击→<a href="https://github.com" target="_blank" rel="noopener">https://github.com</a>右上角sign up<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/5x0MOWtEd4jqwAH5TXRe1qhXefHiOiLCsLpl0vLFZ04!/b/dFQBAAAAAAAA&amp;bo=eQRqAgAAAAADFyc!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"><br>注册完成后，记住自己的用户名，因为后续个人网站的网址格式为：username.github.io<br>这个username就是你的github用户名。<br>这里我的GitHub账号是：YUTING0907<br>个人网站：YUTING0907.github.io<br>你后续也可以自己绑定域名，叫个更炫酷的名字XXX.com</p>
+<h4 id="2-创建Repository"><a href="#2-创建Repository" class="headerlink" title="2.创建Repository"></a>2.创建Repository</h4><p>登陆GitHub，点击右上角的+，会出现New repository创建一个与你博客相关你的Repository进行管理，之后你的博客都会在GitHub的这个Repository里同步更新。<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/*bhCJMsQQlH5*0hTH7p1in230nG62njUjBHVSaqhKn0!/b/dD4BAAAAAAAA&amp;bo=DQVSAgAAAAADF2o!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
 <p>Repository的名字是username.github.io，比如我的YUTING0907.github.io。其余可以先不填，点击Create repository</p>
 <h4 id="3-配置SSH-Keys"><a href="#3-配置SSH-Keys" class="headerlink" title="3.配置SSH Keys"></a>3.配置SSH Keys</h4><p>SSH Keys用来使本地git项目与GitHub联系，这样能在GitHub上的博客项目是最新更新的。</p>
 <p>检查SSH Keys的设置<br><strong>I. 开始–所有应用–找到git bash</strong></p>
-<p><strong>II. 检查你电脑里现有的SSH Key</strong><br>   $ cd ~/.ssh<br>如果显示 No such file or directory，说明这是你第一次用git<br><img src="http://pjqhk6p7v.bkt.clouddn.com/ssh_key.png" alt="在这里插入图片描述"></p>
+<p><strong>II. 检查你电脑里现有的SSH Key</strong><br>   $ cd ~/.ssh<br>如果显示 No such file or directory，说明这是你第一次用git<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/3KDk1iRk5gEdR1LEgUg.TqHLInCwu2ZEY7D9QyUCZ*4!/b/dAgBAAAAAAAA&amp;bo=NAE5AAAAAAADFz4!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
 <p><strong>III. 接下来生成新的SSH Key:</strong><br>$ ssh-keygen -t rsa -C “邮件地址”<br>Generating public/private rsa key pair.<br>Enter file in which to save the key (/Users/your_user_directory/.ssh/id_rsa):&lt;回车就好&gt;</p>
 <p>这里的邮箱地址，输入注册 Github 的邮箱地址</p>
 <p> 然后系统会要你输入密码：<br>Enter passphrase (empty for no passphrase):&lt;设置密码&gt;<br>Enter same passphrase again:&lt;再次输入密码&gt;</p>
 <p>再回车，这里会提示你输入一个密码，作为你提交项目时使用</p>
-<p><strong>注意：</strong>输入密码的时候没有输入痕迹的，不要以为什么也没有输入。<br>最后看到这样的界面，就成功设置ssh key了：<br><img src="http://pjqhk6p7v.bkt.clouddn.com/ssh_set_up.png" alt="在这里插入图片描述"></p>
+<p><strong>注意：</strong>输入密码的时候没有输入痕迹的，不要以为什么也没有输入。<br>最后看到这样的界面，就成功设置ssh key了：<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/mYRnwZ8YFWIqmMRyqUbc5ob0slTpOiDo96NSAVjeo08!/b/dLwAAAAAAAAA&amp;bo=5gEpAQAAAAADF*0!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
 <h4 id="IV-添加SSH-Key到GitHub上"><a href="#IV-添加SSH-Key到GitHub上" class="headerlink" title="IV. 添加SSH Key到GitHub上"></a>IV. 添加SSH Key到GitHub上</h4><p>在本地文件夹找到id_rsa.pub文件，看上面的图片第四行的位置告诉你存在哪里了，没有的话可能是隐藏了，勾选一下文件扩展名 隐藏的项目。</p>
 <p>回到你的GitHub主页，右上角点击头像选中Setting</p>
 <p>继续选中左边菜单栏的SSH and GPG keys</p>
@@ -229,11 +229,11 @@ Are you sure you want to continue connecting (yes/no)
 <pre><code>hexo init
 </code></pre><p><strong>安装依赖包</strong></p>
 <pre><code>$ npm install
-</code></pre><p>这里我踩坑了，<br><img src="http://pjqhk6p7v.bkt.clouddn.com/npm_install_error.png" alt="在这里插入图片描述"></p>
+</code></pre><p>这里我踩坑了，<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/95hREaV7iXFGebAzGGu01Ayke2nVXhftPOPm1vntWyg!/b/dL8AAAAAAAAA&amp;bo=rQFfAQAAAAADF8A!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
 <p>然后上百度、google各种找解决办法，后来发现是因为<br>Your versions of node and npm are years old and no longer supported。版本太低了，后来更新node.js版本就好了.<br><a href="https://github.com/npm/npm/issues/8488" target="_blank" rel="noopener">npm install 报错解决办法</a><br>这里放上更新node.js的方法<br>方法一：执行下列代码</p>
 <pre><code>npm install npm@latest -g
 </code></pre><p>但我的电脑出现了如下报错，如有朋友出现更新错误，课移步方法二。<br>C:\Users\lenovo\AppData\Roaming\npm\node_modules\npm\bin\npm-cli.js:79<br>      let notifier = require(‘update-notifier’)({pkg})<br>      ^^^<br>方法二:<br>1.到node官网（<a href="https://nodejs.org/en/）" target="_blank" rel="noopener">https://nodejs.org/en/）</a><br>下载最新版或者官网推荐版本，我下载的是10.14.1。</p>
-<p>2.将下载的文件安装到之前安装node.js的地方<br>通过where node命令查看node路径<br><img src="http://pjqhk6p7v.bkt.clouddn.com/where_node.png" alt="在这里插入图片描述"></p>
+<p>2.将下载的文件安装到之前安装node.js的地方<br>通过where node命令查看node路径<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/IPFuuHtZ8RT5DD1PnwVAUJeaBY3smLyDDB3Yvka.x4g!/b/dL4AAAAAAAAA&amp;bo=AQEoAAAAAAADFxo!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
 <p>将刚刚下载的文件放到上面查到的路径中<br>双击刚刚下载的文件,点击next 具体安装方法和之前第一次安装一样，但是【<strong>注意在选择路径的时候要选成上面查到的node路径中</strong>】</p>
 <p>3.安装完成。通过npm -v和node -v查看当前版本号</p>
 <p><strong>确保git部署</strong></p>
@@ -242,7 +242,7 @@ Are you sure you want to continue connecting (yes/no)
 <p>【小提醒】如果在配置 SSH key 时设置了密码，执行 hexo d 命令上传文件时需要输入密码进行确认，会出现一个小框框，让你输入密码，你输入密码即可部署更新。</p>
 <p>执行完 hexo init 命令后会给一个默认的主题：landscape</p>
 <h3 id="最后一步：将博客部署到username-github-io"><a href="#最后一步：将博客部署到username-github-io" class="headerlink" title="最后一步：将博客部署到username.github.io"></a>最后一步：将博客部署到username.github.io</h3><p><strong>复制SSH码</strong></p>
-<p>进入 Github 个人主页中的 Repository，复制新建的独立博客项目username.github.io的 SSH码<br><img src="http://pjqhk6p7v.bkt.clouddn.com/repo.png" alt="在这里插入图片描述"></p>
+<p>进入 Github 个人主页中的 Repository，复制新建的独立博客项目username.github.io的 SSH码<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/3S8S4ph4RLihnpcoxSNWWtYoCcwUhNHDmmzmJVypCeQ!/b/dLgAAAAAAAAA&amp;bo=cgQpAgAAAAADF28!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
 <p><strong>编辑整站配置文件</strong><br>打开 D:/username.github.io/_config.yml,把刚刚复制的 SSH码粘贴到repository：后面</p>
 <pre><code>deploy:
   type: git
@@ -255,6 +255,7 @@ Are you sure you want to continue connecting (yes/no)
 <p><a href="https://github.com/npm/npm/issues/8488" target="_blank" rel="noopener">npm install错误</a></p>
 <iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 
 " style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe>
+
                 <hr>
                 
 
@@ -420,7 +421,7 @@ Are you sure you want to continue connecting (yes/no)
 			
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; YUTING 2018
+                    Copyright &copy; YUTING 2019
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
