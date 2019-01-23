@@ -194,15 +194,15 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h3 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a><strong>决策树</strong></h3><p>本文介绍的是决策树算法原理(台大林轩田的机器学习技法第九课课程笔记)</p>
+                <h3 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a><strong>决策树</strong></h3><p>本文介绍的是决策树算法原理</p>
 <p>决策树是一种基本的回归与分类算法，是一种模仿人类做决定的思维方式构建的算法，在分类问题中，是基于特征对实例进行分类的过程，决策树本质上是从训练数据集中归纳出一组分类规则。</p>
 <p>例如下面这个例子。对下班时间、约会情况、提交截止时间这些条件进行判断，从而决定是否要进行在线课程测试。我们模拟一下今天晚上要不要上课决定的过程。这可能取决于下班时间，如果18：30之前就下班了，那有充足的时间，可以去上课。但可能还取决于今天有没有约会，要是有约会，这个课怕是也上不成了。另一种情况，今天要加班到21：30，这时可能要看看今天是不是里交作业的期限，或者离交作业的期限还早。</p>
 <p>把上面的决策过程画成图如下：<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/zhC4zsM5.r55QvKFGVPHpe7KZF3Ok1V2xAXvtsIkzV8!/b/dL8AAAAAAAAA&amp;bo=4AE2AQAAAAARF*Y!&amp;rf=viewer_4&amp;t=5" alt=""><br>决策树学习算法包含<strong>特征选择</strong>、<strong>决策树生成</strong>与<strong>决策树的剪枝</strong>过程。</p>
 <p>决策树学习常用的算法有ID3，C4.5,与CART，下面结合这些算法分别叙述决策树学习的特征选择、决策树的生成和剪枝过程。</p>
-<h3 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a><strong>特征选择</strong></h3><p>决策树的第一步是选择属性判断结点，那么通过什么来决定选择哪一个属性呢？<br>这就需要引入熵的概念和信息增益的概念，1948年，香农提出了 ”<strong>信息熵</strong>(entropy)“的概念，一条信息的信息量大小和它的不确定性有直接的关系，要搞清楚一件非常非常不确定的事情，或者是我们一无所知的事情，需要了解大量信息==&gt;信息量的度量就等于不确定性的多少。<br>例子：猜世界杯冠军，假如一无所知，猜多少次？每个队夺冠的几率不是相等的，比特(bit)来衡量信息的多少。<br>采用如下方式求信息熵：<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/M3xhIVYF2YDeNDrsfZ9N*nxzIPhen1dBIT9uDyKfgP4!/b/dL8AAAAAAAAA&amp;bo=tAFKAAAAAAADF80!&amp;rf=viewer_4&amp;t=5" alt=""><br>当每个球队夺冠概率相等时候，由上面的式子可以求得<br>H = -(1/32<em>log1/32+ 1/32</em>log1/32+…+1/32<em>log1/32)<br>=-[1/32</em>(-5)<em>32] = 5,32支参加世界杯夺冠球队的信息熵是5，也就是你5次可以猜对那支球队夺冠。<br><em>*变量的不确定性越大，熵也越大。</em></em></p>
+<h3 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a><strong>特征选择</strong></h3><p>决策树的第一步是选择属性判断结点，那么通过什么来决定选择哪一个属性呢？<br>这就需要引入熵的概念和信息增益的概念，1948年，香农提出了 ”<strong>信息熵</strong>(entropy)“的概念，一条信息的信息量大小和它的不确定性有直接的关系，要搞清楚一件非常非常不确定的事情，或者是我们一无所知的事情，需要了解大量信息==&gt;信息量的度量就等于不确定性的多少。<br>例子：猜世界杯冠军，假如一无所知，猜多少次？每个队夺冠的几率不是相等的，比特(bit)来衡量信息的多少。<br>采用如下方式求信息熵：<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/M3xhIVYF2YDeNDrsfZ9N*nxzIPhen1dBIT9uDyKfgP4!/b/dL8AAAAAAAAA&amp;bo=tAFKAAAAAAADF80!&amp;rf=viewer_4&amp;t=5" alt=""><br>当每个球队夺冠概率相等时候，由上面的式子可以求得<br>H = -(1/32<em>log1/32+ 1/32</em>log1/32+…+1/32<em>log1/32)<br>=-[1/32</em>(-5)<em>32] = 5<br>32支参加世界杯夺冠球队的信息熵是5，也就是你5次可以猜对那支球队夺冠。<br><em>*变量的不确定性越大，熵也越大。</em></em></p>
 <p><strong>信息增益</strong><br>特征A对训练集D的信息增益g(D,A),定义为集合D的经验熵H(D)与特征A在给定条件下D的经验条件熵H(D|A)之差。<br>                    g(D,A)=H(D)-H(D|A)</p>
 <p> 例：有如下数据集,分别有年龄、有工作、有自己的房子、信贷情况4个特征，根据这些特征判断是否批准借贷申请。<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/PMaYRc4iFbzStp4l3TvsITRsKFTYN4oQx7AB76qTxHk!/b/dL8AAAAAAAAA&amp;bo=eQY4BAAAAAARF2M!&amp;rf=viewer_4&amp;t=5" alt=""></p>
-<p>每个特征的信息增益的计算过程如下：<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/yNeCh1UYjpEgClSMkbBPdrnXZTk2OBVNl.I2cBJg4y8!/b/dL4AAAAAAAAA&amp;bo=OAS0BQAAAAARF60!&amp;rf=viewer_4&amp;t=5" alt=""><br>ID3算法的核心是在决策树上应用信息增益准则选择特征，递归地构建决策树。但以信息增益作为划分训练数据集的特征，存在偏向于选择取值较多的特征的问题。使用<strong>信息增益比</strong>可以对这一问题进行校正。</p>
+<p>每个特征的信息增益的计算过程如下：<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/yNeCh1UYjpEgClSMkbBPdrnXZTk2OBVNl.I2cBJg4y8!/b/dL4AAAAAAAAA&amp;bo=OAS0BQAAAAARF60!&amp;rf=viewer_4&amp;t=5" alt=""><br>ID3算法的核心是在决策树上应用信息增益准则选择特征，递归地构建决策树。但以信息增益作为划分训练数据集的特征，存在偏向于选择取值较多的特征的问题。这里使用<strong>信息增益比</strong>可以对这一问题进行校正。</p>
 <p>信息增益比定义为其信息增益g(D,A)与训练数据集D关于特征A的值的熵HA(D)之比。<br>C4.5算法与ID3算法类似，只是C4.5对ID3的算法进行了改进，C4.5在生成树的过程中，用信息增益比来筛选特征。</p>
 <h3 id="决策树的生成"><a href="#决策树的生成" class="headerlink" title="决策树的生成"></a><strong>决策树的生成</strong></h3><p>决策树的基本思想是递归的过程：</p>
 <ul>
@@ -212,9 +212,12 @@
 <li><strong>4) 根据当前决策结点属性取值的不同，将训练样本数据集分成若干子集，每个取值形成一个分支，有几个取值形成几个分支。重复进行先前的步骤</strong></li>
 </ul>
 <h3 id="决策树的剪枝"><a href="#决策树的剪枝" class="headerlink" title="决策树的剪枝"></a><strong>决策树的剪枝</strong></h3><p><strong>决策树什么时候停下来</strong><br>1.一种最直观的方式是当每个子节点只有一种类型的记录时停止，但是这样往往会使得树的节点过多，导致过拟合问题（Overfitting）。<br>2.另一种是人工设置最小的阀值，当前节点中的记录数低于一个最小的阀值，那么就停止分割，将max(P(i))对应的分类作为当前叶节点的分类。</p>
-<p>决策树生成算法递归地产生决策树，直到不能继续下去为止。这样产生的树往往对训练数据的分类很准确，但对未知的数据分类却没有那么准确。解决这个问题的办法是考虑决策树的复杂度，对已经生成的决策树进行简化。<br>决策树通过极小化误差函数Ca(T) = C(T)+a|T|来实现剪枝，|T|表示模型复杂度，C(T)表示模型对训练数据的预测误差。</p>
-<h3 id="CART算法"><a href="#CART算法" class="headerlink" title="CART算法"></a><strong>CART算法</strong></h3><p>CART算法是通过基尼指数Gini筛选特征，然后递归的构建二叉树，再进行剪枝的过程。以下为计算 GINI 公式</p>
-<script type="math/tex; mode=display">GINI(D)=1-\sum_{i=1}^n p(i)^2</script><hr>
+<p>决策树生成算法递归地产生决策树，直到不能继续下去为止。这样产生的树往往对训练数据的分类很准确，但对未知的数据分类却没有那么准确。解决这个问题的办法是考虑决策树的复杂度，对已经生成的决策树进行简化。<br>决策树通过极小化误差函数Ca(T) = C(T)+a|T|来实现剪枝，|T|表示模型复杂度，C(T)表示模型对训练数据的预测误差。在对训练数据的预测误差和决策树复杂度之间做一个平衡。</p>
+<h3 id="CART算法"><a href="#CART算法" class="headerlink" title="CART算法"></a><strong>CART算法</strong></h3><p>CART算法是通过基尼指数Gini筛选特征，然后递归的构建二叉树，再进行剪枝的过程。基尼指数其表征了特征的不纯度，以下为计算 GINI 公式</p>
+<script type="math/tex; mode=display">GINI(D)=1-\sum_{i=1}^n p(i)^2</script><p>我们取一个极端情况，如果数据集合中的类别只有一类，那么<br>GINI(D）=0，当集合中有两类，概率分别是1/2，那么Gini(D)=1/2, 说明Gini(D)越小，则数据集D的纯度越高。</p>
+<p>现在很多python集成模型，比如sklearn，决策树里都默认是CART算法，采用基尼指数划分数据，因为基尼指数和熵计算在误差率上几乎没有差异，而基尼指数又规避了计算log的过程，这样当数据量很大时，就会节约大量的时间。</p>
+<p><strong>参考资料：</strong><br>台大林轩田的机器学习技法—第九课<br>《统计学习方法》李航</p>
+<hr>
 <iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 
 " style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe>
 
