@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        搭建自己的个人网站(上)｜YUTING&#39;s blog
+        Machine Learning-笔记 -决策树｜YUTING&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://YUTING0907.github.io/2018/12/15/搭建自己的个人网站-上/">
+    <link rel="canonical" href="http://YUTING0907.github.io/2019/01/20/Machine-Learning-笔记 -决策树/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -162,19 +162,19 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>搭建自己的个人网站(上)</h1>
+                    <h1>Machine Learning-笔记 -决策树</h1>
                     
                     <span class="meta">
-                         作者 yuting
+                         作者 Echo Yu
                         <span>
-                          日期 2018-12-15
+                          日期 2019-01-20
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#node" title="node">node</a>
+                        <a class="tag" href="/tags/#Machine Learning" title="Machine Learning">Machine Learning</a>
                         
-                        <a class="tag" href="/tags/#hexo" title="hexo">hexo</a>
+                        <a class="tag" href="/tags/#Decision Tree" title="Decision Tree">Decision Tree</a>
                         
                     </div>
                 </div>
@@ -183,7 +183,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            搭建自己的个人网站(上)
+            Machine Learning-笔记 -决策树
         </span>
     </div>
 </header>
@@ -194,80 +194,40 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>本篇个人网站搭建系列博文是基于:GitHub+Hexo。<br>难度指数：♥♥<br>系统环境：win8</p>
-<p><strong>前言：</strong>真正搭建这个网站框架的时间也就花了两个晚上，不需要你有多么深厚的编程基础，可能会遇到一些坑，就需要你遇到问题解决问题的能力了，还有搜功，因为很多你遇到的问题很多人都遇到了，太阳底下没有新鲜事儿，会搜索基本解决了大多数问题。</p>
-<h3 id="第一步：准备必要的软件"><a href="#第一步：准备必要的软件" class="headerlink" title="第一步：准备必要的软件"></a>第一步：准备必要的软件</h3><p><strong>1.Git下载</strong><br>     <a href="https://git-scm.com/downloads" target="_blank" rel="noopener">Git</a>,选择适合自己电脑的环境，一路Next下来就行了。</p>
-<p><strong>2、安装node.js</strong><br>    <a href="http://nodejs.cn/" target="_blank" rel="noopener">node.js</a>,也是基于自己的电脑环境选择下载，下载最新版本，在Windows安装时务必选择全部组件，包括勾选<code>Add to Path</code>。安装完成后，在Windows环境下，打开命令行提示符，输入<code>node -v</code>，看到版本号正常输出，则安装完成。<br>           <img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/rm7.QvW1mxRhb6sdXnYhiskAulDc0JF9F0bBkPmX50s!/b/dFYBAAAAAAAA&amp;bo=4AAqAAAAAAADF*g!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
-<h3 id="第二步：Github注册与配置"><a href="#第二步：Github注册与配置" class="headerlink" title="第二步：Github注册与配置"></a>第二步：Github注册与配置</h3><h4 id="1-注册Github"><a href="#1-注册Github" class="headerlink" title="1.注册Github"></a>1.注册Github</h4><p>点击→<a href="https://github.com" target="_blank" rel="noopener">https://github.com</a>右上角sign up<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/5x0MOWtEd4jqwAH5TXRe1qhXefHiOiLCsLpl0vLFZ04!/b/dFQBAAAAAAAA&amp;bo=eQRqAgAAAAADFyc!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"><br>注册完成后，记住自己的用户名，因为后续个人网站的网址格式为：username.github.io<br>这个username就是你的github用户名。<br>这里我的GitHub账号是：YUTING0907<br>个人网站：YUTING0907.github.io<br>你后续也可以自己绑定域名，叫个更炫酷的名字XXX.com</p>
-<h4 id="2-创建Repository"><a href="#2-创建Repository" class="headerlink" title="2.创建Repository"></a>2.创建Repository</h4><p>登陆GitHub，点击右上角的+，会出现New repository创建一个与你博客相关你的Repository进行管理，之后你的博客都会在GitHub的这个Repository里同步更新。<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/*bhCJMsQQlH5*0hTH7p1in230nG62njUjBHVSaqhKn0!/b/dD4BAAAAAAAA&amp;bo=DQVSAgAAAAADF2o!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
-<p>Repository的名字是username.github.io，比如我的YUTING0907.github.io。其余可以先不填，点击Create repository</p>
-<h4 id="3-配置SSH-Keys"><a href="#3-配置SSH-Keys" class="headerlink" title="3.配置SSH Keys"></a>3.配置SSH Keys</h4><p>SSH Keys用来使本地git项目与GitHub联系，这样能在GitHub上的博客项目是最新更新的。</p>
-<p>检查SSH Keys的设置<br><strong>I. 开始–所有应用–找到git bash</strong></p>
-<p><strong>II. 检查你电脑里现有的SSH Key</strong><br>   $ cd ~/.ssh<br>如果显示 No such file or directory，说明这是你第一次用git<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/3KDk1iRk5gEdR1LEgUg.TqHLInCwu2ZEY7D9QyUCZ*4!/b/dAgBAAAAAAAA&amp;bo=NAE5AAAAAAADFz4!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
-<p><strong>III. 接下来生成新的SSH Key:</strong><br>$ ssh-keygen -t rsa -C “邮件地址”<br>Generating public/private rsa key pair.<br>Enter file in which to save the key (/Users/your_user_directory/.ssh/id_rsa):&lt;回车就好&gt;</p>
-<p>这里的邮箱地址，输入注册 Github 的邮箱地址</p>
-<p> 然后系统会要你输入密码：<br>Enter passphrase (empty for no passphrase):&lt;设置密码&gt;<br>Enter same passphrase again:&lt;再次输入密码&gt;</p>
-<p>再回车，这里会提示你输入一个密码，作为你提交项目时使用</p>
-<p><strong>注意：</strong>输入密码的时候没有输入痕迹的，不要以为什么也没有输入。<br>最后看到这样的界面，就成功设置ssh key了：<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/mYRnwZ8YFWIqmMRyqUbc5ob0slTpOiDo96NSAVjeo08!/b/dLwAAAAAAAAA&amp;bo=5gEpAQAAAAADF*0!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
-<h4 id="IV-添加SSH-Key到GitHub上"><a href="#IV-添加SSH-Key到GitHub上" class="headerlink" title="IV. 添加SSH Key到GitHub上"></a>IV. 添加SSH Key到GitHub上</h4><p>在本地文件夹找到id_rsa.pub文件，看上面的图片第四行的位置告诉你存在哪里了，没有的话可能是隐藏了，勾选一下文件扩展名 隐藏的项目。</p>
-<p>回到你的GitHub主页，右上角点击头像选中Setting</p>
-<p>继续选中左边菜单栏的SSH and GPG keys</p>
-<p>Title最好写，随便写。否则可能出现各种各样的二逼问题<br>Key部分就是放刚才复制的内容了，点击Add SSH key</p>
-<h4 id="V-测试"><a href="#V-测试" class="headerlink" title="V.测试"></a>V.测试</h4><p>git bash里输入代码：<code>$ ssh -T git@github.com</code> </p>
-<pre><code>The authenticity of host &#39;GitHub.com (52.74.227.119)&#39; can&#39;t be established.
-RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.
-Are you sure you want to continue connecting (yes/no)
-</code></pre><p>输入yes，回车<br>按照提示输入刚才设置的密码，回车<br>You’ve successfully authenticated…<br>设置成功！</p>
-<h4 id="VI-设置用户信息"><a href="#VI-设置用户信息" class="headerlink" title="VI.设置用户信息"></a>VI.设置用户信息</h4><pre><code>$ git config --global user.name &quot;YUTING0907&quot; 
-</code></pre><p>//输入注册时的username</p>
-<pre><code>$ git config --global user.email  &quot;YUTING9597@163.COM&quot; 
-</code></pre><p>//填写注册邮箱<br>把名称和邮箱替换成你自己的,SSH Key就配置成功啦！<br>本机已成功连接到 github。</p>
-<h3 id="第三步：搭建Hexo博客"><a href="#第三步：搭建Hexo博客" class="headerlink" title="第三步：搭建Hexo博客"></a>第三步：搭建Hexo博客</h3><p><strong>利用npm命令安装hexo</strong><br>npm Node Package Manager是随同NodeJS一起安装的包管理工具，想了解更多可以自行去百度。</p>
-<pre><code>$ npm install -g hexo
-</code></pre><p>安装完成后，在本地创建一个与 Repository中博客项目同名的文件夹username.github.io(如D:/YUTING0907.github.io)在文件夹上点击鼠标右键,选择 Git bash here（可以代替命令行指示符的存在~）,【这一步的作用是因为以后博客部署和更新都要在此文件夹下】</p>
-<p><strong>hexo初始化</strong></p>
-<pre><code>hexo init
-</code></pre><p><strong>安装依赖包</strong></p>
-<pre><code>$ npm install
-</code></pre><p>这里我踩坑了，<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/95hREaV7iXFGebAzGGu01Ayke2nVXhftPOPm1vntWyg!/b/dL8AAAAAAAAA&amp;bo=rQFfAQAAAAADF8A!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
-<p>然后上百度、google各种找解决办法，后来发现是因为<br>Your versions of node and npm are years old and no longer supported。版本太低了，后来更新node.js版本就好了.<br><a href="https://github.com/npm/npm/issues/8488" target="_blank" rel="noopener">npm install 报错解决办法</a><br>这里放上更新node.js的方法<br>方法一：执行下列代码</p>
-<pre><code>npm install npm@latest -g
-</code></pre><p>但我的电脑出现了如下报错，如有朋友出现更新错误，课移步方法二。<br>C:\Users\lenovo\AppData\Roaming\npm\node_modules\npm\bin\npm-cli.js:79<br>      let notifier = require(‘update-notifier’)({pkg})<br>      ^^^<br>方法二:<br>1.到node官网（<a href="https://nodejs.org/en/）" target="_blank" rel="noopener">https://nodejs.org/en/）</a><br>下载最新版或者官网推荐版本，我下载的是10.14.1。</p>
-<p>2.将下载的文件安装到之前安装node.js的地方<br>通过where node命令查看node路径<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/IPFuuHtZ8RT5DD1PnwVAUJeaBY3smLyDDB3Yvka.x4g!/b/dL4AAAAAAAAA&amp;bo=AQEoAAAAAAADFxo!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
-<p>将刚刚下载的文件放到上面查到的路径中<br>双击刚刚下载的文件,点击next 具体安装方法和之前第一次安装一样，但是【<strong>注意在选择路径的时候要选成上面查到的node路径中</strong>】</p>
-<p>3.安装完成。通过npm -v和node -v查看当前版本号</p>
-<p><strong>确保git部署</strong></p>
-<pre><code>$ npm install hexo-deployer-git --save
-</code></pre><p><strong>本地查看</strong><br>做到这里恭喜你😀，现在已经搭建好本地的 Hexo 博客了，执行完下面的命令就可以到浏览器输入 localhost:4000 查看到啦！<br>$ hexo g   //生成更新网站<br>$ hexo s   //这一步是让你可以在本地localhost:4000可以浏览网站，一个服务预览的作用，退出服务按ctrl+c<br>$ hexo d //部署网站</p>
-<p>【小提醒】如果在配置 SSH key 时设置了密码，执行 hexo d 命令上传文件时需要输入密码进行确认，会出现一个小框框，让你输入密码，你输入密码即可部署更新。</p>
-<p>执行完 hexo init 命令后会给一个默认的主题：landscape</p>
-<h3 id="最后一步：将博客部署到username-github-io"><a href="#最后一步：将博客部署到username-github-io" class="headerlink" title="最后一步：将博客部署到username.github.io"></a>最后一步：将博客部署到username.github.io</h3><p><strong>复制SSH码</strong></p>
-<p>进入 Github 个人主页中的 Repository，复制新建的独立博客项目username.github.io的 SSH码<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/3S8S4ph4RLihnpcoxSNWWtYoCcwUhNHDmmzmJVypCeQ!/b/dLgAAAAAAAAA&amp;bo=cgQpAgAAAAADF28!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
-<p><strong>编辑整站配置文件</strong><br>打开 D:/username.github.io/_config.yml,把刚刚复制的 SSH码粘贴到repository：后面</p>
-<pre><code>deploy:
-  type: git
-  repository: git@github.com:username/username.github.io.git
-  branch: master
-</code></pre><p>冒号后一定要空一格。否则会报FATAL can not read a block mapping entry的错。</p>
-<p>当当当当~~到这里你已经拥有一个属于自己的网站，可能有点简陋，但是整个框架已经搭起来了。期待下一篇把网站拾掇得更好吧。</p>
-<p>搭建参考：<br><a href="http://codewithzhangyi.com/archives/" target="_blank" rel="noopener">如何搭建自己的个人网站</a></p>
-<p><a href="https://blog.csdn.net/H_duolalu/article/details/80215580" target="_blank" rel="noopener">更新node</a></p>
-<p><a href="https://github.com/npm/npm/issues/8488" target="_blank" rel="noopener">npm install错误</a></p>
+                <h3 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a><strong>决策树</strong></h3><p>本文介绍的是决策树算法原理(台大林轩田的机器学习技法第九课课程笔记)</p>
+<p>决策树是一种基本的回归与分类算法，是一种模仿人类做决定的思维方式构建的算法，在分类问题中，是基于特征对实例进行分类的过程，决策树本质上是从训练数据集中归纳出一组分类规则。</p>
+<p>例如下面这个例子。对下班时间、约会情况、提交截止时间这些条件进行判断，从而决定是否要进行在线课程测试。我们模拟一下今天晚上要不要上课决定的过程。这可能取决于下班时间，如果18：30之前就下班了，那有充足的时间，可以去上课。但可能还取决于今天有没有约会，要是有约会，这个课怕是也上不成了。另一种情况，今天要加班到21：30，这时可能要看看今天是不是里交作业的期限，或者离交作业的期限还早。</p>
+<p>把上面的决策过程画成图如下：<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/zhC4zsM5.r55QvKFGVPHpe7KZF3Ok1V2xAXvtsIkzV8!/b/dL8AAAAAAAAA&amp;bo=4AE2AQAAAAARF*Y!&amp;rf=viewer_4&amp;t=5" alt=""><br>决策树学习算法包含<strong>特征选择</strong>、<strong>决策树生成</strong>与<strong>决策树的剪枝</strong>过程。</p>
+<p>决策树学习常用的算法有ID3，C4.5,与CART，下面结合这些算法分别叙述决策树学习的特征选择、决策树的生成和剪枝过程。</p>
+<h3 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a><strong>特征选择</strong></h3><p>决策树的第一步是选择属性判断结点，那么通过什么来决定选择哪一个属性呢？<br>这就需要引入熵的概念和信息增益的概念，1948年，香农提出了 ”<strong>信息熵</strong>(entropy)“的概念，一条信息的信息量大小和它的不确定性有直接的关系，要搞清楚一件非常非常不确定的事情，或者是我们一无所知的事情，需要了解大量信息==&gt;信息量的度量就等于不确定性的多少。<br>例子：猜世界杯冠军，假如一无所知，猜多少次？每个队夺冠的几率不是相等的，比特(bit)来衡量信息的多少。<br>采用如下方式求信息熵：<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/M3xhIVYF2YDeNDrsfZ9N*nxzIPhen1dBIT9uDyKfgP4!/b/dL8AAAAAAAAA&amp;bo=tAFKAAAAAAADF80!&amp;rf=viewer_4&amp;t=5" alt=""><br>当每个球队夺冠概率相等时候，由上面的式子可以求得<br>H = -(1/32<em>log1/32+ 1/32</em>log1/32+…+1/32<em>log1/32)<br>=-[1/32</em>(-5)<em>32] = 5,32支参加世界杯夺冠球队的信息熵是5，也就是你5次可以猜对那支球队夺冠。<br><em>*变量的不确定性越大，熵也越大。</em></em></p>
+<p><strong>信息增益</strong><br>特征A对训练集D的信息增益g(D,A),定义为集合D的经验熵H(D)与特征A在给定条件下D的经验条件熵H(D|A)之差。<br>                    g(D,A)=H(D)-H(D|A)</p>
+<p> 例：有如下数据集,分别有年龄、有工作、有自己的房子、信贷情况4个特征，根据这些特征判断是否批准借贷申请。<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/PMaYRc4iFbzStp4l3TvsITRsKFTYN4oQx7AB76qTxHk!/b/dL8AAAAAAAAA&amp;bo=eQY4BAAAAAARF2M!&amp;rf=viewer_4&amp;t=5" alt=""></p>
+<p>每个特征的信息增益的计算过程如下：<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/yNeCh1UYjpEgClSMkbBPdrnXZTk2OBVNl.I2cBJg4y8!/b/dL4AAAAAAAAA&amp;bo=OAS0BQAAAAARF60!&amp;rf=viewer_4&amp;t=5" alt=""><br>ID3算法的核心是在决策树上应用信息增益准则选择特征，递归地构建决策树。但以信息增益作为划分训练数据集的特征，存在偏向于选择取值较多的特征的问题。使用<strong>信息增益比</strong>可以对这一问题进行校正。</p>
+<p>信息增益比定义为其信息增益g(D,A)与训练数据集D关于特征A的值的熵HA(D)之比。<br>C4.5算法与ID3算法类似，只是C4.5对ID3的算法进行了改进，C4.5在生成树的过程中，用信息增益比来筛选特征。</p>
+<h3 id="决策树的生成"><a href="#决策树的生成" class="headerlink" title="决策树的生成"></a><strong>决策树的生成</strong></h3><p>决策树的基本思想是递归的过程：</p>
+<ul>
+<li><strong>1) 开始构建根结点，选择一个最优特征，按照这一特征将数据集分割成子集，使得各个子集有一个在当前条件下最好的分类。</strong></li>
+<li><strong>2) 如果样本都在同一类，则该结点成树叶</strong></li>
+<li><strong>3) 否则选择最有分类能力的属性作为决策树的当前结点</strong></li>
+<li><strong>4) 根据当前决策结点属性取值的不同，将训练样本数据集分成若干子集，每个取值形成一个分支，有几个取值形成几个分支。重复进行先前的步骤</strong></li>
+</ul>
+<h3 id="决策树的剪枝"><a href="#决策树的剪枝" class="headerlink" title="决策树的剪枝"></a><strong>决策树的剪枝</strong></h3><p><strong>决策树什么时候停下来</strong><br>1.一种最直观的方式是当每个子节点只有一种类型的记录时停止，但是这样往往会使得树的节点过多，导致过拟合问题（Overfitting）。<br>2.另一种是人工设置最小的阀值，当前节点中的记录数低于一个最小的阀值，那么就停止分割，将max(P(i))对应的分类作为当前叶节点的分类。</p>
+<p>决策树生成算法递归地产生决策树，直到不能继续下去为止。这样产生的树往往对训练数据的分类很准确，但对未知的数据分类却没有那么准确。解决这个问题的办法是考虑决策树的复杂度，对已经生成的决策树进行简化。<br>决策树通过极小化误差函数Ca(T) = C(T)+a|T|来实现剪枝，|T|表示模型复杂度，C(T)表示模型对训练数据的预测误差。</p>
+<h3 id="CART算法"><a href="#CART算法" class="headerlink" title="CART算法"></a><strong>CART算法</strong></h3><p>CART算法是通过基尼指数Gini筛选特征，然后递归的构建二叉树，再进行剪枝的过程。以下为计算 GINI 公式</p>
+<script type="math/tex; mode=display">GINI(D)=1-\sum_{i=1}^n p(i)^2</script><hr>
 <iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 
 " style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe>
+
+
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2018/12/16/搭建自己的个人网站-下/" data-toggle="tooltip" data-placement="top" title="搭建自己的个人网站(下)">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2018/12/12/article/" data-toggle="tooltip" data-placement="top" title="2019 do better">Next Post &rarr;</a>
+                        <a href="/2019/01/19/我熟读《影响力》,把销售小哥看得更透/" data-toggle="tooltip" data-placement="top" title="我熟读《影响力》,把销售小哥看得更透">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -310,7 +270,7 @@ Are you sure you want to continue connecting (yes/no)
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一步：准备必要的软件"><span class="toc-text">第一步：准备必要的软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二步：Github注册与配置"><span class="toc-text">第二步：Github注册与配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-注册Github"><span class="toc-text">1.注册Github</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-创建Repository"><span class="toc-text">2.创建Repository</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-配置SSH-Keys"><span class="toc-text">3.配置SSH Keys</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IV-添加SSH-Key到GitHub上"><span class="toc-text">IV. 添加SSH Key到GitHub上</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#V-测试"><span class="toc-text">V.测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#VI-设置用户信息"><span class="toc-text">VI.设置用户信息</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三步：搭建Hexo博客"><span class="toc-text">第三步：搭建Hexo博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最后一步：将博客部署到username-github-io"><span class="toc-text">最后一步：将博客部署到username.github.io</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#决策树"><span class="toc-text">决策树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特征选择"><span class="toc-text">特征选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#决策树的生成"><span class="toc-text">决策树的生成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#决策树的剪枝"><span class="toc-text">决策树的剪枝</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CART算法"><span class="toc-text">CART算法</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -332,9 +292,9 @@ Are you sure you want to continue connecting (yes/no)
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#node" title="node">node</a>
+                        <a class="tag" href="/tags/#Machine Learning" title="Machine Learning">Machine Learning</a>
                         
-                        <a class="tag" href="/tags/#hexo" title="hexo">hexo</a>
+                        <a class="tag" href="/tags/#Decision Tree" title="Decision Tree">Decision Tree</a>
                         
                     </div>
                 </section>
@@ -476,6 +436,34 @@ Are you sure you want to continue connecting (yes/no)
     })
 </script>
 
+
+<!-- mathjax -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+        processEscapes: true
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    }});
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
 
 
 <!-- Google Analytics -->
