@@ -87,15 +87,15 @@
                     
                         
 							
-                        <li>
-                            <a href="/categories/">categories</a>
-                        </li>
+								
 							
 						
                     
                         
 							
-								
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
 							
 						
                     
@@ -213,7 +213,7 @@
 <script type="math/tex; mode=display">D_{t+1}(i) = \frac{D_t(i)}{2e_i}</script><p>正确分类样本，权重更新：</p>
 <script type="math/tex; mode=display">D_{t+1}(i) = \frac{D_t(i)}{2(1-e_i)}</script><p>第三步，将各个训练得到的弱分类器组合成一个强分类器，各个弱分类器的训练过程结束后，加大分类误差率小的弱分类器的权重，使其在最终的分类函数中起着较大的决定作用。而降低分类误差率大的弱分类器的权重，使其在最终的分类函数中起着较小的决定作用。</p>
 <pre><code>    $$H_{final}=sign(f(x))=sign(\sum_{t=1}^T a_tH_t(x))$$
-</code></pre><p><strong>Adaboost算法实例：</strong><br>将这10个样本作为训练数据，根据X和Y的对应关系，把这10个数据分为两类，其中用“+”表示类别1，用“O”表示类别-1.如图所示训练样本，弱分类器采用平行于坐标轴的直线。<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/N0Rkanv6x1NzMozPz0IuBIXknW4yxVGqe6Sis.xOCNE!/b/dLkAAAAAAAAA&amp;bo=OAS6AwAAAAARF6U!&amp;rf=viewer_4&amp;t=5" alt=""><br><strong>初始化</strong>：令每个权值w1i = 1/N = 0.1，其中，N = 10，i = 1,2, …, 10，然后分别对于t= 1,2,3, …等值进行迭代（t表示迭代次数，表示第t轮）</p>
+</code></pre><h3 id="Adaboost算法实例："><a href="#Adaboost算法实例：" class="headerlink" title="Adaboost算法实例："></a><strong>Adaboost算法实例：</strong></h3><p>将这10个样本作为训练数据，根据X和Y的对应关系，把这10个数据分为两类，其中用“+”表示类别1，用“O”表示类别-1.如图所示训练样本，弱分类器采用平行于坐标轴的直线。<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/N0Rkanv6x1NzMozPz0IuBIXknW4yxVGqe6Sis.xOCNE!/b/dLkAAAAAAAAA&amp;bo=OAS6AwAAAAARF6U!&amp;rf=viewer_4&amp;t=5" alt=""><br><strong>初始化</strong>：令每个权值w1i = 1/N = 0.1，其中，N = 10，i = 1,2, …, 10，然后分别对于t= 1,2,3, …等值进行迭代（t表示迭代次数，表示第t轮）</p>
 <p><strong>第一次迭代t=1：</strong><br>初始的权值分布D1为1/N（10个数据，每个数据的权值皆初始化为0.1），D1=[0.1,  0.1, 0.1, 0.1, 0.1, 0.1,0.1, 0.1, 0.1, 0.1]</p>
 <p>在权值分布D1的情况下，取已知的三个弱分类器h1、h2和h3中误差率最小的分类器作为第1个基本分类器H1(x)（三个误差率都是0.3，那就取第一个吧）</p>
 <p>在分类器H1(x)=h1情况下，样本点“5 7 8”被错分，因此基本分类器H1(x)的误差率为：e1=0.3<br>根据误差率e1计算Ht的权重:</p>
@@ -248,6 +248,7 @@
 <pre><code> $$D_4(i) = \frac{D_3(i)}{2e_3}=\frac{11}{3}D_3(i)$$
 </code></pre><p>经过第3轮后，最后得到各个样本数据新的权值分布：<br>D4=[1/6,1/6,11/114,11/114,7/114,11/114,7/114,7/114,1/6,1/38]<br>分类函数f3(x) = 0.4236H1(x)+0.6496H2(x)+0.9229H3(x),此时组合三个基本的强分类函数在数据集上有0个误分类点。至此，结束整个训练过程。<br>最终得到的强分类器为：</p>
 <script type="math/tex; mode=display">H_{final}=sign(\sum_{t=1}^T a_tH_t(x))=sign(0.4236H_1(x)+0.6496H_2(x)+0.9229H_3(x)</script><p>以上是Adaboost的全过程</p>
+<h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a><strong>参考：</strong></h3><p>pan_jinquan 博客：<a href="https://blog.csdn.net/guyuealian/article/details/70995333" target="_blank" rel="noopener">https://blog.csdn.net/guyuealian/article/details/70995333</a><br>林轩田 机器学习技法</p>
 <hr>
 <iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 
 " style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe>
@@ -304,7 +305,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bagging-amp-Boosting"><span class="toc-text">Bagging &amp; Boosting</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Bagging"><span class="toc-text">Bagging</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Boosting"><span class="toc-text">Boosting</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adaboost"><span class="toc-text">Adaboost</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bagging-amp-Boosting"><span class="toc-text">Bagging &amp; Boosting</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Bagging"><span class="toc-text">Bagging</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Boosting"><span class="toc-text">Boosting</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adaboost"><span class="toc-text">Adaboost</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adaboost算法实例："><span class="toc-text">Adaboost算法实例：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考："><span class="toc-text">参考：</span></a></li></ol>
                 </div>
             </div>
         </div>
