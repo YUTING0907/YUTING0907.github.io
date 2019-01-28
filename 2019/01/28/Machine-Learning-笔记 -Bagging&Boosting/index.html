@@ -205,23 +205,18 @@
 <p>Adaboost算法的大体描述为以下三步：<br>首先初始化训练数据，假设有N个训练样本数据，每个样本数据的权重为1/N，可以表示为<br>D1(i) = (W1,W2,W3,W4,…Wn)=[1/N,1/N,1/N…1/N]</p>
 <p>第二步，训练弱分类器Ht,如果某个训练样本被错误分类，那么在构造下一个训练集中，它对应的权重要增大；相反，如果某个训练样本被正确分类，那么它的权重就减小。</p>
 <p>   a.选取一个当前误差率最低的弱分类器h,作为第t个基本分类器Ht,并计算该分类器在Dt分布上的误差et。<br>   b.计算该弱分类器在最终分类器所占的权重(弱分类器用at表示)：</p>
-<pre><code>$$a_t =\ln(\sqrt{\frac{1-e_t}{e_t}})$$
-</code></pre><p>   c.更新训练样本的权值分布Dt+1:</p>
-<pre><code> $$D_{t+1} = \frac{D_t(i)exp(-a_iy_iH_t(x_i))}{Z_t} $$
- 其中：$$归一化常数Z_t=2\sqrt{e_t(1-e_t)}$$
+<script type="math/tex; mode=display">a_t =\ln(\sqrt{\frac{1-e_t}{e_t}})</script><p>   c.更新训练样本的权值分布Dt+1:</p>
+<script type="math/tex; mode=display">D_{t+1} = \frac{D_t(i)exp(-a_iy_iH_t(x_i))}{Z_t}</script><pre><code> 其中：$$归一化常数Z_t=2\sqrt{e_t(1-e_t)}$$
 </code></pre><p><strong>说明：</strong><br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/QR*Fk74acZJgXDxWzEgd*DQT2vpOU5cSP10Zu6P5gnk!/b/dL8AAAAAAAAA&amp;bo=OATLAQAAAAARF9Y!&amp;rf=viewer_4&amp;t=5" alt=""><br>从上面推导可得<br>错误分类样本，权重更新：</p>
 <script type="math/tex; mode=display">D_{t+1}(i) = \frac{D_t(i)}{2e_i}</script><p>正确分类样本，权重更新：</p>
 <script type="math/tex; mode=display">D_{t+1}(i) = \frac{D_t(i)}{2(1-e_i)}</script><p>第三步，将各个训练得到的弱分类器组合成一个强分类器，各个弱分类器的训练过程结束后，加大分类误差率小的弱分类器的权重，使其在最终的分类函数中起着较大的决定作用。而降低分类误差率大的弱分类器的权重，使其在最终的分类函数中起着较小的决定作用。</p>
-<pre><code>    $$H_{final}=sign(f(x))=sign(\sum_{t=1}^T a_tH_t(x))$$
-</code></pre><h3 id="Adaboost算法实例："><a href="#Adaboost算法实例：" class="headerlink" title="Adaboost算法实例："></a><strong>Adaboost算法实例：</strong></h3><p>将这10个样本作为训练数据，根据X和Y的对应关系，把这10个数据分为两类，其中用“+”表示类别1，用“O”表示类别-1.如图所示训练样本，弱分类器采用平行于坐标轴的直线。<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/N0Rkanv6x1NzMozPz0IuBIXknW4yxVGqe6Sis.xOCNE!/b/dLkAAAAAAAAA&amp;bo=OAS6AwAAAAARF6U!&amp;rf=viewer_4&amp;t=5" alt=""><br><strong>初始化</strong>：令每个权值w1i = 1/N = 0.1，其中，N = 10，i = 1,2, …, 10，然后分别对于t= 1,2,3, …等值进行迭代（t表示迭代次数，表示第t轮）</p>
+<script type="math/tex; mode=display">H_{final}=sign(f(x))=sign(\sum_{t=1}^T a_tH_t(x))</script><h3 id="Adaboost算法实例："><a href="#Adaboost算法实例：" class="headerlink" title="Adaboost算法实例："></a><strong>Adaboost算法实例：</strong></h3><p>将这10个样本作为训练数据，根据X和Y的对应关系，把这10个数据分为两类，其中用“+”表示类别1，用“O”表示类别-1.如图所示训练样本，弱分类器采用平行于坐标轴的直线。<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/N0Rkanv6x1NzMozPz0IuBIXknW4yxVGqe6Sis.xOCNE!/b/dLkAAAAAAAAA&amp;bo=OAS6AwAAAAARF6U!&amp;rf=viewer_4&amp;t=5" alt=""><br><strong>初始化</strong>：令每个权值w1i = 1/N = 0.1，其中，N = 10，i = 1,2, …, 10，然后分别对于t= 1,2,3, …等值进行迭代（t表示迭代次数，表示第t轮）</p>
 <p><strong>第一次迭代t=1：</strong><br>初始的权值分布D1为1/N（10个数据，每个数据的权值皆初始化为0.1），D1=[0.1,  0.1, 0.1, 0.1, 0.1, 0.1,0.1, 0.1, 0.1, 0.1]</p>
 <p>在权值分布D1的情况下，取已知的三个弱分类器h1、h2和h3中误差率最小的分类器作为第1个基本分类器H1(x)（三个误差率都是0.3，那就取第一个吧）</p>
 <p>在分类器H1(x)=h1情况下，样本点“5 7 8”被错分，因此基本分类器H1(x)的误差率为：e1=0.3<br>根据误差率e1计算Ht的权重:</p>
 <script type="math/tex; mode=display">a_1=\frac{1}{2}ln(\frac{1-0.3}{0.3})=0.4236</script><p>然后更新训练样本数据的权值分布，用于下一轮迭代，对于正确分类的训练样本“1 2 3 4 6 9 10”（共七个）的权值更新：</p>
-<pre><code> $$D_2(i) = \frac{D_1(i)}{2(1-e_1)}=\frac{1}{10}*\frac{1}{2(1-0.3)}=\frac1{14}$$
-</code></pre><p>对于错误分类的训练样本“5 7 8”（共三个）的权值更新：</p>
-<pre><code> $$D_2(i) = \frac{D_1(i)}{2e_1}=\frac{1}{10}*\frac{1}{2*0.3}=\frac1{6}$$
-</code></pre><p>这样在第一轮结束后，最后得到的各个样本数据新的权值分布为：D2=[1/14,1/14,1/14,1/14,1/6,1/14,1/6,1/6,1/14,1/14]</p>
+<script type="math/tex; mode=display">D_2(i) = \frac{D_1(i)}{2(1-e_1)}=\frac{1}{10}*\frac{1}{2(1-0.3)}=\frac1{14}</script><p>对于错误分类的训练样本“5 7 8”（共三个）的权值更新：</p>
+<script type="math/tex; mode=display">D_2(i) = \frac{D_1(i)}{2e_1}=\frac{1}{10}*\frac{1}{2*0.3}=\frac1{6}</script><p>这样在第一轮结束后，最后得到的各个样本数据新的权值分布为：D2=[1/14,1/14,1/14,1/14,1/6,1/14,1/6,1/6,1/14,1/14]</p>
 <p>可得分类函数f1(x)=a1H1(x)=0.4236H1(x)，这时，强分类器的训练错误为0.3</p>
 <p><strong>第二次迭代t=2：</strong></p>
 <pre><code>在权值分布D2的情况下，再取三个弱分类器h1、h2和h3中误差率最小的分类器作为第2个基本分类器H2(x)：
@@ -234,19 +229,15 @@
 </code></pre><p>因此选取当前最小的分类器h2作为第2个基本分类器H2(x),显然H2(x)把样本“3 4 6”分错了，根据D2可以得知他们的权值D2(3)=1/14,D2(4)=1/14,D2(6)=1/14,所以H2(x)在训练集上的误差率：e2=3 * 1/14 = 3/14</p>
 <p>根据误差率e2计算Ht的权重:</p>
 <script type="math/tex; mode=display">a_2=\frac{1}{2}ln(\frac{1-3/14}{3/14})=0.6496</script><p>对于正确分类的训练样本的权值更新：</p>
-<pre><code> $$D_3(i) = \frac{D_2(i)}{2(1-e_2)}=\frac{7}{11}D_2(i)$$
-</code></pre><p>对于错误分类的训练样本的权值更新：</p>
-<pre><code> $$D_3(i) = \frac{D_2(i)}{2e_2}=\frac{7}{3}D_2(i)$$
-</code></pre><p>经过第2轮后，最后得到各个样本数据新的权值分布：<br>D3=[1/22,1/22,1/6,1/6,7/66,1/6,7/66,7/66,1/22,1/22]<br>分类函数f2(x) = 0.4236H1(x)+0.6496H2(x),此时组合两个基本的分类函数错分类点为”3 4 6”</p>
+<script type="math/tex; mode=display">D_3(i) = \frac{D_2(i)}{2(1-e_2)}=\frac{7}{11}D_2(i)</script><p>对于错误分类的训练样本的权值更新：</p>
+<script type="math/tex; mode=display">D_3(i) = \frac{D_2(i)}{2e_2}=\frac{7}{3}D_2(i)</script><p>经过第2轮后，最后得到各个样本数据新的权值分布：<br>D3=[1/22,1/22,1/6,1/6,7/66,1/6,7/66,7/66,1/22,1/22]<br>分类函数f2(x) = 0.4236H1(x)+0.6496H2(x),此时组合两个基本的分类函数错分类点为”3 4 6”</p>
 <p><strong>第三次迭代t=3：</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">在权值分布D3的情况下，再取三个弱分类器h1、h2和h3中误差率最小的分类器作为第3个基本分类器H3(x)：</span><br><span class="line">1)当取弱分类器h1=X1=2.5时，此时被错分的样本点为“5 7 8”：</span><br><span class="line">误差率e=7/66+7/66+7/66=7/22；</span><br><span class="line">2)当取弱分类器h2=X1=8.5时，此时被错分的样本点为“3 4 6”：</span><br><span class="line">误差率e=1/6+1/6+1/6=1/2=0.5；</span><br><span class="line">3)当取弱分类器h3=X2=6.5时，此时被错分的样本点为“1 2 9”：</span><br><span class="line">误差率e=1/22+1/22+1/22=3/22；</span><br></pre></td></tr></table></figure>
 <p>选取当前最小的分类器h3作为第3个基本分类器H3(x),显然H3(x)把样本“1 2 9”分错了，根据D3可以得知他们的权值D3(1)=1/22,D3(2)=1/22,D3(9)=1/22,所以H3(x)在训练集上的误差率：e3=3 * 1/22 = 3/22</p>
 <p>根据误差率e3计算Ht的权重:</p>
 <script type="math/tex; mode=display">a_3=\frac{1}{2}ln(\frac{1-3/22}{3/22})=0.9229</script><p>对于正确分类的训练样本的权值更新：</p>
-<pre><code> $$D_4(i) = \frac{D_3(i)}{2(1-e_3)}=\frac{11}{19}D_3(i)$$
-</code></pre><p>对于错误分类的训练样本的权值更新：</p>
-<pre><code> $$D_4(i) = \frac{D_3(i)}{2e_3}=\frac{11}{3}D_3(i)$$
-</code></pre><p>经过第3轮后，最后得到各个样本数据新的权值分布：<br>D4=[1/6,1/6,11/114,11/114,7/114,11/114,7/114,7/114,1/6,1/38]<br>分类函数f3(x) = 0.4236H1(x)+0.6496H2(x)+0.9229H3(x),此时组合三个基本的强分类函数在数据集上有0个误分类点。至此，结束整个训练过程。<br>最终得到的强分类器为：</p>
+<script type="math/tex; mode=display">D_4(i) = \frac{D_3(i)}{2(1-e_3)}=\frac{11}{19}D_3(i)</script><p>对于错误分类的训练样本的权值更新：</p>
+<script type="math/tex; mode=display">D_4(i) = \frac{D_3(i)}{2e_3}=\frac{11}{3}D_3(i)</script><p>经过第3轮后，最后得到各个样本数据新的权值分布：<br>D4=[1/6,1/6,11/114,11/114,7/114,11/114,7/114,7/114,1/6,1/38]<br>分类函数f3(x) = 0.4236H1(x)+0.6496H2(x)+0.9229H3(x),此时组合三个基本的强分类函数在数据集上有0个误分类点。至此，结束整个训练过程。<br>最终得到的强分类器为：</p>
 <script type="math/tex; mode=display">H_{final}=sign(\sum_{t=1}^T a_tH_t(x))=sign(0.4236H_1(x)+0.6496H_2(x)+0.9229H_3(x)</script><p>以上是Adaboost的全过程</p>
 <h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a><strong>参考：</strong></h3><p>pan_jinquan 博客：<a href="https://blog.csdn.net/guyuealian/article/details/70995333" target="_blank" rel="noopener">https://blog.csdn.net/guyuealian/article/details/70995333</a><br>林轩田 机器学习技法</p>
 <hr>
