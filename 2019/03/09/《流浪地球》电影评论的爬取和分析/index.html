@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YUTING在 Github 上的个人博客">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="YUTING" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        《流浪地球》电影评论的爬取和分析｜YUTING&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://YUTING0907.github.io/2019/03/09/《流浪地球》电影评论的爬取和分析/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YUTING
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="http://pjqhk6p7v.bkt.clouddn.com/5.gif">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://pjqhk6p7v.bkt.clouddn.com/5.gif?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>《流浪地球》电影评论的爬取和分析</h1>
+                    
+                    <span class="meta">
+                         作者 Echo Yu
+                        <span>
+                          日期 2019-03-09
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Data Analysis" title="Data Analysis">Data Analysis</a>
+                        
+                        <a class="tag" href="/tags/#爬虫" title="爬虫">爬虫</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            《流浪地球》电影评论的爬取和分析
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>本文在猫眼电影上爬取了《流浪地球》的上万评论,并对其评论进行分析</p>
+<h3 id="爬虫-爬取数据"><a href="#爬虫-爬取数据" class="headerlink" title="爬虫-爬取数据"></a>爬虫-爬取数据</h3><h4 id="找到评论网页地址"><a href="#找到评论网页地址" class="headerlink" title="找到评论网页地址"></a>找到评论网页地址</h4><p>先打开猫眼官网找到《流浪地球》的介绍页面：<a href="https://maoyan.com/films/248906" target="_blank" rel="noopener">https://maoyan.com/films/248906</a><br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/DlzZZcnQmJlcg**2UJdVofzhw1drFquhmgZJnbTisuM!/b/dFIBAAAAAAAA&amp;bo=ZwPdAQAAAAADJ7o!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
+<ul>
+<li>打开开发者工具</li>
+<li>转换成手机浏览(因为网页版的评论数据只显示部分短评)<br>点击红色箭头指向的位置，然后按F12键刷新，这时候我们就可以看到所有评论了<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/JRF2hjEvkSVM1lW8xlO5RUgFLHO1pGd2.PrJGm8oDog!/b/dDUBAAAAAAAA&amp;bo=ywPFAQAAAAADFz4!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"><h4 id="获取评论请求地址"><a href="#获取评论请求地址" class="headerlink" title="获取评论请求地址"></a>获取评论请求地址</h4>在点击打开“查看全部533685条讨论”后，屏幕上的评论往下拉，会发现浏览器的网络展示中会不断加载新页面，网络请求多出来了comments.json的请求：<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/t4bi2nk3sPPDCunbWpdBJSGco4pUaYEYjCC.RMMQjo0!/b/dL4AAAAAAAAA&amp;bo=DQNIAgAAAAADF3Y!&amp;rf=viewer_4&amp;t=5" alt=""></li>
+</ul>
+<p>复制出几个comments.json页面的URL做比较寻找规律<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://m.maoyan.com/review/v2/comments.json?movieId=248906&amp;userId=-1&amp;offset=0&amp;limit=15&amp;ts=0&amp;level=2&amp;type=3</span><br><span class="line">http://m.maoyan.com/review/v2/comments.json?movieId=248906&amp;userId=-1&amp;offset=15&amp;limit=15&amp;ts=1552143388614&amp;level=2&amp;type=3</span><br><span class="line">http://m.maoyan.com/review/v2/comments.json?movieId=248906&amp;userId=-1&amp;offset=30&amp;limit=15&amp;ts=1552143388614&amp;level=2&amp;type=3</span><br></pre></td></tr></table></figure></p>
+<p>可以发现规律：</p>
+<ul>
+<li>初始页面的ts值为0,随后会有ts值，且保持不变。这里的ts是当前的时间戳,看、可以用如下代码查看</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#coding:UTF-8</span><br><span class="line">import time</span><br><span class="line">#毫秒转换成秒</span><br><span class="line">timeStamp = int(1552143388614/1000)</span><br><span class="line">#转换成localtime</span><br><span class="line">localTime = time.localtime(timeStamp)</span><br><span class="line">#转换成新的时间格式(2017-09-16 11:28:54)</span><br><span class="line">strTime = time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;, localTime)</span><br><span class="line">print(strTime)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>offset是请求评论开始的序号，limit为请求的条数</li>
+</ul>
+<p>再看返回的json结果：</p>
+<ul>
+<li>data.comments中是评论的具体内容</li>
+<li>paging中通过hasMore来告诉我们是否还有更多（判断是否继续抓取）</li>
+</ul>
+<p><strong>构造请求url 方法一</strong></p>
+<p>根据上面的分析，我们构造请求的url就很明确了：</p>
+<ul>
+<li>从offset=0&amp;limit=15开始</li>
+<li>通过返回的paging.hasMore来判断是否继续抓取</li>
+<li>下一个抓取的url中offset+=limit</li>
+</ul>
+<p><strong>只能抓取1000条？！</strong></p>
+<p>根据上述分析，在返回的json数据中是可以看到总评论数的，但是实际抓取的时候，在offset超过1000之后，返回的数据中hasMore就变成了false。</p>
+<p>于是尝试通过浏览器一直下拉刷新，到达offset超过1000的情况，发现页面会不停的发送请求，但也无法获取数据。</p>
+<p>那应该就是网站做了控制，不允许offset超过1000。</p>
+<p><strong>构造请求URL 方法二</strong></p>
+<p>那么就要考虑其他构造url的方法来抓取了。先观察下每个请求返回的信息：</p>
+<p>发现每个comment里都包含有一个time信息，可以发现后台是按照时间顺序的，每分钟一个间隔，那么就可以考虑根据每次返回comment中的时间来更新url中的ts即可。</p>
+<p>由于不确定每次请求返回的数据中包含了多长的时间段，且返回的第一个评论时间戳与第二个评论是不同的，所以抓取思路如下：</p>
+<ul>
+<li>获取请求数据</li>
+<li>记录第一个时间戳</li>
+<li>记录第二个时间戳</li>
+<li>当遇到第三个时间戳时，将ts设置为第二个时间戳，重新构造url</li>
+<li>如果单次抓取中每遇到第三个时间戳，则通过修改offset来继续抓取，直到遇到第三个时间戳</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">def parse_json(data):</span><br><span class="line">    global count</span><br><span class="line">    global offset</span><br><span class="line">    global limit</span><br><span class="line">    global ts</span><br><span class="line">    ts_duration = ts</span><br><span class="line">    res = json.loads(data)</span><br><span class="line">    comments = res[&apos;data&apos;][&apos;comments&apos;]</span><br><span class="line">    for comment in comments:</span><br><span class="line">        comment_time = comment[&apos;time&apos;]</span><br><span class="line">        if ts == 0:</span><br><span class="line">            ts = comment_time</span><br><span class="line">            ts_duration = comment_time</span><br><span class="line">        if comment_time != ts and ts == ts_duration:</span><br><span class="line">            ts_duration = comment_time</span><br><span class="line">        if comment_time !=ts_duration:</span><br><span class="line">            ts = ts_duration</span><br><span class="line">            offset = 0</span><br><span class="line">            return get_url()</span><br><span class="line">        else:</span><br><span class="line">            content = comment[&apos;content&apos;].strip().replace(&apos;\n&apos;, &apos;。&apos;)</span><br><span class="line">            print(&apos;get comment &apos; + str(count))</span><br><span class="line">            count += 1</span><br><span class="line">            write_txt(time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;,time.localtime(comment_time/1000)) + &apos;##&apos; + content + &apos;\n&apos;)</span><br><span class="line">    if res[&apos;paging&apos;][&apos;hasMore&apos;]:</span><br><span class="line">        offset += limit</span><br><span class="line">        return get_url()</span><br><span class="line">    else:</span><br><span class="line">        return None</span><br></pre></td></tr></table></figure>
+<p>这里贴出另一个思路完整代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br></pre></td><td class="code"><pre><span class="line"># coding: utf-8</span><br><span class="line"></span><br><span class="line"># 导入爬虫所需工具库</span><br><span class="line">import time,  random</span><br><span class="line">import datetime as dt</span><br><span class="line">import requests</span><br><span class="line">import json</span><br><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"># 8个备用user_agents</span><br><span class="line">user_agents = [</span><br><span class="line">    &#123;&apos;User-Agent&apos;: &apos;MQQBrowser/26 Mozilla/5.0 (Linux; U; Android 2.3.7; zh-cn; MB200 Build/GRJ22;\</span><br><span class="line">            CyanogenMod-7) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1&apos;&#125;,</span><br><span class="line">    &#123;&apos;User-Agent&apos;: &apos;Mozilla/5.0 (hp-tablet; Linux; hpwOS/3.0.0; U; en-US) AppleWebKit/534.6 \</span><br><span class="line">            (KHTML, like Gecko) wOSBrowser/233.70 Safari/534.6 TouchPad/1.0&apos;&#125;,</span><br><span class="line">    &#123;&apos;User-Agent&apos;: &apos;Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5;\</span><br><span class="line">            Trident/5.0; IEMobile/9.0; HTC; Titan)&apos;&#125;,</span><br><span class="line">    &#123;&apos;User-Agent&apos;: &apos;Mozilla/5.0 (SymbianOS/9.4; Series60/5.0 NokiaN97-1/20.0.019;\</span><br><span class="line">            Profile/MIDP-2.1 Configuration/CLDC-1.1) AppleWebKit/525 (KHTML, like Gecko) BrowserNG/7.1.18124&apos;&#125;,</span><br><span class="line">    &#123;&apos;User-Agent&apos;: &apos;Mozilla/5.0 (Linux; U; Android 3.0; en-us; Xoom Build/HRI39) \</span><br><span class="line">            AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13&apos;&#125;,</span><br><span class="line">    &#123;&apos;User-Agent&apos;: &apos;Mozilla/5.0 (iPod; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us)\</span><br><span class="line">            AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5&apos;&#125;,</span><br><span class="line">    &#123;&apos;User-Agent&apos;: &apos;Mozilla/5.0 (iPad; U; CPU OS 4_3_3 like Mac OS X; en-us) \</span><br><span class="line">            AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5&apos;&#125;,</span><br><span class="line">    &#123;&apos;User-Agent&apos;: &apos;Mozilla/5.0 (Linux; U; Android 2.3.7; en-us; Nexus One Build/FRF91)\</span><br><span class="line">            AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1&apos;&#125;,</span><br><span class="line">]</span><br><span class="line"># 创建爬虫类</span><br><span class="line">class MovieSpider(object):</span><br><span class="line">    def __init__(self, filename):</span><br><span class="line">        self.headers = user_agents</span><br><span class="line">        self.filename = filename</span><br><span class="line"></span><br><span class="line">    def get_data(self, header, url):</span><br><span class="line">        &apos;&apos;&apos;</span><br><span class="line">        功能：访问url的网址，获取网页内容并返回</span><br><span class="line">        参数：url,目标网页的url</span><br><span class="line">        返回：目标网页的html内容</span><br><span class="line">        &apos;&apos;&apos;</span><br><span class="line">        try:</span><br><span class="line">            r = requests.get(url, headers=header)</span><br><span class="line">            r.raise_for_status()</span><br><span class="line">            return r.text</span><br><span class="line">        except Exception as e:</span><br><span class="line">            print(e)</span><br><span class="line"></span><br><span class="line">    def parse_data(self, html):</span><br><span class="line">        &apos;&apos;&apos;</span><br><span class="line">        功能：提取 html 页面信息中的关键信息，并整合一个数组并返回</span><br><span class="line">        参数：html 根据 url 获取到的网页内容</span><br><span class="line">        返回：存储有 html 中提取出的关键信息的数组</span><br><span class="line">        &apos;&apos;&apos;</span><br><span class="line">        json_data = json.loads(html)[&apos;cmts&apos;]</span><br><span class="line">        comments = []</span><br><span class="line"></span><br><span class="line">        try:</span><br><span class="line">            for item in json_data:</span><br><span class="line">                comment = []</span><br><span class="line">                # 提取影评中的6条数据：nickName(昵称),cityName(城市),content(评语)，</span><br><span class="line">                # score(评分),startTime(评价时间),gender(性别)</span><br><span class="line">                comment.append(item[&apos;nickName&apos;])</span><br><span class="line">                comment.append(item[&apos;cityName&apos;] if &apos;cityName&apos; in item else &apos;&apos;)</span><br><span class="line">                comment.append(item[&apos;content&apos;].strip().replace(&apos;\n&apos;, &apos;&apos;))</span><br><span class="line">                comment.append(item[&apos;score&apos;])</span><br><span class="line">                comment.append(item[&apos;startTime&apos;])</span><br><span class="line">                comment.append(item[&apos;gender&apos;] if &apos;gender&apos; in item else &apos;&apos;)</span><br><span class="line">                comment.append(item[&apos;userLevel&apos;] if &apos;userLevel&apos; in item else &apos;&apos;)</span><br><span class="line">                comment.append(item[&apos;userId&apos;] if &apos;userId&apos; in item else &apos;&apos;)</span><br><span class="line"></span><br><span class="line">                comments.append(comment)</span><br><span class="line"></span><br><span class="line">            return comments</span><br><span class="line"></span><br><span class="line">        except Exception as e:</span><br><span class="line">            print(comment)</span><br><span class="line">            print(e)</span><br><span class="line"></span><br><span class="line">    def save_data(self, comments):</span><br><span class="line">        &apos;&apos;&apos;</span><br><span class="line">        功能：将comments中的信息输出到文件中/或数据库中。</span><br><span class="line">        参数：comments 将要保存的数据</span><br><span class="line">        &apos;&apos;&apos;</span><br><span class="line">        df = pd.DataFrame(comments)</span><br><span class="line">        df.to_csv(self.filename, mode=&apos;a&apos;, encoding=&apos;utf_8_sig&apos;,</span><br><span class="line">                  index=False, sep=&apos;,&apos;, header=False)</span><br><span class="line"></span><br><span class="line">    def run(self, time_lists):</span><br><span class="line">        &apos;&apos;&apos;</span><br><span class="line">        功能：爬虫调度器，根据规则每次生成一个新的请求 url，爬取其内容，并保存到本地。</span><br><span class="line">        &apos;&apos;&apos;</span><br><span class="line">        #         start_time = dt.datetime.now().strftime(&apos;%Y-%m-%d  %H:%M:%S&apos;)</span><br><span class="line">        start_time = time_lists[0]  # 电影上映时间，评论爬取到此截至</span><br><span class="line">        end_time = time_lists[-1]  # 电影上映时间，评论爬取到此截至</span><br><span class="line">        print(&apos;*******************&apos;)</span><br><span class="line"></span><br><span class="line">        # 抓取评论信息</span><br><span class="line">        i = 0</span><br><span class="line">        while start_time &gt; end_time:</span><br><span class="line">            i += 1</span><br><span class="line">            if i % 10 == 0:</span><br><span class="line">                print(&apos;已爬取%s页评论&apos; % i)</span><br><span class="line">            url = &apos;http://m.maoyan.com/mmdb/comments/movie/248906.json?_v_=            yes&amp;offset=0&amp;startTime=&apos; + start_time.replace(</span><br><span class="line">                &apos;  &apos;, &apos;%20&apos;)</span><br><span class="line">            header = random.choice(self.headers)</span><br><span class="line">            time.sleep(0.05)</span><br><span class="line">            html = None</span><br><span class="line"></span><br><span class="line">            try:</span><br><span class="line">                html = self.get_data(header, url)</span><br><span class="line">            except Exception as e:</span><br><span class="line">                print(&apos;*************************&apos;)</span><br><span class="line">                time.sleep(0.83)</span><br><span class="line">                html = self.get_data(url)</span><br><span class="line">                print(e)</span><br><span class="line"></span><br><span class="line">            else:</span><br><span class="line">                time.sleep(0.3)</span><br><span class="line"></span><br><span class="line">            # 解析评论信息</span><br><span class="line">            comments = self.parse_data(html)</span><br><span class="line">            start_time = comments[14][4]</span><br><span class="line"></span><br><span class="line">            start_time = dt.datetime.strptime(</span><br><span class="line">                start_time, &apos;%Y-%m-%d  %H:%M:%S&apos;) + dt.timedelta(seconds=-1)</span><br><span class="line">            start_time = dt.datetime.strftime(start_time, &apos;%Y-%m-%d  %H:%M:%S&apos;)</span><br><span class="line"></span><br><span class="line">            self.save_data(comments)</span><br><span class="line"></span><br><span class="line"># 通过改变时间点，选择爬取信息所处的时间段</span><br><span class="line">t1 = [&apos;2019-02-12  18:59:59&apos;, &apos;2019-02-05  00:00:00&apos;]</span><br><span class="line">time_lists = t1</span><br><span class="line">filename = &apos;流浪地球%s_comments.csv&apos; % time_lists[1].split()[0]</span><br><span class="line">spider = MovieSpider(filename)</span><br><span class="line">spider.run(time_lists)</span><br><span class="line">print(&apos;爬取信息结束&apos;)</span><br></pre></td></tr></table></figure>
+<h3 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h3><ul>
+<li>读取数据<br>前面已经将评论的时间和内容通过<code>csv</code>的格式保存下来，并使用<code>;</code>分割。这里我们将使用<code>pandas</code>读取<code>csv</code>并进行统计处理</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">data = pd.read_csv(&apos;./data.csv&apos;)</span><br><span class="line">data.info()</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>数据详情<br>共有102580条数据；<br>包含字段：<br>评论内容、性别、评论ID、评论者昵称、回复数量、评分、时间、点赞数量、评论者ID、评论者等级</p>
+</li>
+<li><p>清理数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 删除无用数据</span><br><span class="line">data = data.dropna(axis = 0, how = &quot;any&quot;)</span><br><span class="line"># 删除重复评论</span><br><span class="line">data = data.drop_duplicates(subset=&apos;content&apos;)</span><br><span class="line"># 将本来是object类型的time，转换成时间类型</span><br><span class="line">data[&apos;time&apos;] = pd.to_datetime(data[&apos;time&apos;],format=&apos;%Y-%m-%d %H:%M:%S&apos;)</span><br><span class="line"># 日期筛选为上映后的日期</span><br><span class="line">data = data[data[&apos;time&apos;]&gt;=pd.to_datetime(&apos;2019-02-05 00:00:00&apos;)]</span><br><span class="line"># 将时间设置为index</span><br><span class="line">data.set_index(data[&apos;time&apos;],inplace=True)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>分析问题<br>1.总体评价如何？<br>2.总体评价的时间走向如何？<br>3.高分的评价理由是什么？<br>4.低分的评价理由是什么？<br>5.低分的人群有哪些特征？（性别、等级）<br>6.低分跟哪位演员有关？</p>
+<p><strong>总体评价如何？</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from pyecharts import Bar</span><br><span class="line">from pyecharts import Overlap</span><br><span class="line">from pyecharts import Line</span><br><span class="line"></span><br><span class="line">score_total = data[&apos;score&apos;].value_counts().sort_index()</span><br><span class="line">bar = Bar(&apos;《流浪地球》各评分数量&apos;,width=700)</span><br><span class="line">overlap = Overlap(width=700)</span><br><span class="line">bar.add(&quot;&quot;, score_total.index, score_total.values, is_label_show=True,</span><br><span class="line">       bar_category_gap=&apos;40%&apos;, label_color = [&apos;#130f40&apos;],</span><br><span class="line">       legend_text_size=18,xaxis_label_textsize=18,yaxis_label_textsize=18)</span><br><span class="line">line = Line(&quot;&quot;, width=700)</span><br><span class="line">line.add(&quot;&quot;,score_total.index, score_total.values+500,is_smooth=True)</span><br><span class="line">overlap.add(bar)</span><br><span class="line">overlap.add(line)</span><br><span class="line">overlap</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/cpKS154bQyeLY02bQ96*Ib6SRAy1z1xyKt0XBlHR6Zg!/b/dFMBAAAAAAAA&amp;bo=vAKQAQAAAAADFx0!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"><br> 低分占比<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 低分占比 &lt;5</span><br><span class="line">score_total[:5].sum()/score_total.sum()*100</span><br></pre></td></tr></table></figure></p>
+<p>高分占比 8<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 高分占比 8</span><br><span class="line">score_total[8:].sum()/score_total.sum()*100</span><br></pre></td></tr></table></figure></p>
+<p>满分占比<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 满分占比</span><br><span class="line">score_total[10:].sum()/score_total.sum()*100</span><br></pre></td></tr></table></figure></p>
+<p>通过上述分析计算，高分占比达到90%以上，满分占比也高达70%以上，可以看出《流浪地球》整体评分很高</p>
+<p><strong>高分的评价理由是什么？</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">import jieba</span><br><span class="line">from collections import Counter</span><br><span class="line">from pyecharts import WordCloud</span><br><span class="line"></span><br><span class="line"># 比较偏的就不可以被正确分词了 add_word函数提供了解决方法</span><br><span class="line">jieba.add_word(&apos;屈楚萧&apos;)</span><br><span class="line">jieba.add_word(&apos;刘启&apos;)</span><br><span class="line">jieba.add_word(&apos;吴京&apos;)</span><br><span class="line">jieba.add_word(&apos;刘培强&apos;)</span><br><span class="line">jieba.add_word(&apos;李光洁&apos;)</span><br><span class="line">jieba.add_word(&apos;王磊&apos;)</span><br><span class="line">jieba.add_word(&apos;吴孟达&apos;)</span><br><span class="line">jieba.add_word(&apos;达叔&apos;)</span><br><span class="line">jieba.add_word(&apos;韩子昂&apos;)</span><br><span class="line">jieba.add_word(&apos;赵今麦&apos;)</span><br><span class="line">jieba.add_word(&apos;韩朵朵&apos;)</span><br><span class="line"></span><br><span class="line">swords = [x.strip() for x in open (&apos;stopwords.txt&apos;,encoding=&apos;utf-8&apos;)]</span><br><span class="line"></span><br><span class="line">def plot_word_cloud(data, swords):</span><br><span class="line">    text = &apos;&apos;.join(data[&apos;content&apos;])</span><br><span class="line">    words = list(jieba.cut(text))</span><br><span class="line">    ex_sw_words = []</span><br><span class="line">    for word in words:</span><br><span class="line">        if len(word)&gt;1 and (word not in swords):</span><br><span class="line">            ex_sw_words.append(word)</span><br><span class="line">    c = Counter()</span><br><span class="line">    c = Counter(ex_sw_words)</span><br><span class="line">    wc_data = pd.DataFrame(&#123;&apos;word&apos;:list(c.keys()), &apos;counts&apos;:list(c.values())&#125;).sort_values(by=&apos;counts&apos;, ascending=False).head(100)</span><br><span class="line">    wordcloud = WordCloud(width=1300, height=620)</span><br><span class="line">    wordcloud.add(&quot;&quot;, wc_data[&apos;word&apos;], wc_data[&apos;counts&apos;], word_size_range=[20, 100])</span><br><span class="line">    return wordcloud</span><br><span class="line"># 高分的评价</span><br><span class="line">plot_word_cloud(data=data[data[&apos;score&apos;]&gt;6], swords=swords)</span><br></pre></td></tr></table></figure>
+<p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/Suvm.I8ESBV9Fkc3Bn5PHLMX4QQBcl3X9.4tLRCicRQ!/b/dL8AAAAAAAAA&amp;bo=FAVsAgAAAAADN20!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># nlargest函数不需要排序直接看最大的</span><br><span class="line">for i in data[data[&apos;score&apos;]&gt;6].nlargest(10, &apos;upCount&apos;)[&apos;content&apos;]:</span><br><span class="line">    print(i+&apos;\n&apos;)</span><br></pre></td></tr></table></figure>
+<p>通过热度词云可以看出，《流浪地球》评分高的原因是因为中国国产的科幻片，特效的制作精良。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 低分的评价</span><br><span class="line">plot_word_cloud(data=data[data[&apos;score&apos;]&lt;5], swords=swords)</span><br></pre></td></tr></table></figure>
+<p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/c1TmBZ57ca1AEW4KqsGBt4tYqpisemfDnSInFfkEjto!/b/dC0BAAAAAAAA&amp;bo=FAVsAgAAAAADN20!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"><br>通过上图低分词云可以看出，网友评论低分的原因是因为剧情，虽然在中国科幻片上特效制作精良，算是中国国产科幻片里程碑作品，但剧情欠佳。</p>
+<p><strong>低分的人群有哪些特征？（性别、等级）</strong></p>
+<p>观众总体的性别占比<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 总体的性别比例</span><br><span class="line">gender_total = data[&apos;gender&apos;].value_counts()</span><br><span class="line">bar = Bar(&quot;《流浪地球》观众性别&quot;, width=700)</span><br><span class="line">bar.add(&quot;&quot;,[&apos;未知&apos;, &apos;男&apos;, &apos;女&apos;],gender_total.values, is_stack=True, is_label_show=True,</span><br><span class="line">               bar_category_gap=&apos;60%&apos;, label_color = [&apos;#130f40&apos;],</span><br><span class="line">       legend_text_size=18,xaxis_label_textsize=18,yaxis_label_textsize=18)</span><br><span class="line">bar</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/1esG2QMjcqJC1.mYkRqhwpW9AksjehmcW2LJxEQfpTg!/b/dD4BAAAAAAAA&amp;bo=vAKQAQAAAAADFx0!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"><br>低分观众的性别占比<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gender_low = data[data[&apos;score&apos;]&lt;5][&apos;gender&apos;].value_counts()</span><br><span class="line"></span><br><span class="line">bar = Bar(&quot;《流浪地球》低分评论观众性别&quot;, width=700)</span><br><span class="line">bar.add(&quot;&quot;,[&apos;未知&apos;, &apos;男&apos;, &apos;女&apos;],gender_low.values, is_stack=True, is_label_show=True,</span><br><span class="line">        bar_category_gap=&apos;60%&apos;, label_color = [&apos;#130f40&apos;],</span><br><span class="line">       legend_text_size=18,xaxis_label_textsize=18,yaxis_label_textsize=18)</span><br><span class="line">bar</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/R7Q0V7LQMy*UacK3XIfKxxNisOP7KhjRJ3epJzoU2OM!/b/dDMBAAAAAAAA&amp;bo=vAKQAQAAAAADFx0!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"><br>可以看出低分观众在男女比例上跟总体的男女比例基本一致</p>
+<p><strong>高低分跟哪位演员有关？</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mapping = &#123;&apos;liucixin&apos;:&apos;刘慈欣|大刘&apos;, &apos;guofan&apos;:&apos;郭帆&apos;, &apos;quchuxiao&apos;:&apos;屈楚萧|刘启|户口&apos;, &apos;wujing&apos;:&apos;吴京|刘培强&apos;, </span><br><span class="line">           &apos;liguangjie&apos;:&apos;李光洁|王磊&apos;, &apos;wumengda&apos;:&apos;吴孟达|达叔|韩子昂&apos;, &apos;zhaojinmai&apos;:&apos;赵今麦|韩朵朵&apos;&#125;</span><br><span class="line">for key,values in mapping.items():</span><br><span class="line">    data[key] = data[&apos;content&apos;].str.contains(values)</span><br><span class="line"></span><br><span class="line">staff_count = pd.Series(&#123;key: data.loc[data[key],&apos;score&apos;].count() for key in mapping.keys()&#125;).sort_values()</span><br><span class="line">staff_count</span><br><span class="line"></span><br><span class="line">bar = Bar(&quot;《流浪地球》演职员总体提及次数&quot;, width=700)</span><br><span class="line">bar.add(&quot;&quot;,[&apos;李光洁&apos;,&apos;郭帆&apos;,&apos;赵今麦&apos;,&apos;吴孟达&apos;,&apos;屈楚萧&apos;,&apos;刘慈欣&apos;,&apos;吴京&apos;],staff_count.values,is_stack=True, is_label_show=True</span><br><span class="line">       ,bar_category_gap=&apos;60%&apos;,label_color = [&apos;#130f40&apos;]</span><br><span class="line">        ,legend_text_size=18,xaxis_label_textsize=18,yaxis_label_textsize=18)</span><br><span class="line">bar</span><br></pre></td></tr></table></figure>
+<p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/rnGVOTZd7zmRNS1tc4g0i8rfqLGHXuj8YMkHRGFC6NI!/b/dLgAAAAAAAAA&amp;bo=vAKQAQAAAAADFx0!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">staff_low = pd.Series(&#123;key: data.loc[data[key]&amp;(data[&apos;score&apos;]&lt;5),&apos;score&apos;].count() for key in mapping.keys()&#125;).sort_values()</span><br><span class="line"></span><br><span class="line">staff_count_pct = np.round(staff_low/staff_count*100, 2).sort_values()</span><br><span class="line"></span><br><span class="line">bar = Bar(&quot;《流浪地球》演职员低分评论提及百分比&quot;, width=700)</span><br><span class="line">bar.add(&quot;&quot;,[&apos;郭帆&apos;,&apos;刘慈欣&apos;,&apos;李光洁&apos;,&apos;屈楚萧&apos;,&apos;赵今麦&apos;,&apos;吴京&apos;,&apos;吴孟达&apos;],staff_count_pct.values,is_stack=True,is_label_show=True,bar_category_gap=&apos;60%&apos;,label_color = [&apos;#130f40&apos;]</span><br><span class="line">       ,legend_text_size=18,xaxis_label_textsize=18,yaxis_label_textsize=18)</span><br><span class="line">bar</span><br></pre></td></tr></table></figure>
+<p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/aOLybbDPCMTpLrTYK3d.SNPKptH3AFEWdqp0fGHRf2o!/b/dD4BAAAAAAAA&amp;bo=vAKQAQAAAAADFx0!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
+<h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a><strong>参考：</strong></h3><p><a href="https://segmentfault.com/a/1190000018242134" target="_blank" rel="noopener">https://segmentfault.com/a/1190000018242134</a></p>
+<hr>
+<iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 
+" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe>
+
+
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2019/01/28/Machine-Learning-笔记 -Bagging&Boosting/" data-toggle="tooltip" data-placement="top" title="Machine-Learning-笔记 -Bagging&Boosting">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+                    <!-- Valine -->
+                    <div class="vcomments"></div>
+                    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+                    <script src="//cdn.jsdelivr.net/npm/valine"></script>
+                    <script>
+                        var GUEST = ['nick','mail','link'];
+                        var meta = 'undefined';
+                        meta = meta.split(',').filter(function (item) {
+                            return GUEST.indexOf(item)>-1;
+                        });
+                        var notify = 'false' == true ? true : false;
+                        var verify = 'false' == true ? true : false;
+                        new Valine({
+                            el: '.vcomments',
+                            notify: notify,
+                            verify: verify,
+                            app_id: "KPXIfOuMVwWIv2Skprm5gYB4-gzGzoHsz",
+                            app_key: "f92SiTdYRrLO0zwfdQnRyXW1",
+                            placeholder: "Just go go",
+                            avatar:"mm",
+                            meta:meta
+                        });
+                    </script>
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#爬虫-爬取数据"><span class="toc-text">爬虫-爬取数据</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#找到评论网页地址"><span class="toc-text">找到评论网页地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获取评论请求地址"><span class="toc-text">获取评论请求地址</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据分析"><span class="toc-text">数据分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考："><span class="toc-text">参考：</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Data Analysis" title="Data Analysis">Data Analysis</a>
+                        
+                        <a class="tag" href="/tags/#爬虫" title="爬虫">爬虫</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/YUTING">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/yu-ting-66-78">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/ytfantastic">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/YUTING">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://github.com/YUTING0907">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+			
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YUTING 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://yuting0907.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://YUTING0907.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- mathjax -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+        processEscapes: true
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    }});
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/image/20181215001153.jpg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+</body>
+
+</html>
