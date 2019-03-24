@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YUTING在 Github 上的个人博客">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="YUTING" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Machine Learining-实战 Titanic生存预测｜YUTING&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://YUTING0907.github.io/2019/03/23/Machine-Learining-实战-Titanic生存预测/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YUTING
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="http://pjqhk6p7v.bkt.clouddn.com/5.gif">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://pjqhk6p7v.bkt.clouddn.com/5.gif?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Machine Learining-实战 Titanic生存预测</h1>
+                    
+                    <span class="meta">
+                         作者 yuting
+                        <span>
+                          日期 2019-03-23
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Machine Learning" title="Machine Learning">Machine Learning</a>
+                        
+                        <a class="tag" href="/tags/#XGBoost" title="XGBoost">XGBoost</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Machine Learining-实战 Titanic生存预测
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>本文是机器学习实战片,例子是kaggle上老经典的例子了，Titanic生存预测<br>目的是了解机器学习的大体流程。文末百度网盘链接中包含本文用到的数据集和代码。</p>
+<p><strong>环境</strong><br>win8, python3,jupyter notebook</p>
+<p><strong>目录</strong></p>
+<ul>
+<li>项目背景</li>
+<li>数据概览</li>
+<li>数据预处理</li>
+<li>特征分析</li>
+<li>特征工程</li>
+<li>构建模型<h3 id="1-项目背景"><a href="#1-项目背景" class="headerlink" title="1.项目背景"></a>1.项目背景</h3>泰坦尼克号是当时世界上体积最庞大内部设施最豪华的客运轮船，当时泰坦尼克号的乘船事件可谓轰动全球，相信大家都看过那部经典电影。泰坦尼克号将乘客分为三个等级: 三等舱位于船身较下层也最便宜，一等舱是整艘船最为昂贵奢华的部分，二等舱在其中间。在这次灾难中能否幸存下来难免会有些运气成分, 但是有些人比其他人更可能生存下来, 比如妇女, 儿童和上层阶级。在电影中出现过让”女人和孩子先走“的台词。</li>
+</ul>
+<h3 id="2-数据概览"><a href="#2-数据概览" class="headerlink" title="2.数据概览"></a>2.数据概览</h3><p>项目共提供了两份数据，train.csv文件作为训练集构建与生存相关的模型；另一份test.csv文件则用作测试集, 用我们构建出来的模型预测生存情况.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>字段含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PassengerId</td>
+<td>乘客编号</td>
+</tr>
+<tr>
+<td>Survived</td>
+<td>是否生还，0表示未生还，1表示生还</td>
+</tr>
+<tr>
+<td>Pclass</td>
+<td>船票种类，折射处乘客的社会地位，1表示上层阶级，2表示中层阶级，3表示底层阶级</td>
+</tr>
+<tr>
+<td>Sex</td>
+<td>性别，男性为male，女性为female</td>
+</tr>
+<tr>
+<td>Age</td>
+<td>年龄，不满1岁的年龄为小数</td>
+</tr>
+<tr>
+<td>SibSp</td>
+<td>该乘客同船的兄弟姐妹及配偶的数量</td>
+</tr>
+<tr>
+<td>Parch</td>
+<td>该乘客同船的父母以及儿女的数量</td>
+</tr>
+<tr>
+<td>Ticket</td>
+<td>船票编号</td>
+</tr>
+<tr>
+<td>Fare</td>
+<td>买票的费用</td>
+</tr>
+<tr>
+<td>Cabin</td>
+<td>船舱编号</td>
+</tr>
+<tr>
+<td>Embarked</td>
+<td>代表在哪里上的船</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h5 id="2-1读取数据："><a href="#2-1读取数据：" class="headerlink" title="2.1读取数据："></a>2.1读取数据：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">train = pd.read_csv(&apos;..\train.csv&apos;)</span><br><span class="line">test = pd.read_csv(&apos;..\test.csv&apos;)</span><br></pre></td></tr></table></figure>
+<h5 id="2-2查看前五行数据"><a href="#2-2查看前五行数据" class="headerlink" title="2.2查看前五行数据"></a>2.2查看前五行数据</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train.head()</span><br></pre></td></tr></table></figure>
+<p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/5y42.3hfvuBqT3H9fdp*wG2wuqDV0eXAxUYHTvF*igc!/b/dL8AAAAAAAAA&amp;bo=0wOxAAAAAAADF1M!&amp;rf=viewer_4&amp;t=5" alt=""></p>
+<h5 id="2-3查看数据表整体信息"><a href="#2-3查看数据表整体信息" class="headerlink" title="2.3查看数据表整体信息"></a>2.3查看数据表整体信息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train.info()</span><br><span class="line">test.info()</span><br></pre></td></tr></table></figure>
+<p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/nLZfras9IrjU4mJwrqA.zvkgTJ5MjqhlIWq4CcHL28A!/b/dLkAAAAAAAAA&amp;bo=kAH.AQAAAAADF1w!&amp;rf=viewer_4&amp;t=5" alt=""></p>
+<h3 id="3-数据预处理"><a href="#3-数据预处理" class="headerlink" title="3.数据预处理"></a>3.数据预处理</h3><p>训练集中 Age Embarked  Cabin有缺省值<br>测试集中 Age Fare Cabin有缺省值 但根据经验常识Cabin船舱编号排除在特征外</p>
+<pre><code>train[&#39;Embarked&#39;].value_counts()
+</code></pre><h4 id="3-1对缺失值进行填充"><a href="#3-1对缺失值进行填充" class="headerlink" title="3.1对缺失值进行填充"></a>3.1对缺失值进行填充</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">train[&apos;Embarked&apos;].fillna(&apos;S&apos;,inplace=True)</span><br><span class="line">train[&apos;Age&apos;].fillna(train[&apos;Age&apos;].mean(),inplace=True)</span><br><span class="line">test[&apos;Age&apos;].fillna(test[&apos;Age&apos;].mean(),inplace=True)</span><br><span class="line">test[&apos;Fare&apos;].fillna(test[&apos;Fare&apos;].mean(),inplace=True)</span><br></pre></td></tr></table></figure>
+<h4 id="3-2类型转换"><a href="#3-2类型转换" class="headerlink" title="3.2类型转换"></a>3.2类型转换</h4><p>数据类型转换格式如下：运用函数astype()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train[&apos;Age&apos;]  = train[&apos;Age&apos;].astype(int)</span><br></pre></td></tr></table></figure></p>
+<h4 id="4-特征分析"><a href="#4-特征分析" class="headerlink" title="4.特征分析"></a>4.特征分析</h4><p>在11个特征中, 哪些是和幸存相关的呢?</p>
+<ul>
+<li>Sex<br>在泰坦尼克号的电影中，有句台词是让女人和小孩先走，这里的性别肯定相关性高了，我们看看数据</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import seaborn as sns</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">from pylab import mpl</span><br><span class="line">mpl.rcParams[&apos;font.sans-serif&apos;] = [&apos;SimHei&apos;]  #解决seaborn中文字体显示问题</span><br><span class="line">plt.rcParams[&quot;figure.dpi&quot;] =mpl.rcParams[&apos;axes.unicode_minus&apos;] = False # 解决保存图像是负号&apos;-&apos;显示为方块的问题</span><br><span class="line">%matplotlib inline</span><br><span class="line">train[train[&apos;Survived&apos;]==1].groupby(&apos;Sex&apos;)[&apos;Survived&apos;].value_counts()</span><br><span class="line"></span><br><span class="line">sns.barplot(x=&apos;Sex&apos;,y=&apos;Survived&apos;,data=train)</span><br></pre></td></tr></table></figure>
+<p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/kVo0VoSsmHJzFU*SF572VUMNDvlUSNkOImvlrc*Joqc!/b/dL8AAAAAAAAA&amp;bo=ewHfAAAAAAADF5c!&amp;rf=viewer_4&amp;t=5" alt=""><br>可以从柱状图中看出男女的生成比例很明显的不一样。所以Sex是一个强特征。</p>
+<ul>
+<li>Pclass 对于船舱等级, 一等舱是整个船最昂贵奢华的地方, 有钱人才能享受, 想必一等舱的有钱人比三等舱的穷人更容易幸存, 到底是不是呢? 用数据说话</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.pointplot(x=&apos;Pclass&apos;,y=&apos;Survived&apos;,hue=&apos;Sex&apos;,data=train</span><br><span class="line">              ,palette=&#123;&apos;male&apos;:&apos;blue&apos;,&apos;female&apos;:&apos;pink&apos;&#125;,markers=[&apos;*&apos;,&apos;o&apos;],linestyles=[&apos;-&apos;,&apos;--&apos;])</span><br></pre></td></tr></table></figure>
+<p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/ATQPPmZoeVRZ16JcGmjyBXPZ5OtYtLqjCgWWj6P*BlY!/b/dC8BAAAAAAAA&amp;bo=awHjAAAAAAADF7s!&amp;rf=viewer_4&amp;t=5" alt=""><br>可以看到一等舱人员的幸存机会远大于三等舱, 果然和船舱等级相关.</p>
+<ul>
+<li><p>Age<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/O8Bvm6BCCjAFqnEfpKKyP5nODQ0JFDsPgEdDA4HnMSQ!/b/dLYAAAAAAAAA&amp;bo=WAHmAAAAAAADF40!&amp;rf=viewer_4&amp;t=5" alt=""><br>可以看到女人普遍存活率都很高，男性在0-10岁之间存活率高，显然年龄是有影响的。</p>
+</li>
+<li><p>SibSp 从之前的描述性统计了解到, 兄弟姐妹与配偶的人数最多为8, 最少为0, 哪个更容易生存呢?<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/nwU24IyRk5CFZqTzKQLk*sv2Kx5Pblpabo86QfuzizA!/b/dL8AAAAAAAAA&amp;bo=TgHjAAAAAAADF54!&amp;rf=viewer_4&amp;t=5" alt=""><br>可以看出关键时候，有兄弟姐妹和配偶的会提高存活几率，1到2个为宜，多了容易全部die</p>
+</li>
+<li><p>Parch 该乘客同船的父母以及儿女的数量,看看船上有父母孩子的存活率会不会更高呢？<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/2cyYwyi.A1J1OF0xnM014uLhb3hl8EeQVQifaBNbIYI!/b/dL8AAAAAAAAA&amp;bo=egHkAAAAAAADF60!&amp;rf=viewer_4&amp;t=5" alt=""><br>由上图可以看吹1-3个存活率会更高，毕竟人多力量大。但这个力量也不能太大，太大容易翻船哈哈哈。</p>
+</li>
+</ul>
+<h4 id="5-特征工程"><a href="#5-特征工程" class="headerlink" title="5.特征工程"></a>5.特征工程</h4><p>对分类特征进行向量化<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#采用DictVectorizer对特征向量化</span><br><span class="line"># DictVectorizer为分类（也称为标称，离散）特征实现所谓的one-of-K或“one-hot（独热）”编码</span><br><span class="line">from sklearn.feature_extraction import DictVectorizer</span><br><span class="line">dict_vec = DictVectorizer(sparse=False)</span><br><span class="line">X_train = dict_vec.fit_transform(X_train.to_dict(orient=&apos;record&apos;))</span><br><span class="line">X_test = dict_vec.fit_transform(X_test.to_dict(orient=&apos;record&apos;))</span><br><span class="line"></span><br><span class="line"># 查看特征：dict_vec.feature_names_</span><br></pre></td></tr></table></figure></p>
+<h4 id="6-构建模型"><a href="#6-构建模型" class="headerlink" title="6.构建模型"></a>6.构建模型</h4><p>使用随机森林和Xgboost分别进行模型训练<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#从sklearn.ensemble中导入RandomForestClassifier</span><br><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line">#使用默认配置初始化RandomForestClassifier</span><br><span class="line">rfc = RandomForestClassifier()</span><br><span class="line"></span><br><span class="line">#使用默认配置的RandomForestClassifier进行预测操作</span><br><span class="line">rfc.fit(X_train,y_train)</span><br><span class="line">rfc_y_predict = rfc.predict(X_test)</span><br><span class="line">rfc_submission = pd.DataFrame(&#123;&apos;PassengerId&apos;:test[&apos;PassengerId&apos;],&apos;Survived&apos;:rfc_y_predict&#125;)</span><br><span class="line">rfc_submission.to_csv(&apos;D:\\Pywork\\Titanic\\rfc_submission.csv&apos;,index=False)</span><br><span class="line"></span><br><span class="line">from sklearn.cross_validation import cross_val_score</span><br><span class="line">#使用5折交叉验证的方法在训练集上分别对默认配置的RandomForestClassifier以及XGBClassifier进行性能评估，并获得平均分类准确性的得分</span><br><span class="line">cross_val_score(rfc,X_train,y_train,cv=5).mean()</span><br><span class="line"></span><br><span class="line">#从流行包xgboost中导入XGBClassifier进行交叉验证</span><br><span class="line">from xgboost import XGBClassifier</span><br><span class="line">xgbc = XGBClassifier()</span><br><span class="line">cross_val_score(xgbc,X_train,y_train,cv=5).mean()</span><br></pre></td></tr></table></figure></p>
+<p>使用并行网络的方式寻找更好的超参数组合，以期待进一步提高XGBClassifier的预测性能<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.grid_search import GridSearchCV</span><br><span class="line">params = &#123;&apos;max_depth&apos;:[i for i in range(2,7)],&apos;n_estimators&apos;:[j for j in range(100,1100,200)],&apos;learning_rate&apos;:[0.05,0.1,0.25,0.5,0.1]</span><br><span class="line">         &#125;</span><br><span class="line">xgbc_best = XGBClassifier()</span><br><span class="line">gs = GridSearchCV(xgbc_best,params,n_jobs=-1,cv=5,verbose=1)</span><br><span class="line">gs.fit(X_train,y_train)</span><br></pre></td></tr></table></figure></p>
+<p>检查优化完成后的超参数配置<br>print(gs.best_score_)<br>print(gs.best_params_)</p>
+<p>最后进行模型预测</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#使用经过超参数配置的XGBClassfier对测试数据的预测结果存储在文件xgbc_best_submission中</span><br><span class="line">xgbc_best_y_predict = gs.predict(X_test)</span><br><span class="line">xgbc_best_submission = pd.DataFrame(&#123;&apos;PassengerId&apos;:test[&apos;PassengerId&apos;],&apos;Survived&apos;:xgbc_best_y_predict&#125;)</span><br><span class="line">#将默认配置的RandomForestClassifier对测试数据的预测结果存储在文件rfc_submission.csv中。</span><br><span class="line">xgbc_best_submission.to_csv(&apos;D:\\Pywork\\Titanic\\xgbc_best_submission.csv&apos;,index=False)</span><br></pre></td></tr></table></figure>
+<p>想要以上涉及到的源代码可以联系我<br>邮箱:yuting9597@163.com<br>百度网盘：<a href="https://pan.baidu.com/s/1vGq4Et2gReM58Dr_1O-v3Q" target="_blank" rel="noopener">https://pan.baidu.com/s/1vGq4Et2gReM58Dr_1O-v3Q</a> 密码：uoqv</p>
+<p>参考文章：</p>
+<hr>
+<iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 
+" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe>
+
+
+
+
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2019/03/23/北上广深租房信息的爬取和分析/" data-toggle="tooltip" data-placement="top" title="北上广深租房信息的爬取和分析">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+                    <!-- Valine -->
+                    <div class="vcomments"></div>
+                    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+                    <script src="//cdn.jsdelivr.net/npm/valine"></script>
+                    <script>
+                        var GUEST = ['nick','mail','link'];
+                        var meta = 'undefined';
+                        meta = meta.split(',').filter(function (item) {
+                            return GUEST.indexOf(item)>-1;
+                        });
+                        var notify = 'false' == true ? true : false;
+                        var verify = 'false' == true ? true : false;
+                        new Valine({
+                            el: '.vcomments',
+                            notify: notify,
+                            verify: verify,
+                            app_id: "KPXIfOuMVwWIv2Skprm5gYB4-gzGzoHsz",
+                            app_key: "f92SiTdYRrLO0zwfdQnRyXW1",
+                            placeholder: "Just go go",
+                            avatar:"mm",
+                            meta:meta
+                        });
+                    </script>
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-项目背景"><span class="toc-text">1.项目背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-数据概览"><span class="toc-text">2.数据概览</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1读取数据："><span class="toc-text">2.1读取数据：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2查看前五行数据"><span class="toc-text">2.2查看前五行数据</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3查看数据表整体信息"><span class="toc-text">2.3查看数据表整体信息</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#3-数据预处理"><span class="toc-text">3.数据预处理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1对缺失值进行填充"><span class="toc-text">3.1对缺失值进行填充</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2类型转换"><span class="toc-text">3.2类型转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-特征分析"><span class="toc-text">4.特征分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-特征工程"><span class="toc-text">5.特征工程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-构建模型"><span class="toc-text">6.构建模型</span></a></li></ol></li>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Machine Learning" title="Machine Learning">Machine Learning</a>
+                        
+                        <a class="tag" href="/tags/#XGBoost" title="XGBoost">XGBoost</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/YUTING">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/yu-ting-66-78">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/ytfantastic">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/YUTING">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://github.com/YUTING0907">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+			
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YUTING 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://yuting0907.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://YUTING0907.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/image/20181215001153.jpg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+</body>
+
+</html>
