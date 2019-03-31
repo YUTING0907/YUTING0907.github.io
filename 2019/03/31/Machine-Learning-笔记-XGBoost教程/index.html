@@ -243,7 +243,9 @@
 </ul>
 </li>
 <li><strong>num_pbuffer</strong> [set automatically by xgboost, no need to be set by user]<br>size of prediction buffer, normally set to number of training instances. The buffers are used to save the prediction results of last boosting step.</li>
-<li><strong>num_feature</strong> [set automatically by xgboost, no need to be set by user]<br>  boosting过程中用到的特征维数，设置为特征个数。XGBoost         会自动设置，不需要手工设置<h5 id="2-Booster-parameters参数"><a href="#2-Booster-parameters参数" class="headerlink" title="(2) Booster parameters参数"></a><strong>(2) Booster parameters参数</strong></h5></li>
+<li><strong>num_feature</strong> [set automatically by xgboost, no need to be set by user]<br>  boosting过程中用到的特征维数，设置为特征个数。XGBoost         会自动设置，不需要手工设置</li>
+</ul>
+<h5 id="2-Booster-parameters参数"><a href="#2-Booster-parameters参数" class="headerlink" title="(2) Booster parameters参数"></a><strong>(2) Booster parameters参数</strong></h5><ul>
 <li><strong>Parameters for Tree Booster</strong><pre><code> - **eta [default=0.3]** 
      - 为了防止过拟合，更新过程中用到的收缩步长。在每次提升计算之后，算法会直接获得新特征的权重。 eta通过缩减特征的权重使提升计算过程更加保守。
  通常最后设置eta为0.01~0.2
@@ -322,7 +324,9 @@
 <h3 id="【4】代码实现：python"><a href="#【4】代码实现：python" class="headerlink" title="【4】代码实现：python"></a>【4】代码实现：python</h3><h5 id="1-API接口说明"><a href="#1-API接口说明" class="headerlink" title="(1)API接口说明"></a><strong>(1)API接口说明</strong></h5><p>目前为止，xgb model 有两个接口</p>
 <ul>
 <li>import xgboost </li>
-<li>from xgboost import XGBClassifier<h5 id="2-XGBoost调参"><a href="#2-XGBoost调参" class="headerlink" title="(2) XGBoost调参"></a><strong>(2) XGBoost调参</strong></h5></li>
+<li>from xgboost import XGBClassifier</li>
+</ul>
+<h5 id="2-XGBoost调参"><a href="#2-XGBoost调参" class="headerlink" title="(2) XGBoost调参"></a><strong>(2) XGBoost调参</strong></h5><ul>
 <li>方法一：直接调参，调用 xgboost包 的 XGBClassifier()<br>可以对其参数进行手动修改，default参数如下<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/TLeI9lRonq7NAgF68hz5M8bI.ExHoesibyN39nBmL2w!/b/dL8AAAAAAAAA&amp;bo=PQJ0AAAAAAADF3k!&amp;rf=viewer_4&amp;t=5" alt=""></li>
 <li>方法二： 随机调参。<br>使用 xgb.cv，这里同样可以使用KFold() </li>
 </ul>
