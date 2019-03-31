@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YUTING在 Github 上的个人博客">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="YUTING" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Machine Learning-笔记 -XGBoost教程｜YUTING&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://YUTING0907.github.io/2019/03/31/Machine-Learning-笔记-XGBoost教程/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YUTING
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="http://pjqhk6p7v.bkt.clouddn.com/5.gif">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://pjqhk6p7v.bkt.clouddn.com/5.gif?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Machine Learning-笔记 -XGBoost教程</h1>
+                    
+                    <span class="meta">
+                         作者 yuting
+                        <span>
+                          日期 2019-03-31
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Machine Learning" title="Machine Learning">Machine Learning</a>
+                        
+                        <a class="tag" href="/tags/#XGBoost" title="XGBoost">XGBoost</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Machine Learning-笔记 -XGBoost教程
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h3 id="【1】前言"><a href="#【1】前言" class="headerlink" title="【1】前言"></a>【1】前言</h3><ul>
+<li>XGBoost, 全名(eXtreme Gradient Boosting)，Kaggle大杀器，在数据挖掘比赛上，Everybody knows it！！！</li>
+<li>XGBoost作者：陈天奇（华盛顿大学）</li>
+<li>XGBoost前身:XGBoost是Boosting算法的其中一种,是在GBDT的基础上进行改进，使之更强大，适用于更大范围.</li>
+<li>算法发布时间在2014年</li>
+</ul>
+<hr>
+<p>本文适用对象：<br>1.了解决策树族群：决策森林，Adaboost，GBDT等<br>2.了解bagging，boosting<br>3.准备在机器学习道路上越走越远的朋友<br>4.高能数学预警：泰勒公式、梯度下降法了解一下下，但是我是不愿意看这些深奥的数学公式。</p>
+<p>链接：<br><a href="https://github.com/YUTING0907/Markdown_pic/blob/master/xgboost/BoostedTree.pdf" target="_blank" rel="noopener">【天奇大神PPT传送门】</a></p>
+<hr>
+<h3 id="【2】算法原理简述"><a href="#【2】算法原理简述" class="headerlink" title="【2】算法原理简述"></a>【2】算法原理简述</h3><h5 id="1-Review-of-key-concepts-of-supervised-learning-监督学习到底在学什么"><a href="#1-Review-of-key-concepts-of-supervised-learning-监督学习到底在学什么" class="headerlink" title="(1)Review of key concepts of supervised learning | 监督学习到底在学什么"></a>(1)Review of key concepts of supervised learning | 监督学习到底在学什么</h5><ul>
+<li>label(标签)<br>根据带有标签的数据学习出一套规则，给另外没有标签的测试集打上标签。</li>
+<li>假设函数(Hypothesis)</li>
+<li>目标函数（Objective Function）= 损失函数(Cost Function) + 正则化（Regularization）</li>
+<li>minimize Objective Function 最小化目标函数</li>
+</ul>
+<p>在监督学习算法学习的过程中，其实就是最小化目标函数的过程，找到让目标函数最小化的一组参数。其中：</p>
+<ul>
+<li>损失函数表示模型对训练数据的拟合程度，loss越小，代表模型预测的越准.</li>
+<li>正则化项衡量模型的复杂度，regularization越小，代表模型模型的复杂度越低。</li>
+<li>目标函数越小，代表模型越好</li>
+</ul>
+<h5 id="2-Regression-Tree-and-Ensemble-决策树在做什么"><a href="#2-Regression-Tree-and-Ensemble-决策树在做什么" class="headerlink" title="(2) Regression Tree and Ensemble | 决策树在做什么"></a>(2) Regression Tree and Ensemble | 决策树在做什么</h5><ul>
+<li>一种模仿人类做决定的思维方式构建的算法</li>
+<li>信息增益（Information Gain）：决定分裂节点，主要是为了减少损失loss</li>
+<li>最大深度：会影响模型复杂度</li>
+<li>树的剪枝：主要为了减少模型复杂度，而复杂度被‘树枝的数量’影响</li>
+<li>回归树不止用于做回归，还可以做分类、排序等，主要依赖于目标函数的定义</li>
+</ul>
+<h5 id="3-Gradient-Boosting-How-do-we-learn"><a href="#3-Gradient-Boosting-How-do-we-learn" class="headerlink" title="(3) Gradient Boosting(How do we learn)"></a>(3) Gradient Boosting(How do we learn)</h5><p>XGBoost 与前身 GBDT比较优势在于</p>
+<ul>
+<li><strong>1.损失函数</strong>：GBDT是一阶，XGB是二阶泰勒展开</li>
+<li><strong>2.XGB的损失函数可以自定义</strong></li>
+<li><strong>3.XGB加入正则</strong>：XGB的目标函数进行了优化，有正则项，减少过拟合，控制模型复杂度</li>
+<li><strong>4.XGB运行速度快</strong>：决策树的学习最耗时的一个步骤就是对特征的值进行排序,在进行节点的分裂的时候，需要计算每个特征的增益。Xgboost在训练之前，预先对数据进行了排序，然后保存为block结构，后面的迭代中重复使用这个结构，大大减小计算量。各个特征的增益计算就可以开多线程进行。</li>
+<li><strong>5.内置交叉验证</strong>: 允许每轮boosting迭代中用交叉检验，以便获取最优 Boosting_n_round 迭代次数，可利用网格搜索grid search和交叉检验cross validation进行调参。</li>
+<li><strong>7.预剪枝：</strong><br>GBDT：分裂到负损失，分裂停止;<br>XGB：一直分裂到指定的最大深度（max_depth），然后回过头剪枝。如某个点之后不再正值，去除这个分裂。优点是，当一个负损失(-2)后存在一个正损失(+10)，(-2+10=8&gt;0)求和为正，保留这个分裂。</li>
+</ul>
+<h3 id="【3】参数说明"><a href="#【3】参数说明" class="headerlink" title="【3】参数说明"></a>【3】参数说明</h3><p>XGBoost的参数多到让人发指，下面只列举部分常用参数，所有参数的官方说明文档，请点击<a href="https://xgboost.readthedocs.io/en/latest/parameter.html" target="_blank" rel="noopener">官方文档说明</a><br>XGBoost的参数可以归为3类：</p>
+<h5 id="1-General-parameters-通用参数"><a href="#1-General-parameters-通用参数" class="headerlink" title="(1) General parameters 通用参数"></a>(1) General parameters 通用参数</h5><p>该参数控制在提升（boosting）过程中使用哪种booster，常用的booster有树模型（tree）和线性模型（linear model）</p>
+<ul>
+<li><strong>booster [default=gbtree]</strong><br>有两种模型可以选择gbtree和gblinear。gbtree使用基于树的模型进行提升计算，gblinear使用线性模型进行提升计算。缺省值为gbtree</li>
+<li><strong>silent [default=0]</strong><br>取0时表示打印出运行时信息，取1时表示以缄默方式运行，不打印运行时的信息。缺省值为0</li>
+<li><strong>nthread</strong> [default to maximum number of threads available if not set] <ul>
+<li>XGBoost运行时的线程数。缺省值是当前系统可以获得的最大线程数。</li>
+<li>如果你希望以最大速度运行，建议不设置这个参数，模型将自动获得最大线程</li>
+</ul>
+</li>
+<li><strong>num_pbuffer</strong> [set automatically by xgboost, no need to be set by user]<br>size of prediction buffer, normally set to number of training instances. The buffers are used to save the prediction results of last boosting step.</li>
+<li><strong>num_feature</strong> [set automatically by xgboost, no need to be set by user]<br>  boosting过程中用到的特征维数，设置为特征个数。XGBoost         会自动设置，不需要手工设置<h5 id="2-Booster-parameters参数"><a href="#2-Booster-parameters参数" class="headerlink" title="(2) Booster parameters参数"></a>(2) Booster parameters参数</h5></li>
+<li><strong>Parameters for Tree Booster</strong><pre><code> - **eta [default=0.3]** 
+     - 为了防止过拟合，更新过程中用到的收缩步长。在每次提升计算之后，算法会直接获得新特征的权重。 eta通过缩减特征的权重使提升计算过程更加保守。
+ 通常最后设置eta为0.01~0.2
+     - 取值范围为：[0,1]
+</code></pre><ul>
+<li><strong>gamma [default=0]</strong><pre><code>  - minimum loss reduction required to make a further partition on a leaf node of the tree. the larger, the more conservative the algorithm will be **；**
+  - range: [0,∞] **；**
+ -  模型在默认情况下，对于一个节点的划分只有在其loss function 得到结果大于0的情况下才进行，而gamma 给定了所需的最低loss function的值 **；**
+  - gamma值使得算法更conservation，且其值依赖于loss function ，在模型中应该进行调参 **。**
+</code></pre></li>
+<li><strong>max_depth [default=6]</strong> <pre><code>  - 树的最大深度。缺省值为6 **；**
+  - 取值范围为：[1,∞] **；**
+  - 指树的最大深度 **；**
+  - 树的深度越大，则对数据的拟合程度越高（过拟合程度也越高）。即该参数也是控制过拟合 **；**
+   - 建议通过交叉验证（xgb.cv ) 进行调参 **；**
+</code></pre>通常取值：3-10 <strong>；</strong></li>
+<li><strong>min_child_weight [default=1]</strong> <ul>
+<li>孩子节点中最小的样本权重和。如果一个叶子节点的样本权重和小于min_child_weight则拆分过程结束。在现行回归模型中，这个参数是指建立每个模型所需要的最小样本数。该成熟越大算法越conservative。即调大这个参数能够控制过拟合 <strong>;</strong><ul>
+<li>取值范围为: [0,∞]</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>max_delta_step [default=0]</strong> <ul>
+<li>如果取值为0，那么意味着无限制。如果取为正数，则其使得xgboost更新过程更加保守。</li>
+<li>取值范围为：[0,∞]</li>
+<li>通常不需要设置这个值，但在使用logistics 回归时，若类别极度不平衡，则调整该参数可能有效果</li>
+</ul>
+</li>
+<li>subsample [default=1] <ul>
+<li>用于训练模型的子样本占整个样本集合的比例。如果设置为0.5则意味着XGBoost将随机的从整个样本集合中抽取出50%的子样本建立树模型，这能够防止过拟合。</li>
+<li>取值范围为：(0,1]</li>
+</ul>
+</li>
+<li>colsample_bytree [default=1] <pre><code>  在建立树时对特征随机采样的比例。缺省值为1
+</code></pre></li>
+<li>colsample_bylevel[default=1]<br>通常不使用，因为subsample和colsample_bytree已经可以起到相同的作用了</li>
+</ul>
+</li>
+<li><strong>Parameters for Linear Booster and Tweedie Regression</strong><ul>
+<li><strong>lambda [default=0]</strong><br>L2 正则的惩罚系数<br>用于处理XGBoost的正则化部分。通常不使用，但可以用来降低过拟合</li>
+<li><strong>alpha [default=0]</strong><br>L1 正则的惩罚系数<br>当数据维度极高时可以使用，使得算法运行更快。</li>
+<li><strong>lambda_bias</strong><br>在偏置上的L2正则。缺省值为0（在L1上没有偏置项的正则，因为L1时偏置不重要）</li>
+</ul>
+</li>
+</ul>
+<h5 id="3-Learning-Task-parameters"><a href="#3-Learning-Task-parameters" class="headerlink" title="(3) Learning Task parameters"></a>(3) Learning Task parameters</h5><ul>
+<li><p><strong>objective [ default=reg:linear ]</strong></p>
+<ul>
+<li>“reg:linear” –线性回归。</li>
+<li>“reg:logistic” –逻辑回归。</li>
+<li>“binary:logistic” –二分类的逻辑回归问题，输出为概率。</li>
+<li>“binary:logitraw” –二分类的逻辑回归问题，输出的结果为wTx。</li>
+<li>“count:poisson” –计数问题的poisson回归，输出结果为poisson分布。<br>在poisson回归中，max_delta_step的缺省值为0.7。(used to safeguard optimization)</li>
+<li>“multi:softmax” –让XGBoost采用softmax目标函数处理多分类问题，同时需要设置参数num_class（类别个数）</li>
+<li>“multi:softprob” –和softmax一样，但是输出的是ndata * nclass的向量，可以将该向量reshape成ndata行nclass列的矩阵。每行数据表示样本所属于每个类别的概率。</li>
+<li>“rank:pairwise” –set XGBoost to do ranking task by minimizing the pairwise loss</li>
+</ul>
+</li>
+<li><p><strong>base_score [ default=0.5 ]</strong><br>the initial prediction score of all instances, global bias</p>
+</li>
+<li><strong>eval_metric [ default according to objective ]</strong><br>校验数据所需要的评价指标，不同的目标函数将会有缺省的评价指标（rmse for regression, and error for classification, mean average precision for ranking）<ul>
+<li>“rmse”: root mean square error</li>
+<li>“logloss”: negative log-likelihood</li>
+<li>“error”: Binary classification error rate. It is calculated as #(wrong cases)/#(all cases). For the predictions, the evaluation will regard the instances with prediction value larger than 0.5 as positive instances, and the others as negative instances.</li>
+<li>“merror”: Multiclass classification error rate. It is calculated as #(wrong cases)/#(all cases).</li>
+<li>“mlogloss”: Multiclass logloss</li>
+<li>“auc”: Area under the curve for ranking evaluation</li>
+<li>“ndcg”:Normalized Discounted Cumulative Gain</li>
+<li>“map”:Mean average precision</li>
+</ul>
+</li>
+<li><strong>seed [ default=0 ]</strong><br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/aOr8BZHt*q6uyFpj2aEFCLoBAyu*6MYDD*iL8zMnsK8!/b/dDQBAAAAAAAA&amp;bo=ZQEYAQAAAAADF08!&amp;rf=viewer_4&amp;t=5" alt=""></li>
+</ul>
+<hr>
+<h3 id="【4】代码实现：python"><a href="#【4】代码实现：python" class="headerlink" title="【4】代码实现：python"></a>【4】代码实现：python</h3><h5 id="1-API接口说明"><a href="#1-API接口说明" class="headerlink" title="(1)API接口说明"></a>(1)API接口说明</h5><p>目前为止，xgb model 有两个接口</p>
+<ul>
+<li>import xgboost </li>
+<li>from xgboost import XGBClassifier<h5 id="2-XGBoost调参"><a href="#2-XGBoost调参" class="headerlink" title="(2) XGBoost调参"></a>(2) XGBoost调参</h5></li>
+<li>方法一：直接调参，调用 xgboost包 的 XGBClassifier()<br>可以对其参数进行手动修改，default参数如下<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/TLeI9lRonq7NAgF68hz5M8bI.ExHoesibyN39nBmL2w!/b/dL8AAAAAAAAA&amp;bo=PQJ0AAAAAAADF3k!&amp;rf=viewer_4&amp;t=5" alt=""></li>
+<li>方法二： 随机调参。<br>使用 xgb.cv，这里同样可以使用KFold() </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.cross_validation import KFold</span><br><span class="line">kf = KFold(len(train_feat), n_folds=5, shuffle=True, random_state=520)</span><br><span class="line">for i, (train_index, test_index) in enumerate(kf):</span><br><span class="line">        # 将测试集均分 取一份当测试集</span><br><span class="line">	xgb_train = xgb.DMatrix(train_feat[predictors].iloc[train_index], train_feat[label].iloc[train_index])</span><br><span class="line">	xgb_eval = xgb.DMatrix(train_feat[predictors].iloc[test_index], train_feat[label].iloc[test_index])</span><br><span class="line">	print(&quot;..........开始第&#123;&#125;轮训练&quot;.format(i))</span><br></pre></td></tr></table></figure>
+<p>注: xgb.cv()这里的cv()函数是进行了k折叠交叉验证，它不是一个参数搜索功能<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import xgboost as xgb</span><br><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import random</span><br><span class="line">from ggplot import *</span><br><span class="line">import seaborn as sns</span><br><span class="line">from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, classification_report, confusion_matrix,mean_squared_error</span><br><span class="line"></span><br><span class="line">train_path = &apos;D:/Pywork/Titanic/train.csv&apos;</span><br><span class="line">test_path = &apos;D:/Pywork/Titanic/test.csv&apos;</span><br><span class="line">train = pd.read_csv(train_path)</span><br><span class="line">test = pd.read_csv(test_path)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">best_param = list()</span><br><span class="line">best_logloss = np.Inf</span><br><span class="line">best_logloss_index = 0</span><br><span class="line">X_hote = pd.get_dummies(X_train)</span><br><span class="line">print(X_hote.info())</span><br><span class="line">dtrain = xgb.DMatrix(X_hote, y_train)</span><br><span class="line"></span><br><span class="line">for i in range(50):</span><br><span class="line">    xgb_params = &#123;</span><br><span class="line">        &apos;objective&apos;: &quot;binary:logistic&quot;,</span><br><span class="line">        &apos;max_depth&apos;: np.random.randint(6, 11), # 构建树的深度，越大越容易过拟合</span><br><span class="line">        &apos;eta&apos;: np.random.uniform(.01, .3), # 如同学习率</span><br><span class="line">        &apos;gamma&apos;: np.random.uniform(0.0, 0.2),# gamma最小损失调节范围</span><br><span class="line">        &apos;subsample&apos;: np.random.uniform(.6, .9), # 随机采样训练样本</span><br><span class="line">        &apos;colsample_bytree&apos;: np.random.uniform(.5, .8), # 生成树时进行的列采样</span><br><span class="line">        &apos;min_child_weight&apos;: np.random.randint(1, 41),</span><br><span class="line">        &apos;max_delta_step&apos;: np.random.randint(1, 11),</span><br><span class="line">        &apos;silent&apos;: 1</span><br><span class="line">    &#125;</span><br><span class="line">    cv_nfold = 5</span><br><span class="line">    cv_nround = 50</span><br><span class="line">    bst_cv1 = xgb.cv(params=xgb_params,  # 这是一个字典，里面包含着训练中的参数关键字和对应的值</span><br><span class="line">                     dtrain=dtrain, # 训练的数据</span><br><span class="line">                     num_boost_round=cv_nround, # 这是指提升迭代的个数</span><br><span class="line">                      # evals  这是一个列表，用于对训练过程中进行评估列表中的元素 evals = [(dtrain,’train’)]</span><br><span class="line">                     # feval,自定义评估函数</span><br><span class="line">                     # verbose_eval(可以输入布尔型或数值型)，也要求evals 里至少有 一个元素。</span><br><span class="line">                     # 如果为True ,则对evals中元素的评估结果会输出在结果中；如果输入数字，假设为5，则每隔5个迭代输出一次</span><br><span class="line">                     nfold=cv_nfold,</span><br><span class="line">                     seed=0,</span><br><span class="line">                     metrics=[&quot;auc&quot;, &quot;rmse&quot;, &quot;error&quot;, &quot;logloss&quot;],</span><br><span class="line">                     maximize=False, # 是否对评估函数进行最大化</span><br><span class="line">                     early_stopping_rounds=10,</span><br><span class="line">                     verbose_eval=None,</span><br><span class="line">                     )</span><br><span class="line"></span><br><span class="line">    min_logloss = min(bst_cv1[&apos;test-logloss-mean&apos;])</span><br><span class="line">    min_logloss_index = bst_cv1.index[bst_cv1[&apos;test-logloss-mean&apos;] == min(bst_cv1[&apos;test-logloss-mean&apos;])][0]</span><br><span class="line"></span><br><span class="line">    if min_logloss &lt; best_logloss:</span><br><span class="line">        best_logloss = min_logloss</span><br><span class="line">        best_logloss_index = min_logloss_index</span><br><span class="line">        best_param = xgb_params</span><br><span class="line"></span><br><span class="line">nround = best_logloss_index</span><br><span class="line">print(best_logloss)</span><br><span class="line">print(&apos;best_round = %d&apos; % (nround))</span><br><span class="line">print(&apos;best_param : ------------------------------&apos;)</span><br><span class="line">print(best_param)  # 显示最佳参数组合，到后面真正的模型要用</span><br><span class="line">plt.figure()</span><br><span class="line">plt.plot(bst_cv1[&apos;train-logloss-mean&apos;], &apos;g&apos;, label=&apos;train&apos;)</span><br><span class="line">plt.plot(bst_cv1[&apos;test-logloss-mean&apos;], &apos;r&apos;, label=&apos;test&apos;)</span><br><span class="line">print(plt.show())</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>方法三：使用 gridsearch 和 cross validation</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.grid_search import GridSearchCV</span><br><span class="line">params = &#123;&apos;max_depth&apos;:[i for i in range(2,7)],&apos;n_estimators&apos;:[j for j in range(100,1100,200)],&apos;learning_rate&apos;:[0.05,0.1,0.25,0.5,0.1]</span><br><span class="line">         &#125;</span><br><span class="line">xgbc_best = XGBClassifier()</span><br><span class="line">gs = GridSearchCV(xgbc_best,params,n_jobs=-1,cv=5,verbose=1)</span><br><span class="line">gs.fit(X_train,y_train)</span><br></pre></td></tr></table></figure>
+<h5 id="3-绘制-train-test-的-auc-rmse-error"><a href="#3-绘制-train-test-的-auc-rmse-error" class="headerlink" title="(3) 绘制 train/test 的 auc/rmse/error"></a>(3) 绘制 train/test 的 auc/rmse/error</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">def xgb_plot(input, output):</span><br><span class="line">    history = input</span><br><span class="line">    train_history = history.iloc[:, 8:16].assign(id=[i+1 for i in history.index])</span><br><span class="line">    train_history[&apos;Class&apos;] = &apos;train&apos;</span><br><span class="line">    test_history = history.iloc[:, 0:8].assign(id=[i+1 for i in history.index])</span><br><span class="line">    test_history[&apos;Class&apos;] = &apos;test&apos;</span><br><span class="line">    train_history.columns = [&quot;auc_mean&quot;, &quot;auc_std&quot;, &quot;error_mean&quot;, &quot;error_std&quot;, &quot;logloss_mean&quot;, &quot;logloss_std&quot;, &quot;rmse_mean&quot;, &quot;rmse_std&quot;, &quot;id&quot;, &quot;Class&quot;]</span><br><span class="line">    test_history.columns = [&quot;auc_mean&quot;, &quot;auc_std&quot;, &quot;error_mean&quot;, &quot;error_std&quot;, &quot;logloss_mean&quot;, &quot;logloss_std&quot;, &quot;rmse_mean&quot;, &quot;rmse_std&quot;, &quot;id&quot;, &quot;Class&quot;]</span><br><span class="line">    his = pd.concat([train_history, test_history])</span><br><span class="line"></span><br><span class="line">    if output == &quot;auc&quot;:</span><br><span class="line">        his[&apos;y_min_auc&apos;] = his[&apos;auc_mean&apos;]-his[&apos;auc_std&apos;]</span><br><span class="line">        his[&apos;y_man_auc&apos;] = his[&apos;auc_mean&apos;]+his[&apos;auc_std&apos;]</span><br><span class="line">        auc = ggplot(his, aes(x=&apos;id&apos;, y=&apos;auc_mean&apos;, ymin=&apos;y_min_auc&apos;, ymax=&apos;y_man_auc&apos;, fill=&apos;Class&apos;))+geom_line()+geom_ribbon(alpha=0.5)+labs(x=&quot;nround&quot;,y=&apos;&apos;,title = &quot;XGB Cross Validation AUC&quot;)</span><br><span class="line">        return auc</span><br><span class="line">    if output == &quot;rmse&quot;:</span><br><span class="line">        his[&apos;y_min_rmse&apos;] = his[&apos;rmse_mean&apos;] - his[&apos;rmse_std&apos;]</span><br><span class="line">        his[&apos;y_man_rmse&apos;] = his[&apos;rmse_mean&apos;] + his[&apos;rmse_std&apos;]</span><br><span class="line">        rmse = ggplot(his, aes(x=&apos;id&apos;, y=&apos;rmse_mean&apos;, ymin=&apos;y_min_rmse&apos;, ymax=&apos;y_man_rmse&apos;, fill=&apos;Class&apos;)) + geom_line() + geom_ribbon(alpha=0.5) + labs(x=&quot;nround&quot;, y=&apos;&apos;, title=&quot;XGB Cross Validation RMSE&quot;)</span><br><span class="line">        return (rmse)</span><br><span class="line">    if output == &quot;error&quot;:</span><br><span class="line">        his[&apos;y_min_error&apos;] = his[&apos;error_mean&apos;] - his[&apos;error_std&apos;]</span><br><span class="line">        his[&apos;y_man_error&apos;] = his[&apos;error_mean&apos;] + his[&apos;error_std&apos;]</span><br><span class="line">        error = ggplot(his, aes(x=&apos;id&apos;, y=&apos;error_mean&apos;, ymin=&apos;y_min_error&apos;, ymax=&apos;y_man_error&apos;, fill=&apos;Class&apos;)) + geom_line() + geom_ribbon(alpha=0.5) + labs(x=&quot;nround&quot;, y=&apos;&apos;, title=&quot;XGB Cross Validation ERROR&quot;)</span><br><span class="line">        return (error)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>横坐标是迭代次数</li>
+<li>train曲线和test曲线的相差程度，可以侧面反映模型复杂度，检验是否过拟合</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xgb_plot(bst_cv1, &apos;auc&apos;)</span><br></pre></td></tr></table></figure>
+<p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/y8Dm0rNkvvoO4EXLCTQT*qSCvZwyBYPBvkZweT7h6ok!/b/dL4AAAAAAAAA&amp;bo=EgQ3AgAAAAADFxE!&amp;rf=viewer_4&amp;t=5" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xgb_plot(bst_cv1,&apos;rmse&apos;)</span><br></pre></td></tr></table></figure>
+<p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/0lHqHpsTCuA8173eyPQ7KXVLsk6NQI*DZPFBixu8APk!/b/dDYBAAAAAAAA&amp;bo=HARvAgAAAAADF0c!&amp;rf=viewer_4&amp;t=5" alt=""></p>
+<h5 id="4-建模，进行预测，打印评估指标"><a href="#4-建模，进行预测，打印评估指标" class="headerlink" title="(4) 建模，进行预测，打印评估指标"></a>(4) 建模，进行预测，打印评估指标</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 利用上面调参结果： best_param</span><br><span class="line"></span><br><span class="line">md_1 = xgb.train(best_param, dtrain, num_boost_round=nround)</span><br><span class="line">dtest = xgb.DMatrix(X_test)</span><br><span class="line">xgbc_y_predict = [1 if value &gt;= 0.5 else 0 for value in md_1.predict(dtest)]</span><br><span class="line"></span><br><span class="line">accuracy = accuracy_score(y_test, xgbc_y_predict )</span><br><span class="line">f1_score = f1_score(y_test,predictions)</span><br><span class="line">print(&quot;Accuracy: %.2f%%&quot; %(accuracy * 100.0))</span><br><span class="line">print(&quot;F1 Score: %.2f%%&quot; %(f1_score * 100.0))</span><br><span class="line"></span><br><span class="line"># save model</span><br><span class="line">md_1.save_model(&apos;xgb.model&apos;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>方法二： 使用 XGBClassifier()</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">md_2 = XGBClassifier(**best_param)                   # 2个*号，允许直接填入字典格式的param</span><br><span class="line">md_2.fit(X_train, y_train)  </span><br><span class="line"></span><br><span class="line">ypred = md_2.predict(X_test)</span><br><span class="line">predictions = [round(value) for value in ypred]</span><br><span class="line"></span><br><span class="line"># 打印评估指标</span><br><span class="line">MSE = mean_squared_error(y_test, predictions)</span><br><span class="line">print(&quot;MSE: %.2f%%&quot; % (MSE * 100.0))  </span><br><span class="line">accuracy = accuracy_score(y_test, predictions)</span><br><span class="line">print(&quot;Accuracy: %.2f%%&quot; % (accuracy * 100.0))</span><br><span class="line">f1_score = f1_score(y_test, predictions)</span><br><span class="line">print(&quot;F1 Score: %.2f%%&quot; % (f1_score * 100.0))</span><br></pre></td></tr></table></figure>
+<h5 id="5-绘制Importance排序图"><a href="#5-绘制Importance排序图" class="headerlink" title="(5) 绘制Importance排序图"></a>(5) 绘制Importance排序图</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ax = xgb.plot_importance(md_1, height=0.5)</span><br><span class="line">fig = ax.figure</span><br><span class="line">fig.set_size_inches(25,20)                  # 可调节图片尺寸和紧密程度</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h5 id="6-根据Importance进行特征筛选"><a href="#6-根据Importance进行特征筛选" class="headerlink" title="(6) 根据Importance进行特征筛选"></a>(6) 根据Importance进行特征筛选</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"># sorted(list(selection_model.booster().get_score(importance_type=&apos;weight&apos;).values()),reverse = True)</span><br><span class="line"></span><br><span class="line">importance_plot = pd.DataFrame(&#123;&apos;feature&apos;:list(X_train.columns),&apos;importance&apos;:md_2.feature_importances_&#125;)</span><br><span class="line">importance_plot = importance_plot.sort_values(by=&apos;importance&apos;)</span><br><span class="line">importance_plot = importance_plot.reset.index(drop=True)</span><br><span class="line">thresholds = importance_plot.importance</span><br><span class="line">thresholds_valid = np.unique(thresholds[thresholds != 0])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">for thresh in thresholds_valid:</span><br><span class="line"></span><br><span class="line">	# select features using threshold</span><br><span class="line">	selection = SelectFromModel(md_2, threshold=thresh, prefit=True)</span><br><span class="line">	select_X_train = selection.transform(X_train)</span><br><span class="line">	# train model</span><br><span class="line">	selection_model = XGBClassifier(**best_param)</span><br><span class="line">	selection_model.fit(select_X_train, y_train)</span><br><span class="line">	# eval model</span><br><span class="line">	select_X_test = selection.transform(X_test)</span><br><span class="line">	y_pred = selection_model.predict(select_X_test)</span><br><span class="line">	predictions = [round(value) for value in y_pred]</span><br><span class="line">	accuracy = accuracy_score(y_test, predictions)</span><br><span class="line">	print(&quot;Thresh=%.4f, n=%d, Accuracy: %.2f%%&quot; % (thresh, select_X_train.shape[1], accuracy*100.0))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">thresh = 0.034</span><br><span class="line">selected_features = list(importance_plot[importance_plot.importance &gt; thresh][&apos;feature&apos;])</span><br><span class="line">print(&apos;selected features are :\n %s&apos;%selected_features)</span><br><span class="line">select_X_train = X_train[selected_features]                        # 筛选Importance符合阈值的特征集</span><br><span class="line"></span><br><span class="line">n_features = selected_X_train.shape[1]</span><br><span class="line">print(&apos;total: %d features are selected&apos; %n_features)</span><br><span class="line"></span><br><span class="line">selection_model = XGBClassifier(**best_param)                                   </span><br><span class="line">selection_model.fit(select_X_train, y_train)</span><br><span class="line"></span><br><span class="line">select_X_test = X_test[selected_features]</span><br><span class="line">y_pred = selection_model.predict(select_X_test)</span><br><span class="line">predictions = [round(value) for value in y_pred]</span><br><span class="line">accuracy = accuracy_score(y_test, predictions)</span><br><span class="line">f1_score = f1_score(y_test, predictions)</span><br><span class="line">print(&quot;Accuracy: %.2f%%&quot; % (accuracy * 100.0))</span><br><span class="line">print(&quot;F1 Score: %.2f%%&quot; % (f1_score * 100.0))</span><br></pre></td></tr></table></figure>
+<p>至于是先调参，再做变量筛选，还是先筛选后调参，或是反复调参反复筛选，纯凭个人喜号。</p>
+<h5 id="7-绘制决策树"><a href="#7-绘制决策树" class="headerlink" title="(7)绘制决策树"></a>(7)绘制决策树</h5><p>参考:<a href="http://codewithzhangyi.com/2018/06/01/XGBOOST%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" target="_blank" rel="noopener">codewithzhangyi.com</a><br>这里我没有绘制决策树，参考一个很棒的小姐姐个人网站，她的这篇文章中有写。</p>
+<hr>
+<p>参考：<br><a href="https://xgboost.readthedocs.io/en/latest/" target="_blank" rel="noopener">官方使用手册</a><br><a href="http://codewithzhangyi.com" target="_blank" rel="noopener">codewithzhangyi.com</a><br><a href="https://www.cnblogs.com/wj-1314/p/9402324.html" target="_blank" rel="noopener">Python机器学习笔记：XgBoost算法</a></p>
+<hr>
+<iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 
+" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe>
+
+
+
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2019/03/23/Machine-Learning-实战-Titanic生存预测/" data-toggle="tooltip" data-placement="top" title="Machine Learning-实战 Titanic生存预测">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+                    <!-- Valine -->
+                    <div class="vcomments"></div>
+                    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+                    <script src="//cdn.jsdelivr.net/npm/valine"></script>
+                    <script>
+                        var GUEST = ['nick','mail','link'];
+                        var meta = 'undefined';
+                        meta = meta.split(',').filter(function (item) {
+                            return GUEST.indexOf(item)>-1;
+                        });
+                        var notify = 'false' == true ? true : false;
+                        var verify = 'false' == true ? true : false;
+                        new Valine({
+                            el: '.vcomments',
+                            notify: notify,
+                            verify: verify,
+                            app_id: "KPXIfOuMVwWIv2Skprm5gYB4-gzGzoHsz",
+                            app_key: "f92SiTdYRrLO0zwfdQnRyXW1",
+                            placeholder: "Just go go",
+                            avatar:"mm",
+                            meta:meta
+                        });
+                    </script>
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#【1】前言"><span class="toc-text">【1】前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【2】算法原理简述"><span class="toc-text">【2】算法原理简述</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-Review-of-key-concepts-of-supervised-learning-监督学习到底在学什么"><span class="toc-text">(1)Review of key concepts of supervised learning | 监督学习到底在学什么</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-Regression-Tree-and-Ensemble-决策树在做什么"><span class="toc-text">(2) Regression Tree and Ensemble | 决策树在做什么</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-Gradient-Boosting-How-do-we-learn"><span class="toc-text">(3) Gradient Boosting(How do we learn)</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#【3】参数说明"><span class="toc-text">【3】参数说明</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-General-parameters-通用参数"><span class="toc-text">(1) General parameters 通用参数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-Booster-parameters参数"><span class="toc-text">(2) Booster parameters参数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-Learning-Task-parameters"><span class="toc-text">(3) Learning Task parameters</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【4】代码实现：python"><span class="toc-text">【4】代码实现：python</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-API接口说明"><span class="toc-text">(1)API接口说明</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-XGBoost调参"><span class="toc-text">(2) XGBoost调参</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-绘制-train-test-的-auc-rmse-error"><span class="toc-text">(3) 绘制 train/test 的 auc/rmse/error</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-建模，进行预测，打印评估指标"><span class="toc-text">(4) 建模，进行预测，打印评估指标</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-绘制Importance排序图"><span class="toc-text">(5) 绘制Importance排序图</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-根据Importance进行特征筛选"><span class="toc-text">(6) 根据Importance进行特征筛选</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-绘制决策树"><span class="toc-text">(7)绘制决策树</span></a></li></ol></li>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Machine Learning" title="Machine Learning">Machine Learning</a>
+                        
+                        <a class="tag" href="/tags/#XGBoost" title="XGBoost">XGBoost</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/YUTING">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/yu-ting-66-78">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/ytfantastic">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/YUTING">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://github.com/YUTING0907">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+			
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YUTING 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://yuting0907.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://YUTING0907.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/image/20181215001153.jpg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+</body>
+
+</html>
