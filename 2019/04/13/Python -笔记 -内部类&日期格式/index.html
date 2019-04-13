@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        搭建自己的个人网站(上)｜YUTING&#39;s blog
+        Python -笔记 -内部类&amp;日期格式｜YUTING&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://YUTING0907.github.io/2018/12/15/搭建自己的个人网站-上/">
+    <link rel="canonical" href="http://YUTING0907.github.io/2019/04/13/Python -笔记 -内部类&amp;日期格式/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -162,19 +162,17 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>搭建自己的个人网站(上)</h1>
+                    <h1>Python -笔记 -内部类&amp;日期格式</h1>
                     
                     <span class="meta">
                          作者 yuting
                         <span>
-                          日期 2018-12-15
+                          日期 2019-04-13
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#node" title="node">node</a>
-                        
-                        <a class="tag" href="/tags/#hexo" title="hexo">hexo</a>
+                        <a class="tag" href="/tags/#Python" title="Python">Python</a>
                         
                     </div>
                 </div>
@@ -183,7 +181,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            搭建自己的个人网站(上)
+            Python -笔记 -内部类&日期格式
         </span>
     </div>
 </header>
@@ -194,80 +192,35 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>本篇个人网站搭建系列博文是基于:GitHub+Hexo。<br>难度指数：♥♥<br>系统环境：win8</p>
-<p><strong>前言：</strong>真正搭建这个网站框架的时间也就花了两个晚上，不需要你有多么深厚的编程基础，可能会遇到一些坑，就需要你遇到问题解决问题的能力了，还有搜功，因为很多你遇到的问题很多人都遇到了，太阳底下没有新鲜事儿，会搜索基本解决了大多数问题。</p>
-<h3 id="第一步：准备必要的软件"><a href="#第一步：准备必要的软件" class="headerlink" title="第一步：准备必要的软件"></a>第一步：准备必要的软件</h3><p><strong>1.Git下载</strong><br>     <a href="https://git-scm.com/downloads" target="_blank" rel="noopener">Git</a>,选择适合自己电脑的环境，一路Next下来就行了。</p>
-<p><strong>2、安装node.js</strong><br>    <a href="http://nodejs.cn/" target="_blank" rel="noopener">node.js</a>,也是基于自己的电脑环境选择下载，下载最新版本，在Windows安装时务必选择全部组件，包括勾选<code>Add to Path</code>。安装完成后，在Windows环境下，打开命令行提示符，输入<code>node -v</code>，看到版本号正常输出，则安装完成。<br>           <img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/rm7.QvW1mxRhb6sdXnYhiskAulDc0JF9F0bBkPmX50s!/b/dFYBAAAAAAAA&amp;bo=4AAqAAAAAAADF*g!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
-<h3 id="第二步：Github注册与配置"><a href="#第二步：Github注册与配置" class="headerlink" title="第二步：Github注册与配置"></a>第二步：Github注册与配置</h3><h4 id="1-注册Github"><a href="#1-注册Github" class="headerlink" title="1.注册Github"></a>1.注册Github</h4><p>点击→<a href="https://github.com" target="_blank" rel="noopener">https://github.com</a>右上角sign up<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/5x0MOWtEd4jqwAH5TXRe1qhXefHiOiLCsLpl0vLFZ04!/b/dFQBAAAAAAAA&amp;bo=eQRqAgAAAAADFyc!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"><br>注册完成后，记住自己的用户名，因为后续个人网站的网址格式为：username.github.io<br>这个username就是你的github用户名。<br>这里我的GitHub账号是：YUTING0907<br>个人网站：YUTING0907.github.io<br>你后续也可以自己绑定域名，叫个更炫酷的名字XXX.com</p>
-<h4 id="2-创建Repository"><a href="#2-创建Repository" class="headerlink" title="2.创建Repository"></a>2.创建Repository</h4><p>登陆GitHub，点击右上角的+，会出现New repository创建一个与你博客相关你的Repository进行管理，之后你的博客都会在GitHub的这个Repository里同步更新。<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/*bhCJMsQQlH5*0hTH7p1in230nG62njUjBHVSaqhKn0!/b/dD4BAAAAAAAA&amp;bo=DQVSAgAAAAADF2o!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
-<p>Repository的名字是username.github.io，比如我的YUTING0907.github.io。其余可以先不填，点击Create repository</p>
-<h4 id="3-配置SSH-Keys"><a href="#3-配置SSH-Keys" class="headerlink" title="3.配置SSH Keys"></a>3.配置SSH Keys</h4><p>SSH Keys用来使本地git项目与GitHub联系，这样能在GitHub上的博客项目是最新更新的。</p>
-<p>检查SSH Keys的设置<br><strong>I. 开始–所有应用–找到git bash</strong></p>
-<p><strong>II. 检查你电脑里现有的SSH Key</strong><br>   $ cd ~/.ssh<br>如果显示 No such file or directory，说明这是你第一次用git<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/3KDk1iRk5gEdR1LEgUg.TqHLInCwu2ZEY7D9QyUCZ*4!/b/dAgBAAAAAAAA&amp;bo=NAE5AAAAAAADFz4!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
-<p><strong>III. 接下来生成新的SSH Key:</strong><br>$ ssh-keygen -t rsa -C “邮件地址”<br>Generating public/private rsa key pair.<br>Enter file in which to save the key (/Users/your_user_directory/.ssh/id_rsa):&lt;回车就好&gt;</p>
-<p>这里的邮箱地址，输入注册 Github 的邮箱地址</p>
-<p> 然后系统会要你输入密码：<br>Enter passphrase (empty for no passphrase):&lt;设置密码&gt;<br>Enter same passphrase again:&lt;再次输入密码&gt;</p>
-<p>再回车，这里会提示你输入一个密码，作为你提交项目时使用</p>
-<p><strong>注意：</strong>输入密码的时候没有输入痕迹的，不要以为什么也没有输入。<br>最后看到这样的界面，就成功设置ssh key了：<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/mYRnwZ8YFWIqmMRyqUbc5ob0slTpOiDo96NSAVjeo08!/b/dLwAAAAAAAAA&amp;bo=5gEpAQAAAAADF*0!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
-<h4 id="IV-添加SSH-Key到GitHub上"><a href="#IV-添加SSH-Key到GitHub上" class="headerlink" title="IV. 添加SSH Key到GitHub上"></a>IV. 添加SSH Key到GitHub上</h4><p>在本地文件夹找到id_rsa.pub文件，看上面的图片第四行的位置告诉你存在哪里了，没有的话可能是隐藏了，勾选一下文件扩展名 隐藏的项目。</p>
-<p>回到你的GitHub主页，右上角点击头像选中Setting</p>
-<p>继续选中左边菜单栏的SSH and GPG keys</p>
-<p>Title最好写，随便写。否则可能出现各种各样的二逼问题<br>Key部分就是放刚才复制的内容了，点击Add SSH key</p>
-<h4 id="V-测试"><a href="#V-测试" class="headerlink" title="V.测试"></a>V.测试</h4><p>git bash里输入代码：<code>$ ssh -T git@github.com</code> </p>
-<pre><code>The authenticity of host &#39;GitHub.com (52.74.227.119)&#39; can&#39;t be established.
-RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.
-Are you sure you want to continue connecting (yes/no)
-</code></pre><p>输入yes，回车<br>按照提示输入刚才设置的密码，回车<br>You’ve successfully authenticated…<br>设置成功！</p>
-<h4 id="VI-设置用户信息"><a href="#VI-设置用户信息" class="headerlink" title="VI.设置用户信息"></a>VI.设置用户信息</h4><pre><code>$ git config --global user.name &quot;YUTING0907&quot; 
-</code></pre><p>//输入注册时的username</p>
-<pre><code>$ git config --global user.email  &quot;YUTING9597@163.COM&quot; 
-</code></pre><p>//填写注册邮箱<br>把名称和邮箱替换成你自己的,SSH Key就配置成功啦！<br>本机已成功连接到 github。</p>
-<h3 id="第三步：搭建Hexo博客"><a href="#第三步：搭建Hexo博客" class="headerlink" title="第三步：搭建Hexo博客"></a>第三步：搭建Hexo博客</h3><p><strong>利用npm命令安装hexo</strong><br>npm Node Package Manager是随同NodeJS一起安装的包管理工具，想了解更多可以自行去百度。</p>
-<pre><code>$ npm install -g hexo
-</code></pre><p>安装完成后，在本地创建一个与 Repository中博客项目同名的文件夹username.github.io(如D:/YUTING0907.github.io)在文件夹上点击鼠标右键,选择 Git bash here（可以代替命令行指示符的存在~）,【这一步的作用是因为以后博客部署和更新都要在此文件夹下】</p>
-<p><strong>hexo初始化</strong></p>
-<pre><code>hexo init
-</code></pre><p><strong>安装依赖包</strong></p>
-<pre><code>$ npm install
-</code></pre><p>这里我踩坑了，<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/95hREaV7iXFGebAzGGu01Ayke2nVXhftPOPm1vntWyg!/b/dL8AAAAAAAAA&amp;bo=rQFfAQAAAAADF8A!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
-<p>然后上百度、google各种找解决办法，后来发现是因为<br>Your versions of node and npm are years old and no longer supported。版本太低了，后来更新node.js版本就好了.<br><a href="https://github.com/npm/npm/issues/8488" target="_blank" rel="noopener">npm install 报错解决办法</a><br>这里放上更新node.js的方法<br>方法一：执行下列代码</p>
-<pre><code>npm install npm@latest -g
-</code></pre><p>但我的电脑出现了如下报错，如有朋友出现更新错误，课移步方法二。<br>C:\Users\lenovo\AppData\Roaming\npm\node_modules\npm\bin\npm-cli.js:79<br>      let notifier = require(‘update-notifier’)({pkg})<br>      ^^^<br>方法二:<br>1.到node官网（<a href="https://nodejs.org/en/）" target="_blank" rel="noopener">https://nodejs.org/en/）</a><br>下载最新版或者官网推荐版本，我下载的是10.14.1。</p>
-<p>2.将下载的文件安装到之前安装node.js的地方<br>通过where node命令查看node路径<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/IPFuuHtZ8RT5DD1PnwVAUJeaBY3smLyDDB3Yvka.x4g!/b/dL4AAAAAAAAA&amp;bo=AQEoAAAAAAADFxo!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
-<p>将刚刚下载的文件放到上面查到的路径中<br>双击刚刚下载的文件,点击next 具体安装方法和之前第一次安装一样，但是【<strong>注意在选择路径的时候要选成上面查到的node路径中</strong>】</p>
-<p>3.安装完成。通过npm -v和node -v查看当前版本号</p>
-<p><strong>确保git部署</strong></p>
-<pre><code>$ npm install hexo-deployer-git --save
-</code></pre><p><strong>本地查看</strong><br>做到这里恭喜你😀，现在已经搭建好本地的 Hexo 博客了，执行完下面的命令就可以到浏览器输入 localhost:4000 查看到啦！<br>$ hexo g   //生成更新网站<br>$ hexo s   //这一步是让你可以在本地localhost:4000可以浏览网站，一个服务预览的作用，退出服务按ctrl+c<br>$ hexo d //部署网站</p>
-<p>【小提醒】如果在配置 SSH key 时设置了密码，执行 hexo d 命令上传文件时需要输入密码进行确认，会出现一个小框框，让你输入密码，你输入密码即可部署更新。</p>
-<p>执行完 hexo init 命令后会给一个默认的主题：landscape</p>
-<h3 id="最后一步：将博客部署到username-github-io"><a href="#最后一步：将博客部署到username-github-io" class="headerlink" title="最后一步：将博客部署到username.github.io"></a>最后一步：将博客部署到username.github.io</h3><p><strong>复制SSH码</strong></p>
-<p>进入 Github 个人主页中的 Repository，复制新建的独立博客项目username.github.io的 SSH码<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/3S8S4ph4RLihnpcoxSNWWtYoCcwUhNHDmmzmJVypCeQ!/b/dLgAAAAAAAAA&amp;bo=cgQpAgAAAAADF28!&amp;rf=viewer_4&amp;t=5" alt="在这里插入图片描述"></p>
-<p><strong>编辑整站配置文件</strong><br>打开 D:/username.github.io/_config.yml,把刚刚复制的 SSH码粘贴到repository：后面</p>
-<pre><code>deploy:
-  type: git
-  repository: git@github.com:username/username.github.io.git
-  branch: master
-</code></pre><p>冒号后一定要空一格。否则会报FATAL can not read a block mapping entry的错。</p>
-<p>当当当当~~到这里你已经拥有一个属于自己的网站，可能有点简陋，但是整个框架已经搭起来了。期待下一篇把网站拾掇得更好吧。</p>
-<p>搭建参考：<br><a href="http://codewithzhangyi.com/archives/" target="_blank" rel="noopener">如何搭建自己的个人网站</a></p>
-<p><a href="https://blog.csdn.net/H_duolalu/article/details/80215580" target="_blank" rel="noopener">更新node</a></p>
-<p><a href="https://github.com/npm/npm/issues/8488" target="_blank" rel="noopener">npm install错误</a></p>
+                <hr>
+<p><strong>本文适用对象：</strong></p>
+<p>python初级打怪～</p>
+<p>本文介绍两个python的小知识点，内部类和日期格式转换</p>
+<hr>
+<h3 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a><strong>内部类</strong></h3><p>内部类顾名思义就是类内部包含的类，就叫内部类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class Car: #外部类</span><br><span class="line">    class Door: # 内部类</span><br><span class="line">        def open(self):</span><br><span class="line">            print(&quot;open door&quot;)</span><br><span class="line"></span><br><span class="line">    class Wheel:</span><br><span class="line">        def run(self):</span><br><span class="line">            print(&quot;car run&quot;)</span><br><span class="line"></span><br><span class="line">if __name__ ==&quot;__main__&quot;:</span><br><span class="line">    car = Car() #实例化外部类</span><br><span class="line">    backDoor = Car.Door()  # 实例化内部类 第一种方法</span><br><span class="line">    frontDoor = car.Door()  # 因为car已经实例化外部类，再次实例化Car的内部类 第二种方法</span><br><span class="line">    backDoor.open()</span><br><span class="line">    frontDoor.open()</span><br></pre></td></tr></table></figure></p>
+<p>以上代码列举了调用内部类的两种方法<br>第一种调用内部类的方法是：<br><strong>通过外部类直接调用，不实例化外部类。</strong><br>第二种调用内部类的方法是：<br><strong>通过外部类的实例化对象调用</strong></p>
+<h3 id="内部类-1"><a href="#内部类-1" class="headerlink" title="内部类"></a><strong>内部类</strong></h3><hr>
+<h4 id="日期格式："><a href="#日期格式：" class="headerlink" title="日期格式："></a><strong>日期格式：</strong></h4><p>字符格式转换成日期格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import datetime</span><br><span class="line">datetime.datetime.strptime(&apos;2019-04-13&apos;, &apos;%Y-%m-%d&apos;)</span><br><span class="line">＃output：2019-04-1３ 00:00:00</span><br></pre></td></tr></table></figure>
+<p>六天后的时间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import datetime</span><br><span class="line">now = datetime.datetime.strptime(&apos;2019-04-13&apos;, &apos;%Y-%m-%d&apos;)</span><br><span class="line">times = &apos;2019-04-13&apos;</span><br><span class="line">endnow = now+datetime.timedelta(days=6)</span><br><span class="line">print(endnow)</span><br><span class="line">＃output：2019-04-19 00:00:00</span><br></pre></td></tr></table></figure>
+<p>时间转换成字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import datetime</span><br><span class="line">now = datetime.datetime.strptime(&apos;2019-04-13&apos;, &apos;%Y-%m-%d&apos;)</span><br><span class="line">times = &apos;2019-04-13&apos;</span><br><span class="line">endnow = now+datetime.timedelta(days=6)</span><br><span class="line">print(endnow.strftime(&apos;%Y-%m-%d&apos;))</span><br><span class="line">＃output：2019-04-19</span><br></pre></td></tr></table></figure>
+<hr>
 <iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 
 " style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe>
+
+
+
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2018/12/16/搭建自己的个人网站-下/" data-toggle="tooltip" data-placement="top" title="搭建自己的个人网站(下)">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2018/12/12/article/" data-toggle="tooltip" data-placement="top" title="2019 do better">Next Post &rarr;</a>
+                        <a href="/2019/04/13/Python -笔记 -单例模式(Singleton)实现/" data-toggle="tooltip" data-placement="top" title="Python -笔记 -单例模式(Singleton)实现">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -310,7 +263,7 @@ Are you sure you want to continue connecting (yes/no)
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一步：准备必要的软件"><span class="toc-text">第一步：准备必要的软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二步：Github注册与配置"><span class="toc-text">第二步：Github注册与配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-注册Github"><span class="toc-text">1.注册Github</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-创建Repository"><span class="toc-text">2.创建Repository</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-配置SSH-Keys"><span class="toc-text">3.配置SSH Keys</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IV-添加SSH-Key到GitHub上"><span class="toc-text">IV. 添加SSH Key到GitHub上</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#V-测试"><span class="toc-text">V.测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#VI-设置用户信息"><span class="toc-text">VI.设置用户信息</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三步：搭建Hexo博客"><span class="toc-text">第三步：搭建Hexo博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最后一步：将博客部署到username-github-io"><span class="toc-text">最后一步：将博客部署到username.github.io</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#内部类"><span class="toc-text">内部类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内部类-1"><span class="toc-text">内部类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#日期格式："><span class="toc-text">日期格式：</span></a></li></ol></li></ol>
                 </div>
             </div>
         </div>
@@ -332,9 +285,7 @@ Are you sure you want to continue connecting (yes/no)
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#node" title="node">node</a>
-                        
-                        <a class="tag" href="/tags/#hexo" title="hexo">hexo</a>
+                        <a class="tag" href="/tags/#Python" title="Python">Python</a>
                         
                     </div>
                 </section>
