@@ -199,7 +199,7 @@
 <hr>
 <h3 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a><strong>内部类</strong></h3><p>内部类顾名思义就是类内部包含的类，就叫内部类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class Car: #外部类</span><br><span class="line">    class Door: # 内部类</span><br><span class="line">        def open(self):</span><br><span class="line">            print(&quot;open door&quot;)</span><br><span class="line"></span><br><span class="line">    class Wheel:</span><br><span class="line">        def run(self):</span><br><span class="line">            print(&quot;car run&quot;)</span><br><span class="line"></span><br><span class="line">if __name__ ==&quot;__main__&quot;:</span><br><span class="line">    car = Car() #实例化外部类</span><br><span class="line">    backDoor = Car.Door()  # 实例化内部类 第一种方法</span><br><span class="line">    frontDoor = car.Door()  # 因为car已经实例化外部类，再次实例化Car的内部类 第二种方法</span><br><span class="line">    backDoor.open()</span><br><span class="line">    frontDoor.open()</span><br></pre></td></tr></table></figure></p>
 <p>以上代码列举了调用内部类的两种方法<br>第一种调用内部类的方法是：<br><strong>通过外部类直接调用，不实例化外部类。</strong><br>第二种调用内部类的方法是：<br><strong>通过外部类的实例化对象调用</strong></p>
-<h3 id="内部类-1"><a href="#内部类-1" class="headerlink" title="内部类"></a><strong>内部类</strong></h3><hr>
+<hr>
 <h4 id="日期格式："><a href="#日期格式：" class="headerlink" title="日期格式："></a><strong>日期格式：</strong></h4><p>字符格式转换成日期格式</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import datetime</span><br><span class="line">datetime.datetime.strptime(&apos;2019-04-13&apos;, &apos;%Y-%m-%d&apos;)</span><br><span class="line">＃output：2019-04-1３ 00:00:00</span><br></pre></td></tr></table></figure>
 <p>六天后的时间</p>
@@ -263,7 +263,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#内部类"><span class="toc-text">内部类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内部类-1"><span class="toc-text">内部类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#日期格式："><span class="toc-text">日期格式：</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#内部类"><span class="toc-text">内部类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#日期格式："><span class="toc-text">日期格式：</span></a></li></ol></li></ol>
                 </div>
             </div>
         </div>
