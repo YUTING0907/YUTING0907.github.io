@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YUTING在 Github 上的个人博客">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="YUTING" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        python-应用-实现2048.｜YUTING&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://YUTING0907.github.io/2019/12/28/python实现2048/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    YUTING
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/categories/">categories</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="http://pjqhk6p7v.bkt.clouddn.com/5.gif">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://pjqhk6p7v.bkt.clouddn.com/5.gif?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>python-应用-实现2048.</h1>
+                    
+                    <span class="meta">
+                         作者 yuting
+                        <span>
+                          日期 2019-12-28
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Python" title="Python">Python</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            python-应用-实现2048.
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <hr>
+<p>本篇文章是利用python 实现2048小游戏<br>目的：为了提高自己的编程思路</p>
+<p>环境：win8+python3.6+curses模块 Pycharm<br>适用人群：python入门+想用python做点事情的朋友们</p>
+<p>大家可能都玩过2048，我记得那时候还蛮火的。不过那个时候我还没有接触编程，根本想不到自己今天还会写代码。。</p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p><strong>游戏规则</strong>：玩家通过 w s a d 控制数字移动方向，达成 2048 这个数字即获胜。</p>
+<p>每次可以选择一个方向移动，数字便会朝这个方向移动，如果遇到相同数字就相加，遇到不同数字或者边界就停止移动。同时会在空白的地方生成 2 或者 4 的随机数字。通过不断相撞、相加，最后达成 2048 这个数字。</p>
+<p><strong>编程思路：</strong></p>
+<p><strong>1.首先想象一下游戏的几个状态：</strong></p>
+<p>状态1：初始化状态(也就是刚开始游戏）<br>状态2：游戏中(Game ing……)<br>状态3：你赢了(Win)<br>状态4：你输了(Game Over)</p>
+<p><strong>2.用户行为</strong></p>
+<p>用户通过行为(action)改变来完成一个游戏状态到另一个游戏状态的该表，比如用户上移，下移，左移，右移，重置和退出。</p>
+<p><strong>3.由一个状态转化到另一个状态</strong></p>
+<p>分析一下从一个状态到下一个状态的所有可能性：<br>1.当上一个状态是初始化(Init)状态时，下一个状态肯定是游戏中(Game ing…)的状态。</p>
+<p>2.当上一个状态为游戏中(Game ing…)的状态时，下一个状态要根据用户的输入来判断，如用户输入Restart,则下一个状态返回为初始化状态(Init)，如用户输入Exit的时候，下一个状态转换为退出游戏(Exit),</p>
+<p>用户还可以上下左右移动，这时候下一个状态可能是你输了(Game Over)或者你赢了(Win)，再或者继续游戏。</p>
+<p>3.当上一个状态为你输了(Game Over)，用户输入Restart，下一个状态可能为初始化(Init)状态，用户输入Exit的时候，下一个状态转换为退出游戏(Exit)。</p>
+<p>4.当上一个状态为你赢了(Win)，用户输入Restart，下一个状态可能为初始化(Init)状态，用户输入Exit的时候，下一个状态转换为退出游戏(Exit)。</p>
+<p>其中3和4神似，可以合并起来得到not_game的功能。</p>
+<p>上述文字用图表示如下：</p>
+<p>! [ 图片来自实验楼] ( <a href="http://m.qpic.cn/psc?/V10c1VbY1Y4Fvm/3pY6KhS62k*1Vm7UATlxq*dT9N4M9SFdcoa2exyDwTjMQRzdwgQxzI3eywPjhcCPWMtBAbo8u2e.zNSVqh5WGr9RvKTwx9YMevj37h84A.s!/b&amp;bo=ZgKCAQAAAAADF9U!&amp;rf=viewer_4&amp;t=5" target="_blank" rel="noopener">http://m.qpic.cn/psc?/V10c1VbY1Y4Fvm/3pY6KhS62k*1Vm7UATlxq*dT9N4M9SFdcoa2exyDwTjMQRzdwgQxzI3eywPjhcCPWMtBAbo8u2e.zNSVqh5WGr9RvKTwx9YMevj37h84A.s!/b&amp;bo=ZgKCAQAAAAADF9U!&amp;rf=viewer_4&amp;t=5</a> )</p>
+<p><strong>另外除非用户按代表退出的按键(Exit)或者游戏被玩死了,否则游戏一直被挂起。</strong></p>
+<p>根据以上分析，下面可以初略的搭建程序大致的框架：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(stdscr)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">init</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="comment"># 重置游戏棋盘</span></span><br><span class="line">        game_field.reset()</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Game'</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">game</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="comment"># 画出 GameOver 或者 Win 的界面</span></span><br><span class="line">        game_field.draw(stdscr)</span><br><span class="line">        <span class="comment"># 读取用户输入得到action，判断是重启游戏还是结束游戏</span></span><br><span class="line">        action = get_user_action(stdscr)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> action ==<span class="string">'Restart'</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'Init'</span></span><br><span class="line">        <span class="keyword">if</span> action==<span class="string">'Exit'</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'Exit'</span></span><br><span class="line">        <span class="keyword">if</span> game_field.move(action):</span><br><span class="line">            <span class="keyword">if</span> game_field.is_win():</span><br><span class="line">                <span class="keyword">return</span> <span class="string">'Win'</span></span><br><span class="line">            <span class="keyword">if</span> game_field.is_gameover():</span><br><span class="line">                <span class="keyword">return</span> <span class="string">'Gameover'</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Game'</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">not_game</span><span class="params">(state)</span>:</span></span><br><span class="line">        <span class="comment"># 画出 GameOver 或者 Win 的界面</span></span><br><span class="line">        game_field.draw(stdscr)</span><br><span class="line">        <span class="comment"># 读取用户输入得到action，判断是重启游戏还是结束游戏</span></span><br><span class="line">        action = get_user_action(stdscr)</span><br><span class="line">        responses = defaultdict(<span class="keyword">lambda</span>:state)</span><br><span class="line">        responses[<span class="string">'Restart'</span>], responses[<span class="string">'Exit'</span>] = <span class="string">'Init'</span>,<span class="string">'Exit'</span></span><br><span class="line">        <span class="keyword">return</span> responses[action]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 游戏盘的四种状态</span></span><br><span class="line">    state_actions=&#123;</span><br><span class="line">        <span class="string">'Init'</span>:init,</span><br><span class="line">        <span class="string">'Win'</span>:<span class="keyword">lambda</span>:not_game(<span class="string">'Win'</span>),</span><br><span class="line">        <span class="string">'Gameover'</span>:<span class="keyword">lambda</span>:not_game(<span class="string">'Gameover'</span>),</span><br><span class="line">        <span class="string">'Game'</span>:game</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    game_field = GameField(win=<span class="number">2048</span>)</span><br><span class="line">    state = <span class="string">'Init'</span></span><br><span class="line">    <span class="keyword">while</span> state!=<span class="string">'Exit'</span>:</span><br><span class="line">        state = state_actions[state]()</span><br></pre></td></tr></table></figure>
+<p>4.丰富框架<br>大体的骨架搭好了，下面让它完善起来。</p>
+<p>分为两类：<br>第一类，把它叫做通用工具类。</p>
+<p>这两个操作主要是用户在操作游戏之后对棋盘状态的变化以及修改，拥有这两个函数能够节省不少的代码量。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">transpose</span><span class="params">(field)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> [list(row) <span class="keyword">for</span> row <span class="keyword">in</span> zip(*field)]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">invert</span><span class="params">(field)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> [row[::<span class="number">-1</span>] <span class="keyword">for</span> row <span class="keyword">in</span> field]</span><br></pre></td></tr></table></figure></p>
+<p>如下为用户输入函数：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">actions = [<span class="string">'Up'</span>, <span class="string">'Left'</span>, <span class="string">'Down'</span>, <span class="string">'Right'</span>, <span class="string">'Restart'</span>, <span class="string">'Exit'</span>]</span><br><span class="line"><span class="comment"># 分别用 W（上），A（左），S（下），D（右），R（重置），Q（退出），进行输入来操作游戏，这里考虑到大写锁定键锁定的情况：</span></span><br><span class="line">letter_codes = [ord(c) <span class="keyword">for</span> c <span class="keyword">in</span> <span class="string">'WASDRQwasdrq'</span>]</span><br><span class="line">actions_dict = dict(zip(letter_codes, actions*<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_user_action</span><span class="params">(keyboard)</span>:</span></span><br><span class="line">    char = <span class="string">'N'</span></span><br><span class="line">    <span class="comment">#阻塞＋循环，直到获得用户有效输入才返回对应行为：</span></span><br><span class="line">    <span class="keyword">while</span> char <span class="keyword">not</span> <span class="keyword">in</span> actions_dict:</span><br><span class="line">        char = keyboard.getch()</span><br><span class="line">    <span class="keyword">return</span> actions_dict[char]</span><br></pre></td></tr></table></figure></p>
+<p>第二大类：棋盘类<br>包含重置棋盘、棋盘走一步、判断输赢、绘制游戏界面、随机生成一个 2 或者 4、判断能否移动的功能。</p>
+<p>重置棋盘<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#重置棋盘</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">reset</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> self.score&gt;self.highscore:</span><br><span class="line">        self.highscore = self.score</span><br><span class="line">    self.score = <span class="number">0</span></span><br><span class="line">    self.field = [[<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(self.width)] <span class="keyword">for</span> j <span class="keyword">in</span> range(self.height)]</span><br><span class="line">    self.spawn()</span><br><span class="line">    self.spawn()</span><br></pre></td></tr></table></figure></p>
+<p>棋盘走一步<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">move</span><span class="params">(self,direction)</span>:</span></span><br><span class="line">    <span class="comment">#一行相左合并</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">move_row_left</span><span class="params">(row)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">tighten</span><span class="params">(row)</span>:</span> <span class="comment">#把零散的非零单元挤到一块</span></span><br><span class="line">            new_row = [i <span class="keyword">for</span> i <span class="keyword">in</span> row <span class="keyword">if</span> i!=<span class="number">0</span>]</span><br><span class="line">            new_row+=[<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(len(row)-len(new_row))]</span><br><span class="line">            <span class="keyword">return</span> new_row</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">merge</span><span class="params">(row)</span>:</span></span><br><span class="line">            pair=<span class="keyword">False</span></span><br><span class="line">            new_row=[]</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(len(row)):</span><br><span class="line">                <span class="keyword">if</span> pair:</span><br><span class="line">                    <span class="comment"># 合并后，加入乘 2 后的元素在 0 元素后面</span></span><br><span class="line">                    new_row.append(<span class="number">2</span>*row[i])</span><br><span class="line">                    self.score+=<span class="number">2</span>*row[i]</span><br><span class="line">                    pair=<span class="keyword">False</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">if</span> i+<span class="number">1</span>&lt;len(row) <span class="keyword">and</span> row[i]==row[i+<span class="number">1</span>]:</span><br><span class="line">                        pair=<span class="keyword">True</span></span><br><span class="line">                        <span class="comment"># 不能合并，新列表中加入该元素</span></span><br><span class="line">                        new_row.append(<span class="number">0</span>)</span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        new_row.append(row[i])</span><br><span class="line">            <span class="keyword">assert</span> len(new_row)==len(row)</span><br><span class="line">            <span class="keyword">return</span> new_row</span><br><span class="line">        <span class="comment"># 先挤到一块再合并再挤到一块</span></span><br><span class="line">        <span class="keyword">return</span> tighten(merge(tighten(row)))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建 moves 字典，把不同的棋盘操作作为不同的 key，对应不同的方法函数</span></span><br><span class="line">    moves=&#123;&#125;</span><br><span class="line">    moves[<span class="string">'Left'</span>] = <span class="keyword">lambda</span> filed:[move_row_left(row) <span class="keyword">for</span> row <span class="keyword">in</span> filed]</span><br><span class="line">    moves[<span class="string">'Right'</span>] = <span class="keyword">lambda</span> filed:invert(moves[<span class="string">'Left'</span>](invert(filed)))</span><br><span class="line">    moves[<span class="string">'Up'</span>] = <span class="keyword">lambda</span> field:transpose(moves[<span class="string">'Left'</span>](transpose(field)))</span><br><span class="line">    moves[<span class="string">'Down'</span>] = <span class="keyword">lambda</span> field:transpose((moves[<span class="string">'Right'</span>](transpose(field))))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> direction <span class="keyword">in</span> moves:</span><br><span class="line">        <span class="keyword">if</span> self.move_is_possible(direction):</span><br><span class="line">            self.field = moves[direction](self.field)</span><br><span class="line">            <span class="comment">#生成一个随机2或者4</span></span><br><span class="line">            self.spawn()</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br></pre></td></tr></table></figure></p>
+<p>判断输赢<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 判断输赢</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_win</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> any(any(i&gt;=self.win_value <span class="keyword">for</span> i <span class="keyword">in</span> row) <span class="keyword">for</span> row <span class="keyword">in</span> self.field)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_gameover</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">not</span> any(self.move_is_possible(move) <span class="keyword">for</span> move <span class="keyword">in</span> actions)</span><br></pre></td></tr></table></figure></p>
+<p>绘制游戏界面<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span><span class="params">(self, screen)</span>:</span></span><br><span class="line">     help_string1 = <span class="string">'(W)Up (S)Down (A)Left (D)Right'</span></span><br><span class="line">     help_string2 = <span class="string">'     (R)Restart (Q)Exit'</span></span><br><span class="line">     gameover_string = <span class="string">'           GAME OVER'</span></span><br><span class="line">     win_string = <span class="string">'          YOU WIN!'</span></span><br><span class="line">     <span class="function"><span class="keyword">def</span> <span class="title">cast</span><span class="params">(string)</span>:</span></span><br><span class="line">         screen.addstr(string+<span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line">     <span class="comment"># 绘制水平分割线</span></span><br><span class="line">     <span class="function"><span class="keyword">def</span> <span class="title">draw_hor_separator</span><span class="params">()</span>:</span></span><br><span class="line">         line = <span class="string">'+'</span>+(<span class="string">'+------'</span> * self.width + <span class="string">'+'</span>)[<span class="number">1</span>:]</span><br><span class="line">         <span class="comment"># defaultdict传入为函数时，可以实现value为某个常量，使用lambda可以使得代码更为简洁</span></span><br><span class="line">         separator = defaultdict(<span class="keyword">lambda</span>: line)</span><br><span class="line">         <span class="comment">#hasattr(object, name) 判断object对象中是否存在name属性</span></span><br><span class="line">         <span class="comment"># python中的函数是一种对象，它有属于对象的属性。函数还可以自定义自己的属性。注意，属性是和对象相关的，和作用域无关。</span></span><br><span class="line">         <span class="keyword">if</span> <span class="keyword">not</span> hasattr(draw_hor_separator,<span class="string">'counter'</span>):</span><br><span class="line">             draw_hor_separator.counter=<span class="number">0</span></span><br><span class="line">         cast(separator[draw_hor_separator.counter])</span><br><span class="line">         draw_hor_separator.counter+=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">def</span> <span class="title">draw_row</span><span class="params">(row)</span>:</span></span><br><span class="line">         cast(<span class="string">''</span>.join(<span class="string">'|&#123;: ^5&#125; '</span>.format(num) <span class="keyword">if</span> num &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="string">'|      '</span> <span class="keyword">for</span> num <span class="keyword">in</span> row) + <span class="string">'|'</span>)</span><br><span class="line"></span><br><span class="line">     screen.clear()</span><br><span class="line"></span><br><span class="line">     cast(<span class="string">'SCORE: '</span> + str(self.score))</span><br><span class="line">     <span class="keyword">if</span> <span class="number">0</span> != self.highscore:</span><br><span class="line">         cast(<span class="string">'HGHSCORE: '</span> + str(self.highscore))</span><br><span class="line"></span><br><span class="line">     <span class="keyword">for</span> row <span class="keyword">in</span> self.field:</span><br><span class="line">         draw_hor_separator()</span><br><span class="line">         draw_row(row)</span><br><span class="line">     draw_hor_separator()</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> self.is_win():</span><br><span class="line">         cast(win_string)</span><br><span class="line">     <span class="keyword">else</span>:</span><br><span class="line">         <span class="keyword">if</span> self.is_gameover():</span><br><span class="line">             cast(gameover_string)</span><br><span class="line">         <span class="keyword">else</span>:</span><br><span class="line">             cast(help_string1)</span><br><span class="line">     cast(help_string2)</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个 2 或者 4<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">spawn</span><span class="params">(self)</span>:</span></span><br><span class="line">    new_element = <span class="number">4</span> <span class="keyword">if</span> randrange(<span class="number">100</span>) &gt; <span class="number">89</span> <span class="keyword">else</span> <span class="number">2</span></span><br><span class="line">    (i, j) = choice([(i, j) <span class="keyword">for</span> i <span class="keyword">in</span> range(self.width) <span class="keyword">for</span> j <span class="keyword">in</span> range(self.height) <span class="keyword">if</span> self.field[i][j] == <span class="number">0</span>])</span><br><span class="line">    self.field[i][j] = new_element</span><br></pre></td></tr></table></figure></p>
+<p>判断能否移动<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 判断是否能移动</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">move_is_possible</span><span class="params">(self, dictions)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">row_is_left_moveable</span><span class="params">(row)</span>:</span></span><br><span class="line">            <span class="function"><span class="keyword">def</span> <span class="title">change</span><span class="params">(i)</span>:</span></span><br><span class="line">                <span class="comment"># 当左边有空位（0），右边有数字时，可以向左移动</span></span><br><span class="line">                <span class="keyword">if</span> row[i] == <span class="number">0</span> <span class="keyword">and</span> row[i + <span class="number">1</span>] != <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">                <span class="comment"># 当左边有一个数和右边的数相等时，可以向左合并</span></span><br><span class="line">                <span class="keyword">if</span> row[i] != <span class="number">0</span> <span class="keyword">and</span> row[i + <span class="number">1</span>] == row[i]:</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> any(change(i) <span class="keyword">for</span> i <span class="keyword">in</span> range(len(row) - <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">        check = &#123;&#125;</span><br><span class="line">        <span class="comment"># 判断矩阵每一行有没有可以左移动的元素</span></span><br><span class="line">        check[<span class="string">'Left'</span>] = <span class="keyword">lambda</span> field: any(row_is_left_moveable(row) <span class="keyword">for</span> row <span class="keyword">in</span> field)</span><br><span class="line">        <span class="comment"># 判断矩阵每一行有没有可以右移动的元素。这里只用进行判断，所以矩阵变换之后，不用再变换复原</span></span><br><span class="line">        check[<span class="string">'Right'</span>] = <span class="keyword">lambda</span> field: check[<span class="string">'Left'</span>](invert(field))</span><br><span class="line"></span><br><span class="line">        check[<span class="string">'Up'</span>] = <span class="keyword">lambda</span> field: check[<span class="string">'Left'</span>](transpose(field))</span><br><span class="line"></span><br><span class="line">        check[<span class="string">'Down'</span>] = <span class="keyword">lambda</span> field: check[<span class="string">'Right'</span>](transpose(field))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> dictions <span class="keyword">in</span> check:</span><br><span class="line">            <span class="keyword">return</span> check[dictions](self.field)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br></pre></td></tr></table></figure></p>
+<p>附录：</p>
+<ul>
+<li>附所有源代码</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!user/bin/env/python3</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> randrange, choice</span><br><span class="line"><span class="keyword">import</span> curses</span><br><span class="line"></span><br><span class="line">actions = [<span class="string">'Up'</span>, <span class="string">'Left'</span>, <span class="string">'Down'</span>, <span class="string">'Right'</span>, <span class="string">'Restart'</span>, <span class="string">'Exit'</span>]</span><br><span class="line"><span class="comment"># 分别用 W（上），A（左），S（下），D（右），R（重置），Q（退出），进行输入来操作游戏，这里考虑到大写锁定键锁定的情况：</span></span><br><span class="line">letter_codes = [ord(c) <span class="keyword">for</span> c <span class="keyword">in</span> <span class="string">'WASDRQwasdrq'</span>]</span><br><span class="line">actions_dict = dict(zip(letter_codes, actions*<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_user_action</span><span class="params">(keyboard)</span>:</span></span><br><span class="line">    char = <span class="string">'N'</span></span><br><span class="line">    <span class="comment">#阻塞＋循环，直到获得用户有效输入才返回对应行为：</span></span><br><span class="line">    <span class="keyword">while</span> char <span class="keyword">not</span> <span class="keyword">in</span> actions_dict:</span><br><span class="line">        char = keyboard.getch()</span><br><span class="line">    <span class="keyword">return</span> actions_dict[char]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">transpose</span><span class="params">(field)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> [list(row) <span class="keyword">for</span> row <span class="keyword">in</span> zip(*field)]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">invert</span><span class="params">(field)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> [row[::<span class="number">-1</span>] <span class="keyword">for</span> row <span class="keyword">in</span> field]</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GameField</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,height=<span class="number">4</span>, width=<span class="number">4</span>, win=<span class="number">2048</span>)</span>:</span></span><br><span class="line">        self.height = height</span><br><span class="line">        self.width = width</span><br><span class="line">        self.win_value =win <span class="comment">#过关分数</span></span><br><span class="line">        self.score = <span class="number">0</span>      <span class="comment">#当前分数</span></span><br><span class="line">        self.highscore =<span class="number">0</span>   <span class="comment">#最高分数</span></span><br><span class="line">        self.reset()        <span class="comment">#棋盘重置</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#重置棋盘</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reset</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.score&gt;self.highscore:</span><br><span class="line">            self.highscore = self.score</span><br><span class="line">        self.score = <span class="number">0</span></span><br><span class="line">        self.field = [[<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(self.width)] <span class="keyword">for</span> j <span class="keyword">in</span> range(self.height)]</span><br><span class="line">        self.spawn()</span><br><span class="line">        self.spawn()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">move</span><span class="params">(self,direction)</span>:</span></span><br><span class="line">        <span class="comment">#一行相左合并</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">move_row_left</span><span class="params">(row)</span>:</span></span><br><span class="line">            <span class="function"><span class="keyword">def</span> <span class="title">tighten</span><span class="params">(row)</span>:</span> <span class="comment">#把零散的非零单元挤到一块</span></span><br><span class="line">                new_row = [i <span class="keyword">for</span> i <span class="keyword">in</span> row <span class="keyword">if</span> i!=<span class="number">0</span>]</span><br><span class="line">                new_row+=[<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(len(row)-len(new_row))]</span><br><span class="line">                <span class="keyword">return</span> new_row</span><br><span class="line">            <span class="function"><span class="keyword">def</span> <span class="title">merge</span><span class="params">(row)</span>:</span></span><br><span class="line">                pair=<span class="keyword">False</span></span><br><span class="line">                new_row=[]</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> range(len(row)):</span><br><span class="line">                    <span class="keyword">if</span> pair:</span><br><span class="line">                        <span class="comment"># 合并后，加入乘 2 后的元素在 0 元素后面</span></span><br><span class="line">                        new_row.append(<span class="number">2</span>*row[i])</span><br><span class="line">                        self.score+=<span class="number">2</span>*row[i]</span><br><span class="line">                        pair=<span class="keyword">False</span></span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        <span class="keyword">if</span> i+<span class="number">1</span>&lt;len(row) <span class="keyword">and</span> row[i]==row[i+<span class="number">1</span>]:</span><br><span class="line">                            pair=<span class="keyword">True</span></span><br><span class="line">                            <span class="comment"># 不能合并，新列表中加入该元素</span></span><br><span class="line">                            new_row.append(<span class="number">0</span>)</span><br><span class="line">                        <span class="keyword">else</span>:</span><br><span class="line">                            new_row.append(row[i])</span><br><span class="line">                <span class="keyword">assert</span> len(new_row)==len(row)</span><br><span class="line">                <span class="keyword">return</span> new_row</span><br><span class="line">            <span class="comment"># 先挤到一块再合并再挤到一块</span></span><br><span class="line">            <span class="keyword">return</span> tighten(merge(tighten(row)))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 创建 moves 字典，把不同的棋盘操作作为不同的 key，对应不同的方法函数</span></span><br><span class="line">        moves=&#123;&#125;</span><br><span class="line">        moves[<span class="string">'Left'</span>] = <span class="keyword">lambda</span> filed:[move_row_left(row) <span class="keyword">for</span> row <span class="keyword">in</span> filed]</span><br><span class="line">        moves[<span class="string">'Right'</span>] = <span class="keyword">lambda</span> filed:invert(moves[<span class="string">'Left'</span>](invert(filed)))</span><br><span class="line">        moves[<span class="string">'Up'</span>] = <span class="keyword">lambda</span> field:transpose(moves[<span class="string">'Left'</span>](transpose(field)))</span><br><span class="line">        moves[<span class="string">'Down'</span>] = <span class="keyword">lambda</span> field:transpose((moves[<span class="string">'Right'</span>](transpose(field))))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> direction <span class="keyword">in</span> moves:</span><br><span class="line">            <span class="keyword">if</span> self.move_is_possible(direction):</span><br><span class="line">                self.field = moves[direction](self.field)</span><br><span class="line">                <span class="comment">#生成一个随机2或者4</span></span><br><span class="line">                self.spawn()</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 判断输赢</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_win</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> any(any(i&gt;=self.win_value <span class="keyword">for</span> i <span class="keyword">in</span> row) <span class="keyword">for</span> row <span class="keyword">in</span> self.field)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_gameover</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">not</span> any(self.move_is_possible(move) <span class="keyword">for</span> move <span class="keyword">in</span> actions)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">draw</span><span class="params">(self, screen)</span>:</span></span><br><span class="line">        help_string1 = <span class="string">'(W)Up (S)Down (A)Left (D)Right'</span></span><br><span class="line">        help_string2 = <span class="string">'     (R)Restart (Q)Exit'</span></span><br><span class="line">        gameover_string = <span class="string">'           GAME OVER'</span></span><br><span class="line">        win_string = <span class="string">'          YOU WIN!'</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">cast</span><span class="params">(string)</span>:</span></span><br><span class="line">            screen.addstr(string+<span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 绘制水平分割线</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">draw_hor_separator</span><span class="params">()</span>:</span></span><br><span class="line">            line = <span class="string">'+'</span>+(<span class="string">'+------'</span> * self.width + <span class="string">'+'</span>)[<span class="number">1</span>:]</span><br><span class="line">            <span class="comment"># defaultdict传入为函数时，可以实现value为某个常量，使用lambda可以使得代码更为简洁</span></span><br><span class="line">            separator = defaultdict(<span class="keyword">lambda</span>: line)</span><br><span class="line">            <span class="comment">#hasattr(object, name) 判断object对象中是否存在name属性</span></span><br><span class="line">            <span class="comment"># python中的函数是一种对象，它有属于对象的属性。函数还可以自定义自己的属性。注意，属性是和对象相关的，和作用域无关。</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> hasattr(draw_hor_separator,<span class="string">'counter'</span>):</span><br><span class="line">                draw_hor_separator.counter=<span class="number">0</span></span><br><span class="line">            cast(separator[draw_hor_separator.counter])</span><br><span class="line">            draw_hor_separator.counter+=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">draw_row</span><span class="params">(row)</span>:</span></span><br><span class="line">            cast(<span class="string">''</span>.join(<span class="string">'|&#123;: ^5&#125; '</span>.format(num) <span class="keyword">if</span> num &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="string">'|      '</span> <span class="keyword">for</span> num <span class="keyword">in</span> row) + <span class="string">'|'</span>)</span><br><span class="line"></span><br><span class="line">        screen.clear()</span><br><span class="line"></span><br><span class="line">        cast(<span class="string">'SCORE: '</span> + str(self.score))</span><br><span class="line">        <span class="keyword">if</span> <span class="number">0</span> != self.highscore:</span><br><span class="line">            cast(<span class="string">'HGHSCORE: '</span> + str(self.highscore))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> self.field:</span><br><span class="line">            draw_hor_separator()</span><br><span class="line">            draw_row(row)</span><br><span class="line">        draw_hor_separator()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.is_win():</span><br><span class="line">            cast(win_string)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> self.is_gameover():</span><br><span class="line">                cast(gameover_string)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                cast(help_string1)</span><br><span class="line">        cast(help_string2)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 随机生成一个 2 或者 4</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">spawn</span><span class="params">(self)</span>:</span></span><br><span class="line">        new_element = <span class="number">4</span> <span class="keyword">if</span> randrange(<span class="number">100</span>) &gt; <span class="number">89</span> <span class="keyword">else</span> <span class="number">2</span></span><br><span class="line">        (i, j) = choice([(i, j) <span class="keyword">for</span> i <span class="keyword">in</span> range(self.width) <span class="keyword">for</span> j <span class="keyword">in</span> range(self.height) <span class="keyword">if</span> self.field[i][j] == <span class="number">0</span>])</span><br><span class="line">        self.field[i][j] = new_element</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 判断是否能移动</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">move_is_possible</span><span class="params">(self, dictions)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">row_is_left_moveable</span><span class="params">(row)</span>:</span></span><br><span class="line">            <span class="function"><span class="keyword">def</span> <span class="title">change</span><span class="params">(i)</span>:</span></span><br><span class="line">                <span class="comment"># 当左边有空位（0），右边有数字时，可以向左移动</span></span><br><span class="line">                <span class="keyword">if</span> row[i] == <span class="number">0</span> <span class="keyword">and</span> row[i + <span class="number">1</span>] != <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">                <span class="comment"># 当左边有一个数和右边的数相等时，可以向左合并</span></span><br><span class="line">                <span class="keyword">if</span> row[i] != <span class="number">0</span> <span class="keyword">and</span> row[i + <span class="number">1</span>] == row[i]:</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> any(change(i) <span class="keyword">for</span> i <span class="keyword">in</span> range(len(row) - <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">        check = &#123;&#125;</span><br><span class="line">        <span class="comment"># 判断矩阵每一行有没有可以左移动的元素</span></span><br><span class="line">        check[<span class="string">'Left'</span>] = <span class="keyword">lambda</span> field: any(row_is_left_moveable(row) <span class="keyword">for</span> row <span class="keyword">in</span> field)</span><br><span class="line">        <span class="comment"># 判断矩阵每一行有没有可以右移动的元素。这里只用进行判断，所以矩阵变换之后，不用再变换复原</span></span><br><span class="line">        check[<span class="string">'Right'</span>] = <span class="keyword">lambda</span> field: check[<span class="string">'Left'</span>](invert(field))</span><br><span class="line"></span><br><span class="line">        check[<span class="string">'Up'</span>] = <span class="keyword">lambda</span> field: check[<span class="string">'Left'</span>](transpose(field))</span><br><span class="line"></span><br><span class="line">        check[<span class="string">'Down'</span>] = <span class="keyword">lambda</span> field: check[<span class="string">'Right'</span>](transpose(field))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> dictions <span class="keyword">in</span> check:</span><br><span class="line">            <span class="keyword">return</span> check[dictions](self.field)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(stdscr)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">init</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="comment"># 重置游戏棋盘</span></span><br><span class="line">        game_field.reset()</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Game'</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">game</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="comment"># 画出 GameOver 或者 Win 的界面</span></span><br><span class="line">        game_field.draw(stdscr)</span><br><span class="line">        <span class="comment"># 读取用户输入得到action，判断是重启游戏还是结束游戏</span></span><br><span class="line">        action = get_user_action(stdscr)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> action ==<span class="string">'Restart'</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'Init'</span></span><br><span class="line">        <span class="keyword">if</span> action==<span class="string">'Exit'</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'Exit'</span></span><br><span class="line">        <span class="keyword">if</span> game_field.move(action):</span><br><span class="line">            <span class="keyword">if</span> game_field.is_win():</span><br><span class="line">                <span class="keyword">return</span> <span class="string">'Win'</span></span><br><span class="line">            <span class="keyword">if</span> game_field.is_gameover():</span><br><span class="line">                <span class="keyword">return</span> <span class="string">'Gameover'</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Game'</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">not_game</span><span class="params">(state)</span>:</span></span><br><span class="line">        <span class="comment"># 画出 GameOver 或者 Win 的界面</span></span><br><span class="line">        game_field.draw(stdscr)</span><br><span class="line">        <span class="comment"># 读取用户输入得到action，判断是重启游戏还是结束游戏</span></span><br><span class="line">        action = get_user_action(stdscr)</span><br><span class="line">        responses = defaultdict(<span class="keyword">lambda</span>:state)</span><br><span class="line">        responses[<span class="string">'Restart'</span>], responses[<span class="string">'Exit'</span>] = <span class="string">'Init'</span>,<span class="string">'Exit'</span></span><br><span class="line">        <span class="keyword">return</span> responses[action]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 游戏盘的四种状态</span></span><br><span class="line">    state_actions=&#123;</span><br><span class="line">        <span class="string">'Init'</span>:init,</span><br><span class="line">        <span class="string">'Win'</span>:<span class="keyword">lambda</span>:not_game(<span class="string">'Win'</span>),</span><br><span class="line">        <span class="string">'Gameover'</span>:<span class="keyword">lambda</span>:not_game(<span class="string">'Gameover'</span>),</span><br><span class="line">        <span class="string">'Game'</span>:game</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    curses.use_default_colors()</span><br><span class="line"></span><br><span class="line">    game_field = GameField(win=<span class="number">2048</span>)</span><br><span class="line">    state = <span class="string">'Init'</span></span><br><span class="line">    <span class="keyword">while</span> state!=<span class="string">'Exit'</span>:</span><br><span class="line">        state = state_actions[state]()</span><br><span class="line"></span><br><span class="line">curses.wrapper(main)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>curses包的安装：<br>问题：windows系统如果直接用pip install下载会报错<br>解决办法：<br>去网址下载<a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#curses(如果点击下载出现file" target="_blank" rel="noopener">http://www.lfd.uci.edu/~gohlke/pythonlibs/#curses(如果点击下载出现file</a> not find，请fq下载)</li>
+</ul>
+<p>在下载目录运行如下命令：<br>pip install —upgrade curses-2.2+utf8-cp36-cp36m-win_amd64.whl</p>
+<ul>
+<li>可视化游戏网址：<a href="https://play2048.co/" target="_blank" rel="noopener">https://play2048.co/</a></li>
+</ul>
+<hr>
+<iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 
+" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2019/07/20/参加市北-GMIS 2019的感悟和总结/" data-toggle="tooltip" data-placement="top" title="参加市北-GMIS 2019的感悟和总结.md">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+                    <!-- Valine -->
+                    <div class="vcomments"></div>
+                    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+                    <script src="//cdn.jsdelivr.net/npm/valine"></script>
+                    <script>
+                        var GUEST = ['nick','mail','link'];
+                        var meta = 'undefined';
+                        meta = meta.split(',').filter(function (item) {
+                            return GUEST.indexOf(item)>-1;
+                        });
+                        var notify = 'false' == true ? true : false;
+                        var verify = 'false' == true ? true : false;
+                        new Valine({
+                            el: '.vcomments',
+                            notify: notify,
+                            verify: verify,
+                            app_id: "KPXIfOuMVwWIv2Skprm5gYB4-gzGzoHsz",
+                            app_key: "f92SiTdYRrLO0zwfdQnRyXW1",
+                            placeholder: "Just go go",
+                            avatar:"mm",
+                            meta:meta
+                        });
+                    </script>
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#正文"><span class="toc-text">正文</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Python" title="Python">Python</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/YUTING">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/yu-ting-66-78">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/ytfantastic">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/YUTING">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://github.com/YUTING0907">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+			
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; YUTING 2019
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://yuting0907.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://YUTING0907.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/image/20181215001153.jpg">
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+</body>
+
+</html>
