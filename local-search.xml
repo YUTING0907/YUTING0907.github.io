@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>hexo博客从win8迁移到mac</title>
+    <link href="/2022/05/22/hexo%E5%8D%9A%E5%AE%A2%E4%BB%8Ewin8%E8%BF%81%E7%A7%BB%E5%88%B0mac/"/>
+    <url>/2022/05/22/hexo%E5%8D%9A%E5%AE%A2%E4%BB%8Ewin8%E8%BF%81%E7%A7%BB%E5%88%B0mac/</url>
+    
+    <content type="html"><![CDATA[<p>本文介绍：如何从hexo博客从win8迁移到mac</p><p>最近换电脑，然后看到同组大佬的hexo博客已经写到130+，在大佬的刺激下准备把之前荒废的博客重新打理起来。</p><h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p><strong>1.安装brew</strong></p><p><code>/bin/zsh -c &quot;$(curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh)&quot;</code></p><p>请输入序号：输入1即可</p><p>安装完成后关闭终端界面</p><p>查看是否安装完成</p><p><code>brew --version</code></p><p><img src="/hexo%E5%8D%9A%E5%AE%A2%E4%BB%8Ewin8%E8%BF%81%E7%A7%BB%E5%88%B0mac/brew_version.png"></p><p><strong>2.安装git和node.js</strong></p><p><code>brew install git </code></p><p><code>brew install node</code></p><p><strong>3. 安装hexo</strong></p><p>建立博客的根目录</p><p><code>mkdir blog #这里目录名字自己任意取名</code> </p><p>在根目录下安装hexo</p><p><code>npm install -g hexo</code></p><p>安装完成后会生成blog&#x2F;node_modules文件夹和 blog&#x2F;package-lock.json、package.json文件（这两文件不存在的话会导致hexo s、hexo g、hexo d等hexo命令失效，当时我是误删了这两文件一度怀疑人生）</p><h3 id="部署博客"><a href="#部署博客" class="headerlink" title="部署博客"></a>部署博客</h3><p><strong>4.初始化hexo</strong></p><p>环境准备完毕之后初始化hexo</p><p><code>cd blog </code></p><p><code>hexo init</code></p><p><code>hexo s #部署到本地localhost预览 </code></p><p>访问localhost:4000查看是否成功初始化</p><p>**5. 生成ssh密钥 **</p><p><code>ssh-keygen -t rsa -C &quot;youremail@example.com&quot; #github注册邮箱</code></p><p>运行后进入.ssh文件夹:</p><p><code>cd ～/.ssh</code></p><p>查看id_rsa.pub文件，复制里面的所有内容</p><p><code>cat id_rsa.pub</code></p><p>网页打开github设置：<strong>setting -》 ssh and gpg keys</strong>，添加新的ssh key，把刚才复制的内容粘贴进去。</p><p>保存后，邮箱会收到一封验证邮件，记得通过验证。</p><h3 id="文件迁移"><a href="#文件迁移" class="headerlink" title="文件迁移"></a>文件迁移</h3><p><strong>6.文件配置转移</strong></p><p>将win8里博客根目录下的：</p><p>_config.yml,</p><p>scaffolds,</p><p>source,</p><p>themes</p><p>复制并覆盖到mac博客根目录下。</p><p><strong>🌟关于如何windows如何传输文件到mac</strong></p><p>同一网络下。</p><p>windows：文件夹属性 -&gt; 共享 -&gt; 共享（得到网路路径）</p><p>mac：访达 -&gt; 连接服务器 -&gt; 输入smb:&#x2F;&#x2F;网络路径</p><p><strong>7.测试博客是否成功迁移</strong></p><ul><li>使用hexo s、hexo g、hexo d测试，无报错即成功。</li></ul><p><strong>问题1: 当输入hexo g时可能会出现</strong></p><p><code>Enter passphrase for key ‘/Users/mac/.ssh/id_rsa </code></p><ul><li><p>这里就是要输入密码，每次输入密码比较麻烦</p></li><li><p>在终端输入<code>ssh-add ~/.ssh/id_rsa</code> 然后输入本机密码之后</p></li></ul><p>​        会出现<code>Identity added: /Users/tingyu/.ssh/id_rsa (这里会显示github注册邮箱)</code>，之后hexo部署都不需要输入密码了</p><p>**问题2: spawn failed **</p><p>多系统混合编写导致的问题</p><p><code>cd进.deploy_git文件夹，输入git config –global core.autocrlf false</code></p><p>参考链接：<a href="https://blog.csdn.net/soyawww/article/details/118147820">https://blog.csdn.net/soyawww/article/details/118147820</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>博客</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>hexo</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>python-应用-实现2048.</title>
     <link href="/2019/12/28/python%E5%AE%9E%E7%8E%B02048/"/>
     <url>/2019/12/28/python%E5%AE%9E%E7%8E%B02048/</url>
