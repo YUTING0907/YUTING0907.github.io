@@ -1,0 +1,732 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/null">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yuting">
+  <meta name="keywords" content="ML">
+  
+    <meta name="description" content="本文是关于BDCI 2018-面向电信行业存量用户的智能套餐个性化匹配模型大赛 TOP1开源代码的实现 运行环境 windows python3.6 pandas sklearn xgboost 赛事说明  赛事链接面向电信行业存量用户的智能套餐个性化匹配模型 可以参看链接，里面有详细的训练集数据说明，里面包含了如下信息：数据说明作品要求评分方式 解决方案我复现了top1的解决方案，以下是top1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning-实战 电信行业智能套餐个性化匹配">
+<meta property="og:url" content="http://yuting0907.github.io/2018/12/30/MachineLearning-%E5%AE%9E%E6%88%98%20%E7%94%B5%E4%BF%A1%E8%A1%8C%E4%B8%9A%E6%99%BA%E8%83%BD%E5%A5%97%E9%A4%90%E4%B8%AA%E6%80%A7%E5%8C%96%E5%8C%B9%E9%85%8D/index.html">
+<meta property="og:site_name" content="YUTING">
+<meta property="og:description" content="本文是关于BDCI 2018-面向电信行业存量用户的智能套餐个性化匹配模型大赛 TOP1开源代码的实现 运行环境 windows python3.6 pandas sklearn xgboost 赛事说明  赛事链接面向电信行业存量用户的智能套餐个性化匹配模型 可以参看链接，里面有详细的训练集数据说明，里面包含了如下信息：数据说明作品要求评分方式 解决方案我复现了top1的解决方案，以下是top1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/E.Y6SXlAuAZdQj0B0gLQ01oNeJ6d9fTl6fpWJMuVF5U!/b/dLYAAAAAAAAA&bo=gALgAQAAAAADF1E!&rf=viewer_4&t=5">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/2CgTAjY8XgkPczB78E3PLBNvufN45qQ.lN*Y3ZNflc8!/b/dL4AAAAAAAAA&bo=vQHsAAAAAAADF2I!&rf=viewer_4&t=5">
+<meta property="og:image" content="http://pjqhk6p7v.bkt.clouddn.com/tp_fp.png">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/KY5lH8e4LrLIXcvf7VHrq708jx51ArS2kVKuYJVXiGM!/b/dLkAAAAAAAAA&bo=sARtAgAAAAADF.k!&rf=viewer_4&t=5">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/X5b5TqayXddoVT.HM*t6M24cdgZGjZxdJrepRtMBaoc!/b/dL4AAAAAAAAA&bo=gALgAQAAAAADF1E!&rf=viewer_4&t=5">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/AQZ*DQ*mGsh*7Wi53H.sJja7P16s76WXyP5mfYD8SOM!/b/dL8AAAAAAAAA&bo=gALgAQAAAAADF1E!&rf=viewer_4&t=5">
+<meta property="article:published_time" content="2018-12-30T02:44:50.000Z">
+<meta property="article:modified_time" content="2019-01-12T12:30:57.000Z">
+<meta property="article:author" content="Echo Yu">
+<meta property="article:tag" content="XGBoost">
+<meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/E.Y6SXlAuAZdQj0B0gLQ01oNeJ6d9fTl6fpWJMuVF5U!/b/dLYAAAAAAAAA&bo=gALgAQAAAAADF1E!&rf=viewer_4&t=5">
+  
+  
+  
+  <title>Machine Learning-实战 电信行业智能套餐个性化匹配 - YUTING</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yuting0907.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Machine Learning-实战 电信行业智能套餐个性化匹配"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-12-30 10:44" pubdate>
+          2018年12月30日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          74 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Machine Learning-实战 电信行业智能套餐个性化匹配</h1>
+            
+            <div class="markdown-body">
+              
+              <p>本文是关于BDCI 2018-面向电信行业存量用户的智能套餐个性化匹配模型大赛 TOP1开源代码的实现</p>
+<h2 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h2><ul>
+<li><strong>windows</strong></li>
+<li><strong>python3.6</strong></li>
+<li><strong>pandas sklearn xgboost</strong> <h2 id="赛事说明"><a href="#赛事说明" class="headerlink" title="赛事说明"></a>赛事说明</h2></li>
+</ul>
+<p>赛事链接<a target="_blank" rel="noopener" href="https://www.datafountain.cn/competitions/311/details/data-evaluation">面向电信行业存量用户的智能套餐个性化匹配模型</a></p>
+<p>可以参看链接，里面有详细的训练集数据说明，里面包含了如下信息：<br>数据说明<br>作品要求<br>评分方式</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>我复现了top1的解决方案，以下是top1的解决方案：</p>
+<h3 id="1-数据探查"><a href="#1-数据探查" class="headerlink" title="1.数据探查"></a><strong>1.数据探查</strong></h3><h5 id="分类label"><a href="#分类label" class="headerlink" title="分类label"></a><strong>分类label</strong></h5><p>根据赛事说明，该比赛是一个多分类的问题，对应着有11种套餐，首先看看这11种套餐的分布情况，可以看出它们的分布较为不均。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#导入数据</span><br>path = <span class="hljs-string">&#x27;D:/Pywork/2018_CCF_BDCI_CHINA_TOP1/project/preliminary_training_set/train_all.csv&#x27;</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">import_data</span>(<span class="hljs-params">path</span>):<br>    train_data = pd.read_csv(path, low_memory=<span class="hljs-literal">False</span>)<br>    <span class="hljs-keyword">return</span> train_data<br><br>train_data = import_data(path)<br><br><span class="hljs-comment"># current_service 条形图</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">service_view</span>(<span class="hljs-params">train_data,categories</span>):<br>    data_by_service = train_data.groupby(categories).size().reset_index(name=<span class="hljs-string">&#x27;counts&#x27;</span>)<br>    data_by_service[categories] = data_by_service[categories].astype(<span class="hljs-built_in">str</span>)<br>    <span class="hljs-built_in">print</span>(data_by_service)<br>    <span class="hljs-comment"># 随机生成几种颜色，reshape第二个参数-1指随着N变化，第一维度填满有剩就来填第二维</span><br>    <span class="hljs-comment"># 生成的是随机的N组三通道(r,g,b)的颜色</span><br>    N = <span class="hljs-number">7</span><br>    colors = np.random.rand(N * <span class="hljs-number">3</span>).reshape(N, -<span class="hljs-number">1</span>)<br>    fig, ax = plt.subplots()<br><br>    ax.bar(data_by_service[categories], data_by_service[<span class="hljs-string">&#x27;counts&#x27;</span>], color=colors)<br>    plt.xticks(rotation=<span class="hljs-number">270</span>)<br>    plt.xlabel(categories)<br>    plt.ylabel(<span class="hljs-string">&#x27;counts&#x27;</span>)<br>    plt.show()<br><span class="hljs-built_in">str</span> = <span class="hljs-string">&#x27;current_service&#x27;</span><br>service_view(train_data,<span class="hljs-built_in">str</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/E.Y6SXlAuAZdQj0B0gLQ01oNeJ6d9fTl6fpWJMuVF5U!/b/dLYAAAAAAAAA&bo=gALgAQAAAAADF1E!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload></p>
+<p>多分类问题，典型的评价指标为<strong>macro-f1</strong>：首先针对每个套餐类别，统计分别统计TP（预测答案正确），FP（错将其他类预测为本类），FN（本类标签预测为其他类标）。计算<strong>Precision</strong>(精确率)和<strong>Recall</strong>(召回率)</p>
+<p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/2CgTAjY8XgkPczB78E3PLBNvufN45qQ.lN*Y3ZNflc8!/b/dL4AAAAAAAAA&bo=vQHsAAAAAAADF2I!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload></p>
+<p>举个具体场景的例子：</p>
+<p>假如某个班级有男生80人,女生20人,共计100人.<br>目标是找出所有女生.<br>现在某人挑选出50个人,其中20人是女生,另外还错误的把30个男生也当作女生挑选出来了.<br>作为评估者的你需要来评估(evaluation)下他的工作<br><img src="http://pjqhk6p7v.bkt.clouddn.com/tp_fp.png" srcset="/img/loading.gif" lazyload><br>通过表格可以得出：<br>TP:20<br>FP:30<br>FN:0<br>TN:50</p>
+<p>精确率(precision)$$P &#x3D; \frac{TP}{TP+FP}$$<br>召回率(recall)的公式是：$$R&#x3D;\frac{TP}{TP+NP}$$,</p>
+<p>首先我们可以计算<strong>精确率(precision)</strong>:很容易，我们可以得到,他把其中70(20女+50男)人判定正确了,而总人数是100人，所以它的accuracy就是70%(70 &#x2F; 100).</p>
+<p><strong>召回率(recall)</strong>:它计算的是所有”正确被检索的item(TP)”占所有”应该检索到的item(TP+FN)”的比例,所以它的recall为100%.<br>如果单看某一个指标，预测结果是不会被正确衡量的。比如在以上例子中，如果我全部判断为女生，则召回率可以达到100%，单看召回率它是一个非常准确的预测，但此时你能说该模型的预测效果好吗，很显然不能。所以必须结合P,R一起看。结合起来最常见的方法应该就是F-Measure了，有些地方也叫做F-Score：<br>$$F&#x3D;\frac{(a^2+1)P*R} {a^2(P+R)}$$<br>当参数a&#x3D;1时，就是最常见的F1了：<br>$$F1 &#x3D; \frac{2PR} {P+R} $$</p>
+<p>回到赛题，在得到每个类别下的F1-score后，对各个类别的F1-score求均值，得到最后的评测结果，计算方式如下：<br>$$score&#x3D;\frac 1n\sum{f1_k}$$</p>
+<h5 id="原始特征与标签相关性"><a href="#原始特征与标签相关性" class="headerlink" title="原始特征与标签相关性"></a>原始特征与标签相关性</h5><p>以下是关于原始特征<strong>service_type和label相关性的观察图表</strong>：<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/KY5lH8e4LrLIXcvf7VHrq708jx51ArS2kVKuYJVXiGM!/b/dLkAAAAAAAAA&bo=sARtAgAAAAADF.k!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload><br>可以明显的看出一个规律，service_type可以将套餐分为两个部分，这两个部分是没有交叉的，其中一类有8个，另外一类有3个。这给我们比赛带来一个思路是，可以分模型预测。</p>
+<p><strong>关于age和label相关性的观察图表：</strong><br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/X5b5TqayXddoVT.HM*t6M24cdgZGjZxdJrepRtMBaoc!/b/dL4AAAAAAAAA&bo=gALgAQAAAAADF1E!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload></p>
+<p>我们可以看到对于年龄来讲，基本上符合电信用户群体的分布,但是有很多0岁的异常值，对于异常值,可以先不做处理，或填充-1.</p>
+<p><strong>关于gender和label相关性的观察图表：</strong><br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/AQZ*DQ*mGsh*7Wi53H.sJja7P16s76WXyP5mfYD8SOM!/b/dL8AAAAAAAAA&bo=gALgAQAAAAADF1E!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload><br>我们观察到性别中有0 的缺省值，对于这部分，我们使用了两种方法处理，一种是填充service_type对应字段的众数，和原始值。最终选取了原始值.</p>
+<h3 id="2-数据预处理"><a href="#2-数据预处理" class="headerlink" title="2.数据预处理"></a><strong>2.数据预处理</strong></h3><p>首先将分类的label映射到0-11数字当中便于处理</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">train<span class="hljs-selector-attr">[<span class="hljs-string">&#x27;label&#x27;</span>]</span> = train<span class="hljs-selector-attr">[<span class="hljs-string">&#x27;current_service&#x27;</span>]</span><span class="hljs-selector-class">.map</span>(p)<br></code></pre></td></tr></table></figure>
+<p>为了避免利用pandas.read_csv()导入的类型不统一。可以传入dtype&#x3D;set_str，pandas.read_csv(dtype&#x3D;set_str),来指定类型，set_str是自己创建的字典，每个字段指向的类型，均可自己设定。</p>
+<p>对于年龄，话费不合理的值，用nan值替换。</p>
+<h3 id="3-特征工程"><a href="#3-特征工程" class="headerlink" title="3.特征工程"></a><strong>3.特征工程</strong></h3><p>(1)关联规则<br>受max-encoding的方法的启发，对有关联关系的话费字段，1_total_fee, 2_total_fee, 3_total_fee, 4_total_fee四个字段的构建关联规则，这样可以利用整体信息，对话费字段这个强特征进行降维编码。使得其数据更加具有代表性<br>(2) 业务特征<br>业务特征的部分，我们深入研究了联通的套餐消费场景，从比赛的一开始，首先就通过联通官网以及消费论坛认真的开始调研工作，深入了解了联通的各种套餐特点和用户群差别。通过熟悉套餐的特性，我们可以为各种特定用户群推荐适宜他们的套餐，比如腾讯天王卡玩腾讯游戏看腾讯视频不花钱是深度腾讯用户的福音，蚂蚁大宝卡则可以赠送2g无差别流量给高流量消费者。联通传统套餐的各种优惠活动，比如预充值冲100返流量和话费，适合平时那些流量和话费不够用的用户，充值返话费则适合那些薅羊毛的用户。对此我们针对用户的流量和通话做了一系列特征，比例、差值，求和等，力求尽可能的描绘出一幅用户画像。</p>
+<p>提出了以下几种针对业务的特征：</p>
+<ol>
+<li>话费减去16元是否是整数</li>
+<li>流量的有效数字是否是27的整数倍</li>
+<li>话费的有效数字能否被15乘除</li>
+<li>话费是否是整数（用户可能未超套餐）</li>
+<li>连续两个月套餐的差值能否被5,10,15,27,30等计费单元整除</li>
+<li>四个月话费的最小值</li>
+<li>计算流量的平均单价</li>
+<li>计算通话时间的平均单价</li>
+<li>等等…</li>
+</ol>
+<p> 伪代码如下：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># 平均值 按照行 axis=1</span><br>data[month_fee[:4]].mean(<span class="hljs-attribute">axis</span>=1)<br>data[month_fee[:3]].mean(<span class="hljs-attribute">axis</span>=1)<br>data[month_fee[:2]].mean(<span class="hljs-attribute">axis</span>=1)<br>data[month_fee[:4]].std(<span class="hljs-attribute">axis</span>=1)<br><br><span class="hljs-comment"># CV 变异系数 = 标准差/平均数 </span><br><span class="hljs-comment"># 反映数据离散程度的绝对值，可以认为变异系数和极差、标准差和方差一样，可以消除测量尺度和量纲的影响</span><br>data[<span class="hljs-string">&#x27;total_fee_std4&#x27;</span>] / (data[<span class="hljs-string">&#x27;total_fee_mean4&#x27;</span>] + 0.1)<br><br><span class="hljs-comment"># 四个月最大，最小话费</span><br>data[month_fee[:4]].max(<span class="hljs-attribute">axis</span>=1)<br>data[month_fee[:4]].min(<span class="hljs-attribute">axis</span>=1)<br><br><span class="hljs-comment"># 电话时间 差，和，最小，最大</span><br>data[<span class="hljs-string">&#x27;service2_caller_time&#x27;</span>]-data[<span class="hljs-string">&#x27;service1_caller_time&#x27;</span>]<br>data[<span class="hljs-string">&#x27;service2_caller_time&#x27;</span>]+data[<span class="hljs-string">&#x27;service1_caller_time&#x27;</span>]<br>data[[<span class="hljs-string">&#x27;service2_caller_time&#x27;</span>, <span class="hljs-string">&#x27;service1_caller_time&#x27;</span>]].min(<span class="hljs-attribute">axis</span>=1)<br>data[[<span class="hljs-string">&#x27;service2_caller_time&#x27;</span>, <span class="hljs-string">&#x27;service1_caller_time&#x27;</span>]].max(<span class="hljs-attribute">axis</span>=1)<br><br><span class="hljs-comment">#  话费是否是整数</span><br>data[<span class="hljs-string">&#x27;&#123;&#125;_1&#x27;</span>.format(fee)] = ((data[fee] % 1 == 0) &amp; (data[fee] != 0))<br>data[<span class="hljs-string">&#x27;&#123;&#125;_01&#x27;</span>.format(fee)] = ((data[fee] % 0.1 == 0) &amp; (data[fee] != 0))<br><br><span class="hljs-comment"># 分组标准化</span><br>def grp_standard(data,keys,names,<span class="hljs-attribute">drop</span>=<span class="hljs-literal">False</span>):<br>    <span class="hljs-keyword">for</span> name <span class="hljs-keyword">in</span> names:<br>        new_name = name <span class="hljs-keyword">if</span> drop <span class="hljs-keyword">else</span> name + <span class="hljs-string">&#x27;_&#x27;</span> + keys + <span class="hljs-string">&#x27;_&#x27;</span> + <span class="hljs-string">&#x27;standardize&#x27;</span><br>        mean_std = data.groupby(keys, <span class="hljs-attribute">as_index</span>=<span class="hljs-literal">False</span>)[name].agg(&#123;<span class="hljs-string">&#x27;mean&#x27;</span>: <span class="hljs-string">&#x27;mean&#x27;</span>, <span class="hljs-string">&#x27;std&#x27;</span>: <span class="hljs-string">&#x27;std&#x27;</span>&#125;)<br>        data = data.merge(mean_std, <span class="hljs-attribute">on</span>=keys, <span class="hljs-attribute">how</span>=<span class="hljs-string">&#x27;left&#x27;</span>)<br>        data[new_name] = ((data[name]-data[<span class="hljs-string">&#x27;mean&#x27;</span>])/data[<span class="hljs-string">&#x27;std&#x27;</span>]).fillna(0).astype(np.float32)<br>        # 防止除0报错<br>        data[new_name] = data[new_name].replace(-np.inf, 0).fillna(0)<br>        data.drop([<span class="hljs-string">&#x27;mean&#x27;</span>, <span class="hljs-string">&#x27;std&#x27;</span>], <span class="hljs-attribute">axis</span>=1, <span class="hljs-attribute">inplace</span>=<span class="hljs-literal">True</span>)<br>        return data<br><br><span class="hljs-comment"># 按照 合约类型 标准化</span><br> data = grp_standard(data, <span class="hljs-string">&#x27;contract_type&#x27;</span>, [<span class="hljs-string">&#x27;1_total_fee_log&#x27;</span>], <span class="hljs-attribute">drop</span>=<span class="hljs-literal">False</span>)<br> <span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><br> #  年龄分组<br>data[<span class="hljs-string">&#x27;age_scatter&#x27;</span>] = pd.qcut(data[<span class="hljs-string">&#x27;age&#x27;</span>], 5)<br>data = grp_standard(data, <span class="hljs-string">&#x27;age_scatter&#x27;</span>, [<span class="hljs-string">&#x27;1_total_fee_log&#x27;</span>], <span class="hljs-attribute">drop</span>=<span class="hljs-literal">False</span>) <br><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><br><span class="hljs-comment"># online_time 分组</span><br>data[<span class="hljs-string">&#x27;online_time_scatter&#x27;</span>] = pd.qcut(data[<span class="hljs-string">&#x27;online_time&#x27;</span>], 5)<br>data = grp_standard(data, <span class="hljs-string">&#x27;online_time_scatter&#x27;</span>, [<span class="hljs-string">&#x27;1_total_fee_log&#x27;</span>], <span class="hljs-attribute">drop</span>=<span class="hljs-literal">False</span>)<br><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><span class="hljs-built_in">..</span><br><span class="hljs-comment"># 热编码</span><br>data = pd.get_dummies(data, columns=[<span class="hljs-string">&#x27;contract_type&#x27;</span>], <span class="hljs-attribute">dummy_na</span>=-1)<br>data = pd.get_dummies(data, columns=[<span class="hljs-string">&#x27;net_service&#x27;</span>], <span class="hljs-attribute">dummy_na</span>=-1)<br>data = pd.get_dummies(data, columns=[<span class="hljs-string">&#x27;complaint_level&#x27;</span>], <span class="hljs-attribute">dummy_na</span>=-1)<br>    <br></code></pre></td></tr></table></figure>
+
+<h3 id="3-构建模型"><a href="#3-构建模型" class="headerlink" title="3.构建模型"></a><strong>3.构建模型</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs python">params = &#123;<span class="hljs-string">&#x27;objective&#x27;</span>: <span class="hljs-string">&#x27;multi:softprob&#x27;</span>,<br>         <span class="hljs-string">&#x27;eta&#x27;</span>: <span class="hljs-number">0.5</span>,<br>         <span class="hljs-string">&#x27;max_depth&#x27;</span>: <span class="hljs-number">6</span>,<br>         <span class="hljs-string">&#x27;silent&#x27;</span>: <span class="hljs-number">1</span>,<br>         <span class="hljs-string">&#x27;num_class&#x27;</span>: <span class="hljs-number">3</span>,<br>         <span class="hljs-string">&#x27;eval_metric&#x27;</span>: <span class="hljs-string">&quot;mlogloss&quot;</span>,<br>         <span class="hljs-string">&#x27;min_child_weight&#x27;</span>: <span class="hljs-number">3</span>,<br>         <span class="hljs-string">&#x27;subsample&#x27;</span>: <span class="hljs-number">0.7</span>,<br>         <span class="hljs-string">&#x27;colsample_bytree&#x27;</span>: <span class="hljs-number">0.7</span>,<br>         <span class="hljs-string">&#x27;seed&#x27;</span>: <span class="hljs-number">66</span><br>         &#125;<br><span class="hljs-comment"># 单独拿 service_type=1出来训练 train_feat1</span><br>train_preds1, test_preds1 = xgb_cv(params, train_feat1, test_feat1, predictors1)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;xgb_cv函数返回的test_preds1的类&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(<span class="hljs-built_in">type</span>(test_preds1)))<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">xgb_cv</span>(<span class="hljs-params">params, train_feat, test_feat, predictors, label=<span class="hljs-string">&#x27;label&#x27;</span>,groups=<span class="hljs-literal">None</span>,cv=<span class="hljs-number">5</span>,stratified=<span class="hljs-literal">True</span></span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;开始CV 5折训练...&#x27;</span>)<br>    t0 = time.time()<br>    <span class="hljs-comment"># train_feat[label].nunique() 不同label的个数</span><br>    train_preds = np.zeros((<span class="hljs-built_in">len</span>(train_feat), train_feat[label].nunique()))<br>    test_preds = np.zeros((<span class="hljs-built_in">len</span>(test_feat), train_feat[label].nunique()))<br>    xgb_test = xgb.DMatrix(test_feat[predictors])<br>    models = []<br>    <span class="hljs-comment"># len(train_feat)个样本分成 5个样本集</span><br>    kf = KFold(<span class="hljs-built_in">len</span>(train_feat), n_folds=<span class="hljs-number">5</span>, shuffle=<span class="hljs-literal">True</span>, random_state=<span class="hljs-number">520</span>)<br>    <span class="hljs-keyword">for</span> i, (train_index, test_index) <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(kf):<br>        <span class="hljs-comment"># 将测试集均分 取一份当测试集</span><br>        xgb_train = xgb.DMatrix(train_feat[predictors].iloc[train_index], train_feat[label].iloc[train_index])<br>        xgb_eval = xgb.DMatrix(train_feat[predictors].iloc[test_index], train_feat[label].iloc[test_index])<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;..........开始第&#123;&#125;轮训练&quot;</span>.<span class="hljs-built_in">format</span>(i))<br>        params = &#123;<span class="hljs-string">&#x27;objective&#x27;</span>: <span class="hljs-string">&#x27;multi:softprob&#x27;</span>, <span class="hljs-comment"># 多分类的问题</span><br>                  <span class="hljs-string">&#x27;eta&#x27;</span>: <span class="hljs-number">0.1</span>,                    <span class="hljs-comment"># 如同学习率</span><br>                  <span class="hljs-string">&#x27;max_depth&#x27;</span>: <span class="hljs-number">6</span>,                <span class="hljs-comment"># 构建树的深度，越大越容易过拟合</span><br>                  <span class="hljs-string">&#x27;silent&#x27;</span>: <span class="hljs-number">1</span>,      <span class="hljs-comment"># 取0时表示打印出运行时信息，取1时表示以缄默方式运行，不打印运行时信息。缺省值为0</span><br>                  <span class="hljs-string">&#x27;num_class&#x27;</span>: <span class="hljs-number">11</span>,  <span class="hljs-comment"># 类别数，与 multisoftmax 并用</span><br>                  <span class="hljs-string">&#x27;eval_metric&#x27;</span>: <span class="hljs-string">&quot;mlogloss&quot;</span>,  <span class="hljs-comment"># 评价指标 negative log-likelihood</span><br>                  <span class="hljs-string">&#x27;min_child_weight&#x27;</span>: <span class="hljs-number">3</span>,<br>                  <span class="hljs-string">&#x27;subsample&#x27;</span>: <span class="hljs-number">0.7</span>,   <span class="hljs-comment"># 随机采样训练样本</span><br>                  <span class="hljs-string">&#x27;colsample_bytree&#x27;</span>: <span class="hljs-number">0.7</span>,  <span class="hljs-comment"># 生成树时进行的列采样</span><br>                  <span class="hljs-string">&#x27;seed&#x27;</span>: <span class="hljs-number">66</span><br>                  &#125; <span class="hljs-keyword">if</span> params <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">else</span> params<br>        watchlist = [(xgb_train, <span class="hljs-string">&#x27;train&#x27;</span>), (xgb_eval, <span class="hljs-string">&#x27;val&#x27;</span>)]<br>        clf = xgb.train(params,<br>                        xgb_train,<br>                        num_boost_round=<span class="hljs-number">3000</span>,<br>                        evals=watchlist,<br>                        verbose_eval=<span class="hljs-number">50</span>,<br>                        early_stopping_rounds=<span class="hljs-number">50</span>)<br>        <span class="hljs-comment"># 每次更新的是从训练集中划出来的一部分测试集</span><br>        train_preds[test_index] += clf.predict(xgb_eval)<br>        <span class="hljs-comment"># xgb_test 是 xgb.DMatrix(test_feat) 的返回值</span><br>        test_preds += clf.predict(xgb_test)<br>        models.append(clf)<br>        pickle.dump(models, <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;xgb_&#123;&#125;.model&#x27;</span>.<span class="hljs-built_in">format</span>(datetime.datetime.now().strftime(<span class="hljs-string">&#x27;%Y%m%d_%H%M%S&#x27;</span>)), <span class="hljs-string">&#x27;+wb&#x27;</span>))<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;用时&#123;&#125;秒&#x27;</span>.<span class="hljs-built_in">format</span>(time.time()-t0))<br>        <span class="hljs-keyword">return</span> train_preds, test_preds/<span class="hljs-number">5</span><br><br></code></pre></td></tr></table></figure>
+<p>xgb_cv函数解读：划分数据集的方法采用K折交叉验证，K折交叉验证具体实现是</p>
+<ul>
+<li>将数据集平均分割成K个等份<br><strong>sklearn.cross_validation.KFold</strong>(len(train_feat), n_folds&#x3D;5, shuffle&#x3D;True, random_state&#x3D;520)<br><strong>n_folds&#x3D;5</strong>，K折验证的K值；默认3，最小为2<br><strong>shuffle</strong>默认False;shuffle会对数据产生随机搅动(洗牌)<br><strong>random_state</strong>默认None，随机种子</li>
+<li>使用1份数据作为测试数据，其余作为训练数据</li>
+<li>计算测试准确率</li>
+<li>使用不同的测试集，重复2、3步骤</li>
+<li>对测试准确率做平均，作为对未知数据预测准确率的估计</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">params</span> = &#123;<span class="hljs-string">&#x27;objective&#x27;</span>: <span class="hljs-string">&#x27;multi:softprob&#x27;</span>, <span class="hljs-meta"># 多分类的问题</span><br>          <span class="hljs-string">&#x27;eta&#x27;</span>: <span class="hljs-number">0.1</span>,                    <span class="hljs-meta"># 如同学习率</span><br>          <span class="hljs-string">&#x27;max_depth&#x27;</span>: <span class="hljs-number">6</span>,                <span class="hljs-meta"># 构建树的深度，越大越容易过拟合</span><br>          <span class="hljs-string">&#x27;silent&#x27;</span>: <span class="hljs-number">1</span>,      <span class="hljs-meta"># 取0时表示打印出运行时信息，取1时表示以缄默方式运行，不打印运行时信息。缺省值为0</span><br>          <span class="hljs-string">&#x27;num_class&#x27;</span>: <span class="hljs-number">11</span>,  <span class="hljs-meta"># 类别数，与 multisoftmax 并用</span><br>          <span class="hljs-string">&#x27;eval_metric&#x27;</span>: <span class="hljs-string">&quot;mlogloss&quot;</span>,  <span class="hljs-meta"># 评价指标 negative log-likelihood</span><br>          <span class="hljs-string">&#x27;min_child_weight&#x27;</span>: <span class="hljs-number">3</span>,<br>          <span class="hljs-string">&#x27;subsample&#x27;</span>: <span class="hljs-number">0.7</span>,   <span class="hljs-meta"># 随机采样训练样本</span><br>          <span class="hljs-string">&#x27;colsample_bytree&#x27;</span>: <span class="hljs-number">0.7</span>,  <span class="hljs-meta"># 生成树时进行的列采样</span><br>          <span class="hljs-string">&#x27;seed&#x27;</span>: <span class="hljs-number">66</span><br>          &#125; <span class="hljs-keyword">if</span> <span class="hljs-keyword">params</span> <span class="hljs-keyword">is</span> None <span class="hljs-keyword">else</span> <span class="hljs-keyword">params</span><br></code></pre></td></tr></table></figure>
+<p><strong>xgb.train(params, xgb_train,num_boost_round&#x3D;3000,<br>evals&#x3D;watchlist, verbose_eval&#x3D;50, early_stopping_rounds&#x3D;50)</strong><br>**params:**训练的参数，上面代码块中有详细的解释<br>**xgb_train:**训练的数据</p>
+<p>测试集的预测结果取5次的平均。</p>
+<p>代码链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1VcY_BWTLPcONr2WGgr7bZA">https://pan.baidu.com/s/1VcY_BWTLPcONr2WGgr7bZA</a><br>密码：idgg</p>
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hOjLTNEBAt3DNiT6F-yHCw">机器学习初学者</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/iyuanshuo/article/details/80142730">Xgboost参数</a></li>
+</ul>
+<hr>
+<iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 
+" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  
+frameborder="0" scrolling="no"></iframe>
+
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/XGBoost/">#XGBoost</a>
+      
+        <a href="/tags/Machine-Learning/">#Machine Learning</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Machine Learning-实战 电信行业智能套餐个性化匹配</div>
+      <div>http://yuting0907.github.io/2018/12/30/MachineLearning-实战 电信行业智能套餐个性化匹配/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yuting</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2018年12月30日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/12/31/%E5%81%9A%E8%AE%A1%E5%88%92,%E4%B8%8D%E6%98%AF%E4%B8%80%E4%BB%BD%E6%84%BF%E6%9C%9B%E6%B8%85%E5%8D%95/" title="做计划，不是一份愿望清单...">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">做计划，不是一份愿望清单...</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/12/28/%E4%BD%A0%E5%AF%B9%E4%B8%80%E4%B8%87%E5%B0%8F%E6%97%B6%E5%AE%9A%E5%BE%8B%E6%9C%89%E4%BB%80%E4%B9%88%E8%AF%AF%E8%A7%A3/" title="你对一万小时定律有什么误解?">
+                        <span class="hidden-mobile">你对一万小时定律有什么误解?</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
