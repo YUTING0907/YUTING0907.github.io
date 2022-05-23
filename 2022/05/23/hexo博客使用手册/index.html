@@ -16,24 +16,27 @@
   <meta name="author" content="Echo Yu">
   <meta name="keywords" content="ML">
   
-    <meta name="description" content="本文介绍：如何从hexo博客从win8迁移到mac 最近换电脑，然后看到同组大佬的hexo博客已经写到130+，在大佬的刺激下准备把之前荒废的博客重新打理起来。 环境准备1.安装brew &#x2F;bin&#x2F;zsh -c &quot;$(curl -fsSL https:&#x2F;&#x2F;gitee.com&#x2F;cunkai&#x2F;HomebrewCN&#x2F;raw&#x2F;master&#x2F;Homebrew.sh)&quot; 请输入序号：输入1">
+    <meta name="description" content="本文介绍利用hexo写博客的常用命令和功能 包括创建博客，预览文章，部署博客，文章加密，更换主题，免费图床 新建文章文章在博客目录下输入以下命令时，会默认使用post布局，然后自动在source\_posts目录生成一个文章名.md文件： hexo n 文章名 # 例如 hexo n hexo博客使用手册 另外如果在_config.yml配置文件中将有设置文章的目录post_asset_folde">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hexo博客从win8迁移到mac">
-<meta property="og:url" content="http://yuting0907.github.io/2022/05/22/hexo%E5%8D%9A%E5%AE%A2%E4%BB%8Ewin8%E8%BF%81%E7%A7%BB%E5%88%B0mac/index.html">
+<meta property="og:title" content="hexo博客使用手册">
+<meta property="og:url" content="http://yuting0907.github.io/2022/05/23/hexo%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/index.html">
 <meta property="og:site_name" content="YUTING">
-<meta property="og:description" content="本文介绍：如何从hexo博客从win8迁移到mac 最近换电脑，然后看到同组大佬的hexo博客已经写到130+，在大佬的刺激下准备把之前荒废的博客重新打理起来。 环境准备1.安装brew &#x2F;bin&#x2F;zsh -c &quot;$(curl -fsSL https:&#x2F;&#x2F;gitee.com&#x2F;cunkai&#x2F;HomebrewCN&#x2F;raw&#x2F;master&#x2F;Homebrew.sh)&quot; 请输入序号：输入1">
+<meta property="og:description" content="本文介绍利用hexo写博客的常用命令和功能 包括创建博客，预览文章，部署博客，文章加密，更换主题，免费图床 新建文章文章在博客目录下输入以下命令时，会默认使用post布局，然后自动在source\_posts目录生成一个文章名.md文件： hexo n 文章名 # 例如 hexo n hexo博客使用手册 另外如果在_config.yml配置文件中将有设置文章的目录post_asset_folde">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgbrew_version.png">
-<meta property="article:published_time" content="2022-05-22T09:14:01.000Z">
-<meta property="article:modified_time" content="2022-05-23T03:29:29.804Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgscaffolds.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgscanfolds_post.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgCoding_%E6%9E%84%E5%BB%BA%E5%A4%B1%E8%B4%A5.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgPicGo_setting.png">
+<meta property="article:published_time" content="2022-05-23T05:20:03.000Z">
+<meta property="article:modified_time" content="2022-05-23T06:29:05.043Z">
 <meta property="article:author" content="Echo Yu">
 <meta property="article:tag" content="hexo">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgbrew_version.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgscaffolds.png">
   
   
   
-  <title>hexo博客从win8迁移到mac - YUTING</title>
+  <title>hexo博客使用手册 - YUTING</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -196,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="hexo博客从win8迁移到mac"></span>
+            <span id="subtitle" data-typed-text="hexo博客使用手册"></span>
           
         </div>
 
@@ -207,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-05-22 17:14" pubdate>
-          2022年5月22日 下午
+        <time datetime="2022-05-23 13:20" pubdate>
+          2022年5月23日 下午
         </time>
       </span>
     
@@ -219,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          3.2k 字
         
       </span>
     
@@ -230,7 +233,7 @@
         
         
         
-          12 分钟
+          27 分钟
         
       </span>
     
@@ -268,70 +271,114 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">hexo博客从win8迁移到mac</h1>
+            <h1 style="display: none">hexo博客使用手册</h1>
             
             <div class="markdown-body">
               
-              <p>本文介绍：如何从hexo博客从win8迁移到mac</p>
-<p>最近换电脑，然后看到同组大佬的hexo博客已经写到130+，在大佬的刺激下准备把之前荒废的博客重新打理起来。</p>
-<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p><strong>1.安装brew</strong></p>
-<p><code>/bin/zsh -c &quot;$(curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh)&quot;</code></p>
-<p>请输入序号：输入1即可</p>
-<p>安装完成后关闭终端界面</p>
-<p>查看是否安装完成</p>
-<p><code>brew --version</code></p>
-<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgbrew_version.png" srcset="/img/loading.gif" lazyload></p>
-<p><strong>2.安装git和node.js</strong></p>
-<p><code>brew install git </code></p>
-<p><code>brew install node</code></p>
-<p><strong>3. 安装hexo</strong></p>
-<p>建立博客的根目录</p>
-<p><code>mkdir blog #这里目录名字自己任意取名</code> </p>
-<p>在根目录下安装hexo</p>
-<p><code>npm install -g hexo</code></p>
-<p>安装完成后会生成blog&#x2F;node_modules文件夹和 blog&#x2F;package-lock.json、package.json文件（这两文件不存在的话会导致hexo s、hexo g、hexo d等hexo命令失效，当时我是误删了这两文件一度怀疑人生）</p>
-<h3 id="部署博客"><a href="#部署博客" class="headerlink" title="部署博客"></a>部署博客</h3><p><strong>4.初始化hexo</strong></p>
-<p>环境准备完毕之后初始化hexo</p>
-<p><code>cd blog </code></p>
-<p><code>hexo init</code></p>
-<p><code>hexo s #部署到本地localhost预览 </code></p>
-<p>访问localhost:4000查看是否成功初始化</p>
-<p><strong>5. 生成ssh密钥</strong></p>
-<p><code>ssh-keygen -t rsa -C &quot;youremail@example.com&quot; #github注册邮箱</code></p>
-<p>运行后进入.ssh文件夹:</p>
-<p><code>cd ～/.ssh</code></p>
-<p>查看id_rsa.pub文件，复制里面的所有内容</p>
-<p><code>cat id_rsa.pub</code></p>
-<p>网页打开github设置：<strong>setting -》 ssh and gpg keys</strong>，添加新的ssh key，把刚才复制的内容粘贴进去。</p>
-<p>保存后，邮箱会收到一封验证邮件，记得通过验证。</p>
-<h3 id="文件迁移"><a href="#文件迁移" class="headerlink" title="文件迁移"></a>文件迁移</h3><p><strong>6.文件配置转移</strong></p>
-<p>将win8里博客根目录下的：</p>
-<p>_config.yml,</p>
-<p>scaffolds,</p>
-<p>source,</p>
-<p>themes</p>
-<p>复制并覆盖到mac博客根目录下。</p>
-<p><strong>🌟关于如何windows如何传输文件到mac</strong></p>
-<p>同一网络下。</p>
-<p>windows：文件夹属性 -&gt; 共享 -&gt; 共享（得到网路路径）</p>
-<p>mac：访达 -&gt; 连接服务器 -&gt; 输入smb:&#x2F;&#x2F;网络路径</p>
-<p><strong>7.测试博客是否成功迁移</strong></p>
+              <p>本文介绍利用hexo写博客的常用命令和功能</p>
+<p>包括创建博客，预览文章，部署博客，文章加密，更换主题，免费图床</p>
+<h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><h4 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h4><p>在博客目录下输入以下命令时，会默认使用post布局，然后自动在<code>source\_posts</code>目录生成一个文章名.md文件：</p>
+<p><code>hexo n 文章名 # 例如 hexo n hexo博客使用手册</code></p>
+<p>另外如果在_config.yml配置文件中将有设置文章的目录post_asset_folder: true</p>
+<p>则上述命令还会创建同名文件夹</p>
+<p>当然你还可以指定布局：</p>
+<p><code>$ hexo n [layout_name] draft1</code></p>
+<p>该命令创建了一个使用特定布局的名为draft1的文章。</p>
+<p>打开之前创建的text1.md文件，我们可以看到文章开头包含以下内容：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">text1</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">2022-05-23 13:29:36</span><br><span class="hljs-attr">tags:</span> <span class="hljs-string">hexo</span><br><span class="hljs-attr">categories:</span> <span class="hljs-string">blog</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure>
+
+<p>你显示的内容可能未必与我一样，不必担心, 这是可以自定义的。只需要知道，上面的内容在hexo被称作<strong>Front-matter，实际上就是该文章的一些变量，用于实现一些特定的功能</strong>。比如使<code>author: yuting</code>，那么渲染后的文章中将显示文章作者为<code>yuting</code>。</p>
+<p>如何自定义布局呢？实际上，布局是一个markdown文件，它们保存在<code>scaffolds/</code>目录下，可以看到hexo自带的三种布局其实就是三个<code>.md</code>文件：</p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgscaffolds.png" srcset="/img/loading.gif" lazyload></p>
+<p>而每一个文件中的内容实际只包含一个Front-matter。</p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgscanfolds_post.png" srcset="/img/loading.gif" lazyload></p>
+<p>因此，你可以在这里修改布局或者建立新的布局，然后创建文章时使用这些布局。</p>
+<h4 id="草稿"><a href="#草稿" class="headerlink" title="草稿"></a>草稿</h4><p>使用<code>hexo n draft draft1</code>命令将在<code>source\</code>目录下创建<code>_drafts</code>目录，并生成一个<code>draft1.md</code>文件。</p>
+<p>当你编辑完草稿后，可以把文章推送到<code>_posts</code>目录下，通过下面的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo publish &lt;file_name&gt;<br></code></pre></td></tr></table></figure>
+
+<p>可以使用<code>hexo --draft</code>命令可以查看已有草稿。</p>
+<h4 id="编辑文章"><a href="#编辑文章" class="headerlink" title="编辑文章"></a>编辑文章</h4><p>以下将介绍一些markdown语法。由于markdown在不同平台的实现略有不用，因此下面的内容只会介绍hexo默认支持的语法。此外，由于主题不同，不同机器显示效果也有会一定差异。</p>
+<p>以下是本人操作的环境：</p>
+<p>编辑器：typora（可以自行去下载）</p>
+<p>hexo主题：Fluid</p>
+<p>操作系统：mac</p>
+<h5 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h5><p><code>![]() 小括号（）里添加图片链接 []添加图片名称，也可以不写</code></p>
+<h5 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h5><p><code>##### 标题 #一个表示一级标题，注意文字和#之间有空格</code></p>
+<h5 id="加粗"><a href="#加粗" class="headerlink" title="加粗"></a>加粗</h5><p><code>**加粗** </code></p>
+<h5 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h5><p><code>``` ```</code></p>
+<h5 id="插入视频"><a href="#插入视频" class="headerlink" title="插入视频"></a>插入视频</h5><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">video</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;480&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;320&quot;</span> <span class="hljs-attr">controls</span>&gt;</span><br> <span class="hljs-tag">&lt;<span class="hljs-name">source</span> <span class="hljs-attr">src</span>=<span class="hljs-string">video_path</span>&gt;</span><br> <span class="hljs-tag">&lt;/<span class="hljs-name">video</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="引用区块"><a href="#引用区块" class="headerlink" title="引用区块"></a>引用区块</h5><figure class="highlight node-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs node-repl"><span class="hljs-meta prompt_">&gt;</span> <span class="language-javascript">这也是引用</span><br><span class="hljs-meta prompt_">&gt;</span><br><span class="hljs-meta prompt_">&gt;</span> <span class="language-javascript">引用<span class="hljs-number">1</span></span><br><span class="hljs-meta prompt_">&gt;</span><br><span class="hljs-meta prompt_">&gt;</span> <span class="language-javascript">饮用<span class="hljs-number">2</span></span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="预览文章"><a href="#预览文章" class="headerlink" title="预览文章"></a>预览文章</h3><p>编写好markdown文章后接下来就需要渲染、生成静态文件，启动本地端口查看效果了。</p>
+<p>启动本地端口命令：<code>hexo server</code>或 <code>hexo s</code></p>
+<p>生成静态文件之后，便要启动本地端口。然后localhost:4000</p>
+<p>删除静态文件命令：<code>hexo clean</code></p>
+<p>生成静态文件命令：<code>hexo generate</code>或 <code>hexo g</code></p>
+<p>部署静态文件命令：<code>hexo d</code></p>
+<h3 id="文章加密"><a href="#文章加密" class="headerlink" title="文章加密"></a>文章加密</h3><p><strong>安装hexo-blog-encrypt插件</strong></p>
+<p><code>在hexo目录下 npm install hexo-blog-encrypt</code></p>
+<p>在<code>/Hexo/_config.yml</code>文件中添加内容:</p>
+<p>encrypt: </p>
+<p>​     enable:true</p>
+<p><strong>使用插件</strong></p>
+<p>在想要使用加密功能的Blog头部加上对应文字</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---    </span><br><span class="hljs-attr">password:</span> <span class="hljs-string">smile</span>   <br><span class="hljs-attr">abstract:</span> <span class="hljs-string">Welcome</span> <span class="hljs-string">to</span> <span class="hljs-string">my</span> <span class="hljs-string">blog,</span> <span class="hljs-string">enter</span> <span class="hljs-string">password</span> <span class="hljs-string">to</span> <span class="hljs-string">read.</span> <br><span class="hljs-attr">message:</span> <span class="hljs-string">密码输入框上描述性内容</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure>
+
 <ul>
-<li>使用hexo s、hexo g、hexo d测试，无报错即成功。</li>
+<li>password: 该Blog使用的密码</li>
+<li>abstract: Blog摘要文字（少量）</li>
+<li>message: 密码框上的描述性文字</li>
 </ul>
-<p><strong>问题1: 当输入hexo g时可能会出现</strong></p>
-<p><code>Enter passphrase for key ‘/Users/mac/.ssh/id_rsa </code></p>
-<ul>
-<li><p>这里就是要输入密码，每次输入密码比较麻烦</p>
-</li>
-<li><p>在终端输入<code>ssh-add ~/.ssh/id_rsa</code> 然后输入本机密码之后</p>
-</li>
-</ul>
-<p>​        会出现<code>Identity added: /Users/tingyu/.ssh/id_rsa (这里会显示github注册邮箱)</code>，之后hexo部署都不需要输入密码了</p>
-<p><strong>问题2: spawn failed</strong></p>
-<p>多系统混合编写导致的问题</p>
-<p><code>cd进.deploy_git文件夹，输入git config –global core.autocrlf false</code></p>
-<p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/soyawww/article/details/118147820">https://blog.csdn.net/soyawww/article/details/118147820</a></p>
+<h3 id="更换主题"><a href="#更换主题" class="headerlink" title="更换主题"></a>更换主题</h3><p>以fluid主题举例子</p>
+<p>1.在GitHub上克隆你喜欢的hexo主题到本地博客的根目录的theme文件夹下</p>
+<p>  获取最新版本</p>
+<p>  方式1⃣️：</p>
+<p>  Hexo 5.0.0 版本以上，推荐通过 npm 直接安装，进入博客目录执行命令：</p>
+<p><code>npm install --save hexo-theme-fluid</code></p>
+<p>然后在博客目录下创建 <code>_config.fluid.yml</code>，将主题_config.yml内容复制过去</p>
+<p>当同时存在 <code>_config.fluid.yml</code>和<code>_config.yml</code>时，_config.yml配置无效</p>
+<p>  方式2⃣️：（我博客目前是这种方法）</p>
+<p> 下载 <a target="_blank" rel="noopener" href="https://https//github.com/fluid-dev/hexo-theme-fluid/releases">最新 release 版本</a>解压到 themes 目录，并将解压出的文件夹重命名为 <code>fluid</code></p>
+<p>2.指定主题</p>
+<p>如下修改 Hexo 博客目录中的 <code>_config.yml</code>：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">theme:</span> <span class="hljs-string">fluid</span>  <span class="hljs-comment"># 指定主题</span><br><br><span class="hljs-attr">language:</span> <span class="hljs-string">zh-CN</span>  <span class="hljs-comment"># 指定语言，会影响主题显示的语言，按需修改</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>参考fluid主题操作手册 <a target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/">https://hexo.fluid-dev.com/</a></p>
+<p>Fluid 是基于 Hexo 的一款 Material Design 风格的主题，由 <a target="_blank" rel="noopener" href="https://github.com/fluid-dev">Fluid-dev (opens new window)</a>负责开发与维护。</p>
+<p>主题 GitHub: <a target="_blank" rel="noopener" href="https://github.com/fluid-dev/hexo-theme-fluid">https://github.com/fluid-dev/hexo-theme-fluid(opens new window)</a></p>
+<p>预览网站：<a target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/">Fluid’s blog (opens new window)</a><a target="_blank" rel="noopener" href="https://zkqiang.cn/">zkqiang’s blog(opens new window)</a></p>
+<h3 id="免费图床"><a href="#免费图床" class="headerlink" title="免费图床"></a>免费图床</h3><p>在尝试通过 Coding 持续集成自动将 GitHub 仓库实时同步到 Coding 仓库 失败后，果断采用 PicGo + GitHub 搭建个人图床工具，并且成功了。呜呜呜</p>
+<p>Coding 持续集成我一直构建失败</p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgCoding_%E6%9E%84%E5%BB%BA%E5%A4%B1%E8%B4%A5.png" srcset="/img/loading.gif" lazyload></p>
+<p>Coding构建可以参考：<a target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/posts/coding-imagehost/%EF%BC%8C%E6%88%91%E5%B0%B1%E4%B8%8D%E5%81%9A%E4%BB%8B%E7%BB%8D%E4%BA%86%EF%BC%8C%E6%88%91%E9%83%BD%E6%B2%A1%E6%9E%84%E5%BB%BA%E6%88%90%E5%8A%9F%F0%9F%98%A9">https://hexo.fluid-dev.com/posts/coding-imagehost/，我就不做介绍了，我都没构建成功😩</a></p>
+<h5 id="PicGo-GitHub-搭建个人图床工具"><a href="#PicGo-GitHub-搭建个人图床工具" class="headerlink" title="PicGo + GitHub 搭建个人图床工具"></a>PicGo + GitHub 搭建个人图床工具</h5><p><strong>1.Github仓库设置</strong></p>
+<p>流程：新建 public 仓库 -&gt; 创建 token -&gt; 复制 token 备用</p>
+<p>​    <strong>新建 public 仓库 ：</strong></p>
+<p>​    点击 git 主页右上角的 <code>+</code> 创建 <code>New repository</code>；</p>
+<p>​    填写仓库信息，例如我就创建了一个 <code>PicGo</code> 的仓库。这里注意，仓库得设置为 <code>Public</code> 因为后面通过客户端访问算是外部访问，因此无法访问 <code>Private</code> ，这样的话图片传上来之后只能存储不能显示。所以要设置为 <code>Public</code>。</p>
+<p>​    <strong>创建 token并复制保存</strong></p>
+<p>此时仓库已经建立，点击右上角头像，然后进入设置；</p>
+<p>在页面最下找到 <code>Developer settings</code>，点击进入；</p>
+<p><code>Personal access tokens</code> 创建 <code>token</code>；</p>
+<p>填 description（也是随心填），勾选复选框 repo ，接着到页面底部 <code>Generate token</code> 就完成了；</p>
+<p>然后复制生成一串字符 token，这个 token 只出现一次，所以要保存一下（我一般记在微信收藏）。</p>
+<p><strong>2.PicGo 客户端配置</strong></p>
+<p><strong>下载&amp;安装</strong>  <a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/PicGo">https://github.com/Molunerfinn/PicGo</a></p>
+<p><strong>配置</strong></p>
+<p>仓库名      即你的仓库名<br>分支名      默认 master<br>Token      就是刚刚复制的那一串字符<br>存储路径 这个可以填也可以不填，填了的话图片就上传到 git 中 data 这个文件夹<br>域名         <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/yefcion/cloudimg/master">https://raw.githubusercontent.com/yefcion/cloudimg/master</a></p>
+<p>域名要改一下 格式 <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/[username]/[%E4%BB%93%E5%BA%93%E5%90%8D]/master">https://raw.githubusercontent.com/[username]/[仓库名]/master</a></p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgPicGo_setting.png" srcset="/img/loading.gif" lazyload></p>
+<p>然后点确定就可以了。</p>
+<p>然后关于上传的快捷键设置。默认的是 Mac 按键，推荐改成 <code>Ctrl + alt +c</code>。</p>
+<p>综上，操作完成。</p>
+<p>本方案唯一缺点，不能私人。但是考虑到 GitHub 上传的图在列表里没法预览，应该没人会闲着没事翻记录。。</p>
+<p>​     </p>
 
               
             </div>
@@ -376,8 +423,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>hexo博客从win8迁移到mac</div>
-      <div>http://yuting0907.github.io/2022/05/22/hexo博客从win8迁移到mac/</div>
+      <div>hexo博客使用手册</div>
+      <div>http://yuting0907.github.io/2022/05/23/hexo博客使用手册/</div>
     </div>
     <div class="license-meta">
       
@@ -389,7 +436,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年5月22日</div>
+          <div>2022年5月23日</div>
         </div>
       
       
@@ -419,18 +466,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/05/23/hexo%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="hexo博客使用手册">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">hexo博客使用手册</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2019/12/28/python%E5%AE%9E%E7%8E%B02048/" title="python-应用-实现2048.">
-                        <span class="hidden-mobile">python-应用-实现2048.</span>
+                      <a href="/2022/05/22/hexo%E5%8D%9A%E5%AE%A2%E4%BB%8Ewin8%E8%BF%81%E7%A7%BB%E5%88%B0mac/" title="hexo博客从win8迁移到mac">
+                        <span class="hidden-mobile">hexo博客从win8迁移到mac</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
