@@ -1,0 +1,828 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon_yt.png">
+  <link rel="icon" href="/img/favicon_yt.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Echo Yu">
+  <meta name="keywords" content="ML">
+  
+    <meta name="description" content="Flinkcdc原理一、CDC 概述CDC 的全称是 Change Data Capture ，在广义的概念上，只要是能捕获数据变更的技术，我们都可以称之为 CDC 。目前通常描述的 CDC 技术主要面向数据库的变更，是一种用于捕获数据库中数据变更的技术。CDC 技术的应用场景非常广泛：  数据同步：用于备份，容灾； 数据分发：一个数据源分发给多个下游系统； 数据采集：面向数据仓库 &#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FlinkCDC-2.0-原理与实践">
+<meta property="og:url" content="http://yuting0907.github.io/2022/12/06/FlinkCDC-2-0-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/index.html">
+<meta property="og:site_name" content="YUTING">
+<meta property="og:description" content="Flinkcdc原理一、CDC 概述CDC 的全称是 Change Data Capture ，在广义的概念上，只要是能捕获数据变更的技术，我们都可以称之为 CDC 。目前通常描述的 CDC 技术主要面向数据库的变更，是一种用于捕获数据库中数据变更的技术。CDC 技术的应用场景非常广泛：  数据同步：用于备份，容灾； 数据分发：一个数据源分发给多个下游系统； 数据采集：面向数据仓库 &#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20221206155512.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20221206160007.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20221206160435.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20221206160722.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20221206161620.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20221206161646.png">
+<meta property="article:published_time" content="2022-12-06T07:52:56.000Z">
+<meta property="article:modified_time" content="2022-12-06T09:01:55.996Z">
+<meta property="article:author" content="Echo Yu">
+<meta property="article:tag" content="FlinkCDC">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20221206155512.png">
+  
+  
+  
+  <title>FlinkCDC-2.0-原理与实践 - YUTING</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yuting0907.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>EchoYu&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="FlinkCDC-2.0-原理与实践"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Echo Yu
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-12-06 15:52" pubdate>
+          2022年12月6日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          18k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          152 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">FlinkCDC-2.0-原理与实践</h1>
+            
+            <div class="markdown-body">
+              
+              <h1 id="Flinkcdc原理"><a href="#Flinkcdc原理" class="headerlink" title="Flinkcdc原理"></a>Flinkcdc原理</h1><h2 id="一、CDC-概述"><a href="#一、CDC-概述" class="headerlink" title="一、CDC 概述"></a>一、CDC 概述</h2><p>CDC 的全称是 Change Data Capture ，在广义的概念上，只要是能捕获数据变更的技术，我们都可以称之为 CDC 。目前通常描述的 CDC 技术主要面向数据库的变更，是一种用于捕获数据库中数据变更的技术。CDC 技术的应用场景非常广泛：</p>
+<ul>
+<li><strong>数据同步：</strong>用于备份，容灾；</li>
+<li><strong>数据分发：</strong>一个数据源分发给多个下游系统；</li>
+<li><strong>数据采集：</strong>面向数据仓库 &#x2F; 数据湖的 ETL 数据集成，是非常重要的数据源。</li>
+</ul>
+<p>CDC 的技术方案非常多，目前业界主流的实现机制可以分为两种：</p>
+<ul>
+<li><strong>基于查询的 CDC：</strong><ul>
+<li>离线调度查询作业，批处理。把一张表同步到其他系统，每次通过查询去获取表中最新的数据；</li>
+<li>无法保障数据一致性，查的过程中有可能数据已经发生了多次变更；</li>
+<li>不保障实时性，基于离线调度存在天然的延迟。</li>
+</ul>
+</li>
+<li><strong>基于日志的 CDC：</strong><ul>
+<li>实时消费日志，流处理，例如 MySQL 的 binlog 日志完整记录了数据库中的变更，可以把 binlog 文件当作流的数据源；</li>
+<li>保障数据一致性，因为 binlog 文件包含了所有历史变更明细；</li>
+<li>保障实时性，因为类似 binlog 的日志文件是可以流式消费的，提供的是实时数据。</li>
+</ul>
+</li>
+</ul>
+<p>对比常见的开源 CDC 方案，我们可以发现：</p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20221206155512.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>对比增量同步能力，<ul>
+<li>基于日志的方式，可以很好的做到增量同步；</li>
+<li>而基于查询的方式是很难做到增量同步的。</li>
+</ul>
+</li>
+<li>对比全量同步能力，基于查询或者日志的 CDC 方案基本都支持，除了 Canal。</li>
+<li>而对比全量 + 增量同步的能力，只有 Flink CDC、Debezium、Oracle Goldengate 支持较好。</li>
+<li>从架构角度去看，该表将架构分为单机和分布式，这里的分布式架构不单纯体现在数据读取能力的水平扩展上，更重要的是在大数据场景下分布式系统接入能力。例如 Flink CDC 的数据入湖或者入仓的时候，下游通常是分布式的系统，如 Hive、HDFS、Iceberg、Hudi 等，那么从对接入分布式系统能力上看，Flink CDC 的架构能够很好地接入此类系统。</li>
+<li>在数据转换 &#x2F; 数据清洗能力上，当数据进入到 CDC 工具的时候是否能较方便的对数据做一些过滤或者清洗，甚至聚合？<ul>
+<li>在 Flink CDC 上操作相当简单，可以通过 Flink SQL 去操作这些数据；</li>
+<li>但是像 DataX、Debezium 等则需要通过脚本或者模板去做，所以用户的使用门槛会比较高。</li>
+</ul>
+</li>
+<li>另外，在生态方面，这里指的是下游的一些数据库或者数据源的支持。Flink CDC 下游有丰富的 Connector，例如写入到 TiDB、MySQL、Pg、HBase、Kafka、ClickHouse 等常见的一些系统，也支持各种自定义 connector。</li>
+</ul>
+<h2 id="二、Flink-CDC-项目"><a href="#二、Flink-CDC-项目" class="headerlink" title="二、Flink CDC 项目"></a>二、Flink CDC 项目</h2><h3 id="Dynamic-Table-amp-ChangeLog-Stream"><a href="#Dynamic-Table-amp-ChangeLog-Stream" class="headerlink" title="Dynamic Table &amp; ChangeLog Stream"></a>Dynamic Table &amp; ChangeLog Stream</h3><ul>
+<li>Dynamic Table 就是 Flink SQL 定义的动态表，动态表和流的概念是对等的。参照上图，流可以转换成动态表，动态表也可以转换成流。</li>
+<li>在 Flink SQL中，数据在从一个算子流向另外一个算子时都是以 Changelog Stream 的形式，任意时刻的 Changelog Stream 可以翻译为一个表，也可以翻译为一个流。</li>
+</ul>
+<p>联想下 MySQL 中的表和 binlog 日志，就会发现：MySQL 数据库的一张表所有的变更都记录在 binlog 日志中，如果一直对表进行更新，binlog 日志流也一直会追加，数据库中的表就相当于 binlog 日志流在某个时刻点物化的结果；</p>
+<p>日志流就是将表的变更数据持续捕获的结果。这说明 Flink SQL 的 Dynamic Table 是可以非常自然地表示一张不断变化的 MySQL 数据库表。</p>
+<h2 id="三、Flink-CDC-2-0-详解"><a href="#三、Flink-CDC-2-0-详解" class="headerlink" title="三、Flink CDC 2.0 详解"></a>三、Flink CDC 2.0 详解</h2><p>Flink CDC 1.x 可以不加锁，能够满足大部分场景，但牺牲了一定的数据准确性。Flink CDC 1.x 默认加全局锁，虽然能保证数据一致性，但存在上述 hang 住数据的风险。</p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20221206160007.png" srcset="/img/loading.gif" lazyload></p>
+<p>通过上面的分析，可以知道 2.0 的设计方案，核心要解决上述的三个问题，即支持无锁、水平扩展、checkpoint。</p>
+<h3 id="单个chunk无锁一致性读"><a href="#单个chunk无锁一致性读" class="headerlink" title="单个chunk无锁一致性读"></a>单个chunk无锁一致性读</h3><p>Flinkcdc2.0借鉴了DBlog 这篇论文里描述的无锁算法，利用Chunk 的切分算法可以实现数据同步任务多并发执行，和很多数据库的分库分表原理类似，Chunk切分算法通过表的主键对表中的数据进行分片。假设每个 Chunk 的步长为 10，按照这个规则进行切分，只需要把这些 Chunk 的区间做成左开右闭或者左闭右开的区间，保证衔接后的区间能够等于表的主键区间即可。</p>
+<p>对于每个 Chunk 的无锁读算法，该算法的核心思想是在划分了 Chunk 后，对于每个 Chunk 的全量读取和增量读取，在不用锁的条件下完成一致性的合并。Chunk 的切分如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20221206160435.png" srcset="/img/loading.gif" lazyload></p>
+<p>因为每个 chunk 只负责自己主键范围内的数据，不难推导，只要能够保证每个 Chunk 读取的一致性，就能保证整张表读取的一致性，这便是无锁算法的基本原理。</p>
+<p>Netflix 的 DBLog 论文中 Chunk 读取算法是通过在 DB 维护一张信号表，再通过信号表在 binlog 文件中打点，记录每个 chunk 读取前的 Low Position (低位点) 和读取结束之后 High Position (高位点) ，首先在低位点去查询该 Chunk 的全量数据。在读取出这一部分 Chunk 的数据之后，再将这 2 个位点之间的 binlog 增量数据合并到 chunk 所属的全量数据，从而得到高位点时刻chunk 对应的全量数据。</p>
+<p>Flink CDC 结合自身的情况，在 Chunk 读取算法上做了去信号表的改进，不需要额外维护信号表，通过直接读取 binlog 位点替代在 binlog 中做标记的功能，整体的 chunk 读算法描述如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20221206160722.png" srcset="/img/loading.gif" lazyload></p>
+<p>比如正在读取 Chunk-1，Chunk 的区间是 [K1, K10]，首先直接将该区间内的数据 select 出来并把它存在 buffer 中，在**select 之前记录 binlog 的一个位点 (低位点)<strong>，</strong>select 完成后记录 binlog 的一个位点 (高位点)**。然后开始增量部分，消费从低位点到高位点的 binlog。</p>
+<ul>
+<li>图中的 - ( k2,100 ) + ( k2,108 ) 记录表示这条数据的值从 100 更新到 108；</li>
+<li>第二条记录是删除 k3；</li>
+<li>第三条记录是更新 k2 为 119；</li>
+<li>第四条记录是 k5 的数据由原来的 77 变更为 100。</li>
+</ul>
+<p>观察图片中右下角最终的输出，会发现在消费该 chunk 的 binlog 时，出现的 key 是k2、k3、k5，我们前往 buffer 将这些 key 做标记。</p>
+<ul>
+<li>对于 k1、k4、k6、k7 来说，在高位点读取完毕之后，这些记录没有变化过，所以这些数据是可以直接输出的；</li>
+<li>对于改变过的数据，则需要将增量的数据合并到全量的数据中，只保留合并后的最终数据。例如，k2 最终的结果是 119 ，那么只需要输出 +(k2,119)，而不需要中间发生过改变的数据。</li>
+</ul>
+<p>通过这种方式，Chunk 最终的输出就是在高位点是 chunk 中最新的数据。</p>
+<h3 id="多个Chunk一致性读"><a href="#多个Chunk一致性读" class="headerlink" title="多个Chunk一致性读"></a>多个Chunk一致性读</h3><p>上图描述的是单个 Chunk 的一致性读，但是如果有多个表分了很多不同的 Chunk，且这些 Chunk 分发到了不同的 task 中，那么如何分发 Chunk 并保证全局一致性读呢？</p>
+<p>这个就是基于 FLIP-27 来优雅地实现的，通过下图可以看到有 SourceEnumerator 的组件，这个组件主要用于 Chunk 的划分，划分好的 Chunk 会提供给下游的 SourceReader 去读取，通过把 chunk 分发给不同的 SourceReader 便实现了并发读取 Snapshot Chunk 的过程，同时基于 FLIP-27 我们能较为方便地做到 chunk 粒度的 checkpoint。</p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20221206161620.png" srcset="/img/loading.gif" lazyload></p>
+<p>当 Snapshot Chunk 读取完成之后，需要有一个汇报的流程，如下图中橘色的汇报信息，将 Snapshot Chunk 完成信息汇报给 SourceEnumerator。</p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20221206161646.png" srcset="/img/loading.gif" lazyload></p>
+<p>汇报的主要目的是为了后续分发 binlog chunk (如下图)。因为 Flink CDC 支持全量 + 增量同步，所以当所有 Snapshot Chunk 读取完成之后，还需要消费增量的 binlog，这是通过下发一个 binlog chunk 给任意一个 Source Reader 进行单并发读取实现的。</p>
+<h1 id="Flinkcdc实践"><a href="#Flinkcdc实践" class="headerlink" title="Flinkcdc实践"></a>Flinkcdc实践</h1><p>Flink 版本是 1.14，customer 表的数据量是 6500 万条，Source 并发为 8，全量读取阶段: MySQL CDC 2.0 用时 <strong>13</strong> 分钟；1亿数据量的表，Source并发为1，全量读取阶段MySQL CDC 2.0 用时<strong>2小时</strong>。</p>
+<p>flinkcdc多库多表同步代码：(Mysql-&gt;Kafka-&gt;Doris)</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br></pre></td><td class="code"><pre><code class="hljs scala">## <span class="hljs-type">Mysql2Kafka</span><br><span class="hljs-keyword">package</span> com.itiaoling.app.ods<br><br><span class="hljs-keyword">import</span> com.itiaoling.bean.config.&#123;<span class="hljs-type">KafkaSinkConf</span>, <span class="hljs-type">MySqlSourceConf</span>, <span class="hljs-type">MySqlToKafkaConf</span>&#125;<br><span class="hljs-keyword">import</span> com.itiaoling.source.<span class="hljs-type">MySqlSourceFunction</span><br><span class="hljs-keyword">import</span> com.itiaoling.util.<span class="hljs-type">ExecutionEnvUtil</span><br><span class="hljs-keyword">import</span> com.ververica.cdc.connectors.mysql.source.<span class="hljs-type">MySqlSource</span><br><span class="hljs-keyword">import</span> org.apache.flink.api.common.eventtime.<span class="hljs-type">WatermarkStrategy</span><br><span class="hljs-keyword">import</span> org.apache.flink.api.common.serialization.<span class="hljs-type">SimpleStringSchema</span><br><span class="hljs-keyword">import</span> org.apache.flink.api.java.utils.<span class="hljs-type">ParameterTool</span><br><span class="hljs-keyword">import</span> org.apache.flink.configuration.<span class="hljs-type">Configuration</span><br><span class="hljs-keyword">import</span> org.apache.flink.connector.kafka.sink.&#123;<span class="hljs-type">KafkaRecordSerializationSchema</span>, <span class="hljs-type">KafkaSink</span>&#125;<br><span class="hljs-keyword">import</span> org.apache.flink.streaming.api.environment.<span class="hljs-type">StreamExecutionEnvironment</span><br><span class="hljs-keyword">import</span> java.util<br><span class="hljs-keyword">import</span> java.util.<span class="hljs-type">Map</span><br><br><span class="hljs-keyword">import</span> com.itiaoling.sink.<span class="hljs-type">KafkaSinkFunction</span><br><br><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">MySqlToKafka</span> </span>&#123;<br><br>  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span></span>(args: <span class="hljs-type">Array</span>[<span class="hljs-type">String</span>]): <span class="hljs-type">Unit</span> = &#123;<br>    <span class="hljs-keyword">val</span> parameterTool = <span class="hljs-type">ParameterTool</span>.fromArgs(args)<br>    <span class="hljs-keyword">val</span> active = parameterTool.get(<span class="hljs-string">&quot;spring.profiles.active&quot;</span>)<br>    <span class="hljs-keyword">val</span> sourceSinkType = <span class="hljs-type">Integer</span>.valueOf(parameterTool.get(<span class="hljs-string">&quot;sourceSinkType&quot;</span>))<br>    <span class="hljs-keyword">val</span> businessType = <span class="hljs-type">Integer</span>.valueOf(parameterTool.get(<span class="hljs-string">&quot;businessType&quot;</span>))<br>    <span class="hljs-keyword">val</span> tableName = parameterTool.get(<span class="hljs-string">&quot;tableName&quot;</span>)<br>    <span class="hljs-comment">//mysql2kafka配置信息</span><br>    <span class="hljs-keyword">val</span> mySqlToKafkaConf: <span class="hljs-type">MySqlToKafkaConf</span> = <span class="hljs-type">ExecutionEnvUtil</span>.getSourceSink(active, sourceSinkType, businessType, tableName).asInstanceOf[<span class="hljs-type">MySqlToKafkaConf</span>]<br><br>    <span class="hljs-keyword">val</span> flinkEnv: util.<span class="hljs-type">Map</span>[<span class="hljs-type">String</span>, <span class="hljs-type">String</span>] = mySqlToKafkaConf.flinkEnv<br>    <span class="hljs-keyword">val</span> mysqlConf: <span class="hljs-type">MySqlSourceConf</span> = mySqlToKafkaConf.mysqlSourceConf<br>    <span class="hljs-keyword">val</span> sinkConfig: <span class="hljs-type">KafkaSinkConf</span> = mySqlToKafkaConf.kafkaSinkConf<br><br><br>    <span class="hljs-keyword">val</span> conf = <span class="hljs-keyword">new</span> <span class="hljs-type">Configuration</span><br>    <span class="hljs-keyword">val</span> it: util.<span class="hljs-type">Iterator</span>[<span class="hljs-type">Map</span>.<span class="hljs-type">Entry</span>[<span class="hljs-type">String</span>, <span class="hljs-type">String</span>]] = flinkEnv.entrySet().iterator()<br>    <span class="hljs-keyword">while</span> (it.hasNext) &#123;<br>      <span class="hljs-keyword">val</span> kv: <span class="hljs-type">Map</span>.<span class="hljs-type">Entry</span>[<span class="hljs-type">String</span>, <span class="hljs-type">String</span>] = it.next()<br>      conf.setString(kv.getKey, kv.getValue)<br>    &#125;<br><br>    <span class="hljs-keyword">val</span> env: <span class="hljs-type">StreamExecutionEnvironment</span> = <span class="hljs-type">StreamExecutionEnvironment</span>.getExecutionEnvironment(conf)<br><br>    <span class="hljs-keyword">val</span> mySqlSource: <span class="hljs-type">MySqlSource</span>[<span class="hljs-type">String</span>] = <span class="hljs-type">MySqlSourceFunction</span>.createSourceFunction(mysqlConf)<br><span class="hljs-comment">//    val prefix = sinkConfig.getKafkaTopicPrefix</span><br><span class="hljs-comment">//    val suffix = sinkConfig.getKafkaTopicSuffix</span><br><span class="hljs-comment">//    val topic: String = prefix + &quot;_&quot; + tableName + &quot;_&quot; + suffix</span><br><span class="hljs-comment">//    val sink: KafkaSink[String] = KafkaSink.builder[String].setBootstrapServers(sinkConfig.getBootstrapServers)</span><br><span class="hljs-comment">//      .setRecordSerializer(KafkaRecordSerializationSchema.builder().setTopic(topic).setValueSerializationSchema(new SimpleStringSchema()).build)</span><br><span class="hljs-comment">//      .build</span><br>    <span class="hljs-comment">//使用此方法，可以将配置文件中同步所有表分别同步到不同的kafka的topic中</span><br>    env.fromSource(mySqlSource,<span class="hljs-type">WatermarkStrategy</span>.noWatermarks[<span class="hljs-type">String</span>],<span class="hljs-string">&quot;MySQL Source&quot;</span>)<br>        .addSink(<span class="hljs-type">KafkaSinkFunction</span>.createSinkFunction2(sinkConfig)).name(tableName)<br><br><span class="hljs-comment">//    env.fromSource(mySqlSource, WatermarkStrategy.noWatermarks[String], &quot;MySQL Source&quot;).sinkTo(sink).setParallelism(2)</span><br><br>    env.execute(mySqlToKafkaConf.getAppName)<br><br>  &#125;<br><br>&#125;<br><br><br><br><span class="hljs-keyword">package</span> com.itiaoling.source<br><br><span class="hljs-keyword">import</span> com.itiaoling.bean.config.<span class="hljs-type">MySqlSourceConf</span><br><span class="hljs-keyword">import</span> java.util<br><span class="hljs-keyword">import</span> java.util.&#123;<span class="hljs-type">Map</span>, <span class="hljs-type">Properties</span>&#125;<br><br><span class="hljs-keyword">import</span> com.itiaoling.app.function.<span class="hljs-type">JsonDebeziumDeserializeSchema</span><br><span class="hljs-keyword">import</span> com.ververica.cdc.connectors.mysql.source.<span class="hljs-type">MySqlSource</span><br><br><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">MySqlSourceFunction</span> </span>&#123;<br><br>  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">createSourceFunction</span></span>(mysqlConf: <span class="hljs-type">MySqlSourceConf</span>) = &#123;<br>    validateParameter(mysqlConf)<br>    <span class="hljs-keyword">val</span> debeziumProperties = <span class="hljs-keyword">new</span> <span class="hljs-type">Properties</span>()<br><br>    <span class="hljs-keyword">val</span> it: util.<span class="hljs-type">Iterator</span>[<span class="hljs-type">Map</span>.<span class="hljs-type">Entry</span>[<span class="hljs-type">String</span>, <span class="hljs-type">String</span>]] = mysqlConf.debeziumProperties.entrySet().iterator()<br>    <span class="hljs-keyword">while</span> (it.hasNext) &#123;<br>      <span class="hljs-keyword">val</span> kv: <span class="hljs-type">Map</span>.<span class="hljs-type">Entry</span>[<span class="hljs-type">String</span>, <span class="hljs-type">String</span>] = it.next()<br>      debeziumProperties.setProperty(kv.getKey, kv.getValue)<br>    &#125;<br>    <span class="hljs-type">MySqlSource</span>.builder()<br>      .hostname(mysqlConf.hostname)<br>      .port(mysqlConf.port)<br>      .scanNewlyAddedTableEnabled(<span class="hljs-literal">true</span>)<br>      .databaseList(mysqlConf.mysqlDb)<br>      .username(mysqlConf.username)<br>      .password(mysqlConf.password)<br>      .tableList(mysqlConf.tableName)<br>      .serverTimeZone(debeziumProperties.getOrDefault(<span class="hljs-string">&quot;server-time-zone&quot;</span>, <span class="hljs-string">&quot;UTC&quot;</span>).toString)<br>      .deserializer(<span class="hljs-keyword">new</span> <span class="hljs-type">JsonDebeziumDeserializeSchema</span>(debeziumProperties.getOrDefault(<span class="hljs-string">&quot;server-time-zone&quot;</span>, <span class="hljs-string">&quot;UTC&quot;</span>).toString, mysqlConf.addColumns))<br>      .debeziumProperties(debeziumProperties)<br>      .build()<br>  &#125;<br><br>  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">validateParameter</span></span>(mysqlConf: <span class="hljs-type">MySqlSourceConf</span>) = &#123;<br>    <span class="hljs-comment">//    Validater.NullValidate(&quot;hostname&quot;,mysqlConf.hostname)</span><br>  &#125;<br><br>&#125;<br><br><br><span class="hljs-keyword">package</span> com.itiaoling.app.function<br><br><span class="hljs-keyword">import</span> java.time.<span class="hljs-type">ZoneId</span><br><span class="hljs-keyword">import</span> java.util.<span class="hljs-type">Map</span><br><span class="hljs-keyword">import</span> java.&#123;sql, util&#125;<br><br><span class="hljs-keyword">import</span> com.alibaba.fastjson.<span class="hljs-type">JSONObject</span><br><span class="hljs-keyword">import</span> com.itiaoling.util.<span class="hljs-type">DateUtils</span><br><span class="hljs-keyword">import</span> com.ververica.cdc.debezium.<span class="hljs-type">DebeziumDeserializationSchema</span><br><span class="hljs-keyword">import</span> com.ververica.cdc.debezium.utils.<span class="hljs-type">TemporalConversions</span><br><span class="hljs-keyword">import</span> io.debezium.data.<span class="hljs-type">Envelope</span><br><span class="hljs-keyword">import</span> io.debezium.data.<span class="hljs-type">Envelope</span>.<span class="hljs-type">Operation</span><br><span class="hljs-keyword">import</span> io.debezium.time._<br><span class="hljs-keyword">import</span> org.apache.flink.api.common.typeinfo.&#123;<span class="hljs-type">BasicTypeInfo</span>, <span class="hljs-type">TypeInformation</span>&#125;<br><span class="hljs-keyword">import</span> org.apache.flink.types.<span class="hljs-type">RowKind</span><br><span class="hljs-keyword">import</span> org.apache.flink.util.<span class="hljs-type">Collector</span><br><span class="hljs-keyword">import</span> org.apache.kafka.connect.data.&#123;<span class="hljs-type">Field</span>, <span class="hljs-type">SchemaBuilder</span>, <span class="hljs-type">Struct</span>&#125;<br><span class="hljs-keyword">import</span> org.apache.kafka.connect.source.<span class="hljs-type">SourceRecord</span><br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JsonDebeziumDeserializeSchema</span>(<span class="hljs-params">serverTimeZone: <span class="hljs-type">String</span>, addColumns: java.util.<span class="hljs-type">Map</span>[<span class="hljs-type">String</span>, <span class="hljs-type">String</span>]</span>) <span class="hljs-keyword">extends</span> <span class="hljs-title">DebeziumDeserializationSchema</span>[<span class="hljs-type">String</span>] </span>&#123;<br><br>  <span class="hljs-keyword">var</span> ts_ms: <span class="hljs-type">AnyRef</span> = _<br><br>  <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">deserialize</span></span>(sourceRecord: <span class="hljs-type">SourceRecord</span>, collector: <span class="hljs-type">Collector</span>[<span class="hljs-type">String</span>]): <span class="hljs-type">Unit</span> = &#123;<br>    <span class="hljs-keyword">val</span> operation: <span class="hljs-type">Envelope</span>.<span class="hljs-type">Operation</span> = <span class="hljs-type">Envelope</span>.operationFor(sourceRecord)<br>    <span class="hljs-keyword">val</span> value: <span class="hljs-type">Struct</span> = sourceRecord.value().asInstanceOf[<span class="hljs-type">Struct</span>]<br>    <span class="hljs-keyword">val</span> sourceStruct: <span class="hljs-type">Struct</span> = value.getStruct(<span class="hljs-string">&quot;source&quot;</span>)<br>    <span class="hljs-keyword">val</span> db: <span class="hljs-type">String</span> = sourceStruct.get(<span class="hljs-string">&quot;db&quot;</span>).asInstanceOf[<span class="hljs-type">String</span>]<br>    <span class="hljs-keyword">val</span> table: <span class="hljs-type">String</span> = sourceStruct.get(<span class="hljs-string">&quot;table&quot;</span>).asInstanceOf[<span class="hljs-type">String</span>]<br>    <span class="hljs-keyword">val</span> source: <span class="hljs-type">String</span> = db.replaceAll(<span class="hljs-string">&quot;^*\\d$&quot;</span>, <span class="hljs-string">&quot;&quot;</span>) + <span class="hljs-string">&quot;.&quot;</span> +<br>      table.replaceAll(<span class="hljs-string">&quot;^*_\\d$&quot;</span>, <span class="hljs-string">&quot;&quot;</span>)<br><br>    ts_ms = value.get(<span class="hljs-string">&quot;ts_ms&quot;</span>)<br><br>    <span class="hljs-keyword">if</span> (operation != <span class="hljs-type">Operation</span>.<span class="hljs-type">CREATE</span> &amp;&amp; operation != <span class="hljs-type">Operation</span>.<span class="hljs-type">READ</span>) &#123;<br>      <span class="hljs-keyword">if</span> (operation == <span class="hljs-type">Operation</span>.<span class="hljs-type">DELETE</span>) &#123;<br>        <span class="hljs-keyword">val</span> data: <span class="hljs-type">JSONObject</span> = extractData(value, <span class="hljs-string">&quot;before&quot;</span>)<br>        data.put(<span class="hljs-string">&quot;is_deleted_flg&quot;</span>,<span class="hljs-number">1</span>)<br><br>        <span class="hljs-keyword">val</span> record: <span class="hljs-type">String</span> = <span class="hljs-keyword">new</span> <span class="hljs-type">JSONObject</span>()<br>          .fluentPut(<span class="hljs-string">&quot;op&quot;</span>, <span class="hljs-type">RowKind</span>.<span class="hljs-type">DELETE</span>.shortString())<br>          .fluentPut(<span class="hljs-string">&quot;data&quot;</span>, addColumns(data))<br>          .fluentPut(<span class="hljs-string">&quot;source&quot;</span>, source)<br>          .toJSONString<br>        collector.collect(record)<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">val</span> beforeData: <span class="hljs-type">JSONObject</span> = extractData(value, <span class="hljs-string">&quot;before&quot;</span>)<br>        <span class="hljs-keyword">val</span> afterData: <span class="hljs-type">JSONObject</span> = extractData(value, <span class="hljs-string">&quot;after&quot;</span>)<br>        afterData.put(<span class="hljs-string">&quot;is_deleted_flg&quot;</span>,<span class="hljs-number">0</span>)<br><br>        <span class="hljs-keyword">val</span> map: util.<span class="hljs-type">Map</span>[<span class="hljs-type">String</span>, <span class="hljs-type">AnyRef</span>] = beforeData.getInnerMap<br>        <span class="hljs-keyword">val</span> map1 = afterData.getInnerMap<br><br>        map.putAll(map1)<br><br>        <span class="hljs-keyword">val</span> afterRecord: <span class="hljs-type">String</span> = <span class="hljs-keyword">new</span> <span class="hljs-type">JSONObject</span>()<br>          .fluentPut(<span class="hljs-string">&quot;source&quot;</span>, source)<br>          .fluentPut(<span class="hljs-string">&quot;op&quot;</span>, <span class="hljs-type">RowKind</span>.<span class="hljs-type">UPDATE_AFTER</span>.shortString())<br>          .fluentPut(<span class="hljs-string">&quot;data&quot;</span>, addColumns(<span class="hljs-keyword">new</span> <span class="hljs-type">JSONObject</span>(map)))<br>          .toJSONString<br>        collector.collect(afterRecord)<br>      &#125;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-keyword">val</span> data: <span class="hljs-type">JSONObject</span> = extractData(value, <span class="hljs-string">&quot;after&quot;</span>)<br>      data.put(<span class="hljs-string">&quot;is_deleted_flg&quot;</span>,<span class="hljs-number">0</span>)<br>      <span class="hljs-keyword">val</span> record: <span class="hljs-type">String</span> = <span class="hljs-keyword">new</span> <span class="hljs-type">JSONObject</span>()<br>        .fluentPut(<span class="hljs-string">&quot;source&quot;</span>, source)<br>        .fluentPut(<span class="hljs-string">&quot;data&quot;</span>, addColumns(data))<br>        .fluentPut(<span class="hljs-string">&quot;op&quot;</span>, <span class="hljs-type">RowKind</span>.<span class="hljs-type">INSERT</span>.shortString())<br>        .toJSONString<br>      collector.collect(record)<br>    &#125;<br><br>  &#125;<br><br>  <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">getProducedType</span></span>: <span class="hljs-type">TypeInformation</span>[<span class="hljs-type">String</span>] = <span class="hljs-type">BasicTypeInfo</span>.<span class="hljs-type">STRING_TYPE_INFO</span><br><br><br>  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">extractData</span></span>(struct: <span class="hljs-type">Struct</span>, structType: <span class="hljs-type">String</span>): <span class="hljs-type">JSONObject</span> = &#123;<br>    <span class="hljs-keyword">import</span> scala.collection.<span class="hljs-type">JavaConversions</span>._<br>    <span class="hljs-keyword">val</span> valueStruct: <span class="hljs-type">Struct</span> = struct.getStruct(structType)<br>    <span class="hljs-keyword">val</span> data = <span class="hljs-keyword">new</span> <span class="hljs-type">JSONObject</span>()<br><br>    <span class="hljs-keyword">val</span> fields: util.<span class="hljs-type">List</span>[<span class="hljs-type">Field</span>] = valueStruct.schema().fields()<br>    <span class="hljs-keyword">val</span> timestamp_schema = <span class="hljs-type">SchemaBuilder</span>.int64().name(<span class="hljs-string">&quot;org.apache.kafka.connect.data.Timestamp&quot;</span>)<br>    fields.foreach(field =&gt; &#123;<br>      <span class="hljs-keyword">val</span> v: <span class="hljs-type">AnyRef</span> = valueStruct.get(field)<br>      <span class="hljs-keyword">val</span> typ: <span class="hljs-type">String</span> = field.schema().name()<br>      <span class="hljs-keyword">val</span> value: <span class="hljs-type">AnyRef</span> = typ <span class="hljs-keyword">match</span> &#123;<br>          <span class="hljs-comment">//转成当地时区，本项目中的当地时间就是中国时间，所以直接写死</span><br>        <span class="hljs-keyword">case</span> <span class="hljs-type">Timestamp</span>.<span class="hljs-type">SCHEMA_NAME</span> =&gt; <span class="hljs-keyword">if</span> (v == <span class="hljs-literal">null</span>) <span class="hljs-literal">null</span> <span class="hljs-keyword">else</span>  <span class="hljs-type">DateUtils</span>.format(v.toString.toLong,<span class="hljs-type">ZoneId</span>.of(<span class="hljs-string">&quot;UTC&quot;</span>))<br><br>        <span class="hljs-keyword">case</span> <span class="hljs-type">ZonedTimestamp</span>.<span class="hljs-type">SCHEMA_NAME</span> =&gt; <span class="hljs-keyword">if</span> (v == <span class="hljs-literal">null</span>) <span class="hljs-literal">null</span> <span class="hljs-keyword">else</span> sql.<span class="hljs-type">Timestamp</span>.valueOf(<span class="hljs-type">TemporalConversions</span>.toLocalDateTime(v, <span class="hljs-type">ZoneId</span>.of(<span class="hljs-string">&quot;Asia/Shanghai&quot;</span>))).toString<br><br>        <span class="hljs-keyword">case</span> <span class="hljs-type">Date</span>.<span class="hljs-type">SCHEMA_NAME</span> =&gt;<span class="hljs-keyword">if</span> (v == <span class="hljs-literal">null</span>) <span class="hljs-literal">null</span> <span class="hljs-keyword">else</span> <span class="hljs-type">DateUtils</span>.format2(v.toString.toLong * <span class="hljs-number">24</span> * <span class="hljs-number">60</span> * <span class="hljs-number">60</span> *<span class="hljs-number">1000</span>L)<br>        <span class="hljs-keyword">case</span> _ =&gt; v<br>      &#125;<br>      data.put(field.name(), value)<br>    &#125;)<br><br>    data<br>  &#125;<br><br><br>  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">addColumns</span></span>(data: <span class="hljs-type">JSONObject</span>): <span class="hljs-type">JSONObject</span> = &#123;<br>    <span class="hljs-keyword">val</span> it: util.<span class="hljs-type">Iterator</span>[<span class="hljs-type">Map</span>.<span class="hljs-type">Entry</span>[<span class="hljs-type">String</span>, <span class="hljs-type">String</span>]] = addColumns.entrySet().iterator()<br>    <span class="hljs-keyword">while</span> (it.hasNext) &#123;<br>      <span class="hljs-keyword">val</span> kv: <span class="hljs-type">Map</span>.<span class="hljs-type">Entry</span>[<span class="hljs-type">String</span>, <span class="hljs-type">String</span>] = it.next()<br>      data.put(kv.getKey, kv.getValue)<br>    &#125;<br>    data.put(<span class="hljs-string">&quot;ts_ms&quot;</span>,ts_ms)<br>    data<br>  &#125;<br><br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>kafka2doris</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.itiaoling.app.ods;<br><br><span class="hljs-keyword">import</span> com.alibaba.fastjson.JSONObject;<br><span class="hljs-keyword">import</span> com.itiaoling.bean.Kafka2DorisConf;<br><span class="hljs-keyword">import</span> com.itiaoling.bean.config.DorisSinkConf;<br><span class="hljs-keyword">import</span> com.itiaoling.bean.config.KafkaSourceConf;<br><span class="hljs-keyword">import</span> com.itiaoling.bean.config.Synchronization;<br><span class="hljs-keyword">import</span> com.itiaoling.common.OffsetStrategyEnum;<br><span class="hljs-keyword">import</span> com.itiaoling.util.ExecutionEnvUtil;<br><span class="hljs-keyword">import</span> lombok.extern.slf4j.Slf4j;<br><span class="hljs-keyword">import</span> org.apache.doris.flink.cfg.DorisExecutionOptions;<br><span class="hljs-keyword">import</span> org.apache.doris.flink.cfg.DorisOptions;<br><span class="hljs-keyword">import</span> org.apache.doris.flink.cfg.DorisReadOptions;<br><span class="hljs-keyword">import</span> org.apache.doris.flink.cfg.DorisSink;<br><span class="hljs-keyword">import</span> org.apache.flink.api.common.eventtime.WatermarkStrategy;<br><span class="hljs-keyword">import</span> org.apache.flink.api.common.functions.FilterFunction;<br><span class="hljs-keyword">import</span> org.apache.flink.api.common.functions.FlatMapFunction;<br><span class="hljs-keyword">import</span> org.apache.flink.api.common.serialization.SimpleStringSchema;<br><span class="hljs-keyword">import</span> org.apache.flink.api.java.utils.ParameterTool;<br><span class="hljs-keyword">import</span> org.apache.flink.configuration.Configuration;<br><span class="hljs-keyword">import</span> org.apache.flink.connector.kafka.source.KafkaSource;<br><span class="hljs-keyword">import</span> org.apache.flink.streaming.api.datastream.DataStreamSource;<br><span class="hljs-keyword">import</span> org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;<br><span class="hljs-keyword">import</span> org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;<br><span class="hljs-keyword">import</span> org.apache.flink.util.Collector;<br><span class="hljs-keyword">import</span> org.apache.kafka.clients.consumer.ConsumerConfig;<br><br><span class="hljs-keyword">import</span> java.util.Iterator;<br><span class="hljs-keyword">import</span> java.util.List;<br><span class="hljs-keyword">import</span> java.util.Map;<br><span class="hljs-keyword">import</span> java.util.Properties;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Description: Kafka Sink Doris程序</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span>: liu chao</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span>: 2022-03-04 17:03</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Kafka2Doris</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-type">ParameterTool</span> <span class="hljs-variable">parameterTool</span> <span class="hljs-operator">=</span> ParameterTool.fromArgs(args);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">active</span> <span class="hljs-operator">=</span> parameterTool.get(<span class="hljs-string">&quot;spring.profiles.active&quot;</span>);<br>        <span class="hljs-type">Integer</span> <span class="hljs-variable">sourceSinkType</span> <span class="hljs-operator">=</span> Integer.valueOf(parameterTool.get(<span class="hljs-string">&quot;sourceSinkType&quot;</span>));<br>        <span class="hljs-type">Integer</span> <span class="hljs-variable">businessType</span> <span class="hljs-operator">=</span> Integer.valueOf(parameterTool.get(<span class="hljs-string">&quot;businessType&quot;</span>));<br>        <span class="hljs-type">String</span> <span class="hljs-variable">tableName</span> <span class="hljs-operator">=</span> parameterTool.get(<span class="hljs-string">&quot;tableName&quot;</span>);<br>        <span class="hljs-comment">//kafka2doris配置信息</span><br>        <span class="hljs-type">Kafka2DorisConf</span> <span class="hljs-variable">kafka2DorisConf</span> <span class="hljs-operator">=</span> (Kafka2DorisConf) ExecutionEnvUtil.getYamlSourceSink(active, sourceSinkType, businessType, tableName);<br>        <span class="hljs-comment">//Flink环境配置信息</span><br>        Map&lt;String, String&gt; flinkEnv = kafka2DorisConf.getFlinkEnv();<br>        <span class="hljs-comment">//kafka配置信息</span><br>        <span class="hljs-type">KafkaSourceConf</span> <span class="hljs-variable">kafkaSourceConf</span> <span class="hljs-operator">=</span> kafka2DorisConf.getKafkaSourceConf();<br>        <span class="hljs-comment">//Doris Sink信息</span><br>        <span class="hljs-type">DorisSinkConf</span> <span class="hljs-variable">dorisSinkConf</span> <span class="hljs-operator">=</span> kafka2DorisConf.getDorisSinkConf();<br>        <span class="hljs-comment">//同步配置信息</span><br>        List&lt;Synchronization&gt; synchronizations = kafka2DorisConf.getSynchronizations();<br><br>        <span class="hljs-type">Properties</span> <span class="hljs-variable">kafkaProp</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Properties</span>();<br>        kafkaProp.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaSourceConf.getBootstrapServers());<br>        kafkaProp.setProperty(ConsumerConfig.GROUP_ID_CONFIG, kafkaSourceConf.getGroupId());<br>        kafkaProp.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, kafkaSourceConf.getOffsetConfig());<br><br>        <span class="hljs-type">String</span> <span class="hljs-variable">dorisUrlWithPort</span> <span class="hljs-operator">=</span> dorisSinkConf.getDorisUrlWithPort();<br>        <span class="hljs-type">String</span> <span class="hljs-variable">dorisUser</span> <span class="hljs-operator">=</span> dorisSinkConf.getDorisUser();<br>        <span class="hljs-type">String</span> <span class="hljs-variable">dorisPassword</span> <span class="hljs-operator">=</span> dorisSinkConf.getDorisPassword();<br><br><br>        <span class="hljs-type">Configuration</span> <span class="hljs-variable">conf</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Configuration</span>();<br>        Iterator&lt;Map.Entry&lt;String, String&gt;&gt; it = flinkEnv.entrySet().iterator();<br>        <span class="hljs-keyword">while</span> (it.hasNext()) &#123;<br>            Map.Entry&lt;String, String&gt; kv = it.next();<br>            conf.setString(kv.getKey(), kv.getValue());<br>        &#125;<br>        <span class="hljs-type">StreamExecutionEnvironment</span> <span class="hljs-variable">env</span> <span class="hljs-operator">=</span> StreamExecutionEnvironment.getExecutionEnvironment(conf);<br>        <span class="hljs-keyword">for</span> (Synchronization synchronization : synchronizations) &#123;<br>            <span class="hljs-type">String</span> <span class="hljs-variable">sequenceCol</span> <span class="hljs-operator">=</span> synchronization.getSequenceCol();<br><br>            <span class="hljs-type">String</span> <span class="hljs-variable">kafkaTopic</span> <span class="hljs-operator">=</span> synchronization.getKafkaTopic();<br>            <span class="hljs-type">String</span> <span class="hljs-variable">dorisDb</span> <span class="hljs-operator">=</span> synchronization.getDorisDb();<br>            <span class="hljs-type">String</span> <span class="hljs-variable">dorisTable</span> <span class="hljs-operator">=</span> synchronization.getDorisTable();<br>            log.info(<span class="hljs-string">&quot;kafkaTopic: &quot;</span> + kafkaTopic + <span class="hljs-string">&quot;\n&quot;</span> + <span class="hljs-string">&quot;dorisDb:&quot;</span> + dorisDb + <span class="hljs-string">&quot;\n&quot;</span> + <span class="hljs-string">&quot;dorisTable:&quot;</span> + dorisTable+<span class="hljs-string">&quot;\n&quot;</span>);<br><br>            <span class="hljs-type">Properties</span> <span class="hljs-variable">dorisProp</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Properties</span>();<br>            dorisProp.setProperty(<span class="hljs-string">&quot;format&quot;</span>, <span class="hljs-string">&quot;json&quot;</span>);<br>            dorisProp.setProperty(<span class="hljs-string">&quot;strip_outer_array&quot;</span>, <span class="hljs-string">&quot;true&quot;</span>);<br>            dorisProp.setProperty(<span class="hljs-string">&quot;function_column.sequence_col&quot;</span>, sequenceCol);<br><br>            KafkaSource&lt;String&gt; source = KafkaSource.&lt;String&gt;builder()<br>                    .setBootstrapServers(kafkaSourceConf.getBootstrapServers())<br>                    .setTopics(kafkaTopic)<br>                    .setGroupId(kafkaSourceConf.getGroupId())<br>                    .setStartingOffsets(OffsetStrategyEnum.getStrategyByConfig(kafkaSourceConf.getOffsetConfig()))<br>                    .setValueOnlyDeserializer(<span class="hljs-keyword">new</span> <span class="hljs-title class_">SimpleStringSchema</span>())<br>                    .build();<br>            DataStreamSource&lt;String&gt; json = env.fromSource(source, WatermarkStrategy.noWatermarks(), kafkaTopic);<br><br>            <span class="hljs-comment">//将非正常的json数据剔除</span><br>            SingleOutputStreamOperator&lt;String&gt; filter = json.filter(<span class="hljs-keyword">new</span> <span class="hljs-title class_">FilterFunction</span>&lt;String&gt;() &#123;<br>                <span class="hljs-meta">@Override</span><br>                <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">filter</span><span class="hljs-params">(String value)</span> &#123;<br>                    <span class="hljs-type">Boolean</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> <span class="hljs-literal">true</span>;<br>                    <span class="hljs-keyword">try</span> &#123;<br>                        <span class="hljs-type">JSONObject</span> <span class="hljs-variable">jsonObject</span> <span class="hljs-operator">=</span> (JSONObject) JSONObject.parse(value);<br>                        <span class="hljs-type">Object</span> <span class="hljs-variable">data</span> <span class="hljs-operator">=</span> jsonObject.get(<span class="hljs-string">&quot;data&quot;</span>);<br>                        <span class="hljs-keyword">if</span> (data == <span class="hljs-literal">null</span> || <span class="hljs-string">&quot;null&quot;</span>.equals(data))&#123;<br>                            result = <span class="hljs-literal">false</span>;<br>                        &#125;<br>                    &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>                        result = <span class="hljs-literal">false</span>;<br>                        log.error(<span class="hljs-string">&quot;json 格式化异常: &quot;</span> + value, e);<br>                    &#125;<br>                    <span class="hljs-keyword">return</span> result;<br>                &#125;<br>            &#125;);<br><br>            SingleOutputStreamOperator&lt;String&gt; rowData = filter.flatMap(<span class="hljs-keyword">new</span> <span class="hljs-title class_">FlatMapFunction</span>&lt;String, String&gt;() &#123;<br>                <span class="hljs-meta">@Override</span><br>                <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">flatMap</span><span class="hljs-params">(String value, Collector&lt;String&gt; out)</span> &#123;<br>                    <span class="hljs-type">JSONObject</span> <span class="hljs-variable">jsonObject</span> <span class="hljs-operator">=</span> (JSONObject) JSONObject.parse(value);<br>                    <span class="hljs-type">JSONObject</span> <span class="hljs-variable">data</span> <span class="hljs-operator">=</span> (JSONObject) jsonObject.get(<span class="hljs-string">&quot;data&quot;</span>);<br><br>                    <span class="hljs-keyword">if</span> (data.get(<span class="hljs-string">&quot;create_time&quot;</span>) == <span class="hljs-literal">null</span> || <span class="hljs-string">&quot;null&quot;</span>.equals(data.get(<span class="hljs-string">&quot;create_time&quot;</span>))) &#123;<br>                        data.put(<span class="hljs-string">&quot;create_time&quot;</span>, <span class="hljs-string">&quot;2020-01-01 00:00:00&quot;</span>);<br>                    &#125;<br><br>                    out.collect(data.toJSONString());<br><br>                &#125;<br>            &#125;);<br><br>            rowData.addSink(DorisSink.sink(<br>                    DorisReadOptions.builder().build(),<br>                    DorisExecutionOptions.builder()<br>                            .setBatchSize(synchronization.getDorisBatchSize())<br>                            .setBatchIntervalMs(synchronization.getDorisBatchIntervalMs())<br>                            .setMaxRetries(synchronization.getMaxRetries())<br>                            .setStreamLoadProp(dorisProp).build(),<br>                    DorisOptions.builder()<br>                            .setFenodes(dorisUrlWithPort)<br>                            .setTableIdentifier(dorisDb + <span class="hljs-string">&quot;.&quot;</span> + dorisTable)<br>                            .setUsername(dorisUser)<br>                            .setPassword(dorisPassword).build()<br>            )).name(dorisDb + <span class="hljs-string">&quot;.&quot;</span> + dorisTable);<br><br>        &#125;<br><br>        env.execute(kafka2DorisConf.getAppName());<br>    &#125;<br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+
+<p>1.当yarn per job模式下一个flinkcdc作业同步多库多表数据时候, 如果该作业同步的表中有一个数据量比较大的表，建议将该表单独拎出来作为一个作业同步，内存调大。不然会影响同批次别的表的同步。</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Flink/" class="category-chain-item">Flink</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/FlinkCDC/">#FlinkCDC</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>FlinkCDC-2.0-原理与实践</div>
+      <div>http://yuting0907.github.io/2022/12/06/FlinkCDC-2-0-原理与实践/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Echo Yu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年12月6日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/12/18/MyBatis%E4%B8%8EMysql%E5%AD%97%E6%AE%B5%E6%98%A0%E5%B0%84%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F/" title="MyBatis与Mysql字段映射的三种方式">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">MyBatis与Mysql字段映射的三种方式</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/12/05/%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E5%AE%9E%E8%B7%B5/" title="数据治理实践">
+                        <span class="hidden-mobile">数据治理实践</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
+
+<!--  -->
+<script type="text/javascript" src="/js/love.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>  
+
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="/js/FunnyTitle.js"></script>

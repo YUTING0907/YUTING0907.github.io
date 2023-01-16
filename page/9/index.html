@@ -1,0 +1,911 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon_yt.png">
+  <link rel="icon" href="/img/favicon_yt.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Echo Yu">
+  <meta name="keywords" content="ML">
+  
+    <meta name="description" content="YUTING在 Github 上的个人博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="YUTING">
+<meta property="og:url" content="http://yuting0907.github.io/page/9/index.html">
+<meta property="og:site_name" content="YUTING">
+<meta property="og:description" content="YUTING在 Github 上的个人博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Echo Yu">
+<meta property="article:tag" content="ML">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>YUTING</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yuting0907.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>EchoYu&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Welcome to a magic space"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          style="margin-top: 0">
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/04/13/Python%20-%E7%AC%94%E8%AE%B0%20-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F(Singleton)%E5%AE%9E%E7%8E%B0/" target="_self">
+          Python -笔记 -单例模式(Singleton)实现
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2019/04/13/Python%20-%E7%AC%94%E8%AE%B0%20-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F(Singleton)%E5%AE%9E%E7%8E%B0/" target="_self">
+        <div>
+          
+          本文适用对象： python正在进阶的人儿~高级 Python 语法，涉及装饰器    不管是编写类还是函数都是变量之间的传来传去，最简单粗暴的方式就是全局变量。确实在很多场景下用全局变量很方便。不过如果代码规模增大，并且有多个文件的时候，全局变量就会变得比较混乱。你可能不知道在哪个文件中定义了相同类型甚至重名的全局变量，造成悲剧。 这里介绍一种设计模式，单例模式 What单例模式是什么？单例是
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-04-13 09:26" pubdate>
+              2019-04-13
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Python/">#Python</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/03/31/Machine-Learning-%E7%AC%94%E8%AE%B0-XGBoost%E6%95%99%E7%A8%8B/" target="_self">
+          Machine Learning-笔记 -XGBoost教程
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2019/03/31/Machine-Learning-%E7%AC%94%E8%AE%B0-XGBoost%E6%95%99%E7%A8%8B/" target="_self">
+        <div>
+          
+          【1】前言 XGBoost, 全名(eXtreme Gradient Boosting)，Kaggle大杀器，在数据挖掘比赛上，Everybody knows it！！！ XGBoost作者：陈天奇（华盛顿大学） XGBoost前身:XGBoost是Boosting算法的其中一种,是在GBDT的基础上进行改进，使之更强大，适用于更大范围. 算法发布时间在2014年   本文适用对象：1.了解决策树
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-03-31 14:48" pubdate>
+              2019-03-31
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Machine-Learning/">#Machine Learning</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/03/23/Machine-Learning-%E5%AE%9E%E6%88%98-Titanic%E7%94%9F%E5%AD%98%E9%A2%84%E6%B5%8B/" target="_self">
+          Machine Learning-实战 Titanic生存预测
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2019/03/23/Machine-Learning-%E5%AE%9E%E6%88%98-Titanic%E7%94%9F%E5%AD%98%E9%A2%84%E6%B5%8B/" target="_self">
+        <div>
+          
+          本文是机器学习实战片,例子是kaggle上老经典的例子了，Titanic生存预测目的是了解机器学习的大体流程。文末百度网盘链接中包含本文用到的数据集和代码。 环境win8, python3,jupyter notebook 目录  项目背景 数据概览 数据预处理 特征分析 特征工程 构建模型  1.项目背景泰坦尼克号是当时世界上体积最庞大内部设施最豪华的客运轮船，当时泰坦尼克号的乘船事件可谓轰动全
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-03-23 15:53" pubdate>
+              2019-03-23
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Machine-Learning/">#Machine Learning</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/03/23/%E5%8C%97%E4%B8%8A%E5%B9%BF%E6%B7%B1%E7%A7%9F%E6%88%BF%E4%BF%A1%E6%81%AF%E7%9A%84%E7%88%AC%E5%8F%96%E5%92%8C%E5%88%86%E6%9E%90/" target="_self">
+          北上广深租房信息的爬取和分析
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2019/03/23/%E5%8C%97%E4%B8%8A%E5%B9%BF%E6%B7%B1%E7%A7%9F%E6%88%BF%E4%BF%A1%E6%81%AF%E7%9A%84%E7%88%AC%E5%8F%96%E5%92%8C%E5%88%86%E6%9E%90/" target="_self">
+        <div>
+          
+          本文通过爬取链家租房网站的租房信息，对北上广深一线城市的租房信息进行分析。 以下是本篇的思维导图 数据爬取准备工作：安装mongdb数据库，爬取到的数据将保存在mongdb数据库 1.首先找到爬取数据的路口进入链家网的租房网站可以发现规律提取传参https:&#x2F;&#x2F;m.lianjia.com&#x2F;chuzu&#x2F;sh&#x2F;zufang&#x2F;xujiahui规律提取如下：https:&#x2F;&#x2F;m.lianjia.com&#x2F;ch
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-03-23 09:32" pubdate>
+              2019-03-23
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Data-Analysis/">#Data Analysis</a>
+            
+              <a href="/tags/%E7%88%AC%E8%99%AB/">#爬虫</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/03/17/%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E6%8A%95%E8%B5%84%E7%90%86%E8%B4%A2%E4%BD%93%E7%B3%BB-1.%E4%BA%86%E8%A7%A3%E5%90%84%E7%A7%8D%E6%8A%95%E8%B5%84/" target="_self">
+          构建自己的投资理财体系(1.了解各种投资品)
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2019/03/17/%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E6%8A%95%E8%B5%84%E7%90%86%E8%B4%A2%E4%BD%93%E7%B3%BB-1.%E4%BA%86%E8%A7%A3%E5%90%84%E7%A7%8D%E6%8A%95%E8%B5%84/" target="_self">
+        <div>
+          
+          一.培养理财意识   如果你问有什么技能是越早开始学习越好的，那投资理财一定算一项。因为越早开始享受复利的魔力越大。投资理财是在大学里面学不到的一门学问，但却又是越早学习越好的技能。  下面给大家看一张图，体会一下复利的魔力。50年后，从图中可以看到单利和复利在财富上的巨大分野。巴菲特老爷爷曾经说过复利是世界第八大奇迹。That compound interest was the 8th Wond
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-03-17 15:41" pubdate>
+              2019-03-17
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%8A%95%E8%B5%84%E7%90%86%E8%B4%A2/">#投资理财</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/03/09/%E3%80%8A%E6%B5%81%E6%B5%AA%E5%9C%B0%E7%90%83%E3%80%8B%E7%94%B5%E5%BD%B1%E8%AF%84%E8%AE%BA%E7%9A%84%E7%88%AC%E5%8F%96%E5%92%8C%E5%88%86%E6%9E%90/" target="_self">
+          《流浪地球》电影评论的爬取和分析
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2019/03/09/%E3%80%8A%E6%B5%81%E6%B5%AA%E5%9C%B0%E7%90%83%E3%80%8B%E7%94%B5%E5%BD%B1%E8%AF%84%E8%AE%BA%E7%9A%84%E7%88%AC%E5%8F%96%E5%92%8C%E5%88%86%E6%9E%90/" target="_self">
+        <div>
+          
+          本文在猫眼电影上爬取了《流浪地球》的上万评论,并对其评论进行分析 爬虫-爬取数据找到评论网页地址先打开猫眼官网找到《流浪地球》的介绍页面：https:&#x2F;&#x2F;maoyan.com&#x2F;films&#x2F;248906  打开开发者工具 转换成手机浏览(因为网页版的评论数据只显示部分短评)点击红色箭头指向的位置，然后按F12键刷新，这时候我们就可以看到所有评论了获取评论请求地址在点击打开“查看全部533685条讨论
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-03-09 22:14" pubdate>
+              2019-03-09
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Data-Analysis/">#Data Analysis</a>
+            
+              <a href="/tags/%E7%88%AC%E8%99%AB/">#爬虫</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/01/28/Machine-Learning-%E7%AC%94%E8%AE%B0%20-Bagging&amp;Boosting/" target="_self">
+          Machine-Learning-笔记 -Bagging&amp;Boosting
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2019/01/28/Machine-Learning-%E7%AC%94%E8%AE%B0%20-Bagging&amp;Boosting/" target="_self">
+        <div>
+          
+          本文介绍Bagging和Boosting的概念以及运用它们的集成学习算法Adaboost。 Bagging &amp; BoostingBagging和Boosting都是将多个弱分类器集成起来形成一个强分类器，俗话说三个臭皮匠顶个诸葛亮。首先介绍Bagging BaggingBagging(bootstrap aggregating) ,采用一种有放回的抽样方式，每轮从原始样本集中使用Boots
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-01-28 23:12" pubdate>
+              2019-01-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Machine-Learning/">#Machine Learning</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/01/20/Machine-Learning-%E7%AC%94%E8%AE%B0%20-%E5%86%B3%E7%AD%96%E6%A0%91/" target="_self">
+          Machine Learning-笔记 -决策树
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2019/01/20/Machine-Learning-%E7%AC%94%E8%AE%B0%20-%E5%86%B3%E7%AD%96%E6%A0%91/" target="_self">
+        <div>
+          
+          决策树本文介绍的是决策树算法原理 决策树是一种基本的回归与分类算法，是一种模仿人类做决定的思维方式构建的算法，在分类问题中，是基于特征对实例进行分类的过程，决策树本质上是从训练数据集中归纳出一组分类规则。 例如下面这个例子。对下班时间、约会情况、提交截止时间这些条件进行判断，从而决定是否要进行在线课程测试。我们模拟一下今天晚上要不要上课决定的过程。这可能取决于下班时间，如果18：30之前就下班了，
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-01-20 20:08" pubdate>
+              2019-01-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Machine-Learning/">#Machine Learning</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/01/19/%E7%86%9F%E8%AF%BB%E3%80%8A%E5%BD%B1%E5%93%8D%E5%8A%9B%E3%80%8B,%E6%8A%8A%E9%94%80%E5%94%AE%E5%B0%8F%E5%93%A5%E7%9C%8B%E5%BE%97%E6%9B%B4%E9%80%8F/" target="_self">
+          熟读《影响力》,把销售小哥看得更透
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2019/01/19/%E7%86%9F%E8%AF%BB%E3%80%8A%E5%BD%B1%E5%93%8D%E5%8A%9B%E3%80%8B,%E6%8A%8A%E9%94%80%E5%94%AE%E5%B0%8F%E5%93%A5%E7%9C%8B%E5%BE%97%E6%9B%B4%E9%80%8F/" target="_self">
+        <div>
+          
+          深谙心理学的销售人员可以说是一种很恐怖的存在，房产中介销售商可以利用稀缺性，让本来犹豫不决的你，立马支付了定金。他可能会编造出一个假想的客户，告诉你说，等会我还有一个客户，他很喜欢这套房子，您要是犹豫不决的话，我不敢保证下午这套房子还没卖出去哦。汽车销售员可以利用对比心理让你额外买了一套车险，因为在相比刚刚支付的车的价格，后面随之销售的车险的价格就显得有点微不足道了，这时候的成功率就会更高。
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-01-19 11:54" pubdate>
+              2019-01-19
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/life/">#life</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/01/12/Machine-Learning-%E7%AC%94%E8%AE%B0%20-SVM/" target="_self">
+          Machine Learning-笔记 -SVM
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2019/01/12/Machine-Learning-%E7%AC%94%E8%AE%B0%20-SVM/" target="_self">
+        <div>
+          
+          本文介绍的是SVM算法原理(NG的ML课程笔记) 适应人群：想了解SVM原理的 为了好好理解SVM算法的原理，我们先从逻辑回归开始。 逻辑函数的假设函数(Hypothesis)如下图：下面将用Z代替等号右边 $$Z&#x3D;Θ^TX $$ 逻辑回归用来做什么很显然逻辑回归用来分类，如果有一个y&#x3D;1的样本，我们希望h(x)趋近1，因为我们想正确地将此样本分类，这就意味着当h(x) 趋近于
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-01-12 21:27" pubdate>
+              2019-01-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Machine-Learning/">#Machine Learning</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/page/8/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/#board">7</a><a class="page-number" href="/page/8/#board">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/#board">10</a><a class="extend next" rel="next" href="/page/10/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
+
+<!--  -->
+<script type="text/javascript" src="/js/love.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>  
+
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="/js/FunnyTitle.js"></script>

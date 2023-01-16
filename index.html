@@ -1,0 +1,881 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon_yt.png">
+  <link rel="icon" href="/img/favicon_yt.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Echo Yu">
+  <meta name="keywords" content="ML">
+  
+    <meta name="description" content="YUTING在 Github 上的个人博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="YUTING">
+<meta property="og:url" content="http://yuting0907.github.io/index.html">
+<meta property="og:site_name" content="YUTING">
+<meta property="og:description" content="YUTING在 Github 上的个人博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Echo Yu">
+<meta property="article:tag" content="ML">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>YUTING</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yuting0907.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>EchoYu&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Welcome to a magic space"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          style="margin-top: 0">
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/12/19/Mac%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85vue%E6%95%99%E7%A8%8B/" target="_self">
+          Mac系统安装vue教程
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/12/19/Mac%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85vue%E6%95%99%E7%A8%8B/" target="_self">
+        <div>
+          
+          准备工作：安装node，npmVue依托nodejs，在安装Vue之前，先保证有装node,npm。通过如下命令检查是否有安装 node -v npm -v 若没有安装，可选择手动安装or自动安装 手动安装需要自己去官网下载安装包，下载之后，直接点击运行，一路默认就行，直到安装完成。 node下载地址：https:&#x2F;&#x2F;nodejs.org&#x2F;en&#x2F;download&#x2F; （选择mac os）  自动安装
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-12-19 11:47" pubdate>
+              2022-12-19
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Vue/">#Vue</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/12/18/chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E8%A3%85elasticsearch%E7%9A%84head%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8F%92%E4%BB%B6/" target="_self">
+          chrome浏览器安装elasticsearch的head可视化插件
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/12/18/chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E8%A3%85elasticsearch%E7%9A%84head%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8F%92%E4%BB%B6/" target="_self">
+        <div>
+          
+          head插件简介elasticsearch-head被称为是弹性搜索集群的web前端，head插件主要是用来和elastic Cluster交互的Web前端 chrome浏览器下的head插件安装用chrome浏览器集成head插件,操作比较简单, 可再不用单独运行服务, 简化了head插件的安装. 安装步骤1.下载es-head.crx文件插件下载地址: https:&#x2F;&#x2F;github.com&#x2F;m
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-12-18 14:41" pubdate>
+              2022-12-18
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/elasticsearch/">#elasticsearch</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/12/18/MyBatis%E4%B8%8EMysql%E5%AD%97%E6%AE%B5%E6%98%A0%E5%B0%84%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F/" target="_self">
+          MyBatis与Mysql字段映射的三种方式
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/12/18/MyBatis%E4%B8%8EMysql%E5%AD%97%E6%AE%B5%E6%98%A0%E5%B0%84%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F/" target="_self">
+        <div>
+          
+          Java中属性命名一般使用驼峰命名法，mysql中的字段一般使用“_”来连接两个单词。这样就需要中间有一层转换，使两边能够对应起来。下面是三种不同的实现方式，根据情况做出合理的选择。 场景数据库中表结构： 1234567CREATE TABLE &#96;t_user&#96; (  &#96;id&#96; int(11) unsigned NOT NULL AUTO_INCREMENT,  &#96;user_name&#96; varch
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-12-18 14:32" pubdate>
+              2022-12-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Java/">#Java</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/12/06/FlinkCDC-2-0-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/" target="_self">
+          FlinkCDC-2.0-原理与实践
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/12/06/FlinkCDC-2-0-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/" target="_self">
+        <div>
+          
+          Flinkcdc原理一、CDC 概述CDC 的全称是 Change Data Capture ，在广义的概念上，只要是能捕获数据变更的技术，我们都可以称之为 CDC 。目前通常描述的 CDC 技术主要面向数据库的变更，是一种用于捕获数据库中数据变更的技术。CDC 技术的应用场景非常广泛：  数据同步：用于备份，容灾； 数据分发：一个数据源分发给多个下游系统； 数据采集：面向数据仓库 &#x2F;
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-12-06 15:52" pubdate>
+              2022-12-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Flink/" class="category-chain-item">Flink</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/FlinkCDC/">#FlinkCDC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/12/05/%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E5%AE%9E%E8%B7%B5/" target="_self">
+          数据治理实践
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/12/05/%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E5%AE%9E%E8%B7%B5/" target="_self">
+        <div>
+          
+          数据质量治理 数据质量是数据治理的核心，也是基础工作。数据质量通常会从及时性、真实性、唯一性、完整性、有效性、一致性等六个维度来衡量。 对于数据质量的监控，主要包括三个环节： 第一，结合数据质量衡量的六个维度以及日常工作中发现的数据质量问题，配置相关规则。 第二，在数据加工的各个环节设置检查点，比如从ODS到DW，从DW到DM等环节。如在ODS检查点设置中，可能会包括数据源抽取记录的检查；在基础层
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-12-05 17:47" pubdate>
+              2022-12-05
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86/" class="category-chain-item">数据治理</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86/">#数据治理</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/12/05/flink%E4%B8%8A%E7%BA%BF%E5%BC%82%E5%B8%B8%E6%97%A5%E8%AE%B0/" target="_self">
+          flink上线异常日记
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/12/05/flink%E4%B8%8A%E7%BA%BF%E5%BC%82%E5%B8%B8%E6%97%A5%E8%AE%B0/" target="_self">
+        <div>
+          
+          问题1:Exceeded checkpoint tolerable failure thresholdFlink任务失败，检查点失效：Exceeded checkpoint tolerable failure threshold. 最近实时平台flink任务频繁失败，报检查点方面的错误，初步排查是因为flinkcdc在同步mysql数据的时候，mysql表存有大json的数据，并且数据量达到2千万
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-12-05 16:57" pubdate>
+              2022-12-05
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Flink/" class="category-chain-item">Flink</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Flink/">#Flink</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/12/02/linux%E7%B3%BB%E7%BB%9F%E8%AF%BB%E5%8F%96excel%E6%A8%A1%E7%89%88%E8%BD%AC%E5%8C%96%E6%88%90%E5%9B%BE%E7%89%87/" target="_self">
+          python代码-linux系统读取excel模版转化成图片
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/12/02/linux%E7%B3%BB%E7%BB%9F%E8%AF%BB%E5%8F%96excel%E6%A8%A1%E7%89%88%E8%BD%AC%E5%8C%96%E6%88%90%E5%9B%BE%E7%89%87/" target="_self">
+        <div>
+          
+          windows系统excel转换成图片用python仅仅限于windows平台的包 12345678910111213141516import win32com.clientfrom PIL import ImageGrabimport logginglogging.basicConfig(level&#x3D;logging.DEBUG,format&#x3D;LOG_FORMAT,datefmt&#x3D;DATE_FOR
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-12-02 14:59" pubdate>
+              2022-12-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Python/">#Python</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/10/30/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89-kalmanFilter/" target="_self">
+          计算机视觉-kalmanFilter
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/10/30/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89-kalmanFilter/" target="_self">
+        <div>
+          
+          1.卡尔曼滤波入门卡尔曼滤波的引入： 滤波就是将测量得到的波形中的的噪声过滤掉，使得到的数据更趋于真实情况，也更加平滑，方便使用。 卡尔曼滤波适用的系统： 卡尔曼滤波适用线性高斯系统 1.线性系统：满足叠加性和齐次性 叠加性： 齐次性：  2.高斯系统 高斯：噪声满足正态分布 2.卡尔曼滤波2.1.卡尔曼公式理解实现过程：使用上一时刻的最优结果预测这一时刻的预测值，同时使用这一时刻观测值（传感器测
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-10-30 22:37" pubdate>
+              2022-10-30
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/CV/">#CV</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/10/18/Spring-Cloud%E7%8B%82%E7%A5%9E%E8%AF%B4/" target="_self">
+          Spring Cloud狂神说
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/10/18/Spring-Cloud%E7%8B%82%E7%A5%9E%E8%AF%B4/" target="_self">
+        <div>
+          
+          🥦 1.学习前言🍑 1.1 学习前提 熟练使用SpringBoot 微服务快速开发框架 了解过Dubbo + Zookeeper 分布式基础  🍑 1.2 文章大纲|  Spring Cloud 五大组件  服务注册与发现——Netflix Eureka 负载均衡：  ​       客户端负载均衡——Netflix Ribbon ​        服务端负载均衡：——Feign(其也是依赖
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-10-18 22:34" pubdate>
+              2022-10-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Java/">#Java</a>
+            
+              <a href="/tags/spring-cloud/">#spring cloud</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/10/15/%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" target="_self">
+          如何分析开源项目
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/10/15/%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" target="_self">
+        <div>
+          
+          JAVA前后端分离开源项目1.开源项目下载github上clone或者码云上下载 加载完解压，先不要急着运行！ 观察： 1.用到了哪些技术（SpringBoot，Vue等） 2.是否有数据库 3.你的环境是否匹配（Java，Maven，npm，nodejs，redis….） 然后再想办法运行 2.跑起来是第一步1.安装数据库，执行SQL 2.后端项目导入跑起来！ ​    1）后端需要的数据库需要
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-10-15 16:08" pubdate>
+              2022-10-15
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/#board">10</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
+
+<!--  -->
+<script type="text/javascript" src="/js/love.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>  
+
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="/js/FunnyTitle.js"></script>
