@@ -224,6 +224,46 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/04/14/Flink%E7%A8%8B%E5%BA%8F%E4%BB%8Echeckpoint%E7%82%B9%E5%90%AF%E5%8A%A8-%E5%B9%BF%E6%92%AD%E6%B5%81%E4%BF%AE%E6%94%B9%E9%97%AE%E9%A2%98/" target="_self">
+          Flink程序从checkpoint点启动-广播流修改问题
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2023/04/14/Flink%E7%A8%8B%E5%BA%8F%E4%BB%8Echeckpoint%E7%82%B9%E5%90%AF%E5%8A%A8-%E5%B9%BF%E6%92%AD%E6%B5%81%E4%BF%AE%E6%94%B9%E9%97%AE%E9%A2%98/" target="_self">
+        <div>
+          
+          原本的processBroadcastElement函数逻辑如下： 12345678910111213public void processBroadcastElement(Tuple2&lt;String, String&gt; value, Context ctx, Collector&lt;Tuple2&lt;String, String&gt;&gt; out) throws Except
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-04-14 17:48" pubdate>
+              2023-04-14
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Flink/">#Flink</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/04/14/Flinkcdc%E5%90%8C%E6%AD%A5mysql%E6%95%B0%E6%8D%AE%E5%88%B0Doris-streamload%E5%87%BA%E9%94%99%E8%B7%B3%E8%BF%87%E6%95%B0%E6%8D%AE%E9%97%AE%E9%A2%98/" target="_self">
           Flinkcdc同步mysql数据到Doris-streamload出错跳过数据问题
         </a>
@@ -718,67 +758,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/elasticsearch/">#elasticsearch</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/12/18/MyBatis%E4%B8%8EMysql%E5%AD%97%E6%AE%B5%E6%98%A0%E5%B0%84%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F/" target="_self">
-          MyBatis与Mysql字段映射的三种方式
-        </a>
-      </h1>
-
-      <a class="index-excerpt" href="/2022/12/18/MyBatis%E4%B8%8EMysql%E5%AD%97%E6%AE%B5%E6%98%A0%E5%B0%84%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F/" target="_self">
-        <div>
-          
-          Java中属性命名一般使用驼峰命名法，mysql中的字段一般使用“_”来连接两个单词。这样就需要中间有一层转换，使两边能够对应起来。下面是三种不同的实现方式，根据情况做出合理的选择。 场景数据库中表结构： 1234567CREATE TABLE &#96;t_user&#96; (  &#96;id&#96; int(11) unsigned NOT NULL AUTO_INCREMENT,  &#96;user_name&#96; varch
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-12-18 14:32" pubdate>
-              2022-12-18
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Java/" class="category-chain-item">Java</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Java/">#Java</a>
             
           </div>
         
