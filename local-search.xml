@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Designing a Practical Degradation Model for Deep Blind Image Super-Resolution</title>
+    <link href="/2023/07/25/cv%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Designing-a-Practical-Degradation-Model-for-Deep-Blind-Image-Super-Resolution/"/>
+    <url>/2023/07/25/cv%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Designing-a-Practical-Degradation-Model-for-Deep-Blind-Image-Super-Resolution/</url>
+    
+    <content type="html"><![CDATA[<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>2021年发表在ICCV</p><p>代码：<a href="https://github.com/cszn/BSRGAN">https://github.com/cszn/BSRGAN</a></p><p>文章认为影响真实退化的主要因素有三个：模糊、降采样和噪声。</p><p>论文设计一个实用的退化模型，该模型使三个关键因素的退化空间尽可能大且符合实际，</p><p>来解决低分辨率的问题，</p><h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2.Related Work"></a>2.Related Work</h2><p>bicubic and traditional degradation models 双三次和传统退化模型特点：</p><p>1.传统的退化模型通过采用模糊&#x2F;降采样&#x2F;加噪声来生成LR图像</p><p>2.传统退化模型的模糊核空间应该是跨尺度变化的，这使得在实际中很难确定非常大的尺度因子 </p><p>3.虽然双三次退化很少适用于真实的LR图像，但它可以用于数据增强，对于干净和尖锐的图像超分辨率确实是一个不错的选择</p><h2 id="3-Method"><a href="#3-Method" class="headerlink" title="3.Method"></a>3.Method</h2><p>退化模型：模糊、降采样、噪声和随机洗牌策略。 </p><h3 id="3-1-Blur"><a href="#3-1-Blur" class="headerlink" title="3.1 Blur"></a>3.1 Blur</h3><p>图像的模糊是一种常见的图像退化现象，对此本文提出从HR空间和LR空间对模糊进行建模。</p><p>扩展模糊的退化空间</p><p>对于高斯模糊核尺寸设置从{ 7 × 7，9 × 9，· · ·，21 × 21 }均匀采样，</p><p>各向同性高斯核分别从[ 0.1、2.4]和[ 0.1、2.8]均匀采样尺度因子2和4的核宽度，</p><p>各向异性高斯核分别从[ 0 , π]均匀采样旋转角度和从[ 0.5 , 6]和[ 0.5、8]均匀采样尺度因子2和4的各轴长度。</p><p>为了保证模糊输出的空间大小保持不变，采用反射填充。</p><p>由于宽度为0.1的各向同性高斯核对应于delta ( identity )核，因此我们始终可以应用这两种模糊操作。 </p><h3 id="3-2-Downsampling"><a href="#3-2-Downsampling" class="headerlink" title="3.2. Downsampling"></a>3.2. Downsampling</h3><p>通过二维线性网格插值法[ 28 ]将一个中心21 × 21的各向同性高斯核平移0.5 × ( s - 1)像素，并将其应用于最近邻降采样之前的卷积。高斯核宽度从[ 0.1、0.6 × s]中随机选取。我们将这样的降采样称为Dnsearest。此外，我们还采用了双三次和双线性降采样方法，分别用Ds双线性和Ds双三次表示。此外，还采用了先对图像进行尺度因子为s &#x2F; a的降采样，再进行尺度因子为a的升采样的从底向上采样方法Ds从底向上( &#x3D; Ds &#x2F; a down Duap)。这里插值方法从双线性和双三次插值中随机选取，a从[ 1 &#x2F; 2 , s]中采样。显然，上述4种降采样方法在HR空间存在模糊步长，而Ds从底向上在a小于1的情况下会在LR空间引入升尺度引起的模糊</p><h3 id="3-3-Noise"><a href="#3-3-Noise" class="headerlink" title="3.3 Noise"></a>3.3 Noise</h3><p>噪声在真实图像中普遍存在，因为它可以由不同的来源引起。</p><p>除了广泛使用的高斯噪声，本文的新退化模型还考虑了JPEG压缩噪声和相机传感器噪声。</p><p>1.高斯噪声NG。当没有关于噪声的信息时，高斯噪声假设是最保守的选择[ 40 ]。</p><p>为了合成高斯噪声，采用协方差矩阵为Σ的三维零均值高斯噪声模型N ( 0 ,∑) [ 39 ]。</p><p>这种噪声模型有两种特殊情况：当Σ &#x3D; σ2I，其中I为单位矩阵时，就变成了广泛使用的信道无关加性高斯白噪声( AWGN )模型；当Σ &#x3D; σ21，其中1是一个3 × 3矩阵，所有元素都等于1时，就变成了广泛使用的灰度AWGN模型。在我们的新退化模型中，我们总是加入高斯噪声进行数据合成。</p><p>特别地，将一般情形和两种特殊情形的概率分别设置为0.2、0.4、0.4。</p><p>对于σ，从{ 1 &#x2F; 255，2 &#x2F; 255，· · ·，25 &#x2F; 255 }中均匀采样。 </p><p>2.JPEG压缩噪声NJPEG。</p><p>JPEG是目前应用最广泛的用于降低带宽和存储的图像压缩标准。</p><p>然而，它引入了令人烦恼的8 × 8块效应&#x2F;噪声，特别是在高压缩的情况下。</p><p>压缩程度由品质因数决定，品质因数为[ 0、100]范围内的整数。</p><p>品质因数0表示低品质、高压缩，反之亦然。如果品质因数大于90，则不会引入明显的伪影。</p><p>在新的退化模型中，JPEG质量因子从[ 30,95]中统一选取。</p><p>由于JPEG是最流行的数字图像格式，因此我们采用了两个JPEG压缩步骤，概率分别为0.75和1。</p><p>特别地，后者被用作最终的退化步骤。 </p><p>3.处理后的相机传感器噪声NS</p><p>在现代数码相机中，输出图像是通过图像信号处理( Image Signal Processing，ISP )管道传递原始传感器数据得到的。</p><p>在实际应用中，如果ISP管道不执行去噪步骤，处理后的传感器噪声会通过引入非高斯噪声恶化输出图像[ 42 ]。</p><p>为了合成这种噪声，我们首先通过反向ISP管道从RGB图像中获得原始图像，然后在合成的原始图像中添加噪声后，通过正向管道重建含噪的RGB图像。原始图像噪声模型借鉴于文献[ 6 ]。</p><p>根据Adobe Digital Negative ( DNG )规范[ 1 ]，我们的正向ISP流水线包括去马赛克、曝光补偿、白平衡、相机到XYZ ( D50 )颜色空间转换、XYZ ( D50 )到线性RGB颜色空间转换、色调映射和伽马校正。 </p><h3 id="3-4-Random-Shuffle"><a href="#3-4-Random-Shuffle" class="headerlink" title="3.4 Random Shuffle"></a>3.4 Random Shuffle</h3><p>真实的低分辨率图像也可能是含噪、模糊、降采样和JPEG压缩的高分辨率图像，一幅低分辨率图像可以通过模糊、降采样和不同阶次的噪声进行退化，因此，本文提出了一种随机洗牌策略 </p><h2 id="4-Experiment"><a href="#4-Experiment" class="headerlink" title="4.Experiment"></a>4.Experiment</h2><p>LPIPS用于衡量感知质量，较低的LPIPS值意味着超分辨图像在感知上更接近于真实</p><p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230725220959.png"></p><p>FSSR - JPEG、RealSR - DPED和RealSR - JPEG产生了一些高频伪影，但量化结果优于BSRNet。</p><p>这种不一致性表明这些无参考的IQA指标并不总是匹配感知视觉质量[ 30 ]，IQA指标可以通过新的SISR方法进行更新[ 15 ]。我们进一步认为，SISR的IQA度量也应该随着新的图像退化类型而更新，这将是我们留给未来的工作 </p><h2 id="5-Conclusion"><a href="#5-Conclusion" class="headerlink" title="5.Conclusion"></a>5.Conclusion</h2><p>通过使每个退化因素，即模糊、降采样和噪声，更加复杂和实用，并且通过引入随机洗牌策略，新的退化模型可以覆盖现实世界场景中发现的广泛的退化。</p><p>基于新退化模型生成的合成数据，训练了一个通用图像超分辨率的深度盲模型。</p><p>在合成和真实图像数据集上的实验表明，深度盲模型在受到不同程度退化的图像上表现良好。</p><p>我们相信，现有的深度超分辨率网络可以从我们的新退化模型中受益，以增强它们在实际中的有用性。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>CV</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>论文阅读</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title></title>
     <link href="/2023/07/22/MAXIM-Multi-Axis-MLP-for-Image-Processing/"/>
     <url>/2023/07/22/MAXIM-Multi-Axis-MLP-for-Image-Processing/</url>
