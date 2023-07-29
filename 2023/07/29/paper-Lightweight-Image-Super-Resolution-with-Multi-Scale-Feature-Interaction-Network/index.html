@@ -16,22 +16,28 @@
   <meta name="author" content="Echo Yu">
   <meta name="keywords" content="ML">
   
-    <meta name="description" content="A ConvNet for the 2020s ConvNeXts由传统的卷积层(ConvNets)组合成的模型，在ImageNet上得到了 top-1 accuracy，87.8% 超过了Transformers，在COCO detection and ADE20K segmentation任务上优于 Swin Transformers 。引发人们重新思考卷积在计算机视觉领域的重要性。 论文链接">
+    <meta name="description" content="1.Introduction发表在2021 IEEE（ICME） 据知乎说是毕业神会，两篇保博士毕业，CCF B regular paper 的 正文 + 引用 &#x3D; 6页 2021 IEEE International Conference on Multimedia and Expo (ICME) 以往的卷积神经网络的方法需要消耗大量的算力，难以适用于一些存储和计算资源有限的移动设备。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【2022CVPR论文阅读】-A ConvNet for the 2020s">
-<meta property="og:url" content="http://yuting0907.github.io/2023/07/22/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-A-ConvNet-for-the-2020s/index.html">
+<meta property="og:title" content="Lightweight Image Super-Resolution with Multi-Scale Feature Interaction Network">
+<meta property="og:url" content="http://yuting0907.github.io/2023/07/29/paper-Lightweight-Image-Super-Resolution-with-Multi-Scale-Feature-Interaction-Network/index.html">
 <meta property="og:site_name" content="YUTING">
-<meta property="og:description" content="A ConvNet for the 2020s ConvNeXts由传统的卷积层(ConvNets)组合成的模型，在ImageNet上得到了 top-1 accuracy，87.8% 超过了Transformers，在COCO detection and ADE20K segmentation任务上优于 Swin Transformers 。引发人们重新思考卷积在计算机视觉领域的重要性。 论文链接">
+<meta property="og:description" content="1.Introduction发表在2021 IEEE（ICME） 据知乎说是毕业神会，两篇保博士毕业，CCF B regular paper 的 正文 + 引用 &#x3D; 6页 2021 IEEE International Conference on Multimedia and Expo (ICME) 以往的卷积神经网络的方法需要消耗大量的算力，难以适用于一些存储和计算资源有限的移动设备。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-07-22T04:30:05.000Z">
-<meta property="article:modified_time" content="2023-07-29T02:47:02.371Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230729200048.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230729200139.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230729200734.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230729200301.png">
+<meta property="article:published_time" content="2023-07-29T09:59:49.000Z">
+<meta property="article:modified_time" content="2023-07-29T12:30:15.303Z">
 <meta property="article:author" content="Echo Yu">
 <meta property="article:tag" content="CV">
+<meta property="article:tag" content="Super-Resolution">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230729200048.png">
   
   
   
-  <title>【2022CVPR论文阅读】-A ConvNet for the 2020s - YUTING</title>
+  <title>Lightweight Image Super-Resolution with Multi-Scale Feature Interaction Network - YUTING</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -194,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="【2022CVPR论文阅读】-A ConvNet for the 2020s"></span>
+            <span id="subtitle" data-typed-text="Lightweight Image Super-Resolution with Multi-Scale Feature Interaction Network"></span>
           
         </div>
 
@@ -210,8 +216,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-07-22 12:30" pubdate>
-          2023年7月22日 下午
+        <time datetime="2023-07-29 17:59" pubdate>
+          2023年7月29日 下午
         </time>
       </span>
     
@@ -222,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.6k 字
+          3k 字
         
       </span>
     
@@ -233,7 +239,7 @@
         
         
         
-          31 分钟
+          26 分钟
         
       </span>
     
@@ -271,36 +277,61 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">【2022CVPR论文阅读】-A ConvNet for the 2020s</h1>
+            <h1 style="display: none">Lightweight Image Super-Resolution with Multi-Scale Feature Interaction Network</h1>
             
             <div class="markdown-body">
               
-              <p>A ConvNet for the 2020s</p>
-<p>ConvNeXts由传统的卷积层(ConvNets)组合成的模型，在ImageNet上得到了 top-1 accuracy，87.8% 超过了Transformers，在COCO detection and ADE20K segmentation任务上优于 Swin Transformers 。引发人们重新思考卷积在计算机视觉领域的重要性。</p>
-<p>论文链接，论文代码：</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/YUTING0907/SubscribePapers/blob/main/papers/cvpr/cvpr2022.md">https://github.com/YUTING0907/SubscribePapers/blob/main/papers/cvpr/cvpr2022.md</a></p>
-<h2 id="1-ConvNeXt的进化路径"><a href="#1-ConvNeXt的进化路径" class="headerlink" title="1. ConvNeXt的进化路径"></a>1. ConvNeXt的进化路径</h2><p>图1概括了ConvNeXt的所有优化点，它从ResNet-50[4]或者ResNet-200出发，依次从宏观设计，深度可分离卷积（ResNeXt[5]），逆瓶颈层（MobileNet v2[6]），大卷积核，细节设计这五个角度依次借鉴Swin Transformer的思想，然后在ImageNet-1K上进行训练和评估，最终得到ConvNeXt的核心结构。</p>
-<h3 id="1-1-训练方式"><a href="#1-1-训练方式" class="headerlink" title="1.1 训练方式"></a>1.1 训练方式</h3><p>在介绍ConvNeXt的结构优化之前，我们先简单介绍一下ConvNeXt的训练方法。我们知道ResNet-50在ImageNet-1k上最终的Top-1的准确率是76.1%，而图1中ResNet-50说的是78.8%，而这2.7%的准确率的提升正是依靠对训练策略的优化所达到的。</p>
-<p>在ConvNeXt中，它的优化策略借鉴了Swin-Transformer。具体的优化策略包括：（1）将训练Epoch数从90增加到300；（2）优化器从SGD改为AdamW；（3）更复杂的数据扩充策略，包括Mixup，CutMix，RandAugment，Random Erasing等；（4）增加正则策略，例如随机深度[7]，标签平滑[8]，EMA[9]等。更具体的预训练和微调的超参数如图2。</p>
-<h3 id="1-2-宏观设计"><a href="#1-2-宏观设计" class="headerlink" title="1.2 宏观设计"></a>1.2 宏观设计</h3><h3 id="1-2-1-每个阶段的计算占比（Stage-Ratio）"><a href="#1-2-1-每个阶段的计算占比（Stage-Ratio）" class="headerlink" title="1.2.1 每个阶段的计算占比（Stage Ratio）"></a>1.2.1 每个阶段的计算占比（Stage Ratio）</h3><p>VGG提出了把骨干网络分成若干个网络块的结构，每个网络块通过池化操作将Feature Map降采样到不同的尺寸。在VGG中，每个网络块的网络层的数量基本是相同，但在之后的很多工作中，他们指出当深层的网络块层数更多时，模型的表现更好。例如，ResNet-50中共有4个不同的网络块，每个网络块又有若干个不同的基础层，一般是由卷积，BN等操作组成，它的每个网络块的层数是 (3,4,6,3) 。</p>
-<p>在Swin-Transformer中，每个骨干网络被分成了4个不同的Stage，每个Stage又是由若干个Block组成，在Swin-Transformer中，这个Block的比例是 1:1:3:1 ，而对于更大的模型来说，这个比例是 1:1:9:1 。ConvNeXt的改进是将ResNet-50的每个Stage的block的比例调整到 1:1:3:1 ，最终得到的block数是 (3,3,9,3) 。从图1中可以看出这个改进将ResNet-50的准确率从78.8%提升至79.4%。注意这里模型的GFLOPs从4.1增加至4.5，这0.6%的准确率的提升也有一部分功劳要归功于模型参数量的增加。此外ConvNeXt还提供了更大的block数为 (3,3,27,3) 的模型。</p>
-<h3 id="1-2-2-Patchify-Stem"><a href="#1-2-2-Patchify-Stem" class="headerlink" title="1.2.2 Patchify Stem"></a>1.2.2 Patchify Stem</h3><p>对于ImageNet数据集，我们通常采用 224×224 的输入尺寸，这个尺寸对于ViT等基于Transformer的模型来说是非常大的，它们通常使用一个步长为4，大小也为4的卷积将其尺寸降采样到 56×56 。因为这个卷积的步长和大小是完全相同的，所以它又是一个无覆盖的卷积，或者叫Patchify（补丁化）的卷积。这一部分在Swin-Transformer中叫做stem层，它是位于输入之后的一个降采样层。</p>
-<p>在ConvNeXt中，Stem层也是一个步长为4，大小也为4的卷积操作，这一操作将准确率从79.4%提升至79.5%，GFLOPs从4.5降到4.4%。也有人指出使用覆盖的卷积（例如步长为4，卷积核大小为7的卷积）能够获得更好的表现。</p>
-<h3 id="1-2-3-分组卷积"><a href="#1-2-3-分组卷积" class="headerlink" title="1.2.3 分组卷积"></a>1.2.3 分组卷积</h3><p>在轻量级模型中，我们介绍了深度可分离卷积，它们将 3×3 卷积以通道为单位进行运算（深度卷积），然后再通过 1×1 卷积进行通道融合（点卷积）。而ResNeXt是一个更折中的方案，它通过分组卷积（将通道分组，然后以组为单位进行卷积）的方式来提升模型的计算速度。与之类似的是，Swin-Tranformer的Self-Attention也是以通道为单位的运算单元，不同的是可分离卷积是可学习的卷积核，Self-Attention是根据数据动态计算的权值。</p>
-<p>在ConvNeXt中，也引入了分组卷积的思想。它将 3×3 卷积替换成了 3×3 的分组卷积，这个操作将GFLOPs从4.4降到了2.4，但是它也将准确率从79.5%降到了78.3%。为了弥补准确率的下降，它将ResNet-50的基础通道数从64增加至96。这个操作将GFLOPs增加到了5.3，但是准确率提升到了80.5%。</p>
-<h3 id="1-2-3-逆瓶颈层"><a href="#1-2-3-逆瓶颈层" class="headerlink" title="1.2.3 逆瓶颈层"></a>1.2.3 逆瓶颈层</h3><p>瓶颈层是一个中间小，两头大的结构，最早在残差网络中被使用。而在MobileNet v2中则使用了一个中间大，两头小的结构，他们认为这个结构能够有效的避免信息流失。之后的 Transformer本质也是一个逆瓶颈层的架构，在Transformer中，Self-Attention的隐层节点数是512，而中间的全连接的隐层节点数是2048。这里的ConvNeXt也是使用了逆瓶颈层的结构，如图3.(a)和图3.(b)所示。这个策略将准确率提升至85.6%，GFLOPs降低至4.6。</p>
-<p>在后续的工作中，作者尝试了使用更大的卷积核。为了适应更大的卷积核，作者将卷积的图3.(b)的深度卷积向上移动了一层，如图3.(c)。此操作将准确率降低到了79.9%，但是GFLOPS也下降到了4.1%。</p>
-<p>1.3 更大卷积核</p>
-<p>大卷积核是一个比较古老的卷积运算参数，上次看见这些大卷积核还是在AlexNet，VGG等这些上古网络中。当时使用小卷积核替代大卷积核，一个重要的原因是一个大卷积核（ 5×5 卷积）和两层的小卷积核（ 3×3 卷积）在拥有相同感受野的情况下，表现是比两层小卷积核略差的。在Swin-Transformer中，它们使用的是 7×7 自注意力窗口本质上也是一个大的计算窗口，因此这里作者也对大的卷积核重新进行了对照实验。</p>
-<p>在ConvNeXt的实验中，它们尝试了 5×5 ， 7×7 ， 9×9 和 11×11 共4个不同尺寸的卷积操作。从图1的实验结果来看， 7×7 卷积操作的效果最好。它将模型的准确率提升至80.6%，GFLOPs些许增加至4.2。并且从这个实验结果中可以看出，大卷积核对模型速度的影响并不很大，这可能是得益于当前深度学习框架以及硬件对大卷积核的支持更友好。</p>
-<h3 id="1-4-细节优化"><a href="#1-4-细节优化" class="headerlink" title="1.4 细节优化"></a>1.4 细节优化</h3><h3 id="1-4-1-ReLU替换为GELU"><a href="#1-4-1-ReLU替换为GELU" class="headerlink" title="1.4.1 ReLU替换为GELU"></a>1.4.1 ReLU替换为GELU</h3><p>ReLU是比较早期的激活函数，近年来更多的模型选择使用GELU[11]作为激活函数，例如ConvNeXt要对齐的Swin Transformer。在ConvNeXt的实验中，GELU并没有提升模型的准确率和效率。但是为了对齐其它指标，ConvNeXt还是选择了GELU作为激活函数。</p>
-<h3 id="1-4-2-更少的激活函数"><a href="#1-4-2-更少的激活函数" class="headerlink" title="1.4.2 更少的激活函数"></a>1.4.2 更少的激活函数</h3><p>在以往的卷积网络中，我们倾向于为每一个卷积操作都添加一个激活函数，但Transformer使用了更少的激活函数，Transformer是由一个自注意力层和两个MLP组成，但它仅在一个MLP上使用了激活函数。</p>
-<p>ConvNeXt也借鉴了Transformer的思想，它仅在两个 1×1 卷积之间添加了一个GELU激活函数。实验结果表明这个操作将准确率从80.6%提升至81.3%。</p>
-<h3 id="1-4-3-更少的归一化层"><a href="#1-4-3-更少的归一化层" class="headerlink" title="1.4.3 更少的归一化层"></a>1.4.3 更少的归一化层</h3><p>Transformer也是一个归一化层使用的非常少的网络结构，因此在ConvNeXt中也使用了更少的归一化操作，它仅在第一个 1×1 卷积之前添加了一个BN，而更多的归一化操作对模型效果提升并没有帮助。通过这个操作将模型的准确率提升至81.4%。</p>
-<h3 id="1-4-4-BN替换为LN"><a href="#1-4-4-BN替换为LN" class="headerlink" title="1.4.4 BN替换为LN"></a>1.4.4 BN替换为LN</h3><p>根据我们之前的经验，BN[12]经常被用在CNN中，而LN[13]通常是用来解决BN在样本量过少的时候归一化统计量偏差过大的问题的。也有实验结果表明，如果将残差网络中的BN直接替换为LN的话，模型的性能反而会下降。</p>
-<p>但是在ConvNeXt中，因为之前作者做了若干个将卷积网络向Transformer的改进，因此这里也尝试了将ConvNeXt中的BN替换为LN，令人意外的是，LN在ConvNeXt中要比BN表现的好，它将模型的准确率提升至81.5%。</p>
-<p>因为上述改进都是非常小的点的优化，对模型的速度影响并不大，因此ConvNeXt的GFLOPs维持在了4.2没变。上述的所有改进如下面代码片段所示。注意下面的代码中的 1×1 卷积使用的是线性层来实现的。</p>
-
+              <h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1.Introduction"></a>1.Introduction</h2><p>发表在2021 IEEE（ICME）</p>
+<p>据知乎说是毕业神会，两篇保博士毕业，CCF B</p>
+<p>regular paper 的 正文 + 引用 &#x3D; 6页</p>
+<p>2021 IEEE International Conference on Multimedia and Expo (ICME)</p>
+<p>以往的卷积神经网络的方法需要消耗大量的算力，难以适用于一些存储和计算资源有限的移动设备。</p>
+<p>本文提出一个轻量级的多尺度特征交互网络( MSFIN )，通过此网络可以实现不同尺度的低分辨率观测图像的信息特征的融合，另外本文设计了一个轻量级的循环残差通道注意力块( RRCAB )，使得网络在足够轻量级的同时，也能从通道注意力机制中获益。</p>
+<p>在一些基准测试集上的大量实验已经证实，我们提出的MSFIN能够以更轻量级的模型实现与现有技术相当的性能。  </p>
+<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2.Related Work"></a>2.Related Work</h2><h4 id="2-1-SISR任务中基于深度学习的方法："><a href="#2-1-SISR任务中基于深度学习的方法：" class="headerlink" title="2.1 SISR任务中基于深度学习的方法："></a>2.1 SISR任务中基于深度学习的方法：</h4><p>   Dong等[ 1 ]首次提出了一种三层卷积神经网络( SRCNN )用于端到端的图像超分辨率重建</p>
+<p>   此后，许多深度超分辨率网络被提出，如VDSR [ 2 ]、MemNet [ 3 ]、LapSRN [ 4 ]、MSRN [ 5 ]等</p>
+<p>SISR任务中注意力机制的方法：</p>
+<h4 id="2-2-SISR任务中注意力机制："><a href="#2-2-SISR任务中注意力机制：" class="headerlink" title="2.2 SISR任务中注意力机制："></a>2.2 SISR任务中注意力机制：</h4><p>如今，注意力机制在计算机视觉任务中得到了广泛的应用。</p>
+<p>Hu等人[ 6 ]提出了压缩激励网络( SENet )，利用通道之间的关系，在图像分类任务中取得了显著的性能提升。Zhang等[ 7 ]通过使用一些残差通道注意力块( RCAB )提出了所谓的残差通道注意力网络( RCAN )用于图像SR任务。 </p>
+<h4 id="2-3-递归网络："><a href="#2-3-递归网络：" class="headerlink" title="2.3 递归网络："></a>2.3 递归网络：</h4><p>复杂而深入的SR模型可以提供显著的性能提升，但由于参数和计算量大，它们可能难以用于实际场景。特别是对于一些移动设备，其存储和计算资源有限。许多工作表明递归网络可以有效地减少参数的数量</p>
+<p>例如，DRCN [ 8 ]和DRRN [ 9 ]采用递归机制进行参数共享。然而，简单地使用递归可以实现参数缩减，但会以性能下降为代价。</p>
+<h3 id="2-4-注意力机制的残差多尺度模块："><a href="#2-4-注意力机制的残差多尺度模块：" class="headerlink" title="2.4 注意力机制的残差多尺度模块："></a>2.4 注意力机制的残差多尺度模块：</h3><p>为了解决在简单使用递归实现参数缩减时模型效果下降的问题，一个可选的解决方案是设计一些轻量级且有效的SR模型。Ahn等[ 10 ]提出了一种面向移动场景的级联残差网络( CARN-M )，以PSNR降低为代价来减少计算量。Hui等[ 11 ]设计了一种信息蒸馏网络( Information Distillation Network，IDN )，该网络使用通道拆分策略来聚合具有局部保留信息的当前信息。</p>
+<p>随后，他们在IDN的基础上，进一步提出了高效的信息多蒸馏网络和自适应裁剪策略来进一步提升性能[ 12 ]。Lan等[ 13 ]提出了基于注意力机制的残差多尺度模块( MADNet )来加强模型的特征表示能力。</p>
+<p>类似地，Li等[ 14 ]提出了一种轻量级的超分辨率网络( s-LWSR )来实现高效的SISR。</p>
+<h2 id="3-Method"><a href="#3-Method" class="headerlink" title="3.Method"></a>3.Method</h2><p>以上方法会存在这样的问题：</p>
+<p>1.残差通道注意力块( RCAB )会产生大量的参数，这些参数主要来自残差模块中的卷积层。</p>
+<p>2.此外，在基于多尺度特征的方法中，信息特征从不同的尺度分别聚合生成最终的HR特征，它们之间的相互协作没有得到充分发挥。</p>
+<p><strong>提出Multi-Scale Feature InteractionNetwork（ MSFIN）</strong></p>
+<p>基于这些观察，为了利用图像特征并恢复更多的细节，我们提出了一种多尺度特征交互网络( MSFIN )，</p>
+<p>它可以在性能和参数数量之间做出更好的权衡。</p>
+<p><strong>backbone</strong>网络框架如下：</p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230729200048.png" srcset="/img/loading.gif" lazyload></p>
+<p>RRCAB具体框架如下图：</p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230729200139.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="4-Experiment"><a href="#4-Experiment" class="headerlink" title="4.Experiment"></a>4.Experiment</h2><p>与之前的工作[ 5、7、11、17]一样，本文使用DIV2K数据集[ 18 ]来训练模型，该数据集有800张高质量的RGB训练图像。通过双三次插值对高分辨率图像进行降采样，得到低分辨率图像。</p>
+<p>为了增加训练数据集，随机旋转和翻转来自DIV2K的800张训练图像。本文设定小批量大小为16，从低分辨率图像中随机裁剪大小为48 × 48的低分辨率图像块作为输入。通过设置β 1 &#x3D; 0.9，β1 &#x3D; 0.999，ε &#x3D; 10 - 8使用ADAM优化器训练我们的模型。</p>
+<p>学习率初始化为1 × 10-4，通过余弦退火将学习率降低到6.25 × 10 - 6。提出的SR网络是在PyTorch框架下实现的。 </p>
+<p>为了测试，还使用了几个广泛使用的基准测试：Set5 [ 19 ]，Set14 [ 20 ]，BSDS100 [ 21 ]和Urban100 [ 22 ]。在现有工作的基础上，采用峰值信噪比( PSNR )和结构相似度( SSIM ) [ 23 ]两个指标来验证SR的性能，计算了YCBCR颜色空间的亮度通道上的性能指标 </p>
+<p><strong>4.1 Comparisons of different feature interaction schemes</strong>不同交互方案的对比</p>
+<p>在通道数为20，输入LR块大小为16 × 16的前提下，进行了以下实验，包括交互连接( IC ,如图1所示)、复杂交互连接( CIC ,在IC的基础上增加从3级到1级的交互连接)和无参交互连接（NS，交互连接中的反卷积不共享参数)。</p>
+<p>从表1中，我们可以得到以下观察结果。首先，特征交互的使用可以通过仅添加少量参数来提高SR性能。其次，CIC操作导致参数数量增加，但性能提升不大。  </p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230729200734.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>4.2 Comparisons of different basic modules in RRCAB</strong></p>
+<p>RRCAB中不同基础模块的比较</p>
+<p>在这一部分，主要进行了一些实验来评估我们的基本RRCAB的有效性。</p>
+<p>主要关注通道注意力( CA )、特征融合( FF , 1 × 1卷积后接第二组卷积,如图2所示)和通道混洗( CS )在分组卷积后的效果。</p>
+<p>FF和CS主要用于对组卷积提取的特征进行融合和洗牌，以增强提取特征的表征能力。从表2可以看出，在参数增加不多的情况下，CA机制可以提高性能。FF机制只需要几个额外的参数就可以提高性能。这表明我们提出的RRCAB可以在一定程度上更好地平衡参数数量和性能。 </p>
+<p><strong>4.3 Comparison with state-of-the-arts</strong></p>
+<p>将这些方法按照参数个数小于600K和大于600K分为两组，主要在规模为4的SR任务上对这些方法进行评估。</p>
+<p>如表3所示，本文模型在可接受的参数数量下实现了可比较的性能。</p>
+<p>此外，图3给出了各SR模型在Set14和Urban100数据集上的可视化结果。这也证明了我们的SR模型的有效性。为了增强MSFIN的性能，参考RCAN，也采用了自集成增强机制，记为MSFIN - S +和MSFIN +。从表3可以看出，我们的MSFIN - S +和 MSFIN+在相同的参数范围内，MSFIN +几乎可以超过所有其他方法。 </p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230729200301.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="5-Conclusion"><a href="#5-Conclusion" class="headerlink" title="5.Conclusion"></a>5.Conclusion</h2><p>为了利用图像特征并恢复更多的细节，提出了一种多尺度特征交互网络( MSFIN )，它可以在性能和参数数量之间做出更好的权衡。</p>
+<p>主要贡献可以总结如下：</p>
+<p>( i )基于通道注意力机制，提出了一种轻量级的循环通道注意力块( RRCAB )用于轻量级图像超分辨率任务，可以在更小的内存消耗下提高重建图像的质量。</p>
+<p>( ii )基于这些RRCAB，我们开发了多尺度特征交互模块，该模块可以充分利用来自不同尺度的信息特征和交互连接，以更好地恢复生成图像的细节。 </p>
+<p>模型在DIV2K数据集[ 18 ]来训练模型，该数据集有800张高质量的RGB训练图像，并在Set5 [ 19 ]，Set14 [ 20 ]，BSDS100 [ 21 ]和Urban100 [ 22 ]做了基准测试，采用峰值信噪比( PSNR )和结构相似度( SSIM ) [ 23 ]两个指标来验证SR的性能。</p>
+<h3 id="6-个人感悟"><a href="#6-个人感悟" class="headerlink" title="6. 个人感悟"></a>6. 个人感悟</h3>
               
             </div>
             <hr/>
@@ -334,6 +365,8 @@
       
         <a href="/tags/CV/">#CV</a>
       
+        <a href="/tags/Super-Resolution/">#Super-Resolution</a>
+      
     </div>
   
 </div>
@@ -344,8 +377,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>【2022CVPR论文阅读】-A ConvNet for the 2020s</div>
-      <div>http://yuting0907.github.io/2023/07/22/论文阅读-A-ConvNet-for-the-2020s/</div>
+      <div>Lightweight Image Super-Resolution with Multi-Scale Feature Interaction Network</div>
+      <div>http://yuting0907.github.io/2023/07/29/paper-Lightweight-Image-Super-Resolution-with-Multi-Scale-Feature-Interaction-Network/</div>
     </div>
     <div class="license-meta">
       
@@ -357,7 +390,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年7月22日</div>
+          <div>2023年7月29日</div>
         </div>
       
       
@@ -387,18 +420,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/07/22/MAXIM-Multi-Axis-MLP-for-Image-Processing/" title="MAXIM Multi-Axis MLP for Image Processing">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">MAXIM Multi-Axis MLP for Image Processing</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/07/11/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0GPU%E5%92%8CCUDA%E9%85%8D%E7%BD%AE/" title="深度学习GPU和CUDA配置">
-                        <span class="hidden-mobile">深度学习GPU和CUDA配置</span>
+                      <a href="/2023/07/25/paper-Designing-a-Practical-Degradation-Model-for-Deep-Blind-Image-Super-Resolution/" title="Designing a Practical Degradation Model for Deep Blind Image Super-Resolution">
+                        <span class="hidden-mobile">Designing a Practical Degradation Model for Deep Blind Image Super-Resolution</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
