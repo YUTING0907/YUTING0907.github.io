@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Rethinking Image Aesthetics Assessment: Models, Datasets and Benchmarks</title>
+    <link href="/2023/09/13/paper-Rethinking-Image-Aesthetics-Assessment-Models-Datasets-and-Benchmarks/"/>
+    <url>/2023/09/13/paper-Rethinking-Image-Aesthetics-Assessment-Models-Datasets-and-Benchmarks/</url>
+    
+    <content type="html"><![CDATA[<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>本文构建了一个名为”主题与美学数据集”的大规模数据集( TAD66K )，该数据集是专门为IAA设计的。</p><p>1 )它是一个面向主题的数据集，包含66K张图片，涵盖了47个流行主题。所有图片均根据主题手工精心挑选。</p><p>2 )除了共同的审美标准外，为47个主题提供了47个标准。每个主题的图像都是独立标注的，每个图像至少包含1200个有效标注(迄今为止最丰富的注释)。这些高质量的注释可以帮助我们更深入地了解模型的性能。</p><p>其次，提出了一个基线模型，称为主题和美学网络( TANet )，它可以保持对美学的恒定感知，以有效应对注意力分散问题。此外，TANet可以根据识别的主题自适应地学习预测美学的规则。</p><p>为了进一步提高对每个主题的感知，我们提出了一种RGB分布感知的注意力网络( RGBNet )，以帮助网络感知RGB空间中的颜色分布，并解决与标准注意力的高复杂度相关的问题。</p><p>此外，使用TAD66K和两个现有的数据集，即美学视觉分析( <strong>AVA</strong> ) [ Murray et al , 2012]和Flickr Images with Aesthetics Annotation Dataset (<strong>FLICKR-AES</strong> ) [任军等, 2017]，这两个数据集被广泛用于验证通用和个性化的美学模型，提供了17个最先进( SOTA )基准的严格评估，使这项工作成为迄今为止最完整的IAA基准。在上述所有基准上都取得了有希望的结果，清楚地表明了我们模型的有效性。</p><h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2.Related Work"></a>2.Related Work</h2><h3 id="IAA-Datasets"><a href="#IAA-Datasets" class="headerlink" title="IAA Datasets"></a>IAA Datasets</h3><p>现有的几个数据集(表1 )，先前的研究直接从带有美学分数标注的图像中学习美学。然而，基于像素的元素不能包含任何抽象或主题信息。</p><p>​    人类潜意识给出的审美分数与主题相关，但现有的方法没有考虑或利用这一点。因此，现有的方法试图建立图像→美学映射，这违背了人类的视觉感知过程。</p><p>   这种映射方法在两个方面恶化了图像美学评价( IAA )：</p><p>1 )现有数据集的标注没有考虑不同主题具有不同的评分标准；此外，所有图像混合在一起，不加区分地进行评分，这给地面真值带来了相当大的噪声和误差。</p><p>2 )即使使用最先进的方法，直接从低级像素中学习，同时使用嘈杂的背景真值作为监督信息，使其难以有效地感知美学信息，并且这些方法对美学的理解不够强大，导致注意力分散。这些限制抑制了IAA的发育，目前尚不完全清楚。</p><p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230913231038.png"></p><h3 id="IAA-Model"><a href="#IAA-Model" class="headerlink" title="IAA Model"></a>IAA Model</h3><p>最近的证据表明，对美学分数的直接预测消除了人类观点[塔勒比和米兰法, 2018]的多样性(分布)。一些研究人员注意到了这一局限性，并提出使用地球移动距离( EMD )损失[塔勒比和米兰法, 2018]来训练分数分布任务，而另一些研究人员则尝试为个人偏好[任军等, 2017 ;吕越等, 2021]适配个性化美学模型。</p><p>然而，先前的工作忽略了主题信息的重要性，人类在评估美学时，显式或隐式地考虑了主题的影响；此外，仅依靠IAA数据集的弱监督信息并不足以理解美学(图2 )。在这项工作中，我们专注于寻找主题自适应的理解方法，并研究如何最好地使用它们来为IAA提供一个竞争性的模型。</p><p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230913232146.png"></p><h2 id="3-Method"><a href="#3-Method" class="headerlink" title="3. Method"></a>3. Method</h2><p>backbone</p><p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230913234849.png"></p><h3 id="Theme-Understanding-Network"><a href="#Theme-Understanding-Network" class="headerlink" title="Theme Understanding Network"></a>Theme Understanding Network</h3><p>为了通过直接监督的方式提取主题特征，我们使用ResNet18作为主干网络，并在场景数据库[ Zhou et al . , 2017]上进行训练，取得了85.03 %的top - 5准确率。该场景库是一个1000万张标注了400 +个独特主题语义类别和环境的图像资源库，几乎涵盖了TAD66K数据集和日常生活中的主题。</p><p>为了防止在IAA模型训练过程中出现感知能力逐渐下降的情况</p><p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230913232927.png"></p><p>我们将各个时刻的参数冻结。我们将S的输出定义为S ( x )，将其分为两个流进行处理。一个流被发送到参数生成器L1，自适应地生成θ主题(权重和偏差)：</p><p>θtheme &#x3D; L1(S(x), δ), 式中：δ表示L1的参数。</p><p>为了处理S ( x )中的噪声，另一个流被发送到特征预处理器L2，以减少潜在表示中的空间冗余。最后，我们使用一个线性层L3将两个流相乘得到最终的输出，整个过程可以表示为：</p><p>xtheme &#x3D; L3(L2(S(x)), θtheme).</p><p>因此，主题既包括基本的主题信息，也包括如何感知这些信息的规则。</p><h3 id="RGB-distribution-aware-Attention-Network"><a href="#RGB-distribution-aware-Attention-Network" class="headerlink" title="RGB-distribution-aware Attention Network"></a>RGB-distribution-aware Attention Network</h3><p>第二个模块：从RGB空间提取高层颜色特征，以提高对主题的理解，而<strong>标准的自注意力机制</strong>可以协调一个令牌和所有其他令牌的关系，故而可以借鉴用来捕捉颜色分布信息。颜色分布[ O ‘多诺万等, 2011]构成了美学的重要信息，与主题有着密切的关系。然而，对于IAA任务，颜色分布和相似性的原始信息存在于更接近原始图像的低级特征中，并且较大的特征图尺寸意味着有更多的标记；因此，全局计算复杂度为[ Liu et al , 2021]。</p><p>在我们的实现中，我们对标准的自注意力机制进行了两点改进。</p><p>我们首先将输入分割成互不重叠的块，其中每个块用一个中心点表示，并将其设置为原始像素RGB值的平均值。对于任意大小的图像，其块空间由k × k个中心点组成，这导致其对输入大小的计算复杂度为线性且较低。具体来说，我们设定k &#x3D; 12。</p><p>其次，我们只提取了块之间的关系，而没有将它们与输入相乘。设fab，fuv分别代表两个中心；那么，我们注意力的输出xrgb可以描述为：</p><p>xrgb &#x3D; ∥N l&#x3D;1  Softmax  L4( (Qlfab)T (Klfuv) √d ) </p><p>其中∥Nl &#x3D; 1是RGB通道的级联，Ql，Kl和d分别是查询，密钥和维度，由标准自注意力中的输入生成。在提取出这个关系后，我们不将其与值( V )相乘，而是将其发送到处理器L4之后的softmax层，以减少冗余信息，得到最终结果xrgb。因此，所提出的注意力机制赋予RGB空间对颜色相似性和分布的感知有意义的度量，如图6所示。</p><p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230913234505.png"></p><h3 id="Aesthetics-Perceiving-Network"><a href="#Aesthetics-Perceiving-Network" class="headerlink" title="Aesthetics Perceiving Network"></a>Aesthetics Perceiving Network</h3><p>第三个模块有两个功能。</p><p>首先，APNet直接从输入x中提取美学特征xaes；我们使用MobileNetV2作为主干网，输出结果由L5处理。</p><p>其次，融合三个特征预测一个美学分数，输出结果由L6处理。我们将整个过程描述为：p &#x3D; Faes( xtheme⊕xrgb⊕xaes , θ aes)，( 5 )其中，θ aes表示Faes的所有参数。</p><h2 id="4-Experiment"><a href="#4-Experiment" class="headerlink" title="4. Experiment"></a>4. Experiment</h2><p>消融实验，从APNet（Aesthetics Perceiving Network），也就是文章的第三个模块开始逐渐增加TUNet和RGBNet。</p><p>我们首先检验了TUNet的有效性(表5 )，其获得了+ 9.8 %的SRCC和+ 12.3 %的LCC，同时MSE损失降低了15.0 %。但TUNet需要提取主题特征，降低了模型的训练速度，为3.68 it &#x2F; s。</p><p>此外，加入RGBNet后，性能在SRCC和LCC上分别提升了+ 5.0 %和+ 4.6 %，MSE损失值降低了5.0 %。</p><p>此外，RGBNet模型中提出的注意力机制并没有显著降低网络的速度。我们还与标准的自注意力进行了对比测试，发现由于其过高的计算复杂度，不能以同样的方式正常工作，这表明提出的架构比传统的架构计算效率更高。</p><p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230913235521.png"></p><h2 id="5-Conclusion"><a href="#5-Conclusion" class="headerlink" title="5.Conclusion"></a>5.Conclusion</h2><p>本文讨论了IAA中主题变化的长期被忽视的影响。为了实现这一目标，我们创建了一个面向主题的TAD66K数据集(包含47个主题)，构建了一个完整的基准(包括排名前17位的SOTA模型)，并开发了一个名为TANet的基线模型。与现有的数据集相比，TAD66K更具有挑战性，注释更密集；此外，所提出的TANet引入自适应感知方法来提取主题特征，并在三个具有代表性的数据集上实现了SOTA性能。我们希望我们的贡献将激励社会各界重新思考IAA，并以更广阔的视角推动研究。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>论文阅读</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CV - image aesthetics</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Lightweight Image Super-Resolution with Multi-Scale Feature Interaction Network</title>
     <link href="/2023/07/29/paper-Lightweight-Image-Super-Resolution-with-Multi-Scale-Feature-Interaction-Network/"/>
     <url>/2023/07/29/paper-Lightweight-Image-Super-Resolution-with-Multi-Scale-Feature-Interaction-Network/</url>
