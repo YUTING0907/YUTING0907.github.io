@@ -16,25 +16,22 @@
   <meta name="author" content="Echo Yu">
   <meta name="keywords" content="ML">
   
-    <meta name="description" content="论文发表在ACM Multimedia Conference 2020，ACM MM是CCF A类会议 1.Introduction提出了一种有效的基于上下文感知注意力的模型来预测美学分数分布，该模型将强调局部特征与上下文信息联系起来，并捕获了美学的主观性。 提出了一个注意力模块，通过多级细节和远程感知来提供丰富的上下文依赖。它建立在层级和空间两个维度上。 引入一种新的基于Bhattacharyy">
+    <meta name="description" content="该论文发表在IEEE TRANSACTIONS ON NEURAL NETWORKS AND LEARNING SYSTEMS, VOL.XX, NO.XX, JANUARY, 2021，CCF B评级 1.Introducation为了解决统一的输入尺寸约束和真实世界图像的不同尺寸之间的冲突， 本文通过在以填充图像为输入的网络中应用RoM池化，开发了一种名为PRP的新方法。 1.这种方法使我们能">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Context-aware Attention Network for Predicting Image Aesthetic Subjectivity">
-<meta property="og:url" content="http://yuting0907.github.io/2023/09/18/paper-Context-aware-Attention-Network-for-Predicting-Image-Aesthetic-Subjectivity/index.html">
+<meta property="og:title" content="Theme-Aware Aesthetic Distribution Prediction With Full-Resolution Photographs">
+<meta property="og:url" content="http://yuting0907.github.io/2023/09/19/paper-Theme-Aware-Aesthetic-Distribution-Prediction-With-Full-Resolution-Photographs/index.html">
 <meta property="og:site_name" content="YUTING">
-<meta property="og:description" content="论文发表在ACM Multimedia Conference 2020，ACM MM是CCF A类会议 1.Introduction提出了一种有效的基于上下文感知注意力的模型来预测美学分数分布，该模型将强调局部特征与上下文信息联系起来，并捕获了美学的主观性。 提出了一个注意力模块，通过多级细节和远程感知来提供丰富的上下文依赖。它建立在层级和空间两个维度上。 引入一种新的基于Bhattacharyy">
+<meta property="og:description" content="该论文发表在IEEE TRANSACTIONS ON NEURAL NETWORKS AND LEARNING SYSTEMS, VOL.XX, NO.XX, JANUARY, 2021，CCF B评级 1.Introducation为了解决统一的输入尺寸约束和真实世界图像的不同尺寸之间的冲突， 本文通过在以填充图像为输入的网络中应用RoM池化，开发了一种名为PRP的新方法。 1.这种方法使我们能">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230918224713.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230918225143.png">
-<meta property="article:published_time" content="2023-09-18T14:27:23.000Z">
-<meta property="article:modified_time" content="2023-09-18T16:09:48.760Z">
+<meta property="article:published_time" content="2023-09-19T14:05:22.000Z">
+<meta property="article:modified_time" content="2023-09-19T15:38:24.898Z">
 <meta property="article:author" content="Echo Yu">
 <meta property="article:tag" content="CV - image aesthetics">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230918224713.png">
   
   
   
-  <title>Context-aware Attention Network for Predicting Image Aesthetic Subjectivity - YUTING</title>
+  <title>Theme-Aware Aesthetic Distribution Prediction With Full-Resolution Photographs - YUTING</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Context-aware Attention Network for Predicting Image Aesthetic Subjectivity"></span>
+            <span id="subtitle" data-typed-text="Theme-Aware Aesthetic Distribution Prediction With Full-Resolution Photographs"></span>
           
         </div>
 
@@ -217,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-09-18 22:27" pubdate>
-          2023年9月18日 晚上
+        <time datetime="2023-09-19 22:05" pubdate>
+          2023年9月19日 晚上
         </time>
       </span>
     
@@ -229,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          2.9k 字
         
       </span>
     
@@ -240,7 +237,7 @@
         
         
         
-          11 分钟
+          25 分钟
         
       </span>
     
@@ -278,29 +275,35 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Context-aware Attention Network for Predicting Image Aesthetic Subjectivity</h1>
+            <h1 style="display: none">Theme-Aware Aesthetic Distribution Prediction With Full-Resolution Photographs</h1>
             
             <div class="markdown-body">
               
-              <p>论文发表在ACM Multimedia Conference 2020，ACM MM是CCF A类会议</p>
-<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1.Introduction"></a>1.Introduction</h2><p>提出了一种有效的基于上下文感知注意力的模型来预测美学分数分布，该模型将强调局部特征与上下文信息联系起来，并捕获了美学的主观性。</p>
-<p>提出了一个注意力模块，通过多级细节和远程感知来提供丰富的上下文依赖。它建立在<strong>层级和空间</strong>两个维度上。</p>
-<p>引入一种新的基于<strong>Bhattacharyya距离的损失函数</strong>来衡量客观预测分布与主观真实分布之间的相似性。</p>
-<p>实验结果表明，本文提出的方法取得了最先进的性能，在秩相关性上有大约10 %的提升。</p>
-<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2.Related Work"></a>2.Related Work</h2><h2 id="3-Method"><a href="#3-Method" class="headerlink" title="3.Method"></a>3.Method</h2><p>backbone</p>
-<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230918224713.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="Hierarchical-Context"><a href="#Hierarchical-Context" class="headerlink" title="Hierarchical Context"></a>Hierarchical Context</h3><p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230918225143.png" srcset="/img/loading.gif" lazyload></p>
-<p>从网络中融合多层特征来编码图像的层次上下文。由于通道描述符中的注意力可以看作是一个选择模式因子的过程[ 1 ]，因此我们在该模块中使用通道特征。提出的融合模块来推导分层上下文如图3所示。可以概括为三个步骤。</p>
-<p>​    首先，从网络中提取这些特征。由于每个通道的特征都是用局部感受野学习的，缺乏区域之外的上下文信息[ 11 ]，因此每个特征后面都有一个全局平均池化层( Global Average Pooling，GAP )和一个全局最大池化层( Global Max )，单独的池化( GMP )层。GAP和GMP将不同的空间信息压缩到信道载体中。然后，将这些特征沿通道轴线进行拼接。设f为提取的特征，n为特征总数，则串联后的F∈RC′× 1 × 1可写为：</p>
-<p>F 𝜇 &#x3D; [f𝑐1 𝜇 , f𝑐2 𝜇 , …, f𝑐𝑛 𝜇 ]</p>
-<p>其中μ∈{ GAP，GMP }，[ · , ·]表示级联操作.最后，我们在级联特征中使用一个全连接层，作为学习不同级别通道之间相关性的步骤。级联特征F被映射成一维向量Vh ( x )∈RC × 1 × 1。输出的层次上下文是GAP和GMP之后的向量之和。它将为美学评估捕获更多的信息模式因素。层次上下文Vh ( x )可以写为：</p>
-<p>V ℎ (𝑥) &#x3D; W0 (F𝐺𝐴𝑃 ) + W1 (F𝐺𝑀𝑃 )</p>
-<h3 id="Spatial-Context"><a href="#Spatial-Context" class="headerlink" title="Spatial Context"></a>Spatial Context</h3><p> 建立了一系列的膨胀卷积来获得对原始图像的长期感知。<strong>逐步提高扩张率</strong>，避免了感受野中只有一部分像素可以参与卷积的网格化问题。速率遵循递增规则[ 29 ]，我们将<strong>速率调整为沙漏结构</strong>以满足我们的任务。为了涉及更多的像素，<strong>速率首先增加，以获得更大的感受野。然后减小，卷积集中在最相关的部分</strong>。</p>
-<p>最终，最后一个卷积层输出一个单通道矩阵作为空间上下文，以编码广泛的空间上下文信息。</p>
-<h2 id="4-Experiment"><a href="#4-Experiment" class="headerlink" title="4.Experiment"></a>4.Experiment</h2><h2 id="5-Conclusion"><a href="#5-Conclusion" class="headerlink" title="5.Conclusion"></a>5.Conclusion</h2><p>在本文中，提出了一种有效的基于上下文感知注意力的方法来预测图像美学评估的分数分布。</p>
-<p>与最近大多数使用注意力机制裁剪或聚合图斑的工作不同，本文的方法通过学习上下文感知的注意力来增强部分特征，从而保留局部视图和整体视图之间的上下文关系。</p>
-<p>此外，采用计算复杂度较低的Bhattacharyya距离来度量与感知人类视觉相关性较好的客观预测分布和主观评分分布之间的相似性。实验结果证明了所提方法的性能。</p>
-<h2 id="6-Personal-Thinking"><a href="#6-Personal-Thinking" class="headerlink" title="6.Personal Thinking"></a>6.Personal Thinking</h2><p>膨胀卷积Dilated convolution，中文叫做空洞卷积或者扩张卷积，起源于语义分割。</p>
+              <p>该论文发表在IEEE TRANSACTIONS ON NEURAL NETWORKS AND LEARNING SYSTEMS, VOL.XX, NO.XX, JANUARY, 2021，CCF B评级</p>
+<h2 id="1-Introducation"><a href="#1-Introducation" class="headerlink" title="1.Introducation"></a>1.Introducation</h2><p>为了解决统一的输入尺寸约束和真实世界图像的不同尺寸之间的冲突，</p>
+<p>本文通过在以填充图像为输入的网络中应用RoM池化，开发了一种名为PRP的新方法。</p>
+<p>1.这种方法使我们能够利用填充来保持统一的图像大小，同时消除其副作用。这是AQA中第一个支持端到端批处理的方法。</p>
+<p>2.提出了一种SA模块来弥补RoM池化层中形状信息丢失的问题。对原始图像纵横比进行编码，并与视觉特征进行融合，使模型适应不同的图像形状。</p>
+<p>3.我们发现，在没有主题信息的AVA数据集中对图像进行评价是不准确的，因为存在主题准则偏差。一个主题感知模块被提出来解决这个问题。对主题进行编码，并结合视觉特征，更准确地预测美学质量。</p>
+<p>4.我们提出了一个基于注意力机制的融合模块，将包括形状特征和主题特征在内的额外特征与图像特征进行融合。该模块有效地挖掘了不同特征之间的关系。</p>
+<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2.Related Work"></a>2.Related Work</h2><p>A.Photo Aesthetic Quality Assessment</p>
+<p>尽管这些基于DNNs的工作已经取得了很大的进展，但它们仍然受到固定输入大小问题的困扰</p>
+<p>因此，研究人员提出了解决这一问题的方法。一些工作[ 11 ]、[ 12 ]、[ 40 ]、[ 45 ]提出从原始图像中<strong>裁剪出多个固定大小的图斑</strong>，并将这些图斑提取的特征进行聚合来预测美学质量</p>
+<p>Ma等人[ 12 ]提出根据一些基于人类感知的标准来选择补丁；因此，<strong>斑块可以更具有代表性</strong>。Sheng等人[ 46 ]提出了一种基于注意力的方法，<strong>动态地学习不同块的权重</strong>，而不是根据预定义的标准来选择块</p>
+<p>另一些工作则试图<strong>保持输入图像的纵横比</strong>；他们采用FCN [ 13 ]或SPP [ 14 ]从任意网络输入生成固定大小的特征[ 16 ]，[ 15 ]，[ 47 ]，[ 17 ]。为了适应更好地在固定输入上运行的深度学习工具，一些人使用多尺寸训练作为近似，但只考虑了1.0和1.5的纵横比[ 15 ]，[ 17 ]。Apostolidis等人[ 16 ]进行了<strong>批大小为1</strong>的实验，以便可以接受任何输入大小。然而，该方法的性能甚至不如图像变换方法，可能是由于训练过程不稳定造成的。Hosu等人[ 26 ]从<strong>ImageNet预训练</strong>的模型中提取特征，无需微调；因此，因此，他们可以在一个<strong>两阶段的训练过程中使用原始照片</strong>。Chen等人[ 48 ]提出了一种不同的思想，即使用分数步幅的卷积来适应扭曲的输入。</p>
+<p>B.Pooling Methods and Multisize Feature Extraction Methods</p>
+<p>池化在降低计算复杂度方面起着至关重要的作用。在最初的池化方法实现中，步长和核大小都是人工固定的</p>
+<p>即池化输入大小和输出大小之间的比例是固定的。He等人[ 14 ]指出这样的性质使得网络不灵活，因为全连接层只能接受固定大小的输入。SPP的设计目的是使池化层能够从任意输入中生成固定大小的特征，并且它还可以提取多尺度信息。这是通过使用自适应池化核和步长来实现的。具体来说，池化尺寸是手动固定的，池化步长和内核尺寸定义为输入尺寸和固定池化尺寸之间的比值。为了将SPP融入到网络中，提出了两种方法。一种使用多尺寸端到端训练策略，具有两个预定义尺寸224和180。另一种采用两阶段训练框架，不需要对主干CNN进行微调，使得图像不需要调整大小。</p>
+<p>在传统池化和SPP中，池化都应用于整个输入特征图。也就是说，池化核的移动范围固定为整个输入。然而，在目标检测任务中，一个物体只占据图像区域的一部分。为了仅从目标区域提取特征而丢弃其他特征，RoI池化在[ 18 ]中被提出。RoI池化能够从任意大小和位置的区域中提取固定大小的特征。这意味着可以根据不同的RoI自适应地修改核的移动范围、核的大小和步长。为了校正量化误差，文献[ 52 ]将Ro I池化改进为RoI对齐。这种增强显著提高了小目标的检测性能。RoI池化(对齐)变成了st模型[ 53 ]，[ 54 ]，[ 55 ] . SPP和RoI池化都可以使网络接受任意大小的输入图像。为了实现这一目标，去除全连接层和仅使用卷积层也是一种解决方案。这种网络被命名为FCN，最初被用于解决语义分割任务[ 13 ]。</p>
+<p>SPP和RoI池化都可以使网络接受任意大小的输入图像。为了实现这一目标，去除全连接层和仅使用卷积层也是一种解决方案。这种网络被命名为FCN，最初被用于解决语义分割任务</p>
+<h2 id="3-Method"><a href="#3-Method" class="headerlink" title="3.Method"></a>3.Method</h2><p>本文提出将填充与感兴趣区域( RoI )池化相结合，RoI池化用于对特征图中称为RoI的局部区域进行特征降采样。</p>
+<p>在我们的模型中，我们首先将原始图像填充到一个预定义的大小。因此，输入成为图像区域和填充区域的组合，图像区域被视为RoI。然后，网络中的RoI池化层将只池化图像区域内部的特征，而不使用填充区域的特征。我们将模型中使用的RoI称为RoM ( iMage区域)，以区别于传统的RoI。为了简单起见，这种方法被称为(padding with RoM pooling)PRP。</p>
+<p>尽管PRP模块有诸多优点，但仍然忽略了一些有用的信息。例如，<strong>由于RoM池化输出的形状是相同的，因此丢失了原始的形状信息</strong>。这种信息丢失可能会导致性能下降，因为图像形状会影响人类的审美感知[ 19 ]，[ 20 ]。为了弥补这一缺陷，我们提出了一个形状感知( SA )模块来利用丢失的形状信息。具体来说，首先将原始图像的纵横比离散化，并将其转化为one - hot编码。然后，我们通过全连接层从独热形状编码中提取形状特征。最后，将形状特征和图像特征进行融合来预测美学质量。</p>
+<p>一个额外的特征是长宽比特征，旨在弥补PRP模块的形状信息损失；</p>
+<p>另一个额外的特征是主题特征，旨在引入主题准则偏差。为了更好地融合不同特征，我们提出了基于注意力的特征融合模块。</p>
+<p>我们提出了一个基于注意力机制的融合模块，将包括形状特征和主题特征在内的额外特征与图像特征进行融合。该模块有效地挖掘了不同特征之间的关系。实验证明了所提方法的有效性。</p>
+<h2 id="4-Experiment"><a href="#4-Experiment" class="headerlink" title="4.Experiment"></a>4.Experiment</h2><h2 id="5-Conslusion"><a href="#5-Conslusion" class="headerlink" title="5.Conslusion"></a>5.Conslusion</h2><h2 id="6-Personal-Thinking"><a href="#6-Personal-Thinking" class="headerlink" title="6.Personal Thinking"></a>6.Personal Thinking</h2><p>在传统池化和SPP中，池化都应用于整个输入特征图。也就是说，池化核的移动范围固定为整个输入。然而，在目标检测任务中，一个物体只占据图像区域的一部分。为了仅从目标区域提取特征而丢弃其他特征，RoI池化在[ 18 ]中被提出。RoI池化能够从任意大小和位置的区域中提取固定大小的特征。这意味着可以根据不同的RoI自适应地修改核的移动范围、核的大小和步长。为了校正量化误差，文献[ 52 ]将Ro I池化改进为RoI对齐。这种增强显著提高了小目标的检测性能。RoI池化(对齐)变成了st模型[ 53 ]，[ 54 ]，[ 55 ] . SPP和RoI池化都可以使网络接受任意大小的输入图像。为了实现这一目标，去除全连接层和仅使用卷积层也是一种解决方案。这种网络被命名为FCN，最初被用于解决语义分割任务[ 13 ]。</p>
+<p>RoI池化能够从任意大小和位置的区域中提取固定大小的特征。这意味着可以根据不同的RoI自适应地修改核的移动范围、核的大小和步长</p>
 
               
             </div>
@@ -368,8 +371,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Context-aware Attention Network for Predicting Image Aesthetic Subjectivity</div>
-      <div>http://yuting0907.github.io/2023/09/18/paper-Context-aware-Attention-Network-for-Predicting-Image-Aesthetic-Subjectivity/</div>
+      <div>Theme-Aware Aesthetic Distribution Prediction With Full-Resolution Photographs</div>
+      <div>http://yuting0907.github.io/2023/09/19/paper-Theme-Aware-Aesthetic-Distribution-Prediction-With-Full-Resolution-Photographs/</div>
     </div>
     <div class="license-meta">
       
@@ -381,7 +384,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年9月18日</div>
+          <div>2023年9月19日</div>
         </div>
       
       
@@ -411,18 +414,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/09/19/paper-Theme-Aware-Aesthetic-Distribution-Prediction-With-Full-Resolution-Photographs/" title="Theme-Aware Aesthetic Distribution Prediction With Full-Resolution Photographs">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Theme-Aware Aesthetic Distribution Prediction With Full-Resolution Photographs</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/09/16/paper-Learning-image-aesthetic-subjectivity-from-attribute-aware-relational-reasoning-network/" title="Learning image aesthetic subjectivity from attribute-aware relational reasoning network">
-                        <span class="hidden-mobile">Learning image aesthetic subjectivity from attribute-aware relational reasoning network</span>
+                      <a href="/2023/09/18/paper-Context-aware-Attention-Network-for-Predicting-Image-Aesthetic-Subjectivity/" title="Context-aware Attention Network for Predicting Image Aesthetic Subjectivity">
+                        <span class="hidden-mobile">Context-aware Attention Network for Predicting Image Aesthetic Subjectivity</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

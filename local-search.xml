@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Theme-Aware Aesthetic Distribution Prediction With Full-Resolution Photographs</title>
+    <link href="/2023/09/19/paper-Theme-Aware-Aesthetic-Distribution-Prediction-With-Full-Resolution-Photographs/"/>
+    <url>/2023/09/19/paper-Theme-Aware-Aesthetic-Distribution-Prediction-With-Full-Resolution-Photographs/</url>
+    
+    <content type="html"><![CDATA[<p>该论文发表在IEEE TRANSACTIONS ON NEURAL NETWORKS AND LEARNING SYSTEMS, VOL.XX, NO.XX, JANUARY, 2021，CCF B评级</p><h2 id="1-Introducation"><a href="#1-Introducation" class="headerlink" title="1.Introducation"></a>1.Introducation</h2><p>为了解决统一的输入尺寸约束和真实世界图像的不同尺寸之间的冲突，</p><p>本文通过在以填充图像为输入的网络中应用RoM池化，开发了一种名为PRP的新方法。</p><p>1.这种方法使我们能够利用填充来保持统一的图像大小，同时消除其副作用。这是AQA中第一个支持端到端批处理的方法。</p><p>2.提出了一种SA模块来弥补RoM池化层中形状信息丢失的问题。对原始图像纵横比进行编码，并与视觉特征进行融合，使模型适应不同的图像形状。</p><p>3.我们发现，在没有主题信息的AVA数据集中对图像进行评价是不准确的，因为存在主题准则偏差。一个主题感知模块被提出来解决这个问题。对主题进行编码，并结合视觉特征，更准确地预测美学质量。</p><p>4.我们提出了一个基于注意力机制的融合模块，将包括形状特征和主题特征在内的额外特征与图像特征进行融合。该模块有效地挖掘了不同特征之间的关系。</p><h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2.Related Work"></a>2.Related Work</h2><p>A.Photo Aesthetic Quality Assessment</p><p>尽管这些基于DNNs的工作已经取得了很大的进展，但它们仍然受到固定输入大小问题的困扰</p><p>因此，研究人员提出了解决这一问题的方法。一些工作[ 11 ]、[ 12 ]、[ 40 ]、[ 45 ]提出从原始图像中<strong>裁剪出多个固定大小的图斑</strong>，并将这些图斑提取的特征进行聚合来预测美学质量</p><p>Ma等人[ 12 ]提出根据一些基于人类感知的标准来选择补丁；因此，<strong>斑块可以更具有代表性</strong>。Sheng等人[ 46 ]提出了一种基于注意力的方法，<strong>动态地学习不同块的权重</strong>，而不是根据预定义的标准来选择块</p><p>另一些工作则试图<strong>保持输入图像的纵横比</strong>；他们采用FCN [ 13 ]或SPP [ 14 ]从任意网络输入生成固定大小的特征[ 16 ]，[ 15 ]，[ 47 ]，[ 17 ]。为了适应更好地在固定输入上运行的深度学习工具，一些人使用多尺寸训练作为近似，但只考虑了1.0和1.5的纵横比[ 15 ]，[ 17 ]。Apostolidis等人[ 16 ]进行了<strong>批大小为1</strong>的实验，以便可以接受任何输入大小。然而，该方法的性能甚至不如图像变换方法，可能是由于训练过程不稳定造成的。Hosu等人[ 26 ]从<strong>ImageNet预训练</strong>的模型中提取特征，无需微调；因此，因此，他们可以在一个<strong>两阶段的训练过程中使用原始照片</strong>。Chen等人[ 48 ]提出了一种不同的思想，即使用分数步幅的卷积来适应扭曲的输入。</p><p>B.Pooling Methods and Multisize Feature Extraction Methods</p><p>池化在降低计算复杂度方面起着至关重要的作用。在最初的池化方法实现中，步长和核大小都是人工固定的</p><p>即池化输入大小和输出大小之间的比例是固定的。He等人[ 14 ]指出这样的性质使得网络不灵活，因为全连接层只能接受固定大小的输入。SPP的设计目的是使池化层能够从任意输入中生成固定大小的特征，并且它还可以提取多尺度信息。这是通过使用自适应池化核和步长来实现的。具体来说，池化尺寸是手动固定的，池化步长和内核尺寸定义为输入尺寸和固定池化尺寸之间的比值。为了将SPP融入到网络中，提出了两种方法。一种使用多尺寸端到端训练策略，具有两个预定义尺寸224和180。另一种采用两阶段训练框架，不需要对主干CNN进行微调，使得图像不需要调整大小。</p><p>在传统池化和SPP中，池化都应用于整个输入特征图。也就是说，池化核的移动范围固定为整个输入。然而，在目标检测任务中，一个物体只占据图像区域的一部分。为了仅从目标区域提取特征而丢弃其他特征，RoI池化在[ 18 ]中被提出。RoI池化能够从任意大小和位置的区域中提取固定大小的特征。这意味着可以根据不同的RoI自适应地修改核的移动范围、核的大小和步长。为了校正量化误差，文献[ 52 ]将Ro I池化改进为RoI对齐。这种增强显著提高了小目标的检测性能。RoI池化(对齐)变成了st模型[ 53 ]，[ 54 ]，[ 55 ] . SPP和RoI池化都可以使网络接受任意大小的输入图像。为了实现这一目标，去除全连接层和仅使用卷积层也是一种解决方案。这种网络被命名为FCN，最初被用于解决语义分割任务[ 13 ]。</p><p>SPP和RoI池化都可以使网络接受任意大小的输入图像。为了实现这一目标，去除全连接层和仅使用卷积层也是一种解决方案。这种网络被命名为FCN，最初被用于解决语义分割任务</p><h2 id="3-Method"><a href="#3-Method" class="headerlink" title="3.Method"></a>3.Method</h2><p>本文提出将填充与感兴趣区域( RoI )池化相结合，RoI池化用于对特征图中称为RoI的局部区域进行特征降采样。</p><p>在我们的模型中，我们首先将原始图像填充到一个预定义的大小。因此，输入成为图像区域和填充区域的组合，图像区域被视为RoI。然后，网络中的RoI池化层将只池化图像区域内部的特征，而不使用填充区域的特征。我们将模型中使用的RoI称为RoM ( iMage区域)，以区别于传统的RoI。为了简单起见，这种方法被称为(padding with RoM pooling)PRP。</p><p>尽管PRP模块有诸多优点，但仍然忽略了一些有用的信息。例如，<strong>由于RoM池化输出的形状是相同的，因此丢失了原始的形状信息</strong>。这种信息丢失可能会导致性能下降，因为图像形状会影响人类的审美感知[ 19 ]，[ 20 ]。为了弥补这一缺陷，我们提出了一个形状感知( SA )模块来利用丢失的形状信息。具体来说，首先将原始图像的纵横比离散化，并将其转化为one - hot编码。然后，我们通过全连接层从独热形状编码中提取形状特征。最后，将形状特征和图像特征进行融合来预测美学质量。</p><p>一个额外的特征是长宽比特征，旨在弥补PRP模块的形状信息损失；</p><p>另一个额外的特征是主题特征，旨在引入主题准则偏差。为了更好地融合不同特征，我们提出了基于注意力的特征融合模块。</p><p>我们提出了一个基于注意力机制的融合模块，将包括形状特征和主题特征在内的额外特征与图像特征进行融合。该模块有效地挖掘了不同特征之间的关系。实验证明了所提方法的有效性。</p><h2 id="4-Experiment"><a href="#4-Experiment" class="headerlink" title="4.Experiment"></a>4.Experiment</h2><h2 id="5-Conslusion"><a href="#5-Conslusion" class="headerlink" title="5.Conslusion"></a>5.Conslusion</h2><h2 id="6-Personal-Thinking"><a href="#6-Personal-Thinking" class="headerlink" title="6.Personal Thinking"></a>6.Personal Thinking</h2><p>在传统池化和SPP中，池化都应用于整个输入特征图。也就是说，池化核的移动范围固定为整个输入。然而，在目标检测任务中，一个物体只占据图像区域的一部分。为了仅从目标区域提取特征而丢弃其他特征，RoI池化在[ 18 ]中被提出。RoI池化能够从任意大小和位置的区域中提取固定大小的特征。这意味着可以根据不同的RoI自适应地修改核的移动范围、核的大小和步长。为了校正量化误差，文献[ 52 ]将Ro I池化改进为RoI对齐。这种增强显著提高了小目标的检测性能。RoI池化(对齐)变成了st模型[ 53 ]，[ 54 ]，[ 55 ] . SPP和RoI池化都可以使网络接受任意大小的输入图像。为了实现这一目标，去除全连接层和仅使用卷积层也是一种解决方案。这种网络被命名为FCN，最初被用于解决语义分割任务[ 13 ]。</p><p>RoI池化能够从任意大小和位置的区域中提取固定大小的特征。这意味着可以根据不同的RoI自适应地修改核的移动范围、核的大小和步长</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>论文阅读</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CV - image aesthetics</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Context-aware Attention Network for Predicting Image Aesthetic Subjectivity</title>
     <link href="/2023/09/18/paper-Context-aware-Attention-Network-for-Predicting-Image-Aesthetic-Subjectivity/"/>
     <url>/2023/09/18/paper-Context-aware-Attention-Network-for-Predicting-Image-Aesthetic-Subjectivity/</url>
