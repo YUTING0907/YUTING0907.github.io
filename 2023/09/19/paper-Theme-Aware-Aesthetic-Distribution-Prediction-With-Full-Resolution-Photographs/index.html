@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230925214755.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230925214818.png">
 <meta property="article:published_time" content="2023-09-19T14:05:22.000Z">
-<meta property="article:modified_time" content="2023-09-29T09:24:02.231Z">
+<meta property="article:modified_time" content="2023-09-29T09:24:50.321Z">
 <meta property="article:author" content="Echo Yu">
 <meta property="article:tag" content="CV - image aesthetics">
 <meta name="twitter:card" content="summary_large_image">
@@ -328,9 +328,9 @@
 <p>第一个基线模型将图像缩放到相同大小，由于我们的方法使用了全分辨率图像，为了公平比较，我们将所有图像尺寸调整为800 × 800，这是AVA数据集中最大的图像尺寸。</p>
 <p>第二个基线模型使用填充变换。我们将所有的图像填充到800 × 800。在缩放基线和填充基线中，为了消除其他因素的影响，我们使用与全模型实验相同的数据增强方法和特征图尺寸(第一个池化层的输出大小)。随机裁剪固定大小块的第三条基线，由于大小的原因，需要与图像缩放相结合裁剪后的图像块不能大于数据集中的最小图像尺寸。然而，AVA的最小尺寸仅为160 × 160。</p>
 <h2 id="5-Conslusion"><a href="#5-Conslusion" class="headerlink" title="5.Conslusion"></a>5.Conslusion</h2><p>该论文工作的缺点：</p>
-<p>它们都是AVA数据集中的非典型分布，如Gamma分布[ 10 ]。这可能是模型不能很好地评估它们的原因。</p>
-<p>首先，BERT码在不同主题之间具有较低的区分性。第二，我们的模型不能有效地利用BERT码中的语义信息。我们认为BERT码中的语义信息是有价值的。我们将在未来的工作中进一步研究这种编码方法。</p>
-<p>我们的方法在偏态分布上效果很差</p>
+<p>1.它们都是AVA数据集中的非典型分布，如Gamma分布[ 10 ]。这可能是模型不能很好地评估它们的原因。</p>
+<p>2.首先，BERT码在不同主题之间具有较低的区分性。第二，我们的模型不能有效地利用BERT码中的语义信息。我们认为BERT码中的语义信息是有价值的。我们将在未来的工作中进一步研究这种编码方法。</p>
+<p>3.我们的方法在偏态分布上效果很差</p>
 <h2 id="6-Personal-Thinking"><a href="#6-Personal-Thinking" class="headerlink" title="6.Personal Thinking"></a>6.Personal Thinking</h2><p><strong>SPP(spatial pyramid pooling)金字塔池化</strong>：</p>
 <p>一般而言，对于一个CNN模型，可以将其分为两个部分：</p>
 <ol>
