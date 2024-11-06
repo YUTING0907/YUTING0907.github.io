@@ -16,22 +16,22 @@
   <meta name="author" content="Echo Yu">
   <meta name="keywords" content="ML">
   
-    <meta name="description" content="问题描述： 在加载自己训练的模型文件时，报错ModuleNotFoundError: No module named ‘models’。 123import torchmodel_tmp &#x3D; torch.load(&amp;#x27;.&#x2F;yolov5s.pt&amp;#x27;)print(model_tmp)  问题分析：写load的这个文件要放到具有yolov5工程的文件夹里运行，因为它会寻找原生yolo5工">
+    <meta name="description" content="将深度学习代码同时运行在多个GPU显卡上步骤1设置os.environ[‘CUDA_VISIBLE_DEVICES’] 指定GPU 1234567# 将import torch放在os.environ[&amp;#x27;CUDA_VISIBLE_DEVICES&amp;#x27;] &#x3D; &amp;#x27;0,1&amp;#x27;后面import osos.environ[&amp;#x27;CUDA_VISIBLE_DEVICES">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pytorch加载模型torch.load()遇到问题ModuleNotFoundError: No module named models">
-<meta property="og:url" content="http://yuting0907.github.io/2024/11/05/pytorch%E5%8A%A0%E8%BD%BD%E6%A8%A1%E5%9E%8Btorch-load-%E9%81%87%E5%88%B0%E9%97%AE%E9%A2%98ModuleNotFoundError-No-module-named-models/index.html">
+<meta property="og:title" content="将深度学习代码同时运行在多个GPU显卡上">
+<meta property="og:url" content="http://yuting0907.github.io/2024/11/06/%E5%B0%86%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%BB%A3%E7%A0%81%E5%90%8C%E6%97%B6%E8%BF%90%E8%A1%8C%E5%9C%A8%E5%A4%9A%E4%B8%AAGPU%E6%98%BE%E5%8D%A1%E4%B8%8A/index.html">
 <meta property="og:site_name" content="YUTING">
-<meta property="og:description" content="问题描述： 在加载自己训练的模型文件时，报错ModuleNotFoundError: No module named ‘models’。 123import torchmodel_tmp &#x3D; torch.load(&amp;#x27;.&#x2F;yolov5s.pt&amp;#x27;)print(model_tmp)  问题分析：写load的这个文件要放到具有yolov5工程的文件夹里运行，因为它会寻找原生yolo5工">
+<meta property="og:description" content="将深度学习代码同时运行在多个GPU显卡上步骤1设置os.environ[‘CUDA_VISIBLE_DEVICES’] 指定GPU 1234567# 将import torch放在os.environ[&amp;#x27;CUDA_VISIBLE_DEVICES&amp;#x27;] &#x3D; &amp;#x27;0,1&amp;#x27;后面import osos.environ[&amp;#x27;CUDA_VISIBLE_DEVICES">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-11-05T03:24:54.000Z">
-<meta property="article:modified_time" content="2024-11-05T03:37:40.650Z">
+<meta property="article:published_time" content="2024-11-06T06:50:44.000Z">
+<meta property="article:modified_time" content="2024-11-06T07:03:47.751Z">
 <meta property="article:author" content="Echo Yu">
 <meta property="article:tag" content="深度学习">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>pytorch加载模型torch.load()遇到问题ModuleNotFoundError: No module named models - YUTING</title>
+  <title>将深度学习代码同时运行在多个GPU显卡上 - YUTING</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="pytorch加载模型torch.load()遇到问题ModuleNotFoundError: No module named models"></span>
+            <span id="subtitle" data-typed-text="将深度学习代码同时运行在多个GPU显卡上"></span>
           
         </div>
 
@@ -214,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-11-05 11:24" pubdate>
-          2024年11月5日 上午
+        <time datetime="2024-11-06 14:50" pubdate>
+          2024年11月6日 下午
         </time>
       </span>
     
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          343 字
+          1.6k 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          3 分钟
+          14 分钟
         
       </span>
     
@@ -275,16 +275,28 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">pytorch加载模型torch.load()遇到问题ModuleNotFoundError: No module named models</h1>
+            <h1 style="display: none">将深度学习代码同时运行在多个GPU显卡上</h1>
             
             <div class="markdown-body">
               
-              <h2 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h2><p> 在加载自己训练的模型文件时，报错ModuleNotFoundError: No module named ‘models’。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br>model_tmp = torch.load(<span class="hljs-string">&#x27;./yolov5s.pt&#x27;</span>)<br><span class="hljs-built_in">print</span>(model_tmp)<br></code></pre></td></tr></table></figure>
+              <h2 id="将深度学习代码同时运行在多个GPU显卡上"><a href="#将深度学习代码同时运行在多个GPU显卡上" class="headerlink" title="将深度学习代码同时运行在多个GPU显卡上"></a>将深度学习代码同时运行在多个GPU显卡上</h2><h3 id="步骤1"><a href="#步骤1" class="headerlink" title="步骤1"></a>步骤1</h3><p>设置os.environ[‘CUDA_VISIBLE_DEVICES’] 指定GPU</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 将import torch放在os.environ[&#x27;CUDA_VISIBLE_DEVICES&#x27;] = &#x27;0,1&#x27;后面</span><br><span class="hljs-keyword">import</span> os<br>os.environ[<span class="hljs-string">&#x27;CUDA_VISIBLE_DEVICES&#x27;</span>] = <span class="hljs-string">&#x27;0,1&#x27;</span><br><span class="hljs-keyword">import</span> torch<br><span class="hljs-built_in">print</span>(torch.cuda.device_count()) <span class="hljs-comment">#2说明指令生效</span><br><br><span class="hljs-comment"># 不能将import torch放在前面</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="问题分析："><a href="#问题分析：" class="headerlink" title="问题分析："></a>问题分析：</h2><p>写load的这个文件要放到具有yolov5工程的文件夹里运行，因为它会寻找原生yolo5工程下的models文件夹，里面还会有yolo.py等文件存在，这就是这个找不到”models”的由来。</p>
-<h2 id="问题解决："><a href="#问题解决：" class="headerlink" title="问题解决："></a>问题解决：</h2><p>将代码加载权重文件所在的目录，新建models文件，然后把模型.py放到该目录，就没报错了。</p>
-<p>虽然torch.save()既保存了模型又保存了权重参数文件，但是还需要将模型放到torch加载的地方。</p>
+<h3 id="步骤2-任选其一"><a href="#步骤2-任选其一" class="headerlink" title="步骤2(任选其一)"></a>步骤2(任选其一)</h3><p>1.使用DataParallel(适合PyTorch)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><br><span class="hljs-comment"># 假设有个model</span><br>model = Yourmodel()<br><br><span class="hljs-comment"># 将模型放到多个GPU上(例如0，1)</span><br>model = nn.DataParallel(model,device_ids=[<span class="hljs-number">0</span>,<span class="hljs-number">1</span>])<br><span class="hljs-comment"># 将模型移到GPU上</span><br>model = model.cuda()<br><span class="hljs-comment"># 向前传播会自动在多个GPU上并行处理</span><br>output = model(input_data)<br></code></pre></td></tr></table></figure>
+
+<p>2.使用DistributedDataParallel(适合分布式训练，支持多机多卡)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torch.distributed <span class="hljs-keyword">as</span> dist<br><span class="hljs-keyword">import</span> torch.multiprocessing <span class="hljs-keyword">as</span> mp<br><span class="hljs-keyword">from</span> torch.nn.parallel <span class="hljs-keyword">import</span> DistributedDataParallel <span class="hljs-keyword">as</span> DDP<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">train</span>(<span class="hljs-params">rank, world_size</span>):<br>    dist.init_process_group(<span class="hljs-string">&quot;nccl&quot;</span>, rank=rank, world_size=world_size)<br>    <br>    <span class="hljs-comment"># 设置 GPU 设备</span><br>    torch.cuda.set_device(rank)<br>    <br>    <span class="hljs-comment"># 假设你有一个模型</span><br>    model = YourModel().to(rank)<br>    ddp_model = DDP(model, device_ids=[rank])<br>    <br>    <span class="hljs-comment"># 模型训练等代码</span><br>    output = ddp_model(input_data)<br><br><span class="hljs-comment"># 在两个 GPU 上启动进程</span><br>world_size = <span class="hljs-number">2</span><br>mp.spawn(train, args=(world_size,), nprocs=world_size, join=<span class="hljs-literal">True</span>)<br><br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>TensorFlow: 手动指定 GPU 并行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> tensorflow <span class="hljs-keyword">as</span> tf<br><br><span class="hljs-comment"># 创建分布式策略</span><br>strategy = tf.distribute.MirroredStrategy(devices=[<span class="hljs-string">&quot;/gpu:0&quot;</span>, <span class="hljs-string">&quot;/gpu:1&quot;</span>])<br><br><span class="hljs-keyword">with</span> strategy.scope():<br>    model = YourModel()<br>    model.<span class="hljs-built_in">compile</span>(optimizer=<span class="hljs-string">&#x27;adam&#x27;</span>, loss=<span class="hljs-string">&#x27;sparse_categorical_crossentropy&#x27;</span>)<br><br><span class="hljs-comment"># 训练代码会自动并行运行在多个 GPU 上</span><br>model.fit(train_data, epochs=<span class="hljs-number">5</span>)<br><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>使用 CUDA 的多 GPU 手动操作</p>
+<p>对于更灵活的多 GPU 控制，你可以手动将模型拆分并将不同部分放在不同的 GPU 上。不过这种方法复杂度较高，适用于需要精细控制 GPU 使用的情况。</p>
+</li>
+</ol>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>确保每个 GPU 的内存足够，特别是分布式训练时。<br>对于 DistributedDataParallel 和 MirroredStrategy，可能需要调整 batch size 以平衡每个 GPU 的负载。</p>
 
               
             </div>
@@ -331,8 +343,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>pytorch加载模型torch.load()遇到问题ModuleNotFoundError: No module named models</div>
-      <div>http://yuting0907.github.io/2024/11/05/pytorch加载模型torch-load-遇到问题ModuleNotFoundError-No-module-named-models/</div>
+      <div>将深度学习代码同时运行在多个GPU显卡上</div>
+      <div>http://yuting0907.github.io/2024/11/06/将深度学习代码同时运行在多个GPU显卡上/</div>
     </div>
     <div class="license-meta">
       
@@ -344,7 +356,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年11月5日</div>
+          <div>2024年11月6日</div>
         </div>
       
       
@@ -374,18 +386,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/11/06/%E5%B0%86%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%BB%A3%E7%A0%81%E5%90%8C%E6%97%B6%E8%BF%90%E8%A1%8C%E5%9C%A8%E5%A4%9A%E4%B8%AAGPU%E6%98%BE%E5%8D%A1%E4%B8%8A/" title="将深度学习代码同时运行在多个GPU显卡上">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">将深度学习代码同时运行在多个GPU显卡上</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/06/14/%E6%95%B0%E6%8D%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E8%B7%B5/" title="数据服务实践">
-                        <span class="hidden-mobile">数据服务实践</span>
+                      <a href="/2024/11/05/pytorch%E5%8A%A0%E8%BD%BD%E6%A8%A1%E5%9E%8Btorch-load-%E9%81%87%E5%88%B0%E9%97%AE%E9%A2%98ModuleNotFoundError-No-module-named-models/" title="pytorch加载模型torch.load()遇到问题ModuleNotFoundError: No module named models">
+                        <span class="hidden-mobile">pytorch加载模型torch.load()遇到问题ModuleNotFoundError: No module named models</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
