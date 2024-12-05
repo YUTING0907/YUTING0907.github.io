@@ -16,22 +16,25 @@
   <meta name="author" content="Echo Yu">
   <meta name="keywords" content="ML">
   
-    <meta name="description" content="1.引言1.1 985计算机非全研究生的意义在正文之前，首先敲下警钟，大家不妨仔细想想自己读985计算机非全研究生的意义有些人可能想通过研究生身份校招,周围人走大厂校招的情况不容乐观，很多大厂不要非全应届生。另一部分人想体验学术研究，还有的想重回学校体验学校生活。 首先一定得明确自己读研的意义，如果明确了自己读研的意义，或者已经读研的同学，可以接着继续往下看，接下来的文章将介绍如何能把握住三年时间">
+    <meta name="description" content="面向对象特性：封装、抽象、继承、多态 接口和抽象类的区别？ 接口是has-a，抽象类是is-a，接口倾向于丰富功能不是从属关系。 实际工作中应该培养思维： 基于接口而非实现编程，如函数的命名不能暴露任何实现细节，封装具体的实现细节，特殊的流程不应该暴露给调用者。 多用组合少用继承，委托和组合可以实现代码复用，委托为接口的一个实现类。 面向对象编程的思考过程 划分职责进而识别出有哪些类；    根据">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《从容跨越：985计算机非全日制研究生顺利获得学位的指南》">
-<meta property="og:url" content="http://yuting0907.github.io/2024/11/29/%E3%80%8A%E4%BB%8E%E5%AE%B9%E8%B7%A8%E8%B6%8A%EF%BC%9A985%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%9D%9E%E5%85%A8%E6%97%A5%E5%88%B6%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A1%BA%E5%88%A9%E8%8E%B7%E5%BE%97%E5%AD%A6%E4%BD%8D%E7%9A%84%E6%8C%87%E5%8D%97%E3%80%8B/index.html">
+<meta property="og:title" content="JAVA设计模式">
+<meta property="og:url" content="http://yuting0907.github.io/2024/12/05/JAVA%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="YUTING">
-<meta property="og:description" content="1.引言1.1 985计算机非全研究生的意义在正文之前，首先敲下警钟，大家不妨仔细想想自己读985计算机非全研究生的意义有些人可能想通过研究生身份校招,周围人走大厂校招的情况不容乐观，很多大厂不要非全应届生。另一部分人想体验学术研究，还有的想重回学校体验学校生活。 首先一定得明确自己读研的意义，如果明确了自己读研的意义，或者已经读研的同学，可以接着继续往下看，接下来的文章将介绍如何能把握住三年时间">
+<meta property="og:description" content="面向对象特性：封装、抽象、继承、多态 接口和抽象类的区别？ 接口是has-a，抽象类是is-a，接口倾向于丰富功能不是从属关系。 实际工作中应该培养思维： 基于接口而非实现编程，如函数的命名不能暴露任何实现细节，封装具体的实现细节，特殊的流程不应该暴露给调用者。 多用组合少用继承，委托和组合可以实现代码复用，委托为接口的一个实现类。 面向对象编程的思考过程 划分职责进而识别出有哪些类；    根据">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-11-29T08:02:23.000Z">
-<meta property="article:modified_time" content="2024-11-29T08:16:40.157Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20241205160928.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20241205161021.png">
+<meta property="article:published_time" content="2024-12-05T07:48:21.000Z">
+<meta property="article:modified_time" content="2024-12-05T08:46:31.705Z">
 <meta property="article:author" content="Echo Yu">
-<meta property="article:tag" content="CS">
+<meta property="article:tag" content="JAVA">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20241205160928.png">
   
   
   
-  <title>《从容跨越：985计算机非全日制研究生顺利获得学位的指南》 - YUTING</title>
+  <title>JAVA设计模式 - YUTING</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="《从容跨越：985计算机非全日制研究生顺利获得学位的指南》"></span>
+            <span id="subtitle" data-typed-text="JAVA设计模式"></span>
           
         </div>
 
@@ -214,8 +217,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-11-29 16:02" pubdate>
-          2024年11月29日 下午
+        <time datetime="2024-12-05 15:48" pubdate>
+          2024年12月5日 下午
         </time>
       </span>
     
@@ -226,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.6k 字
+          1.3k 字
         
       </span>
     
@@ -237,7 +240,7 @@
         
         
         
-          22 分钟
+          11 分钟
         
       </span>
     
@@ -275,37 +278,47 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">《从容跨越：985计算机非全日制研究生顺利获得学位的指南》</h1>
+            <h1 style="display: none">JAVA设计模式</h1>
             
             <div class="markdown-body">
               
-              <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1.引言"></a>1.引言</h3><h4 id="1-1-985计算机非全研究生的意义"><a href="#1-1-985计算机非全研究生的意义" class="headerlink" title="1.1 985计算机非全研究生的意义"></a>1.1 985计算机非全研究生的意义</h4><p>在正文之前，首先敲下警钟，大家不妨仔细想想自己读985计算机非全研究生的意义<br>有些人可能想通过研究生身份校招,周围人走大厂校招的情况不容乐观，很多大厂不要非全应届生。<br>另一部分人想体验学术研究，还有的想重回学校体验学校生活。</p>
-<p>首先一定得明确自己读研的意义，如果明确了自己读研的意义，或者已经读研的同学，可以接着继续往下看，接下来的文章将介绍如何能把握住三年时间按时毕业。</p>
-<h3 id="2-时间管理与规划"><a href="#2-时间管理与规划" class="headerlink" title="2.时间管理与规划"></a>2.时间管理与规划</h3><p>这一章节将围绕如何按时毕业作出时间规划，并结合本人和周围人的实际例子进行说明。<br>首先拿华东师范大学计算机学院的毕业要求来说，大论文需要三章详实的算法相关类的改进创新实验，另外有的严格的导师会要求发表核心小论文。</p>
-<h4 id="2-1-研究生课程"><a href="#2-1-研究生课程" class="headerlink" title="2.1 研究生课程"></a>2.1 研究生课程</h4><p>非全研究生的研究生课程和全日制学生没有区别，只是在上课时间上有区别，非全研究生节假日和周末上课，一般研一会修完全部的课程，除非挂科，不过一般不打老师，<br>研究生挂科是不太会出现的。</p>
-<h4 id="2-2-研究课题选题"><a href="#2-2-研究课题选题" class="headerlink" title="2.2 研究课题选题"></a>2.2 研究课题选题</h4><p>研一的这一年大家可以找找自己感兴趣的研究方向，一定要尽早找自己的研究方向，然后跟导师沟通，导师会给你大方向的建议，比如我在自己找研究方向的时候，<br>自己找了两个选题，其中一个是图像超分辨，我导师就跟我说在这个领域里已经相当成熟，需要非常好的数学能力才能作出创新，大家应该都知道数学的创新是最难的。<br>所以想告诉大家的是，跟导师聊选题能帮你在大方向上不走弯路。</p>
-<h4 id="2-3-相关学术文献"><a href="#2-3-相关学术文献" class="headerlink" title="2.3 相关学术文献"></a>2.3 相关学术文献</h4><p>找到自己的选题后，基于自己的选题去dblp网站或者学校图书馆文库里面找相应的论文去看，一开始很难看懂，可以找相关领域的综述和博士论文看，综述文章<br>介绍的是该领域的发展脉络以及简单的介绍该领域相关技术，比如CV图像分割任务，综述类文章会介绍该任务的深度学习网络的演变等。看完综述类文章后，大致对<br>这个方向，前人学者做的工作有粗步的了解。再去详细读每一篇paper，最好是找有开源代码的paper，一来能够复现实验结果，二来能够站在别人的肩膀上少开发一些代码，<br>节约摸索时间。</p>
-<h4 id="2-4-找创新点"><a href="#2-4-找创新点" class="headerlink" title="2.4 找创新点"></a>2.4 找创新点</h4><p>大概慢慢看了10篇论文左右，就需要开始自己找创新点，创新点怎么着？例如CV领域，可以是缝合另一篇文章的模块，在数据集上做实验，<br>可以是修改了loss损失函数，也能是自建数据集，旧网络在新的数据集跑出sota效果。</p>
-<p>短短几句话可能说起来简单，但是实践起来确实不容易，不过要相信仔细找肯定能找到的。<br>拿我自己做例子，我从研一暑假自己找选题，找导师确认选题，再到看论文十篇左右，差不多花了4个月左右时间。<br>再到自己找创新点，然后实验验证自己的idea是否有效，创新点验证实验的整个过程我花了差不多半年，不过这半年松松垮垮，属于心情好做一点，<br>有效时间可能没有这么长，这也就是到了研二的下学期4月份左右。</p>
-<h4 id="2-5-小论文写作和投稿"><a href="#2-5-小论文写作和投稿" class="headerlink" title="2.5 小论文写作和投稿"></a>2.5 小论文写作和投稿</h4><p>实验完成后，撰写小论文和找合适的会议期刊，研二下的6月份将小论文投递了出去。</p>
-<p>至此，研究生生涯已经过了两年，小论文的工作量只能算一章的工作内容，剩下两章的工作量需要在研三上也就是12月底完成。保证撰写大论文在1月份开始<br>或者往后倒推开始写论文的时间，盲审时间为研三下3月份，被抽到的论文送出去盲审。</p>
-<h3 id="3-科研相关学习和工具推荐"><a href="#3-科研相关学习和工具推荐" class="headerlink" title="3.科研相关学习和工具推荐"></a>3.科研相关学习和工具推荐</h3><h4 id="3-1-文献网站"><a href="#3-1-文献网站" class="headerlink" title="3.1 文献网站"></a>3.1 文献网站</h4><p>谷歌学术：文献收录最全，查找方便，如果进不去可以用谷粉学术替代<br>Web of Science<br>Scopus<br>中文期刊：万方、维普、知网<br>ArXiv：免费的预印本数据库，可以看看即将发表但是还没发表的论文</p>
-<h4 id="3-2-文献管理"><a href="#3-2-文献管理" class="headerlink" title="3.2 文献管理"></a>3.2 文献管理</h4><p>Zotero看英文文献，支持翻译插件，可以选中段落自动翻译<br>Connected paper：根据一篇文献迅速得到100篇强相关的文献</p>
-<h4 id="3-3-英文写作"><a href="#3-3-英文写作" class="headerlink" title="3.3 英文写作"></a>3.3 英文写作</h4><p>Acadamic Phrasebank: 很多英文写作模版，套着写论文</p>
-<h4 id="3-4-投稿会议期刊"><a href="#3-4-投稿会议期刊" class="headerlink" title="3.4 投稿会议期刊"></a>3.4 投稿会议期刊</h4><p>CCF期刊会议评级<br>CS Conference小程序：可以查看计算机会议截稿时间</p>
-<h3 id="4-心理调适与动力维持"><a href="#4-心理调适与动力维持" class="headerlink" title="4.心理调适与动力维持"></a>4.心理调适与动力维持</h3><h4 id="4-1-如何应对心理压力"><a href="#4-1-如何应对心理压力" class="headerlink" title="4.1 如何应对心理压力"></a>4.1 如何应对心理压力</h4><p>研究生期间，尤其是对于非全日制学生来说，除了繁重的课程和科研任务，还需要面对工作和生活的压力。如何保持心理健康，积极应对压力，是确保按时毕业的一个重要因素。</p>
-<p>调整期望值：学术研究的进展通常较慢，尤其是在科研初期，可能会感到进展缓慢或者困难重重。设定合理的目标，接受学习和科研中的不确定性，避免过度焦虑。</p>
-<p>管理压力：可以通过运动、冥想或者兴趣爱好等方式来释放压力，保持身心的健康。研究生的生活不是单纯的“拼命”工作，而是要平衡好学习、工作和生活。</p>
-<p>建立支持系统：无论是导师、同学，还是家人朋友，建立一个有效的支持网络，可以在压力大的时候给予帮助和鼓励。相互交流也是缓解压力的好方法。</p>
-<h4 id="4-2-动力维持"><a href="#4-2-动力维持" class="headerlink" title="4.2 动力维持"></a>4.2 动力维持</h4><p>研究生生涯通常是一个较长的过程，如何在三年的时间里保持动力，持续投入，是一个值得关注的问题。</p>
-<p>设定短期和长期目标：除了最终的毕业目标之外，设定一些短期的小目标，并及时庆祝自己达成的每个小成就。这种方式可以帮助你保持动力，并且使你不断接近最终的目标。</p>
-<p>对科研的热情：选择一个自己感兴趣的研究方向，确保自己的研究课题能够激发兴趣。当你对所做的研究充满热情时，动力自然也会持续。</p>
-<p>保持生活的多样性：避免将所有精力都投入到科研中。适当的社交、兴趣爱好、旅行等活动，能帮助你保持积极的心态，避免疲劳和倦怠。</p>
-<h4 id="4-3-心态调整"><a href="#4-3-心态调整" class="headerlink" title="4.3 心态调整"></a>4.3 心态调整</h4><p>在这条漫长的路上，心态尤为重要。<br>接纳失败：科研道路并不总是一帆风顺，失败和挫折是难以避免的。学会从失败中总结经验，保持对未来的希望与动力。</p>
-<p>保持好奇心：不断保持对新知识和新技术的探索欲，主动参与学术交流与讨论，拓宽视野，激发对学术的兴趣。</p>
-<p>自我反思：定期回顾自己的学习和科研进展，思考自己的目标是否调整，是否有需要改进的地方。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这篇文章旨在为读者提供一个清晰的指南，帮助他们在三年内顺利完成985计算机非全日制研究生的学业。首先，强调了明确读研目的的重要性，鼓励学生在入学之前就要清楚自己的目标，从而为接下来的学业规划打下坚实基础。接着，文章详细介绍了如何通过合理的时间管理和科研规划来确保按时毕业，包括如何选择研究方向、如何高效阅读文献、如何进行创新性研究以及如何撰写和投稿论文。与此同时，文章还推荐了一些实用的科研工具和学习资源，帮助学生提升科研效率和学术写作水平。最后，在漫长的研究生生涯中，保持积极的心态、适当调节压力，并保持动力，才能在学术与生活之间找到最佳平衡，最终顺利拿到学位。</p>
-
+              <h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h3><p><strong>特性</strong>：封装、抽象、继承、多态</p>
+<p><strong>接口和抽象类的区别？</strong></p>
+<p>接口是has-a，抽象类是is-a，接口倾向于丰富功能不是从属关系。</p>
+<p><strong>实际工作中应该培养思维：</strong></p>
+<p>基于接口而非实现编程，如函数的命名不能暴露任何实现细节，封装具体的实现细节，特殊的流程不应该暴露给调用者。</p>
+<p>多用组合少用继承，委托和组合可以实现代码复用，委托为接口的一个实现类。</p>
+<p><strong>面向对象编程的思考过程</strong></p>
+<p>划分职责进而识别出有哪些类；</p>
+<p>   根据需求的描述来识别类。</p>
+<p>定义类及其属性和方法；</p>
+<p>​    根据需求的描述识别动词就是方法，</p>
+<p>定义类与类之间的交互关系；</p>
+<p>   泛化、实现、组合、依赖</p>
+<p>将类组装起来并提供执行入口</p>
+<h3 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h3><p>1.单一职责</p>
+<p>2.对扩展开放、修改关闭</p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20241205160928.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20241205161021.png" srcset="/img/loading.gif" lazyload></p>
+<p>3.里式替换（LSP）</p>
+<p>里式替换（LSP）跟多态有何区别</p>
+<p>3.1子类违背父类声明要实现的功能</p>
+<p>父类中提供的sortOrdersByAmount()订单排序函数，是按照金额从小到大来给订单排序的，而子类重写这个sortOrdersByAmount()订单排序函数之后，是按照创建日期来给订单排序的。那子类的设计就违背里式替换原则</p>
+<p>3.2 子类违背父类对输入、输出、异常的约定</p>
+<p>在父类中，某个函数约定：运行出错的时候返回null；获取数据为空的时候返回空集合（empty collection）。而子类重载函数之后，实现变了，运行出错返回异常（exception），获取不到数据返回null。</p>
+<p>那子类的设计就违背里式替换原则。在父类中，某个函数约定，输入数据可以是任意整数，但子类实现的时候，只允许输入数据是正整数，负数就抛出，也就是说，子类对输入的数据的校验比父类更加严格，那子类的设计就违背了里式替换原则。</p>
+<p>在父类中，某个函数约定，只会抛出ArgumentNullException异常，那子类的设计实现中只允许抛出ArgumentNullException异常，任何其他异常的抛出，都会导致子类违背里式替换原则</p>
+<p>3.3 子类违背父类注释中所罗列的任何特殊说明</p>
+<p>父类中定义的withdraw()提现函数的注释是这么写的：“用户的提现金额不得超过账户余额……”，而子类重写withdraw()函数之后，针对VIP账号实现了透支提现的功能，也就是提现金额可以大于账户余额，那这个子类的设计也是不符合里式替换原则的</p>
+<p>4.接口隔离原则</p>
+<p>接口隔离原则提供了一种判断接口的职责是否单一的标准：通过调用者如何使用接口来间接地判定。如果调用者只使用部分接口或接口的部分功能，那接口的设计就不够职责单一</p>
+<p>5.控制反转、依赖反转、依赖注入</p>
+<p>控制反转：程序需要main主函数入口才能运行，控制反转将这个控制过程交给框架，如spring框架</p>
+<p>依赖注入：</p>
+<p>​    依赖的类对象传递进来，这样就提高了代码的扩展性，我们可以灵活地替换依赖的类。</p>
+<p>依赖反转：</p>
+<p>   高层模块（high-level modules）不要依赖低层模块（low-level）。高层模块和低层模块应该通过抽象（abstractions）来互相依赖。除此之外，抽象（abstractions）不要依赖具体实现细节（details），具体实现细节（details）依赖抽象（abstractions）</p>
+<h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h3 id="编程规范"><a href="#编程规范" class="headerlink" title="编程规范"></a>编程规范</h3><h3 id="代码重构"><a href="#代码重构" class="headerlink" title="代码重构"></a>代码重构</h3>
               
             </div>
             <hr/>
@@ -339,7 +352,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/CS/">#CS</a>
+        <a href="/tags/JAVA/">#JAVA</a>
       
     </div>
   
@@ -351,8 +364,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>《从容跨越：985计算机非全日制研究生顺利获得学位的指南》</div>
-      <div>http://yuting0907.github.io/2024/11/29/《从容跨越：985计算机非全日制研究生顺利获得学位的指南》/</div>
+      <div>JAVA设计模式</div>
+      <div>http://yuting0907.github.io/2024/12/05/JAVA设计模式/</div>
     </div>
     <div class="license-meta">
       
@@ -364,7 +377,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年11月29日</div>
+          <div>2024年12月5日</div>
         </div>
       
       
@@ -394,18 +407,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/12/05/JAVA%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="JAVA设计模式">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">JAVA设计模式</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/11/06/%E5%B0%86%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%BB%A3%E7%A0%81%E5%90%8C%E6%97%B6%E8%BF%90%E8%A1%8C%E5%9C%A8%E5%A4%9A%E4%B8%AAGPU%E6%98%BE%E5%8D%A1%E4%B8%8A/" title="将深度学习代码同时运行在多个GPU显卡上">
-                        <span class="hidden-mobile">将深度学习代码同时运行在多个GPU显卡上</span>
+                      <a href="/2024/11/29/%E3%80%8A%E4%BB%8E%E5%AE%B9%E8%B7%A8%E8%B6%8A%EF%BC%9A985%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%9D%9E%E5%85%A8%E6%97%A5%E5%88%B6%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A1%BA%E5%88%A9%E8%8E%B7%E5%BE%97%E5%AD%A6%E4%BD%8D%E7%9A%84%E6%8C%87%E5%8D%97%E3%80%8B/" title="《从容跨越：985计算机非全日制研究生顺利获得学位的指南》">
+                        <span class="hidden-mobile">《从容跨越：985计算机非全日制研究生顺利获得学位的指南》</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>JAVA设计模式</title>
+    <link href="/2024/12/05/JAVA%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <url>/2024/12/05/JAVA%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
+    
+    <content type="html"><![CDATA[<h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h3><p><strong>特性</strong>：封装、抽象、继承、多态</p><p><strong>接口和抽象类的区别？</strong></p><p>接口是has-a，抽象类是is-a，接口倾向于丰富功能不是从属关系。</p><p><strong>实际工作中应该培养思维：</strong></p><p>基于接口而非实现编程，如函数的命名不能暴露任何实现细节，封装具体的实现细节，特殊的流程不应该暴露给调用者。</p><p>多用组合少用继承，委托和组合可以实现代码复用，委托为接口的一个实现类。</p><p><strong>面向对象编程的思考过程</strong></p><p>划分职责进而识别出有哪些类；</p><p>   根据需求的描述来识别类。</p><p>定义类及其属性和方法；</p><p>​    根据需求的描述识别动词就是方法，</p><p>定义类与类之间的交互关系；</p><p>   泛化、实现、组合、依赖</p><p>将类组装起来并提供执行入口</p><h3 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h3><p>1.单一职责</p><p>2.对扩展开放、修改关闭</p><p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20241205160928.png"></p><p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20241205161021.png"></p><p>3.里式替换（LSP）</p><p>里式替换（LSP）跟多态有何区别</p><p>3.1子类违背父类声明要实现的功能</p><p>父类中提供的sortOrdersByAmount()订单排序函数，是按照金额从小到大来给订单排序的，而子类重写这个sortOrdersByAmount()订单排序函数之后，是按照创建日期来给订单排序的。那子类的设计就违背里式替换原则</p><p>3.2 子类违背父类对输入、输出、异常的约定</p><p>在父类中，某个函数约定：运行出错的时候返回null；获取数据为空的时候返回空集合（empty collection）。而子类重载函数之后，实现变了，运行出错返回异常（exception），获取不到数据返回null。</p><p>那子类的设计就违背里式替换原则。在父类中，某个函数约定，输入数据可以是任意整数，但子类实现的时候，只允许输入数据是正整数，负数就抛出，也就是说，子类对输入的数据的校验比父类更加严格，那子类的设计就违背了里式替换原则。</p><p>在父类中，某个函数约定，只会抛出ArgumentNullException异常，那子类的设计实现中只允许抛出ArgumentNullException异常，任何其他异常的抛出，都会导致子类违背里式替换原则</p><p>3.3 子类违背父类注释中所罗列的任何特殊说明</p><p>父类中定义的withdraw()提现函数的注释是这么写的：“用户的提现金额不得超过账户余额……”，而子类重写withdraw()函数之后，针对VIP账号实现了透支提现的功能，也就是提现金额可以大于账户余额，那这个子类的设计也是不符合里式替换原则的</p><p>4.接口隔离原则</p><p>接口隔离原则提供了一种判断接口的职责是否单一的标准：通过调用者如何使用接口来间接地判定。如果调用者只使用部分接口或接口的部分功能，那接口的设计就不够职责单一</p><p>5.控制反转、依赖反转、依赖注入</p><p>控制反转：程序需要main主函数入口才能运行，控制反转将这个控制过程交给框架，如spring框架</p><p>依赖注入：</p><p>​    依赖的类对象传递进来，这样就提高了代码的扩展性，我们可以灵活地替换依赖的类。</p><p>依赖反转：</p><p>   高层模块（high-level modules）不要依赖低层模块（low-level）。高层模块和低层模块应该通过抽象（abstractions）来互相依赖。除此之外，抽象（abstractions）不要依赖具体实现细节（details），具体实现细节（details）依赖抽象（abstractions）</p><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h3 id="编程规范"><a href="#编程规范" class="headerlink" title="编程规范"></a>编程规范</h3><h3 id="代码重构"><a href="#代码重构" class="headerlink" title="代码重构"></a>代码重构</h3>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>JAVA</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>《从容跨越：985计算机非全日制研究生顺利获得学位的指南》</title>
     <link href="/2024/11/29/%E3%80%8A%E4%BB%8E%E5%AE%B9%E8%B7%A8%E8%B6%8A%EF%BC%9A985%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%9D%9E%E5%85%A8%E6%97%A5%E5%88%B6%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A1%BA%E5%88%A9%E8%8E%B7%E5%BE%97%E5%AD%A6%E4%BD%8D%E7%9A%84%E6%8C%87%E5%8D%97%E3%80%8B/"/>
     <url>/2024/11/29/%E3%80%8A%E4%BB%8E%E5%AE%B9%E8%B7%A8%E8%B6%8A%EF%BC%9A985%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%9D%9E%E5%85%A8%E6%97%A5%E5%88%B6%E7%A0%94%E7%A9%B6%E7%94%9F%E9%A1%BA%E5%88%A9%E8%8E%B7%E5%BE%97%E5%AD%A6%E4%BD%8D%E7%9A%84%E6%8C%87%E5%8D%97%E3%80%8B/</url>
