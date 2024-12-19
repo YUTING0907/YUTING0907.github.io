@@ -16,15 +16,15 @@
   <meta name="author" content="Echo Yu">
   <meta name="keywords" content="ML">
   
-    <meta name="description" content="构建API集市，实现接口复用为了实现接口的复用，我们需要构建 API 的集市，应用开发者可以直接在 API 集市发现已有的数据接口，直接申请该接口的 API 权限，即可访问该数据，不需要重复开发 操作流程 步骤一：创建数据源并配置网络连通性  使用数据服务创建API前，需先将您的数据库或数据仓库添加为DataWorks数据源，以此作为数据服务API的数据来源。开发数据服务API时，数据服务将访问该">
+    <meta name="description" content="构建API集市，实现接口复用为了实现接口的复用，我们需要构建 API 的集市，应用开发者可以直接在 API 集市发现已有的数据接口，直接申请该接口的 API 权限，即可访问该数据，不需要重复开发 操作流程 步骤一：创建数据源并配置网络连通性 使用数据服务创建API前，需先将您的数据库或数据仓库添加为DataWorks数据源，以此作为数据服务API的数据来源。开发数据服务API时，数据服务将访问该数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据服务实践">
 <meta property="og:url" content="http://yuting0907.github.io/2024/06/14/%E6%95%B0%E6%8D%AE%E6%9C%8D%E5%8A%A1%E5%AE%9E%E8%B7%B5/index.html">
 <meta property="og:site_name" content="YUTING">
-<meta property="og:description" content="构建API集市，实现接口复用为了实现接口的复用，我们需要构建 API 的集市，应用开发者可以直接在 API 集市发现已有的数据接口，直接申请该接口的 API 权限，即可访问该数据，不需要重复开发 操作流程 步骤一：创建数据源并配置网络连通性  使用数据服务创建API前，需先将您的数据库或数据仓库添加为DataWorks数据源，以此作为数据服务API的数据来源。开发数据服务API时，数据服务将访问该">
+<meta property="og:description" content="构建API集市，实现接口复用为了实现接口的复用，我们需要构建 API 的集市，应用开发者可以直接在 API 集市发现已有的数据接口，直接申请该接口的 API 权限，即可访问该数据，不需要重复开发 操作流程 步骤一：创建数据源并配置网络连通性 使用数据服务创建API前，需先将您的数据库或数据仓库添加为DataWorks数据源，以此作为数据服务API的数据来源。开发数据服务API时，数据服务将访问该数">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-06-14T15:52:09.000Z">
-<meta property="article:modified_time" content="2024-06-14T16:04:41.423Z">
+<meta property="article:modified_time" content="2024-12-19T02:14:08.172Z">
 <meta property="article:author" content="Echo Yu">
 <meta property="article:tag" content="JAVA">
 <meta name="twitter:card" content="summary_large_image">
@@ -281,14 +281,14 @@
               
               <h2 id="构建API集市，实现接口复用"><a href="#构建API集市，实现接口复用" class="headerlink" title="构建API集市，实现接口复用"></a>构建API集市，实现接口复用</h2><p>为了实现接口的复用，我们需要构建 API 的集市，应用开发者可以直接在 API 集市发现已有的数据接口，直接申请该接口的 API 权限，即可访问该数据，不需要重复开发</p>
 <h2 id="操作流程"><a href="#操作流程" class="headerlink" title="操作流程"></a>操作流程</h2><ol>
-<li>步骤一：创建数据源并配置网络连通性<br>  使用数据服务创建API前，需先将您的数据库或数据仓库添加为DataWorks数据源，以此作为数据服务API的数据来源。开发数据服务API时，数据服务将访问该数据源获取数据表的Schema信息，帮助您进一步设置请求和返回参数。调用数据服务API时，数据服务将访问该数据源来执行查询请求。</li>
-<li>步骤二：创建API分组<br>  数据服务基于API网关对外提供服务。在API网关中，分组是API的管理单元，并与调用地址的域名相关联。因此，在数据服务中创建API前，需先在API网关创建API分组。</li>
-<li>步骤三：新建业务流程<br>  数据服务基于业务流程实现以业务为单元的数据服务API开发，并通过业务流程对API及创建API所使用的函数等文件进行组织管理。因此，在数据服务创建API前，需先新建业务流程。</li>
-<li>步骤四：生成API<br>  业务流程创建完成后，您可基于该业务流程创建相应业务的API。</li>
-<li>步骤五：测试API<br>  已创建的API需进行测试运行，测试通过后，该API才可发布上线。</li>
-<li>步骤六：发布API<br>  通过测试的API需发布上线，发布成功后，其他服务才可调用该API。</li>
-<li>步骤七：调用API<br>  数据服务支持使用简单身份认证及加密身份认证调用数据服务API。</li>
-<li>步骤八：查看与管理API<br>  发布上线的API可在服务管理页面查看，同时，数据服务支持根据业务需求进行下线、授权及查看API调用详情等管理操作。</li>
+<li>步骤一：创建数据源并配置网络连通性<br> 使用数据服务创建API前，需先将您的数据库或数据仓库添加为DataWorks数据源，以此作为数据服务API的数据来源。开发数据服务API时，数据服务将访问该数据源获取数据表的Schema信息，帮助您进一步设置请求和返回参数。调用数据服务API时，数据服务将访问该数据源来执行查询请求。</li>
+<li>步骤二：创建API分组<br> 数据服务基于API网关对外提供服务。在API网关中，分组是API的管理单元，并与调用地址的域名相关联。因此，在数据服务中创建API前，需先在API网关创建API分组。</li>
+<li>步骤三：新建业务流程<br> 数据服务基于业务流程实现以业务为单元的数据服务API开发，并通过业务流程对API及创建API所使用的函数等文件进行组织管理。因此，在数据服务创建API前，需先新建业务流程。</li>
+<li>步骤四：生成API<br> 业务流程创建完成后，您可基于该业务流程创建相应业务的API。</li>
+<li>步骤五：测试API<br> 已创建的API需进行测试运行，测试通过后，该API才可发布上线。</li>
+<li>步骤六：发布API<br> 通过测试的API需发布上线，发布成功后，其他服务才可调用该API。</li>
+<li>步骤七：调用API<br> 数据服务支持使用简单身份认证及加密身份认证调用数据服务API。</li>
+<li>步骤八：查看与管理API<br> 发布上线的API可在服务管理页面查看，同时，数据服务支持根据业务需求进行下线、授权及查看API调用详情等管理操作。</li>
 </ol>
 <h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><ul>
 <li>流控策略：单位时长内API调用限制(次)<br>  拦截器+redis+lua脚本实现redis操作原子性</li>
@@ -361,6 +361,27 @@
             
             <div>
               <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" class="category-chain-item">大数据</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
   
   
     <div class="post-meta">
