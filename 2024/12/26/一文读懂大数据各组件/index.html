@@ -16,24 +16,25 @@
   <meta name="author" content="Echo Yu">
   <meta name="keywords" content="ML">
   
-    <meta name="description" content="😄程序用途 该程序用来对感兴趣的微博博主进行分析，根据微博内容生成词云图,效果如下：  📌一.爬取指定博主的微博内容 爬虫部分主要利用Requests包爬取相应的信息，感兴趣大家可以自行阅读代码，这里主要介绍词云的生成，就不展开说爬虫程序了～ 爬虫全部代码：https:&#x2F;&#x2F;github.com&#x2F;YUTING0907&#x2F;pythonTools&#x2F;tree&#x2F;main&#x2F;WeiboCrawler 📌二.">
+    <meta name="description" content="在还没接触大数据的时候，着实被那么多技术组件和平台架构吓到了，以下列举一些 Druid、Kudu、ClickHouse、Flink、Spark 、Storm、Impala、Presto、Hive、Kafka、RabbitMQ、Canal、Doris、Apache Airflow、Oozie、Azkaban、DolphinScheduler、HDFS、YARN、MapReduce、Hive、HBas">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python爬取指定微博用户并基于微博内容生成词云图">
-<meta property="og:url" content="http://yuting0907.github.io/2024/12/26/python%E7%88%AC%E5%8F%96%E6%8C%87%E5%AE%9A%E5%BE%AE%E5%8D%9A%E7%94%A8%E6%88%B7%E5%B9%B6%E5%9F%BA%E4%BA%8E%E5%BE%AE%E5%8D%9A%E5%86%85%E5%AE%B9%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91%E5%9B%BE/index.html">
+<meta property="og:title" content="一文读懂大数据各组件">
+<meta property="og:url" content="http://yuting0907.github.io/2024/12/26/%E4%B8%80%E6%96%87%E8%AF%BB%E6%87%82%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%90%84%E7%BB%84%E4%BB%B6/index.html">
 <meta property="og:site_name" content="YUTING">
-<meta property="og:description" content="😄程序用途 该程序用来对感兴趣的微博博主进行分析，根据微博内容生成词云图,效果如下：  📌一.爬取指定博主的微博内容 爬虫部分主要利用Requests包爬取相应的信息，感兴趣大家可以自行阅读代码，这里主要介绍词云的生成，就不展开说爬虫程序了～ 爬虫全部代码：https:&#x2F;&#x2F;github.com&#x2F;YUTING0907&#x2F;pythonTools&#x2F;tree&#x2F;main&#x2F;WeiboCrawler 📌二.">
+<meta property="og:description" content="在还没接触大数据的时候，着实被那么多技术组件和平台架构吓到了，以下列举一些 Druid、Kudu、ClickHouse、Flink、Spark 、Storm、Impala、Presto、Hive、Kafka、RabbitMQ、Canal、Doris、Apache Airflow、Oozie、Azkaban、DolphinScheduler、HDFS、YARN、MapReduce、Hive、HBas">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20241226162349.png">
-<meta property="article:published_time" content="2024-12-26T08:06:51.000Z">
-<meta property="article:modified_time" content="2024-12-26T08:31:56.597Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgwhiteboard_exported_image.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20241226183224.png">
+<meta property="article:published_time" content="2024-12-26T09:11:36.000Z">
+<meta property="article:modified_time" content="2024-12-26T10:37:43.034Z">
 <meta property="article:author" content="Echo Yu">
-<meta property="article:tag" content="Python">
+<meta property="article:tag" content="大数据">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20241226162349.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgwhiteboard_exported_image.png">
   
   
   
-  <title>python爬取指定微博用户并基于微博内容生成词云图 - YUTING</title>
+  <title>一文读懂大数据各组件 - YUTING</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -200,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="python爬取指定微博用户并基于微博内容生成词云图"></span>
+            <span id="subtitle" data-typed-text="一文读懂大数据各组件"></span>
           
         </div>
 
@@ -216,7 +217,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-12-26 16:06" pubdate>
+        <time datetime="2024-12-26 17:11" pubdate>
           2024年12月26日 下午
         </time>
       </span>
@@ -228,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.7k 字
+          2.4k 字
         
       </span>
     
@@ -239,7 +240,7 @@
         
         
         
-          32 分钟
+          20 分钟
         
       </span>
     
@@ -277,30 +278,134 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">python爬取指定微博用户并基于微博内容生成词云图</h1>
+            <h1 style="display: none">一文读懂大数据各组件</h1>
             
             <div class="markdown-body">
               
-              <p>😄程序用途</p>
-<p>该程序用来对感兴趣的微博博主进行分析，根据微博内容生成词云图,效果如下：</p>
-<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20241226162349.png" srcset="/img/loading.gif" lazyload></p>
-<p>📌一.爬取指定博主的微博内容</p>
-<p>爬虫部分主要利用Requests包爬取相应的信息，感兴趣大家可以自行阅读代码，这里主要介绍词云的生成，就不展开说爬虫程序了～</p>
-<p>爬虫全部代码：<a target="_blank" rel="noopener" href="https://github.com/YUTING0907/pythonTools/tree/main/WeiboCrawler">https://github.com/YUTING0907/pythonTools/tree/main/WeiboCrawler</a></p>
-<p>📌二.根据微博内容生成词云图</p>
-<h5 id="1-中文词分割"><a href="#1-中文词分割" class="headerlink" title="1.中文词分割"></a>1.中文词分割</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">stop_word_list</span>(<span class="hljs-params">filepath</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;创建停用词list&quot;&quot;&quot;</span><br>    f = codecs.<span class="hljs-built_in">open</span>(filepath, <span class="hljs-string">&#x27;r&#x27;</span>, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>    stopwords = [line.strip() <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> f.readlines()]<br>    f.close()<br>    <span class="hljs-keyword">return</span> stopwords<br>  <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">seg_sentence</span>(<span class="hljs-params">sentence</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;中文分词&quot;&quot;&quot;</span><br>    sentence_seged = jieba.cut(sentence.strip())<br>    stopwords = stop_word_list(<span class="hljs-string">&#x27;stopword.txt&#x27;</span>)<br>    outstr = <span class="hljs-string">&#x27;&#x27;</span><br>    <span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> sentence_seged:<br>        <span class="hljs-keyword">if</span> word <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> stopwords:<br>            <span class="hljs-keyword">if</span> word != <span class="hljs-string">&#x27;\t&#x27;</span>:<br>                outstr += word<br>                outstr += <span class="hljs-string">&quot; &quot;</span><br>    <span class="hljs-keyword">return</span> outstr<br><br></code></pre></td></tr></table></figure>
+              <p>在还没接触大数据的时候，着实被那么多技术组件和平台架构吓到了，以下列举一些</p>
+<p>Druid、Kudu、ClickHouse、Flink、Spark 、Storm、Impala、Presto、Hive、Kafka、RabbitMQ、Canal、Doris、Apache Airflow、Oozie、Azkaban、DolphinScheduler、HDFS、YARN、MapReduce、Hive、HBase、ZooKeeper</p>
+<p>😜是不是看着有点吓人，不过没关系通过本文可以帮你迅速建立对这些技术组件的概念性认识，分门别类出来就能知道都是干啥的了～</p>
+<h3 id="大数据平台架构"><a href="#大数据平台架构" class="headerlink" title="大数据平台架构"></a>大数据平台架构</h3><p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgwhiteboard_exported_image.png" srcset="/img/loading.gif" lazyload></p>
+<p>大数据架构平台分为：数据集成、存储与计算、分布式调度、查询分析等核心模块。我们沿着这个架构图，来剖析大数据平台的核心技术</p>
+<h4 id="😄01数据集成"><a href="#😄01数据集成" class="headerlink" title="😄01数据集成"></a>😄01数据集成</h4><p><strong>1. 日志同步</strong></p>
+<p>开源日志收集系统有 Sqoop、Flume、Logstash、Filebeat、Vector 等，其中 Flume 在云原生场景用的多，Vector 是一个很高效的日志同步工具，刚开源不久。</p>
+<p><strong>2.数据抽取工具</strong></p>
+<p>大数据分析不能直接在原始的业务数据库上直接操作，所以需要抽取想要的数据到分析数据库或者分布式存储系统（例如 HDFS）。</p>
+<p>常见数据抽取工具包括：DataX、Canal 、Sqoop、FlinkCDC等。</p>
+<p>1⃣️<strong>离线数据同步</strong></p>
+<ul>
+<li>Apache Sqoop 是一个专为 Hadoop 和关系型数据库之间的数据抽取和传输设计的工具</li>
+</ul>
+<p>Sqoop从关系型数据库（如 MySQL、PostgreSQL、Oracle、SQL Server 等）向 Hadoop（HDFS 或 Hive）导入数据。</p>
+<ul>
+<li><p>DataX 是阿里开源的一个异构数据源离线同步工具，致力于实现包括关系型数据库（MySQL、Oracle 等）、HDFS、Hive、ODPS、HBase、FTP 等各种异构数据源之间稳定高效的数据同步功能。</p>
+</li>
+<li><p>Canal通过模拟 MySQL 的从库协议，实时解析 MySQL 的 binlog（二进制日志），获取数据库的增量数据。</p>
+<p>实际同步大数据量的时候容易丢数据。</p>
+</li>
+</ul>
+<p>2⃣️<strong>实时数据同步</strong></p>
+<p>FlinkCDC是目前用的比较稳定且能实时同步大数据量，实现多数据源之间的实时同步</p>
+<p><strong>3.数据传输队列</strong></p>
+<p>数据传输有三种：</p>
+<ul>
+<li><p>Kafka：流式传输</p>
+</li>
+<li><p>RabbitMQ：队列传输</p>
+</li>
+<li><p>Pulsar：流式传输+队列传输</p>
+</li>
+</ul>
+<h4 id="😯02-数据处理：数据存储、计算"><a href="#😯02-数据处理：数据存储、计算" class="headerlink" title="😯02 数据处理：数据存储、计算"></a>😯02 数据处理：数据存储、计算</h4><p><strong>1. 数据存储：HDFS</strong></p>
+<p>HDFS 特点：横向扩展，数据容错性高。</p>
+<p><strong>2. 数据计算</strong></p>
+<p>在众多的计算引擎中，MapReduce、Hive、Spark 等通常用于离线处理，即批计算。</p>
+<p>Storm、Spark Steaming 等处理实时计算的场景较多，即流计算，Flink 既可以用于流计算，也可以用于批计算。</p>
+<p>📌1）离线数据计算引擎</p>
+<p>Hive 的用途很广，也很可靠，底层基于 MapReduce 的封装，属于 Hadoop 全家桶组件之一，缺点是只能实现离线批处理。</p>
+<p>Spark 是非常高效的批处理工具，成熟，稳定，比 Hive 快很多，并且还能实现近实时的数据处理能力。Spark 功能全，架构新，基于 RDD，计算过程中优先利用内存，并优化中间的计算步骤。</p>
+<p>📌2） 实时数据计算引擎</p>
+<p>实时计算引擎大体经过了三代，依次是：storm、spark streaming、Flink。其中storm和spark streaming现在用的很少，大部分公司都在用Flink。</p>
+<h4 id="😊03-大数据查询"><a href="#😊03-大数据查询" class="headerlink" title="😊03 大数据查询"></a>😊03 大数据查询</h4><p>常用的OLAP引擎对比：</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Apache Druid</th>
+<th>Apache Kylin</th>
+<th>ClickHouse</th>
+<th>Doris</th>
+<th>StarRocks</th>
+<th>Greenplum</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>架构类型</td>
+<td>分布式</td>
+<td>多维预计算</td>
+<td>列式存储</td>
+<td>列式存储</td>
+<td>列式存储</td>
+<td>分布式</td>
+</tr>
+<tr>
+<td>查询性能</td>
+<td>实时低延迟</td>
+<td>Cube 高速查询</td>
+<td>高并发快速查询</td>
+<td>SQL 优化高效查询</td>
+<td>SQL 优化高效查询</td>
+<td>批处理优化</td>
+</tr>
+<tr>
+<td>数据摄取</td>
+<td>实时 + 批量</td>
+<td>批量为主</td>
+<td>实时为主</td>
+<td>实时 + 批量</td>
+<td>实时 + 批量</td>
+<td>批量为主</td>
+</tr>
+<tr>
+<td>应用场景</td>
+<td>实时分析、监控</td>
+<td>BI 报表生成</td>
+<td>日志分析、实时查询</td>
+<td>企业分析、报表生成</td>
+<td>企业分析、报表生成</td>
+<td>数据仓库应用</td>
+</tr>
+<tr>
+<td>技术优势</td>
+<td>时间分区、高效索引</td>
+<td>多维分析</td>
+<td>列式存储、索引优化</td>
+<td>MySQL 兼容性强</td>
+<td>MySQL 兼容性强</td>
+<td>SQL 支持强大</td>
+</tr>
+</tbody></table>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">结果上看 StarRocks 的性能确实很强大，速度最快，但三者对比提升相同量级的性能需要更多的 CPU、内存资源等；<br>Impala 在开启各项优化之后，效果是可以接近 StarRocks 的；<br>Presto 性能一般易用性感觉最好，而且发现跑部分 TPC-DS 测试时，调用 HMS API 的频率偶尔很高，曾经把 HMS 搞挂过。差不多就是开箱即用，配置很简单。支持多源数据（多Catalog）的接入，但是随着数据湖对底层数仓存储层的统一加上各个。其他高效分析引擎对数据湖的支持，这块的优势也会被逐步抹平。<br></code></pre></td></tr></table></figure>
 
-<p>stop_word_list函数作用是通过jieba分词库进行中文词的分割，然后加载停用词，也就是将一些语气词或者一些不想看到的词语不做统计。</p>
-<h5 id="2-词频统计"><a href="#2-词频统计" class="headerlink" title="2.词频统计"></a>2.词频统计</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">write_word_count</span>(<span class="hljs-params">filename</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;词频统计&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;seged_&#x27;</span>+filename+<span class="hljs-string">&#x27;.txt&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>, encoding=<span class="hljs-string">&quot;utf-8-sig&quot;</span>) <span class="hljs-keyword">as</span> fr:<br>        data = jieba.cut(fr.read())<br>    data = <span class="hljs-built_in">dict</span>(Counter(data))<br>    sorted_data = []<br>    <span class="hljs-keyword">for</span> k, v <span class="hljs-keyword">in</span> data.items():<br>        sorted_data.append([k, v])<br>    sorted_data = <span class="hljs-built_in">sorted</span>(sorted_data, key=<span class="hljs-keyword">lambda</span> x: x[<span class="hljs-number">1</span>], reverse=<span class="hljs-literal">True</span>)<br>    <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(filename+<span class="hljs-string">&#x27;_word_count.txt&#x27;</span>, <span class="hljs-string">&#x27;w&#x27;</span>, encoding=<span class="hljs-string">&quot;utf-8-sig&quot;</span>) <span class="hljs-keyword">as</span> fw:<br>        <span class="hljs-keyword">for</span> k, v <span class="hljs-keyword">in</span> sorted_data:<br>            <span class="hljs-keyword">if</span> k != <span class="hljs-string">&#x27; &#x27;</span> <span class="hljs-keyword">and</span> k != <span class="hljs-string">&#x27;\n&#x27;</span> <span class="hljs-keyword">and</span> <span class="hljs-built_in">len</span>(k) != <span class="hljs-built_in">len</span>(<span class="hljs-string">u&quot;一&quot;</span>) <span class="hljs-keyword">and</span> k.isdigit() != <span class="hljs-literal">True</span>:<br>                fw.write(<span class="hljs-string">&quot;&#123;0:25&#125;&#123;1:&gt;25&#125;\n&quot;</span>.<span class="hljs-built_in">format</span>(k, v))<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;词频统计成功，写入路径：&quot;</span>)<br>    <span class="hljs-built_in">print</span>(filename+<span class="hljs-string">&quot;_word_count.txt&quot;</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">read_counter</span>(<span class="hljs-params">filename</span>):<br>    file = codecs.<span class="hljs-built_in">open</span>(filename+<span class="hljs-string">&quot;_word_count.txt&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>, <span class="hljs-string">&quot;utf-8&quot;</span>)<br>    tmp_count = file.readlines()<br>    word_count = &#123;&#125;<br>    <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> tmp_count:<br>        row = re.sub(<span class="hljs-string">r&#x27;,&#123;2,&#125;&#x27;</span>, <span class="hljs-string">&#x27;,&#x27;</span>,<br>                        re.sub(<span class="hljs-string">u&quot;([^\u4e00-\u9fa5\u0030-\u0039\u0041-\u005a\u0061-\u007a])&quot;</span>,<br>                               <span class="hljs-string">&#x27;,&#x27;</span>, row), re.S)<br>        row = row.split(<span class="hljs-string">&#x27;,&#x27;</span>)<br>        <span class="hljs-built_in">print</span>(row)<br>        <span class="hljs-keyword">if</span> row[<span class="hljs-number">0</span>] == <span class="hljs-string">&#x27;&#x27;</span>:<br>            <span class="hljs-keyword">continue</span><br>            <span class="hljs-comment">#row = row[1:-1]</span><br>        <span class="hljs-keyword">else</span>:<br>            row = row[:-<span class="hljs-number">1</span>]<br><br>        word_count[row[<span class="hljs-number">0</span>]] = <span class="hljs-built_in">int</span>(row[<span class="hljs-number">1</span>])<br><br>    <span class="hljs-keyword">return</span> word_count<br></code></pre></td></tr></table></figure>
 
-<p>这段代码的功能是对给定的文本文件进行词频统计并保存统计结果，然后可以读取统计结果并将其转化为字典结构</p>
-<h5 id="3-生成图云"><a href="#3-生成图云" class="headerlink" title="3.生成图云"></a>3.生成图云</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">gen_tag_cloud</span>(<span class="hljs-params">frequencies, filename</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;生成标签云&quot;&quot;&quot;</span><br>    d = path.dirname(path.abspath(__file__))<br><br>    mask = np.array(Image.<span class="hljs-built_in">open</span>(path.join(d, <span class="hljs-string">&quot;view.jpg&quot;</span>)))<br>    stopwords = STOPWORDS.copy()<br><br>    wc = WordCloud(background_color=<span class="hljs-string">&quot;white&quot;</span>, max_words=<span class="hljs-number">2000</span>, mask=mask, stopwords=stopwords, margin=<span class="hljs-number">10</span>,<br>                   random_state=<span class="hljs-number">42</span>, font_path=<span class="hljs-string">&quot;msyh.ttf&quot;</span>, width=<span class="hljs-number">1280</span>, height=<span class="hljs-number">1024</span>).fit_words(frequencies)<br>    image_colors = ImageColorGenerator(mask)<br><br>    plt.imshow(wc)<br>    plt.axis(<span class="hljs-string">&quot;off&quot;</span>)<br>    plt.figure()<br>    wc.to_file(filename + <span class="hljs-string">&quot;_tag_cloud_default.png&quot;</span>)<br><br>    plt.imshow(wc.recolor(color_func=image_colors))<br>    plt.axis(<span class="hljs-string">&quot;off&quot;</span>)<br>    plt.figure()<br>    wc.to_file(filename+<span class="hljs-string">&quot;_tag_cloud_colored.png&quot;</span>)<br></code></pre></td></tr></table></figure>
 
-<p>这段代码的作用是根据词频数据生成标签云（Tag Cloud），并保存成图片文件，可以将view.jpg背景图片替换为自己喜欢的照片，生成出来的词云形状将是背景图片的形状。</p>
-<h5 id="4-主程序"><a href="#4-主程序" class="headerlink" title="4.主程序"></a>4.主程序</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Usage:[filename] e.g. rmrb_hot_weibo_content&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;filename: &quot;</span>, end=<span class="hljs-string">&#x27;&#x27;</span>)<br>    filename = <span class="hljs-built_in">input</span>()<br>    <span class="hljs-keyword">try</span>:<br>        inputs = codecs.<span class="hljs-built_in">open</span>(filename+<span class="hljs-string">&#x27;.txt&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>, <span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>        outputs = codecs.<span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;seged_&#x27;</span>+filename+<span class="hljs-string">&#x27;.txt&#x27;</span>, <span class="hljs-string">&#x27;w&#x27;</span>, <span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>        <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> inputs:<br>            line_seg = seg_sentence(line.replace(<span class="hljs-string">u&#x27;\u200b&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>))<br>            outputs.write(line_seg+<span class="hljs-string">&#x27;\n&#x27;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;分词成功，写入路径：&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;seged_&quot;</span>+filename+<span class="hljs-string">&#x27;.txt&#x27;</span>)<br>        outputs.close()<br>        inputs.close()<br>        write_word_count(filename)<br>        word_freq = read_counter(filename)<br>        gen_tag_cloud(word_freq, filename)<br>    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Error: &quot;</span>, e)<br>        traceback.print_exc()<br></code></pre></td></tr></table></figure>
-
-<p>将以上函数合并起来就是整个词云生成程序了～</p>
-<p>整体代码：<a target="_blank" rel="noopener" href="https://github.com/YUTING0907/pythonTools/tree/main/WordCloud">https://github.com/YUTING0907/pythonTools/tree/main/WordCloud</a></p>
+<h4 id="☕️04-数据调度"><a href="#☕️04-数据调度" class="headerlink" title="☕️04 数据调度"></a>☕️04 数据调度</h4><p><strong>1. 常用任务调度系统</strong></p>
+<p>提到常用的任务调度系统，大家都会想到非常多，包括但不限于：Crontab、Apache Airflow、Oozie、Azkaban、Kettle、XXL-JOB、Apache DolphinScheduler、SeaTunnel 等，五花八门</p>
+<p>Crontab为linux系统自带的调度</p>
+<p>Apache Airflow 国外用的</p>
+<p>Oozie离线hive脚本调度用的多</p>
+<p>Apache DolphinScheduler（海豚调度）更专注于大数据场景</p>
+<p>Kettle比较传统的定时调度</p>
+<p><strong>2. 资源调度系统</strong></p>
+<p>资源调度系统主要包括 Yarn 和 Azkaban。Yarn 用的广泛，上层很多组件都要支持，所以很受欢迎，对其优化很多。</p>
+<p>Azkaban 是资源调度的小众分支，用的人不多</p>
+<h3 id="大数据开发岗位"><a href="#大数据开发岗位" class="headerlink" title="大数据开发岗位"></a>大数据开发岗位</h3><p>1.数据开发&#x2F;数仓开发</p>
+<p>编程语言主要是SQL、辅python，shell。</p>
+<p>数据开发工作流程可大致总结如下：</p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20241226183224.png" srcset="/img/loading.gif" lazyload></p>
+<p>2.大数据平台开发工程师</p>
+<p>搭建数据同步、数据质量、数据服务、数据血缘、元数据管理等平台</p>
+<p>以上使用的编程语言基本都是基于JAVA，JAVA基础是必备的。</p>
 
               
             </div>
@@ -341,7 +446,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" class="category-chain-item">大数据</a>
   
   
 
@@ -356,7 +461,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Python/">#Python</a>
+        <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">#大数据</a>
       
     </div>
   
@@ -368,8 +473,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>python爬取指定微博用户并基于微博内容生成词云图</div>
-      <div>http://yuting0907.github.io/2024/12/26/python爬取指定微博用户并基于微博内容生成词云图/</div>
+      <div>一文读懂大数据各组件</div>
+      <div>http://yuting0907.github.io/2024/12/26/一文读懂大数据各组件/</div>
     </div>
     <div class="license-meta">
       
@@ -411,18 +516,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/12/26/%E4%B8%80%E6%96%87%E8%AF%BB%E6%87%82%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%90%84%E7%BB%84%E4%BB%B6/" title="一文读懂大数据各组件">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">一文读懂大数据各组件</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/12/26/Python%E8%A7%A3%E6%9E%90%E8%8B%B1%E6%96%87%E7%94%B5%E5%AD%90%E4%B9%A6%E5%B9%B6%E6%8F%90%E4%BE%9B%E8%AF%8D%E9%A2%91%E7%BB%9F%E8%AE%A1%E5%92%8C%E5%8D%95%E8%AF%8D%E8%A7%A3%E9%87%8A/" title="Python解析英文电子书并提供词频统计和单词解释">
-                        <span class="hidden-mobile">Python解析英文电子书并提供词频统计和单词解释</span>
+                      <a href="/2024/12/26/python%E7%88%AC%E5%8F%96%E6%8C%87%E5%AE%9A%E5%BE%AE%E5%8D%9A%E7%94%A8%E6%88%B7%E5%B9%B6%E5%9F%BA%E4%BA%8E%E5%BE%AE%E5%8D%9A%E5%86%85%E5%AE%B9%E7%94%9F%E6%88%90%E8%AF%8D%E4%BA%91%E5%9B%BE/" title="python爬取指定微博用户并基于微博内容生成词云图">
+                        <span class="hidden-mobile">python爬取指定微博用户并基于微博内容生成词云图</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
