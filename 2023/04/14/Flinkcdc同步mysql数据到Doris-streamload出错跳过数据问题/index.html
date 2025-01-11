@@ -1,0 +1,794 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon_yt.png">
+  <link rel="icon" href="/img/favicon_yt.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Echo Yu">
+  <meta name="keywords" content="ML">
+  
+    <meta name="description" content="问题描述Flinkcdc实时同步mysql数据到doris，原始修改表结构需要停任务，自己手工同步修改更新表结构，再重启任务，比较麻烦，基于此自定义Dorissink，刚开始没implements CheckpointedFunction类，会出现，这个checkpoint失败的时候，直接跳过这个checkpoint的数据，这样就会导致漏数据。 引起checkpoint失败的原因举例：Doris表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flinkcdc同步mysql数据到Doris-streamload出错跳过数据问题">
+<meta property="og:url" content="http://yuting0907.github.io/2023/04/14/Flinkcdc%E5%90%8C%E6%AD%A5mysql%E6%95%B0%E6%8D%AE%E5%88%B0Doris-streamload%E5%87%BA%E9%94%99%E8%B7%B3%E8%BF%87%E6%95%B0%E6%8D%AE%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="YUTING">
+<meta property="og:description" content="问题描述Flinkcdc实时同步mysql数据到doris，原始修改表结构需要停任务，自己手工同步修改更新表结构，再重启任务，比较麻烦，基于此自定义Dorissink，刚开始没implements CheckpointedFunction类，会出现，这个checkpoint失败的时候，直接跳过这个checkpoint的数据，这样就会导致漏数据。 引起checkpoint失败的原因举例：Doris表">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-14T08:39:55.000Z">
+<meta property="article:modified_time" content="2023-04-14T09:37:23.194Z">
+<meta property="article:author" content="Echo Yu">
+<meta property="article:tag" content="Flink">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Flinkcdc同步mysql数据到Doris-streamload出错跳过数据问题 - YUTING</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/reward.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yuting0907.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>EchoYu&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Flinkcdc同步mysql数据到Doris-streamload出错跳过数据问题"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Echo Yu
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-14 16:39" pubdate>
+          2023年4月14日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          106 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Flinkcdc同步mysql数据到Doris-streamload出错跳过数据问题</h1>
+            
+            <div class="markdown-body">
+              
+              <h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>Flinkcdc实时同步mysql数据到doris，原始修改表结构需要停任务，自己手工同步修改更新表结构，再重启任务，比较麻烦，基于此自定义Dorissink，刚开始没implements CheckpointedFunction类，会出现，这个checkpoint失败的时候，直接跳过这个checkpoint的数据，这样就会导致漏数据。</p>
+<p>引起checkpoint失败的原因举例：Doris表字段设置了not null，会导致streamload失败，正常来说这一批streamload的数据需要等在那儿，不被丢失。但实际测试情况是如果没有implements CheckpointedFunction类，这批数据就会丢了</p>
+<h3 id="相关知识"><a href="#相关知识" class="headerlink" title="相关知识"></a>相关知识</h3><p>DorisSink 是 Flink 的一个 Sink Function，其在实现从最近的检查点重启的过程中，主要依赖于 Flink 的 Checkpointing 机制和 Flink 的状态恢复功能。</p>
+<p>具体来说，DorisSink 首先需要在实现中启用 Flink 的 Checkpointing 机制，以便在任务失败时，能够将所有状态数据写入到检查点中。这可以通过在 Flink 的执行环境中设置相关参数来实现，例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">env.enableCheckpointing(<span class="hljs-number">60000</span>);<br>env.getCheckpointConfig().setCheckpointingMode(CheckpointingMode.EXACTLY_ONCE);<br>env.getCheckpointConfig().setMinPauseBetweenCheckpoints(<span class="hljs-number">5000</span>);<br>env.getCheckpointConfig().setCheckpointTimeout(<span class="hljs-number">60000</span>);<br>env.getCheckpointConfig().setMaxConcurrentCheckpoints(<span class="hljs-number">1</span>);<br></code></pre></td></tr></table></figure>
+
+<p>这里设置了 Checkpointing 的间隔为 60 秒，模式为精确一次，最短间隔为 5 秒，超时时间为 60 秒，同时最多同时进行一个检查点。</p>
+<p>接下来，在任务失败后，DorisSink 会在重启时使用 Flink 的状态恢复功能，从最近的检查点中恢复所有状态数据。这可以通过在 DorisSink 的实现中实现 restoreState() 方法来实现，例如：</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs aspectj"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">restoreState</span><span class="hljs-params">(FinalizedState finalizedState)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>    <span class="hljs-comment">// 从最近的检查点中恢复状态数据</span><br>    state.restore(finalizedState.getMetadata());<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>在 Apache Flink 中，实现 CheckpointedFunction 接口可以让函数自动支持检查点和恢复。DorisSink 实现了 CheckpointedFunction 接口中的 snapshotState() 和 initializeState() 方法来支持检查点。</p>
+<p>snapshotState() 方法用于将函数的状态保存到状态后端，即将所有正在处理的数据的状态（如正在缓存的数据、已完成但未提交的数据）写入到状态后端。在发生故障时，Flink 将使用这个检查点来恢复状态。在 DorisSink 中，snapshotState() 方法的实现会将所有 DorisDynamicOutputFormatForJson 实例中已缓存但未提交的数据写入到 Doris 中。</p>
+<p>initializeState() 方法用于将状态从状态后端中恢复。在 DorisSink 中，initializeState() 方法的实现是空的，因为 DorisDynamicOutputFormatForJson 已经自带了状态的恢复逻辑，不需要再手动实现。</p>
+<p>综上，DorisSink 中的 snapshotState() 和 initializeState() 方法是用于支持检查点和状态的恢复。snapshotState() 方法将数据缓存到状态后端，而 initializeState() 方法则在任务启动时从状态后端恢复数据。</p>
+<h3 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h3><p>代码如下：</p>
+<p>值得注意的是需要继承implements CheckpointedFunction类，并且重写一下两个方法</p>
+<p>@Override<br>    public void snapshotState(FunctionSnapshotContext functionSnapshotContext) throws Exception {<br>        for (DorisDynamicOutputFormatForJson<String> outputFormat : outputFormatList.values()) {<br>            outputFormat.flush();<br>        }<br>    }</p>
+<p>@Override<br>public void initializeState(FunctionInitializationContext functionInitializationContext) throws Exception {</p>
+<p>}</p>
+<p>完整的Doris sink.java代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.itiaoling.sink;<br><br><span class="hljs-keyword">import</span> com.alibaba.fastjson.JSON;<br><span class="hljs-keyword">import</span> com.alibaba.fastjson.JSONObject;<br><span class="hljs-keyword">import</span> com.itiaoling.bean.FlinkCdcTableInfoBean;<br><span class="hljs-keyword">import</span> com.itiaoling.bean.FlinkConfTableInfoBean;<br><span class="hljs-keyword">import</span> com.itiaoling.bean.FlinkHostInfoBean;<br><span class="hljs-keyword">import</span> com.itiaoling.function.DorisDynamicOutputFormatForJson;<br><span class="hljs-keyword">import</span> com.itiaoling.utils.JdbcUtils;<br><span class="hljs-keyword">import</span> lombok.extern.slf4j.Slf4j;<br><span class="hljs-keyword">import</span> org.apache.commons.lang3.StringUtils;<br><span class="hljs-keyword">import</span> org.apache.doris.flink.cfg.DorisExecutionOptions;<br><span class="hljs-keyword">import</span> org.apache.doris.flink.cfg.DorisOptions;<br><span class="hljs-keyword">import</span> org.apache.doris.flink.cfg.DorisReadOptions;<br><span class="hljs-keyword">import</span> org.apache.flink.api.common.functions.RuntimeContext;<br><span class="hljs-keyword">import</span> org.apache.flink.api.java.tuple.Tuple2;<br><span class="hljs-keyword">import</span> org.apache.flink.configuration.Configuration;<br><span class="hljs-keyword">import</span> org.apache.flink.runtime.state.FunctionInitializationContext;<br><span class="hljs-keyword">import</span> org.apache.flink.runtime.state.FunctionSnapshotContext;<br><span class="hljs-keyword">import</span> org.apache.flink.streaming.api.checkpoint.CheckpointedFunction;<br><span class="hljs-keyword">import</span> org.apache.flink.streaming.api.functions.sink.RichSinkFunction;<br><span class="hljs-keyword">import</span> org.apache.flink.table.types.logical.LogicalType;<br><br><span class="hljs-keyword">import</span> java.sql.Connection;<br><span class="hljs-keyword">import</span> java.util.HashMap;<br><span class="hljs-keyword">import</span> java.util.List;<br><span class="hljs-keyword">import</span> java.util.Map;<br><span class="hljs-keyword">import</span> java.util.Properties;<br><span class="hljs-keyword">import</span> java.util.stream.Collectors;<br><br><span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> com.itiaoling.sink.DorisSink.Builder.getProperties;<br><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DorisSink</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">RichSinkFunction</span>&lt;Tuple2&lt;String, String&gt;&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title class_">CheckpointedFunction</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Map&lt;String, DorisDynamicOutputFormatForJson&lt;String&gt;&gt; outputFormatList;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">DorisSink</span><span class="hljs-params">(</span><br><span class="hljs-params">            Map&lt;String, DorisDynamicOutputFormatForJson&lt;String&gt;&gt; outputFormatList)</span> &#123;<br>        <span class="hljs-built_in">this</span>.outputFormatList = outputFormatList;<br>    &#125;<br><br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">open</span><span class="hljs-params">(Configuration parameters)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-built_in">super</span>.open(parameters);<br>        <span class="hljs-type">RuntimeContext</span> <span class="hljs-variable">ctx</span> <span class="hljs-operator">=</span> getRuntimeContext();<br>        <span class="hljs-keyword">for</span> (DorisDynamicOutputFormatForJson&lt;String&gt; outputFormat : outputFormatList.values()) &#123;<br>            outputFormat.setRuntimeContext(ctx);<br>            outputFormat.open(ctx.getIndexOfThisSubtask(), ctx.getNumberOfParallelSubtasks());<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">invoke</span><span class="hljs-params">(Tuple2&lt;String, String&gt; value, Context context)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-type">JSONObject</span> <span class="hljs-variable">rowJson</span> <span class="hljs-operator">=</span> JSON.parseObject(value.f1);<br>        <span class="hljs-type">FlinkHostInfoBean</span> <span class="hljs-variable">flinkHostInfo</span> <span class="hljs-operator">=</span> JSON.parseObject(rowJson.getString(<span class="hljs-string">&quot;flinkHostInfo&quot;</span>), FlinkHostInfoBean.class);<br>        <span class="hljs-type">FlinkConfTableInfoBean</span> <span class="hljs-variable">flinkConfTableInfo</span> <span class="hljs-operator">=</span> JSON.parseObject(rowJson.getString(<span class="hljs-string">&quot;flinkConfTableInfo&quot;</span>), FlinkConfTableInfoBean.class);<br>        <span class="hljs-type">int</span> <span class="hljs-variable">id</span> <span class="hljs-operator">=</span> flinkHostInfo.getId();<br>        <span class="hljs-type">String</span> <span class="hljs-variable">sinkFe</span> <span class="hljs-operator">=</span> flinkHostInfo.getSinkHostPort();<br>        <span class="hljs-type">String</span> <span class="hljs-variable">sinkUsername</span> <span class="hljs-operator">=</span> flinkHostInfo.getSinkUserName();<br>        <span class="hljs-type">String</span> <span class="hljs-variable">sinkPassword</span> <span class="hljs-operator">=</span> flinkHostInfo.getSinkPassword();<br>        <span class="hljs-keyword">if</span> (rowJson.containsKey(<span class="hljs-string">&quot;isNewAdd&quot;</span>)) &#123;<br>            <span class="hljs-type">String</span> <span class="hljs-variable">isNewAdd</span> <span class="hljs-operator">=</span> rowJson.getString(<span class="hljs-string">&quot;isNewAdd&quot;</span>);<br>            <span class="hljs-type">FlinkCdcTableInfoBean</span> <span class="hljs-variable">flinkCdcTableInfo</span> <span class="hljs-operator">=</span> JSON.parseObject(rowJson.getString(<span class="hljs-string">&quot;data&quot;</span>), FlinkCdcTableInfoBean.class);<br>            <span class="hljs-type">String</span> <span class="hljs-variable">dorisTable</span> <span class="hljs-operator">=</span> flinkHostInfo.getSinkDb() + <span class="hljs-string">&quot;.&quot;</span> + flinkCdcTableInfo.getSinkTableName();<br>            <span class="hljs-type">String</span> <span class="hljs-variable">dbName</span> <span class="hljs-operator">=</span> flinkCdcTableInfo.getSourceDb();<br>            <span class="hljs-type">String</span> <span class="hljs-variable">mysqlTable</span> <span class="hljs-operator">=</span> flinkCdcTableInfo.getSourceTableName();<br>            <span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;1&quot;</span>.equals(isNewAdd)) &#123;<br>                log.info(<span class="hljs-string">&quot;have no sink for new table,to create a sink&quot;</span>);<br>                LogicalType[] types = &#123;&#125;;<br>                String[] field = &#123;&#125;;<br>                <span class="hljs-type">Properties</span> <span class="hljs-variable">sinkPro</span> <span class="hljs-operator">=</span> getProperties();<br>                <span class="hljs-keyword">if</span> (StringUtils.isNotEmpty(flinkCdcTableInfo.getStrictMode())&amp;&amp;flinkCdcTableInfo.getStrictMode().equals(<span class="hljs-string">&quot;false&quot;</span>))&#123;<br>                    sinkPro.setProperty(<span class="hljs-string">&quot;strict_mode&quot;</span>, <span class="hljs-string">&quot;false&quot;</span>);<br>                    sinkPro.setProperty(<span class="hljs-string">&quot;max_filter_ratio&quot;</span>, <span class="hljs-string">&quot;1&quot;</span>);<br>                &#125;<br>                DorisOptions.<span class="hljs-type">Builder</span> <span class="hljs-variable">option</span> <span class="hljs-operator">=</span> Builder.getBuilder(sinkFe, sinkUsername, sinkPassword);<br>                DorisExecutionOptions.<span class="hljs-type">Builder</span> <span class="hljs-variable">execution</span> <span class="hljs-operator">=</span> Builder.getBuilder();<br>                <span class="hljs-type">Boolean</span> <span class="hljs-variable">exists</span> <span class="hljs-operator">=</span> JdbcUtils.checkDorisExists(dorisTable, flinkHostInfo);<br>                <span class="hljs-keyword">if</span> (exists) &#123;<br>                    DorisDynamicOutputFormatForJson&lt;String&gt; newFormat =<br>                            <span class="hljs-keyword">new</span> <span class="hljs-title class_">DorisDynamicOutputFormatForJson</span>&lt;&gt;(<br>                                    option.setTableIdentifier(dorisTable).build(),<br>                                    DorisReadOptions.defaults(),<br>                                    execution.setStreamLoadProp(sinkPro).build(),<br>                                    types,<br>                                    field);<br>                    <span class="hljs-keyword">if</span> (outputFormatList.containsKey(dbName + <span class="hljs-string">&quot;.&quot;</span> + mysqlTable)) &#123;<br>                        outputFormatList.get(dbName + <span class="hljs-string">&quot;.&quot;</span> + mysqlTable).close();<br>                    &#125;<br>                    outputFormatList.put(dbName + <span class="hljs-string">&quot;.&quot;</span> + mysqlTable, newFormat);<br>                    <span class="hljs-type">RuntimeContext</span> <span class="hljs-variable">ctx</span> <span class="hljs-operator">=</span> getRuntimeContext();<br>                    newFormat.setRuntimeContext(ctx);<br>                    newFormat.open(ctx.getIndexOfThisSubtask(), ctx.getNumberOfParallelSubtasks());<br>                    log.info(<span class="hljs-string">&quot;create new sink format successfully&quot;</span>);<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    log.error(<span class="hljs-string">&quot;not found doris table:&quot;</span> + dorisTable);<br>                &#125;<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                <span class="hljs-comment">//动态关闭StreamLoad</span><br>                <span class="hljs-keyword">if</span> (outputFormatList.containsKey(dbName + <span class="hljs-string">&quot;.&quot;</span> + mysqlTable)) &#123;<br>                    outputFormatList.get(dbName + <span class="hljs-string">&quot;.&quot;</span> + mysqlTable).close();<br>                &#125;<br>                outputFormatList.remove(dbName + <span class="hljs-string">&quot;.&quot;</span> + mysqlTable);<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (rowJson.containsKey(<span class="hljs-string">&quot;data&quot;</span>) &amp;&amp; !rowJson.containsKey(<span class="hljs-string">&quot;isNewAdd&quot;</span>)) &#123;<br>            <span class="hljs-type">JSONObject</span> <span class="hljs-variable">data</span> <span class="hljs-operator">=</span> (JSONObject) JSON.parseObject(value.f1).get(<span class="hljs-string">&quot;data&quot;</span>);<br>            <span class="hljs-keyword">if</span> (outputFormatList.get(value.f0) != <span class="hljs-literal">null</span>) &#123;<br>                outputFormatList.get(value.f0).writeRecord(data.toJSONString());<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                <span class="hljs-type">String</span> <span class="hljs-variable">queryDb</span> <span class="hljs-operator">=</span> value.f0.split(<span class="hljs-string">&quot;\\.&quot;</span>)[<span class="hljs-number">0</span>];<br>                <span class="hljs-type">String</span> <span class="hljs-variable">queryTable</span> <span class="hljs-operator">=</span> value.f0.split(<span class="hljs-string">&quot;\\.&quot;</span>)[<span class="hljs-number">1</span>];<br>                <span class="hljs-type">Connection</span> <span class="hljs-variable">jdbcConn</span> <span class="hljs-operator">=</span> JdbcUtils.createJdbcConn(flinkConfTableInfo.getHostname(), flinkConfTableInfo.getPort(), flinkConfTableInfo.getUsername()<br>                        , flinkConfTableInfo.getPassword(), flinkConfTableInfo.getMysqlDb());<br>                <span class="hljs-type">String</span> <span class="hljs-variable">cdcTable</span> <span class="hljs-operator">=</span> flinkConfTableInfo.getMysqlDb() + <span class="hljs-string">&quot;.&quot;</span> + flinkConfTableInfo.getTableInfoTableName();<br>                <span class="hljs-type">FlinkCdcTableInfoBean</span> <span class="hljs-variable">flinkCDCTable</span> <span class="hljs-operator">=</span> JdbcUtils.queryTableByTableName(jdbcConn, cdcTable, id, queryDb, queryTable);<br>                <span class="hljs-keyword">if</span> (flinkCDCTable == <span class="hljs-literal">null</span>) &#123;<br>                    log.error(<span class="hljs-string">&quot;no found table in config cdc table:&quot;</span> + flinkConfTableInfo.getHostname() + <span class="hljs-string">&quot; &quot;</span> + cdcTable);<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    log.info(<span class="hljs-string">&quot;this table found in cdc table , renew sink format!&quot;</span>);<br>                    <span class="hljs-type">String</span> <span class="hljs-variable">dorisTableName</span> <span class="hljs-operator">=</span> flinkHostInfo.getSinkDb() + <span class="hljs-string">&quot;.&quot;</span> + flinkCDCTable.getSinkTableName();<br>                    LogicalType[] types = &#123;&#125;;<br>                    String[] field = &#123;&#125;;<br>                    <span class="hljs-type">Properties</span> <span class="hljs-variable">sinkPro</span> <span class="hljs-operator">=</span> getProperties();<br>                    <span class="hljs-keyword">if</span> (StringUtils.isNotEmpty(flinkCDCTable.getStrictMode())&amp;&amp;flinkCDCTable.getStrictMode().equals(<span class="hljs-string">&quot;false&quot;</span>))&#123;<br>                        sinkPro.setProperty(<span class="hljs-string">&quot;strict_mode&quot;</span>, <span class="hljs-string">&quot;false&quot;</span>);<br>                        sinkPro.setProperty(<span class="hljs-string">&quot;max_filter_ratio&quot;</span>, <span class="hljs-string">&quot;1&quot;</span>);<br>                    &#125;<br>                    DorisOptions.<span class="hljs-type">Builder</span> <span class="hljs-variable">option</span> <span class="hljs-operator">=</span> Builder.getBuilder(sinkFe, sinkUsername, sinkPassword);<br>                    DorisExecutionOptions.<span class="hljs-type">Builder</span> <span class="hljs-variable">execution</span> <span class="hljs-operator">=</span> Builder.getBuilder();<br>                    <span class="hljs-type">Boolean</span> <span class="hljs-variable">exists</span> <span class="hljs-operator">=</span> JdbcUtils.checkDorisExists(dorisTableName, flinkHostInfo);<br>                    <span class="hljs-keyword">if</span> (exists) &#123;<br>                        DorisDynamicOutputFormatForJson&lt;String&gt; newFormat =<br>                                <span class="hljs-keyword">new</span> <span class="hljs-title class_">DorisDynamicOutputFormatForJson</span>&lt;&gt;(<br>                                        option.setTableIdentifier(dorisTableName).build(),<br>                                        DorisReadOptions.defaults(),<br>                                        execution.setStreamLoadProp(sinkPro).build(),<br>                                        types,<br>                                        field);<br>                        outputFormatList.put(queryDb + <span class="hljs-string">&quot;.&quot;</span> + queryTable, newFormat);<br>                        <span class="hljs-type">RuntimeContext</span> <span class="hljs-variable">ctx</span> <span class="hljs-operator">=</span> getRuntimeContext();<br><br>                        newFormat.setRuntimeContext(ctx);<br>                        newFormat.open(ctx.getIndexOfThisSubtask(), ctx.getNumberOfParallelSubtasks());<br>                        log.info(<span class="hljs-string">&quot;create after renew sink format successfully&quot;</span>);<br>                        outputFormatList.get(value.f0).writeRecord(data.toJSONString());<br>                    &#125; <span class="hljs-keyword">else</span> &#123;<br>                        log.error(<span class="hljs-string">&quot;not found doris table:&quot;</span> + dorisTableName);<br>                    &#125;<br>                &#125;<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            outputFormatList.get(value.f0).writeRecord(value.f1);<br>        &#125;<br><br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">close</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-built_in">super</span>.close();<br>        <span class="hljs-keyword">for</span> (DorisDynamicOutputFormatForJson&lt;String&gt; outputFormat : outputFormatList.values()) &#123;<br>            outputFormat.close();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">snapshotState</span><span class="hljs-params">(FunctionSnapshotContext functionSnapshotContext)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-keyword">for</span> (DorisDynamicOutputFormatForJson&lt;String&gt; outputFormat : outputFormatList.values()) &#123;<br>            outputFormat.flush();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">initializeState</span><span class="hljs-params">(FunctionInitializationContext functionInitializationContext)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br><br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Builder</span> &#123;<br><br>        <span class="hljs-keyword">private</span> <span class="hljs-title function_">Builder</span><span class="hljs-params">()</span> &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalStateException</span>(<span class="hljs-string">&quot;DorisSink Builder class&quot;</span>);<br>        &#125;<br><br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> DorisSink <span class="hljs-title function_">build</span><span class="hljs-params">( FlinkHostInfoBean flinkHostInfoBean, List&lt;FlinkCdcTableInfoBean&gt; listCDCTables)</span> &#123;<br>            <span class="hljs-comment">// 配置</span><br>            <span class="hljs-type">String</span> <span class="hljs-variable">sinkFe</span> <span class="hljs-operator">=</span> flinkHostInfoBean.getSinkHostPort();<br>            <span class="hljs-type">String</span> <span class="hljs-variable">sinkUsername</span> <span class="hljs-operator">=</span> flinkHostInfoBean.getSinkUserName();<br>            <span class="hljs-type">String</span> <span class="hljs-variable">sinkPassword</span> <span class="hljs-operator">=</span> flinkHostInfoBean.getSinkPassword();<br><br>            <span class="hljs-comment">// 统一的配置</span><br>            <span class="hljs-type">Properties</span> <span class="hljs-variable">sinkPro</span> <span class="hljs-operator">=</span> getProperties();<br><br>            DorisOptions.<span class="hljs-type">Builder</span> <span class="hljs-variable">option</span> <span class="hljs-operator">=</span> getBuilder(sinkFe, sinkUsername, sinkPassword);<br>            DorisExecutionOptions.<span class="hljs-type">Builder</span> <span class="hljs-variable">execution</span> <span class="hljs-operator">=</span> getBuilder();<br>            LogicalType[] types = &#123;&#125;;<br>            String[] field = &#123;&#125;;<br><br>            HashMap&lt;String, DorisDynamicOutputFormatForJson&lt;String&gt;&gt; outputMaps =<br>                    <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br><br>            <span class="hljs-keyword">for</span> (FlinkCdcTableInfoBean listCDCTable : listCDCTables) &#123;<br>                String dorisTable= listCDCTable.getSinkTableName();<br>                <span class="hljs-keyword">if</span> (StringUtils.isNotEmpty(listCDCTable.getStrictMode())&amp;&amp;listCDCTable.getStrictMode().equals(<span class="hljs-string">&quot;false&quot;</span>))&#123;<br>                    sinkPro.setProperty(<span class="hljs-string">&quot;strict_mode&quot;</span>, <span class="hljs-string">&quot;false&quot;</span>);<br>                    sinkPro.setProperty(<span class="hljs-string">&quot;max_filter_ratio&quot;</span>, <span class="hljs-string">&quot;1&quot;</span>);<br>                &#125;<br>                <span class="hljs-type">Boolean</span> <span class="hljs-variable">exists</span> <span class="hljs-operator">=</span> JdbcUtils.checkDorisExists(flinkHostInfoBean.getSinkDb() + <span class="hljs-string">&quot;.&quot;</span> + dorisTable, flinkHostInfoBean);<br>                <span class="hljs-keyword">if</span> (exists) &#123;<br>                    outputMaps.put(<br>                            listCDCTable.getSourceDb() + <span class="hljs-string">&quot;.&quot;</span> + listCDCTable.getSourceTableName(),<br>                            <span class="hljs-keyword">new</span> <span class="hljs-title class_">DorisDynamicOutputFormatForJson</span>&lt;&gt;(<br>                                    option.setTableIdentifier(flinkHostInfoBean.getSinkDb() + <span class="hljs-string">&quot;.&quot;</span> + dorisTable).build(),<br>                                    DorisReadOptions.defaults(),<br>                                    execution.setStreamLoadProp(sinkPro).build(),<br>                                    types,<br>                                    field));<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    log.error(<span class="hljs-string">&quot;not found doris table:&quot;</span> + flinkHostInfoBean.getSinkDb() + <span class="hljs-string">&quot;.&quot;</span> + dorisTable);<br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DorisSink</span>(outputMaps);<br>        &#125;<br><br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> DorisExecutionOptions.Builder <span class="hljs-title function_">getBuilder</span><span class="hljs-params">()</span> &#123;<br>            <span class="hljs-keyword">return</span> DorisExecutionOptions.builder().setMaxRetries(<span class="hljs-number">5</span>).setBatchSize(<span class="hljs-number">50000</span>).setBatchIntervalMs(<span class="hljs-number">20000L</span>);<br>        &#125;<br><br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> DorisOptions.Builder <span class="hljs-title function_">getBuilder</span><span class="hljs-params">(</span><br><span class="hljs-params">                String sinkFe, String sinkUsername, String sinkPassword)</span> &#123;<br>            <span class="hljs-keyword">return</span> DorisOptions.builder()<br>                    .setFenodes(sinkFe)<br>                    .setUsername(sinkUsername)<br>                    .setPassword(sinkPassword);<br>        &#125;<br><br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Properties <span class="hljs-title function_">getProperties</span><span class="hljs-params">()</span> &#123;<br>            <span class="hljs-type">Properties</span> <span class="hljs-variable">sinkPro</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Properties</span>();<br>            sinkPro.setProperty(<span class="hljs-string">&quot;format&quot;</span>, <span class="hljs-string">&quot;json&quot;</span>);<br>            sinkPro.setProperty(<span class="hljs-string">&quot;strip_outer_array&quot;</span>, <span class="hljs-string">&quot;true&quot;</span>);<br>            sinkPro.setProperty(<span class="hljs-string">&quot;function_column.sequence_col&quot;</span>, <span class="hljs-string">&quot;seq_col&quot;</span>);<br><br>            <span class="hljs-keyword">return</span> sinkPro;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+              
+            </div>
+            <hr/>
+            
+            <!-- donate -->
+            <div class="reward-container">
+            	
+            		<button id="rewardBtn" class="reward-btn">
+            			 
+            				 Donate
+            				
+            		</button>
+            		<p class="tea">觉得不错的话，给点打赏吧 ୧(๑•̀⌄•́๑)૭</p>
+            		<div id="rewardImgContainer" class="reward-img-container">
+                     	<div class="singleImgContainer">
+                        	<img id="wechatImg" class="reward-img" src="/img/wechatpay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="wechatPay">wechat pay</p>
+                      </div>
+                      <div class="singleImgContainer">
+                           	<img id="alipayImg" class="reward-img" src="/img/alipay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="aliPay">alipay</p>
+                      </div>
+            		</div>
+            	
+            </div>
+            
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Flink/" class="category-chain-item">Flink</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Flink/">#Flink</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Flinkcdc同步mysql数据到Doris-streamload出错跳过数据问题</div>
+      <div>http://yuting0907.github.io/2023/04/14/Flinkcdc同步mysql数据到Doris-streamload出错跳过数据问题/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Echo Yu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月14日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/14/Flink%E7%A8%8B%E5%BA%8F%E4%BB%8Echeckpoint%E7%82%B9%E5%90%AF%E5%8A%A8-%E5%B9%BF%E6%92%AD%E6%B5%81%E4%BF%AE%E6%94%B9%E9%97%AE%E9%A2%98/" title="Flink程序从checkpoint点启动-广播流修改问题">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Flink程序从checkpoint点启动-广播流修改问题</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/02/%E6%9E%84%E5%BB%BA%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%9F%A5%E8%AF%86%E7%BD%91%E7%BB%9C/" title="构建大数据知识网络">
+                        <span class="hidden-mobile">构建大数据知识网络</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/reward.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
+
+<!--  -->
+<script type="text/javascript" src="/js/love.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>  
+
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="/js/FunnyTitle.js"></script>

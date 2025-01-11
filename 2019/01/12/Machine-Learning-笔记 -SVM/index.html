@@ -1,0 +1,826 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon_yt.png">
+  <link rel="icon" href="/img/favicon_yt.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yuting">
+  <meta name="keywords" content="ML">
+  
+    <meta name="description" content="本文介绍的是SVM算法原理(NG的ML课程笔记) 适应人群：想了解SVM原理的 为了好好理解SVM算法的原理，我们先从逻辑回归开始。 逻辑函数的假设函数(Hypothesis)如下图：下面将用Z代替等号右边 $$Z&#x3D;Θ^TX $$ 逻辑回归用来做什么很显然逻辑回归用来分类，如果有一个y&#x3D;1的样本，我们希望h(x)趋近1，因为我们想正确地将此样本分类，这就意味着当h(x) 趋近于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning-笔记 -SVM">
+<meta property="og:url" content="http://yuting0907.github.io/2019/01/12/Machine-Learning-%E7%AC%94%E8%AE%B0%20-SVM/index.html">
+<meta property="og:site_name" content="YUTING">
+<meta property="og:description" content="本文介绍的是SVM算法原理(NG的ML课程笔记) 适应人群：想了解SVM原理的 为了好好理解SVM算法的原理，我们先从逻辑回归开始。 逻辑函数的假设函数(Hypothesis)如下图：下面将用Z代替等号右边 $$Z&#x3D;Θ^TX $$ 逻辑回归用来做什么很显然逻辑回归用来分类，如果有一个y&#x3D;1的样本，我们希望h(x)趋近1，因为我们想正确地将此样本分类，这就意味着当h(x) 趋近于">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/HVBY*luEKsAWFVFT6oee4DGr*VkgUwIb*0y4kuaN.x0!/b/dDcBAAAAAAAA&bo=nAJlAQAAAAADF8g!&rf=viewer_4&t=5">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/hzVtQJF*zGgUxoMzif6lIwh6gZhiubtZXOURit1R63I!/b/dL4AAAAAAAAA&bo=nAKLAQAAAAADJxY!&rf=viewer_4&t=5">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/m3oxpA4dmsJjWc6kPaVuGmOsbXDehBKpNIXSYUbNQn4!/b/dL8AAAAAAAAA&bo=hwFfAQAAAAADF.o!&rf=viewer_4&t=5">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/LDxD6g7vF5Hv24*xtYGVTg06PeeIpgIDKrm9cLfhbBU!/b/dMIAAAAAAAAA&bo=fQFCAQAAAAADFw0!&rf=viewer_4&t=5">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/LqBf*CXhMKdG*f1P6CuvCfdDJkrhCX0wvSLeUtKBrgs!/b/dL8AAAAAAAAA&bo=pQJxAQAAAAADJ9U!&rf=viewer_4&t=5">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/aePvUWA*0mJ4xkJvYnELd*mxTc37Ax22ztT*MEFwv3U!/b/dDcBAAAAAAAA&bo=gAJGAQAAAAADJ8c!&rf=viewer_4&t=5">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/TaY.XOPn8wB6ywygqVKTVfGr1bWGA03qtFNZygBkxL8!/b/dL8AAAAAAAAA&bo=GQIyAQAAAAADFxo!&rf=viewer_4&t=5">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/eQeKytLiAttggAuvBaWBxt.eF2wx2e6O0u4R5MpKHRo!/b/dDQBAAAAAAAA&bo=tAKQAQAAAAADJyU!&rf=viewer_4&t=5">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/.pPSCQwwf7DkZ3F1.kOrwXPVq*kiV7CQQjCCS6ngkYQ!/b/dLgAAAAAAAAA&bo=bgJ1AQAAAAADFyo!&rf=viewer_4&t=5">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/*Z4h0eBDl68ALF9H4Avsr.rLJUSRgWtkD7MEI1etaI8!/b/dDYBAAAAAAAA&bo=rgELAQAAAAADF5c!&rf=viewer_4&t=5">
+<meta property="article:published_time" content="2019-01-12T13:27:58.000Z">
+<meta property="article:modified_time" content="2022-05-24T00:56:46.342Z">
+<meta property="article:author" content="Echo Yu">
+<meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/HVBY*luEKsAWFVFT6oee4DGr*VkgUwIb*0y4kuaN.x0!/b/dDcBAAAAAAAA&bo=nAJlAQAAAAADF8g!&rf=viewer_4&t=5">
+  
+  
+  
+  <title>Machine Learning-笔记 -SVM - YUTING</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/reward.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yuting0907.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>EchoYu&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Machine Learning-笔记 -SVM"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        yuting
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-01-12 21:27" pubdate>
+          2019年1月12日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          30 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Machine Learning-笔记 -SVM</h1>
+            
+            <div class="markdown-body">
+              
+              <p>本文介绍的是SVM算法原理(NG的ML课程笔记)</p>
+<p>适应人群：想了解SVM原理的</p>
+<p>为了好好理解SVM算法的原理，我们先从逻辑回归开始。</p>
+<p>逻辑函数的假设函数(Hypothesis)如下图：<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/HVBY*luEKsAWFVFT6oee4DGr*VkgUwIb*0y4kuaN.x0!/b/dDcBAAAAAAAA&bo=nAJlAQAAAAADF8g!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload><br>下面将用Z代替等号右边</p>
+<p>$$Z&#x3D;Θ^TX $$</p>
+<h3 id="逻辑回归用来做什么"><a href="#逻辑回归用来做什么" class="headerlink" title="逻辑回归用来做什么"></a><strong>逻辑回归用来做什么</strong></h3><p>很显然逻辑回归用来分类，如果有一个y&#x3D;1的样本，我们希望h(x)趋近1，因为我们想正确地将此样本分类，这就意味着当h(x) 趋近于 1 时，Z应当远大于0，用数学符号表示Z&gt;&gt;0,从上图可以看出当Z&gt;&gt;0是对应的函数输出是1；相反，如果我们有另外一个样本，即y&#x3D;0。我们希望假设函数的输出值将趋近于 0，对应的Z要远远小于0，Z&lt;&lt;0</p>
+<p>进一步观察逻辑回归的代价函数,每一个样本都会为代价函数做贡献。现在，考虑两种情况，一种是 y 等于 1 的情况；另一种是 y 等于 0 的情况。</p>
+<p>在第一种情况中，假设y&#x3D;1，此时在目标函数中只需有第一项起作用，因为 y 等于 1 时，(1-y) 项将等于0。画出关于 z 的函数，你会看到左下角的这条曲线，当z增大时，z 对应的值会变的非常小。对整个代价函数而言，影响也非常小。这也就解释了，为什么逻辑回归在观察到正样本 y&#x3D;1 时，试图将z设置得非常大。因为，在代价函数中的这一项会变的非常小。<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/hzVtQJF*zGgUxoMzif6lIwh6gZhiubtZXOURit1R63I!/b/dL4AAAAAAAAA&bo=nAKLAQAAAAADJxY!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload></p>
+<h3 id="建立SVM-支持向量机"><a href="#建立SVM-支持向量机" class="headerlink" title="建立SVM(支持向量机)"></a><strong>建立SVM(支持向量机)</strong></h3><p>现在开始建立支持SVM(向量机)，首先从这个代价函数开始,一点点修改<br>$$ \log(1- \frac{1} {1+e^{-Z}})$$<br>红线画出的函数表示将要用的代价函数<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/m3oxpA4dmsJjWc6kPaVuGmOsbXDehBKpNIXSYUbNQn4!/b/dL8AAAAAAAAA&bo=hwFfAQAAAAADF.o!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload><br>新的代价函数将会水平的从这里到右边 (图外),到了这里已经非常接近逻辑回归中使用的代价函数了。只是这里是由两条线段组成，即位于右边的水平部分和位于左边的直线部分，先别过多的考虑左边直线部分的斜率，这并不是很重要.</p>
+<p>我们用一个新的代价函数来代替逻辑函数，即这条从 0 点开始的水平直线，然后是一条斜线。左边的函数，我称之为 Cos t1(z)，同时，右边函数我称它为 Cos t0(z)。这里的下标是指在代价函数中，对应的 y&#x3D;1 和 y&#x3D;0 的情况.<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/LDxD6g7vF5Hv24*xtYGVTg06PeeIpgIDKrm9cLfhbBU!/b/dMIAAAAAAAAA&bo=fQFCAQAAAAADFw0!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload></p>
+<h3 id="开始构建SVM-支持向量机"><a href="#开始构建SVM-支持向量机" class="headerlink" title="开始构建SVM(支持向量机)"></a><strong>开始构建SVM(支持向量机)</strong></h3><p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/LqBf*CXhMKdG*f1P6CuvCfdDJkrhCX0wvSLeUtKBrgs!/b/dL8AAAAAAAAA&bo=pQJxAQAAAAADJ9U!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload><br>上面是逻辑回归当中使用的代价函数J(Θ),SVM在这里稍微做个转变,把括号里的log函数分别用上面提到的 Cos t1(z)和Cos t0(z)替换，然后再加上正则项。</p>
+<p>这里我们有两项：第一是训练样本的代价，第二个是我们的正则化项，我们不得不去用这一项来平衡.这就相当于我们想要最小化 A 加上正则化参数λ，然后乘以其他项 B 对吧？这里的 A 表示这里的第一项，同时我用 B 表示第二项，但不包括λ，我们不是优化这里的 A+λ×B.</p>
+<p>我们依照惯例使用一个不同的参数称为 C，那么，我现在删掉这里的λ，并且用常数 C 来代替。同时改为优化目标，C×A+B 因此SVM hypothesis可以表示为<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/aePvUWA*0mJ4xkJvYnELd*mxTc37Ax22ztT*MEFwv3U!/b/dDcBAAAAAAAA&bo=gAJGAQAAAAADJ8c!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload></p>
+<p>现在让我们考虑一下，最小化这些代价函数的必要条件是什么.如果你有一个正样本，y 等于 1.则只有在 z 大于等于 1 时,代价函数 cost 1 (z)才等于 0.换句话说，如果你有一个正样本，我们会希望Θ^TX  &gt;&#x3D;1，反之，如果 y 是等于 0 的，我们观察一下，函数 cost 0 (z)，它只有在 z&lt;&#x3D;1的区间里函数值为 0，这是支持向量机的一个有趣性质。</p>
+<p>我接下来会考虑一个特例，将这个常数 C 设置成一个非常大,比如我们假设 C 的值为 100000 或者其它非常大的数，然后来观察支持向量机会给出什么结果？如果 C 非常大，则最小化代价函数的时候，我们将会很希望找到一个使第一项为 0 的最优解。因此，让我们尝试在代价项的第一项为 0 的情形下理解该优化题。</p>
+<p>第一项为0，必须是c乘以0，所以这将遵循以下约束，y  (i )是等于 1,Z &gt;&#x3D;1,如果 y  (i )是等于 0的,Z&lt;&#x3D;-1.当你最小化这个关于变量 θ 的函数的时候，你会得到一个非常有趣的决策边界。那么就只剩下第二项，这个优化目标函数可以被写成等于<br>$$  \frac{1}{2}||Θ^2||<br>$$<br>具体而言，如果你考察这样一个数据集，其中有正样本，也有负样本，可以看到这个数据集是线性可分的。我的意思是，存在一条直线把正负样本分开。当然有多条不同的直线，可以把正样本和负样本完全分开。<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/TaY.XOPn8wB6ywygqVKTVfGr1bWGA03qtFNZygBkxL8!/b/dL8AAAAAAAAA&bo=GQIyAQAAAAADFxo!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload><br>比如，这就是一个决策边界可以把正样本和负样本分开。但是多多少少这个看起来并不是非常自然是么?</p>
+<p>或者我们可以画一条更差的决策界，这是另一条决策边界，可以将正样本和负样本分开，但仅仅是勉强分开，这些决策边界看起来都不是特别好的选择，支持向量机将会选择这个黑色的决策边界，相较于之前我用粉色或者绿色画的决策界。这条黑色的看起来好得多.在分离正样本和负样本上它显得的更好。数学上来讲，这是什么意思呢？这条黑线有更大的距离，这个距离叫做间距 (margin).因此支持向量机有时被称为 大间距分类器，而这其实是求解上面优化问题的结果。</p>
+<h3 id="大间隔分类背后的数学原理"><a href="#大间隔分类背后的数学原理" class="headerlink" title="大间隔分类背后的数学原理"></a><strong>大间隔分类背后的数学原理</strong></h3><p>首先复习一下关于向量内积的知识,假设我有两个向量，u 和 v 。uT<em>v 叫做向量 u 和 v 之间的内积。向量的内积在几何上的表示为将 v 投影到 u上，p 是 v 投影到向量 u 上的长度, uT</em>v &#x3D;p * ||u||。<br>顺便说一句，uT<em>v&#x3D;vT</em>u。最后一点，需要注意的就是 p 值，p 事实上是有符号的。如果 u 和 v 之间的夹角小于 90 度，那么那条红线的长度 p 是正值。然而如果这个夹角大于 90 度，则 p 将会是负的。</p>
+<p>我们接下来将会使用这些关于向量内积的性质试图来理解支持向量机中的目标函数。<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/eQeKytLiAttggAuvBaWBxt.eF2wx2e6O0u4R5MpKHRo!/b/dDQBAAAAAAAA&bo=tAKQAQAAAAADJyU!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload><br>接下来忽略掉截距，令 θ 0  &#x3D; 0,这样更容易画示意图。我将特征数 n 置为 2，因此我们仅有两个特征 x 1 和 x 2 ，现在 我们来看一下目标函数，支持向量机的优化目标函数。当我们仅有两个特征，即n&#x3D;2时，这个式子可以写作：<br>$$  \frac{1}{2}(Θ^2_1+Θ^2_2) &#x3D; \frac{1}{2}(\sqrt{Θ^2_1+Θ^2_2})^2&#x3D;  \frac{1}{2}||Θ||^2<br>$$<br>因此支持向量机做的全部事情，就是 极小化参数向量 θ  范数的平方 ， 或者说长度的平方.</p>
+<p>现在我将要看看这些项：<br>我们考察一个单一的训练样本，我有一个正样本在这里，用一个叉来表示这个样本x(i),意思是在水平轴上取值为x1(i),在竖直轴上取值为x2(i).，我们有一个参数向量我会将它也画成向量。我将 θ 1 画在横轴这里，将 θ 2  画在纵轴这里，那么内积θT*X(i)将会是什么呢？</p>
+<p>使用我们之前的方法，我们计算的方式就是我将训练样本投影到参数向量 θ,θT*X(i)&#x3D;P*||θ||&#x3D;θ1*X1+θ2*X2</p>
+<p>转换一下约束：Z&gt;&#x3D;1或者Z&lt;&#x3D;-1时，约束是被P(i)*θ&gt;&#x3D;1,或者&lt;&#x3D;-1代替，因为θT*X(i)&#x3D;P*||θ||.</p>
+<p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/.pPSCQwwf7DkZ3F1.kOrwXPVq*kiV7CQQjCCS6ngkYQ!/b/dLgAAAAAAAAA&bo=bgJ1AQAAAAADFyo!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload></p>
+<p>前面提到的代价函数可以被写成等于<br>$$  \frac{1}{2}||Θ^2||$$<br>现在，继续使用之前的简化，即 θ 0 &#x3D;0。(θ 过原点)<br>要想最小化代价函数，必须使得θ的范式尽可能小。但是不要忘了一个前提当为正样本时，P(i)*||Θ||&gt;&#x3D;1,所以必须满足P尽可能的大。而P是特征向量X在参数向量Θ的投影。这个投影长度越大，说明产生间距越大。这就是支持向量机如何能有效地产生大间距分类的原因。</p>
+<p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/*Z4h0eBDl68ALF9H4Avsr.rLJUSRgWtkD7MEI1etaI8!/b/dDYBAAAAAAAA&bo=rgELAQAAAAADF5c!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload><br>看这条绿线，这个绿色的决策界。我们希望正样本和负样本投影到 θ 的值大。要做到这一点的唯一方式就是选择这条绿线做决策界。这是大间距决策界来区分开正样本和负样本这个间距的值。这个间距的值就是 p (1) p (2) p (3) 等等的值。通过让间距变大，支持向量机最终可以找到一个较小的 θ 范数。这正是支持向量机中最小化目标函数的目的。</p>
+<h3 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a><strong>核函数</strong></h3><p>以上介绍的一条直线就可以划分边界的情况，是线性核函数，但很多情况是不能简单的用一条直线就能够划分边界出来的。这时就需要换用更复杂的核函数。这里仅仅列举一下常用的核函数。</p>
+<ul>
+<li>高斯核函数（Gaussian Kernel）</li>
+<li>sigmoid核函数</li>
+<li>线性核函数 </li>
+<li>多项式核函数</li>
+</ul>
+<h3 id="一些规则"><a href="#一些规则" class="headerlink" title="一些规则"></a><strong>一些规则</strong></h3><p>下面是一些普遍使用的准则：<br>n 为特征数，m 为训练样本数。</p>
+<ul>
+<li>如果相较于 m 而言，n 要大许多，即训练集数据量不够支持我们训练一个复杂的非线性模型，我们选用逻辑回归模型或者不带核函数的支持向量机。</li>
+<li>如果 n 较小，而且 m 大小中等，例如 n 在 1-1000 之间，而 m 在 10-10000 之间，使用高斯核函数的支持向量机。</li>
+<li>如果 n 较小，而 m 较大，例如 n 在 1-1000 之间，而 m 大于 50000，则使用支持向量机会非常慢，解决方案是创造、增加更多的特征，然后使用逻辑回归或不带核函数的支持向量机。</li>
+</ul>
+<p>SVM优点：主要在于它的代价函数是凸函数，不存在局部最小值</p>
+<hr>
+<iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 
+" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  
+frameborder="0" scrolling="no"></iframe>
+
+              
+            </div>
+            <hr/>
+            
+            <!-- donate -->
+            <div class="reward-container">
+            	
+            		<button id="rewardBtn" class="reward-btn">
+            			 
+            				 Donate
+            				
+            		</button>
+            		<p class="tea">觉得不错的话，给点打赏吧 ୧(๑•̀⌄•́๑)૭</p>
+            		<div id="rewardImgContainer" class="reward-img-container">
+                     	<div class="singleImgContainer">
+                        	<img id="wechatImg" class="reward-img" src="/img/wechatpay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="wechatPay">wechat pay</p>
+                      </div>
+                      <div class="singleImgContainer">
+                           	<img id="alipayImg" class="reward-img" src="/img/alipay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="aliPay">alipay</p>
+                      </div>
+            		</div>
+            	
+            </div>
+            
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Machine-Learning/">#Machine Learning</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Machine Learning-笔记 -SVM</div>
+      <div>http://yuting0907.github.io/2019/01/12/Machine-Learning-笔记 -SVM/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yuting</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年1月12日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/01/19/%E7%86%9F%E8%AF%BB%E3%80%8A%E5%BD%B1%E5%93%8D%E5%8A%9B%E3%80%8B,%E6%8A%8A%E9%94%80%E5%94%AE%E5%B0%8F%E5%93%A5%E7%9C%8B%E5%BE%97%E6%9B%B4%E9%80%8F/" title="熟读《影响力》,把销售小哥看得更透">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">熟读《影响力》,把销售小哥看得更透</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/12/31/%E5%81%9A%E8%AE%A1%E5%88%92,%E4%B8%8D%E6%98%AF%E4%B8%80%E4%BB%BD%E6%84%BF%E6%9C%9B%E6%B8%85%E5%8D%95/" title="做计划，不是一份愿望清单...">
+                        <span class="hidden-mobile">做计划，不是一份愿望清单...</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/reward.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
+
+<!--  -->
+<script type="text/javascript" src="/js/love.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>  
+
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="/js/FunnyTitle.js"></script>

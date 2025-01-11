@@ -1,0 +1,795 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon_yt.png">
+  <link rel="icon" href="/img/favicon_yt.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Echo Yu">
+  <meta name="keywords" content="ML">
+  
+    <meta name="description" content="windows系统excel转换成图片用python仅仅限于windows平台的包 12345678910111213141516import win32com.clientfrom PIL import ImageGrabimport logginglogging.basicConfig(level&#x3D;logging.DEBUG,format&#x3D;LOG_FORMAT,datefmt&#x3D;DATE_FOR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python代码-linux系统读取excel模版转化成图片">
+<meta property="og:url" content="http://yuting0907.github.io/2022/12/02/linux%E7%B3%BB%E7%BB%9F%E8%AF%BB%E5%8F%96excel%E6%A8%A1%E7%89%88%E8%BD%AC%E5%8C%96%E6%88%90%E5%9B%BE%E7%89%87/index.html">
+<meta property="og:site_name" content="YUTING">
+<meta property="og:description" content="windows系统excel转换成图片用python仅仅限于windows平台的包 12345678910111213141516import win32com.clientfrom PIL import ImageGrabimport logginglogging.basicConfig(level&#x3D;logging.DEBUG,format&#x3D;LOG_FORMAT,datefmt&#x3D;DATE_FOR">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-02T06:59:16.000Z">
+<meta property="article:modified_time" content="2023-06-25T10:24:21.625Z">
+<meta property="article:author" content="Echo Yu">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>python代码-linux系统读取excel模版转化成图片 - YUTING</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/reward.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yuting0907.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>EchoYu&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="python代码-linux系统读取excel模版转化成图片"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Echo Yu
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-12-02 14:59" pubdate>
+          2022年12月2日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          94 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">python代码-linux系统读取excel模版转化成图片</h1>
+            
+            <div class="markdown-body">
+              
+              <h3 id="windows系统excel转换成图片"><a href="#windows系统excel转换成图片" class="headerlink" title="windows系统excel转换成图片"></a>windows系统excel转换成图片</h3><p>用python仅仅限于windows平台的包</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> win32com.client<br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> ImageGrab<br><span class="hljs-keyword">import</span> logging<br><br>logging.basicConfig(level=logging.DEBUG,<span class="hljs-built_in">format</span>=LOG_FORMAT,datefmt=DATE_FORMAT,filename=<span class="hljs-string">&#x27;/py_pj/esc_hour.log&#x27;</span>,filemode=<span class="hljs-string">&#x27;a&#x27;</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">save_pic</span>(<span class="hljs-params">excel_file,sheet_name,pic_file,excel_rg</span>):<br>    w = win32com.client.Dispatch(<span class="hljs-string">&#x27;Excel.Application&#x27;</span>)<br>    wb = w.Workbooks.Open(excel_file)<br>    ws = wb.Worksheets(sheet_name)<br>    ws.Range(excel_rg).CopyPicture(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>)<br>    im = ImageGrab.grabclipboard()<br>    im.save(pic_file,<span class="hljs-string">&quot;png&quot;</span>)<br>    wb.Save()<br>    wb.Close()<br>    logging.info(<span class="hljs-string">&quot;====图片保存成功&quot;</span>)    <br></code></pre></td></tr></table></figure>
+
+<p>后面需要在linux服务器上调度，继而需要找等替代win32com的包</p>
+<p>win32com, xlwings,xlsxwriter,DataNitro,pandas,openpyxl,xlutils都只能在windows或者Mac系统</p>
+<h3 id="linux上实现excel转换成图片"><a href="#linux上实现excel转换成图片" class="headerlink" title="linux上实现excel转换成图片"></a>linux上实现excel转换成图片</h3><p>后来发现aspose的产品，不依赖操作系统能够在linux上运行且不需要安装Excel程序就能够将excel转换成图片，它不仅能够将excel转换成图片，各种文件类型之间都能够想换转换，官方文档链接如下：</p>
+<p><a target="_blank" rel="noopener" href="https://reference.aspose.com/">https://reference.aspose.com/</a></p>
+<p>如下为linux下读取excel模版转换成图片的代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#coding=utf-8</span><br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> datetime<br><span class="hljs-keyword">import</span> pymysql<br><span class="hljs-keyword">import</span> openpyxl<br><span class="hljs-keyword">from</span> openpyxl.utils.dataframe <span class="hljs-keyword">import</span> dataframe_to_rows<br><span class="hljs-keyword">import</span> shutil<br><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> json<br><span class="hljs-keyword">import</span> logging<br><span class="hljs-keyword">import</span> jpype<br><span class="hljs-keyword">import</span> asposecells<br>jpype.startJVM()<br><span class="hljs-keyword">from</span> asposecells.api <span class="hljs-keyword">import</span> LoadOptions,IndividualFontConfigs,Workbook,ImageOrPrintOptions,SheetRender,ImageType<br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image<br><span class="hljs-keyword">from</span> come.util <span class="hljs-keyword">import</span> DBUtilN, SendMessageInWetchat, FileDeal<br><br><br>LOG_FORMAT = <span class="hljs-string">&quot;%(asctime)s - %(levelname)s - %(message)s&quot;</span><br>DATE_FORMAT = <span class="hljs-string">&quot;%Y-%m-%d %A %H:%M:%S&quot;</span><br><br><span class="hljs-comment"># logging.basicConfig(level=logging.DEBUG,format=LOG_FORMAT,datefmt=DATE_FORMAT)</span><br><br><span class="hljs-comment"># logging.basicConfig(level=logging.DEBUG,format=LOG_FORMAT,datefmt=DATE_FORMAT,filename= r&#x27;D:\auto_file\EF\EF-DAILY\moban\efdaily.log&#x27;, filemode = &#x27;a&#x27;)</span><br><br>logging.basicConfig(level=logging.DEBUG,<span class="hljs-built_in">format</span>=LOG_FORMAT,datefmt=DATE_FORMAT,filename= <span class="hljs-string">r&#x27;./py_pj/USED_SYS_MAIL/log/esc_hour.log&#x27;</span>, filemode = <span class="hljs-string">&#x27;a&#x27;</span>)<br><br>day_date = (datetime.datetime.now()).strftime(<span class="hljs-string">&#x27;%Y%m%d&#x27;</span>)<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">daily_report</span>():<br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,con</span>):<br>                self.con=con<br>                <span class="hljs-comment">#ef应用配置</span><br><br><br>                self.Secret = <span class="hljs-string">&#x27;XXXXXX&#x27;</span><br>                self.agentid = XXXXX  <span class="hljs-comment"># esc 应用ID</span><br>                self.toparty = <span class="hljs-string">&quot;1&quot;</span>  <span class="hljs-comment"># esc 信息接收用户组  9</span><br><br>                self.path_moban = <span class="hljs-string">r&#x27;./auto_file/eSC/eSC-DAILY-DAY/moban&#x27;</span> <span class="hljs-comment">#模板模块路径</span><br>                self.path_l = <span class="hljs-string">r&#x27;./auto_file/eSC/eSC-DAILY-DAY/use&#x27;</span>   <span class="hljs-comment">#应用操作模块</span><br>                self.path_bak = <span class="hljs-string">r&#x27;./auto_file/eSC/eSC-DAILY-DAY/bak&#x27;</span> <span class="hljs-comment">#备份模块</span><br>                self.excel_name=<span class="hljs-string">&quot;daily_report_esc_byday&quot;</span>        <span class="hljs-comment">#生成excel文件名称</span><br>                self.exel_moban=self.path_moban +<span class="hljs-string">&quot;/&quot;</span>+self.excel_name + <span class="hljs-string">&quot;.xlsx&quot;</span>  <span class="hljs-comment">#模板文件名称</span><br>                self.filename_today = self.path_l +<span class="hljs-string">&quot;/&quot;</span>+ self.excel_name + <span class="hljs-string">&quot;_&quot;</span> + day_date + <span class="hljs-string">&quot;.xlsx&quot;</span>   <span class="hljs-comment">#应用文件</span><br>                <span class="hljs-comment">#pic1</span><br>                <span class="hljs-comment"># self.picname = self.path_l + &quot;\\&quot; + &#x27;order.png&#x27;  # 保存图片名称</span><br>                self.picname = self.path_l + <span class="hljs-string">&quot;/&quot;</span> + <span class="hljs-string">&#x27;pic1.jpeg&#x27;</span>  <span class="hljs-comment"># 保存图片名称</span><br>                self.sheet_name = <span class="hljs-string">&#x27;Summary&#x27;</span>  <span class="hljs-comment"># 截图Excel sheet名称 数据页sheet</span><br>                <span class="hljs-comment"># self.range_excel_tab = &#x27;F1:O46&#x27;  # 定位截图位置</span><br>                self.range_excel_tab = <span class="hljs-string">&#x27;F1:L47&#x27;</span>  <span class="hljs-comment"># 定位截图位置</span><br><br>                self.sheet_detail = <span class="hljs-string">&#x27;eSC_RawDATA&#x27;</span>  <span class="hljs-comment"># 截图Excel sheet名称 明细页sheet名称</span><br><br>                <span class="hljs-comment">#pic2</span><br>                <span class="hljs-comment"># self.picname1 = self.path_l + &quot;\\&quot; + &#x27;pic2.png&#x27;  # 保存图片名称</span><br>                <span class="hljs-comment"># self.sheet_name1 = &#x27;outbound_seller&#x27;  # 截图Excel sheet名称 数据页sheet</span><br>                <span class="hljs-comment"># self.range_excel_tab1 = &#x27;D1:Z59&#x27;  # 定位截图位置</span><br>                <span class="hljs-comment"># self.sheet_detail1 = &#x27;data2&#x27;  # 截图Excel sheet名称 明细页sheet名称</span><br><br>                <span class="hljs-comment"># self.sql_str=&quot;select time_solt,warehouse_code,cnt,flag,etl_time  from  t_outbound_wecom&quot;  # 查询sql</span><br>                <span class="hljs-comment"># self.pd_sql = &quot;&quot;&quot;select count(1) num  from t_outbound_wecom where etl_time&gt;=date_format(now(),&#x27;%Y-%m-%d %H:00:00&#x27;);&quot;&quot;&quot;  #判断底层etl 是否延迟sql</span><br><br>                self.sql_str = <span class="hljs-string">&quot;SELECT `platform_code`,`on_offshore`,`type`,`country`,`hour`,`so_date`,`so_qty`,`total_cost`,`etl_time` FROM ads.ads_esc_t_push_so_tracking_revenue&quot;</span>  <span class="hljs-comment"># 查询sql</span><br>                <span class="hljs-comment"># self.pd_sql = &quot;&quot;&quot;select count(1) num  from datamart.t_isc_push_OneSales_order&quot;&quot;&quot;  # 判断底层etl 是否延迟sql</span><br>                self.pd_sql = <span class="hljs-string">&quot;&quot;&quot;select count(1) num  from ads.ads_esc_t_push_so_tracking_revenue where etl_time&gt;=date_format(now(),&#x27;%Y-%m-%d %H:00:00&#x27;);&quot;&quot;&quot;</span>  <span class="hljs-comment"># 判断底层etl 是否延迟sql</span><br>                self.times=<span class="hljs-number">1</span>  <span class="hljs-comment">#重复扫描15次 预估15分钟</span><br><br>                <span class="hljs-comment">#pic2</span><br>                <span class="hljs-comment"># self.sql_str1 = &quot;select time_solt,warehouse_code,seller_ocid,cnt,flag,etl_time from t_outbound_wecom_vip&quot;  # 查询sql</span><br><br>        <span class="hljs-comment">#复制模板  从原始位置到新位置</span><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">copyfile</span>(<span class="hljs-params">self</span>):<br>                <span class="hljs-comment"># logging.info(&quot;copyfile&quot;+&quot;  &quot;+self.excel_moban+&quot;  &quot;+self.filename_today)</span><br>                shutil.copyfile(self.exel_moban, self.filename_today)<br>                logging.info(<span class="hljs-string">&quot;===模板备份完成===&quot;</span>)<br><br>        <span class="hljs-comment"># 将文件移到其他文件夹</span><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">move_file</span>(<span class="hljs-params">self</span>):<br>                FileDeal.fileDeal(self.path_l).remove_file(self.path_bak)<br>                logging.info(<span class="hljs-string">&quot;====文件移动成功====&quot;</span>)<br><br><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_token</span>(<span class="hljs-params">self,Secret,CorpID=<span class="hljs-string">&#x27;XXXXX&#x27;</span></span>):<br>                tagurl = <span class="hljs-string">&#x27;https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=&#x27;</span> + CorpID + <span class="hljs-string">&#x27;&amp;corpsecret=&#x27;</span> + Secret<br>                f = requests.get(tagurl)<br>                resultJson = json.loads(f.text)  <span class="hljs-comment"># 加载口令json</span><br>                token = resultJson[<span class="hljs-string">&#x27;access_token&#x27;</span>]  <span class="hljs-comment"># 获取口令</span><br>                <span class="hljs-keyword">return</span> token<br><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">send_message</span>(<span class="hljs-params">self,token,data</span>):<br>                send_url = <span class="hljs-string">&quot;https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=&quot;</span> + token<br>                requests.post(url=send_url, data=json.dumps(data))  <span class="hljs-comment"># 提交请求</span><br>                logging.info(<span class="hljs-string">&quot;====信息推送成功====&quot;</span>)<br>                <span class="hljs-comment"># data = &#123;&quot;toparty&quot;: &quot;5&quot;, &quot;msgtype&quot;: &quot;image&quot;, &quot;agentid&quot;: 1000003, &quot;image&quot;: &#123;&quot;media_id&quot;: mediaid&#125;, &quot;safe&quot;: 0&#125;</span><br><br><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_pic_media</span>(<span class="hljs-params">self,token,file_name,file_type=<span class="hljs-string">&#x27;image&#x27;</span></span>):<br>                upload_url = <span class="hljs-string">&#x27;https://qyapi.weixin.qq.com/cgi-bin/media/upload?access_token=&#x27;</span> + token + <span class="hljs-string">&#x27;&amp;type=&#x27;</span> + file_type +<span class="hljs-string">&#x27;&amp;debug=1&#x27;</span><br>                <span class="hljs-built_in">print</span>(upload_url)<br>                data = &#123;<span class="hljs-string">&quot;media&quot;</span>: <span class="hljs-built_in">open</span>(file_name, <span class="hljs-string">&#x27;rb&#x27;</span>)&#125;<br>                <span class="hljs-built_in">print</span>(file_name)<br>                <span class="hljs-built_in">print</span>(data)<br>                r = requests.post(url=upload_url, files=data)<br>                <span class="hljs-built_in">print</span>(r.text)<br>                resp = json.loads(r.text)  <span class="hljs-comment"># 加载json</span><br>                <span class="hljs-keyword">return</span> resp[<span class="hljs-string">&#x27;media_id&#x27;</span>]<br><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">excel_to_pic</span>(<span class="hljs-params">self,excel_file,pic_file,excel_rg</span>):<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;excel_file:&#x27;</span>+excel_file+<span class="hljs-string">&#x27;\n&#x27;</span>+<span class="hljs-string">&#x27;pic_file:&#x27;</span>+pic_file+<span class="hljs-string">&#x27;\n&#x27;</span>+<span class="hljs-string">&#x27;excel_rg:&#x27;</span>+excel_rg+<span class="hljs-string">&#x27;\n&#x27;</span>)<br>                loadOptions = LoadOptions()<br>                configs = IndividualFontConfigs()<br>                configs.setFontFolder(<span class="hljs-string">&quot;/data/fonts/chinese&quot;</span>, <span class="hljs-literal">True</span>)<br>                loadOptions.setFontConfigs(configs)<br>                workbook = Workbook(excel_file, loadOptions)<br>                workbook.calculateFormula()<br>                imgOptions = ImageOrPrintOptions()<br>                <span class="hljs-comment"># imgOptions.setDesiredSize(desiredWidth, desiredHeight)</span><br>                imgOptions.setImageType(ImageType.JPEG)<br>                worksheet = workbook.getWorksheets().get(<span class="hljs-number">0</span>)<br>                worksheet.getPageSetup().setPrintArea(excel_rg)<br>                worksheet.getPageSetup().setLeftMargin(<span class="hljs-number">0</span>)<br>                worksheet.getPageSetup().setRightMargin(<span class="hljs-number">0</span>)<br>                worksheet.getPageSetup().setTopMargin(<span class="hljs-number">1</span>)<br>                worksheet.getPageSetup().setBottomMargin(<span class="hljs-number">0</span>)<br>                <span class="hljs-built_in">print</span>(worksheet)<br>                sheetRender = SheetRender(worksheet, imgOptions)<br>                <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(pic_file, <span class="hljs-string">&quot;wb&quot;</span>) <span class="hljs-keyword">as</span> w:<br>                        content = sheetRender.toImageBytes(<span class="hljs-number">0</span>)<br>                        w.write(content)<br>                jpype.shutdownJVM()<br><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">edit_pic</span>(<span class="hljs-params">self,pic_file</span>):<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;图片保存路径为&gt;&gt;&gt;&#x27;</span>+pic_file)<br>                img = Image.<span class="hljs-built_in">open</span>(pic_file)<br>                width, height = img.size<br>                <span class="hljs-built_in">print</span>(width, height)<br>                box = (<span class="hljs-number">0</span>, <span class="hljs-number">28</span>, <span class="hljs-number">800</span>, <span class="hljs-number">980</span>)<br>                region = img.crop(box)<br>                region.save(pic_file)<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;图片处理成功&#x27;</span>)<br><br><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">push_data</span>(<span class="hljs-params">self,ws, df, r_x, c_x</span>):<br>                rows = dataframe_to_rows(df, index=<span class="hljs-literal">False</span>)<br>                <span class="hljs-keyword">for</span> r_idx, row <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(rows, <span class="hljs-number">1</span>):<br>                        <span class="hljs-keyword">for</span> c_idx, value <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(row, <span class="hljs-number">1</span>):<br>                                ws.cell(row=r_idx + r_x, column=c_idx + c_x, value=value)<br><br><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">insert_date_excel</span>(<span class="hljs-params">self,sql,sheet_name,startx=<span class="hljs-number">0</span>,starty=<span class="hljs-number">0</span></span>):<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;insert_date_excel&gt;&gt;&gt;&#x27;</span>+sql+<span class="hljs-string">&#x27;\n&#x27;</span>+<span class="hljs-string">&#x27;sheet_name&gt;&gt;&gt;&#x27;</span>+sheet_name)<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;filename_today&gt;&gt;&gt;&#x27;</span>+self.filename_today)<br>                df = pd.read_sql(sql, self.con)<br>                <span class="hljs-built_in">print</span>(df)<br>                wb = openpyxl.load_workbook(self.filename_today)<br>                ws2 = wb[sheet_name]<br>                self.push_data(ws2, df, startx, starty)<br>                wb.save(self.filename_today)<br><br>        <span class="hljs-comment">#重复刷新考虑etl是否运行完成</span><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_sub_condition</span>(<span class="hljs-params">self</span>):<br>                res=<span class="hljs-number">0</span><br>                <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.times):<br>                        ss = DBUtilN.exeSelectSql(self.pd_sql, self.con)<br>                        <span class="hljs-comment"># print(ss)</span><br>                        <span class="hljs-keyword">if</span> ss[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] !=<span class="hljs-number">0</span>:<br>                                res=<span class="hljs-number">1</span><br>                                <span class="hljs-keyword">break</span><br>                        <span class="hljs-keyword">else</span>:<br>                                time.sleep(<span class="hljs-number">1</span>)<br>                                <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;====等待===&quot;</span>)<br>                <span class="hljs-keyword">return</span> res<br><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">cal_process</span>(<span class="hljs-params">self</span>):<br>                <span class="hljs-comment">#判断底层etl是否处理完成</span><br>                res=self.get_sub_condition()<br>                <span class="hljs-comment"># print(&quot;res=&#123;&#125;&quot;.format(res))  0-1</span><br>                <span class="hljs-keyword">if</span> res==<span class="hljs-number">1</span>:<br>                        <span class="hljs-comment"># 移动文件到备份文件夹</span><br>                        self.move_file()<br>                        <span class="hljs-comment"># 删除备份文件夹之前文件及文件夹</span><br>                        FileDeal.fileDeal(self.path_bak).deletefile()<br>                        <span class="hljs-comment"># step0 复制Excel模板</span><br>                        self.copyfile()<br>                        self.tuisong(self.sql_str,self.sheet_detail,self.sheet_name,self.picname,self.range_excel_tab)<br>                        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;最终推送图片路径为&gt;&gt;&gt;&#x27;</span>+self.picname)<br>                        logging.info(<span class="hljs-string">&quot;===按esc数据发送完成===&quot;</span>)<br>                        <span class="hljs-comment"># self.tuisong(self.sql_str1, self.sheet_detail1, self.sheet_name1, self.picname1, self.range_excel_tab1)</span><br>                        <span class="hljs-comment"># logging.info(&quot;===按seller分析数据发送完成===&quot;)</span><br><br>                        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;===推送完成===&quot;</span>)<br><br>                <span class="hljs-keyword">else</span>:<br>                        logging.info(<span class="hljs-string">&quot;===day数据，底层etl 同步数据延迟，未推送===&quot;</span>)<br>                        self.errorts(<span class="hljs-string">&quot;测试消息：==day数据，esc底层etl同步延迟，请上线查看&quot;</span>)<br><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">errorts</span>(<span class="hljs-params">self,msg</span>):<br>                <span class="hljs-comment"># 报警应用</span><br>                SendMessageInWetchat.send_txt_msg(msg,toparty=self.toparty1,agentid=self.agentid1,Secret=self.Secret1)<br><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">tuisong</span>(<span class="hljs-params">self,sql,sheet_detail,sheet_name,picname,range_excel_tab</span>):<br>                <span class="hljs-comment"># step1 将数据插入Excel</span><br>                self.insert_date_excel(sql, sheet_detail)<br><br>                <span class="hljs-comment"># sep2 将Excel数据保存为图片</span><br>                self.excel_to_pic(self.filename_today, picname, range_excel_tab)<br><br>                <span class="hljs-comment"># sep3 保存图片并裁剪</span><br>                self.edit_pic(self.picname)<br><br>                <span class="hljs-comment"># 获取token</span><br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;开始获取token&#x27;</span>)<br>                token = self.get_token(self.Secret)<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;获取token成功&#x27;</span>)<br>                <span class="hljs-comment"># 获取mediaid</span><br>                mediaid = self.get_pic_media(token, picname)<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;获取mediaid成功&#x27;</span>)<br>                <span class="hljs-comment"># 组装data</span><br>                data = &#123;<span class="hljs-string">&quot;toparty&quot;</span>: self.toparty, <span class="hljs-string">&quot;msgtype&quot;</span>: <span class="hljs-string">&quot;image&quot;</span>, <span class="hljs-string">&quot;agentid&quot;</span>: self.agentid, <span class="hljs-string">&quot;image&quot;</span>: &#123;<span class="hljs-string">&quot;media_id&quot;</span>: mediaid&#125;,<span class="hljs-string">&quot;safe&quot;</span>: <span class="hljs-number">0</span>&#125;<br>                <span class="hljs-comment"># step3 发送内容</span><br>                self.send_message(token, data)<br>                 <span class="hljs-comment"># 移动文���到备份文件夹</span><br>                 <span class="hljs-comment"># self.move_file()</span><br>                 <span class="hljs-comment"># logging.info(&quot;===单次推送完成===&quot;)</span><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br><br>        mysqlCon =  pymysql.connect(database=<span class="hljs-string">&#x27;XXX&#x27;</span>,<br>                        host=<span class="hljs-string">&#x27;XXXX&#x27;</span>,<br>                        user=<span class="hljs-string">&#x27;XXX&#x27;</span>,<br>                        password=<span class="hljs-string">&#x27;XXXX&#x27;</span>,<br>                        port=<span class="hljs-number">9030</span>,<br>                        charset=<span class="hljs-string">&#x27;utf8mb4&#x27;</span>,<br>                        connect_timeout=<span class="hljs-number">120</span>)<br>        tt = daily_report(mysqlCon)<br>        <span class="hljs-keyword">try</span>:<br>                tt.cal_process()<br>        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>                error = <span class="hljs-built_in">str</span>(e)<br>                tt.errorts(<span class="hljs-string">&quot;测试消息：esc每日数据异常，请上线查看:&quot;</span> + error)<br>                logging.info(<span class="hljs-string">&quot;esc每日数据异常：&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(e))<br><br>        mysqlCon.close()<br></code></pre></td></tr></table></figure>
+
+<h3 id="Aspose-Cells-Excel模板转换PDF-x2F-图片Linux中文乱码解决"><a href="#Aspose-Cells-Excel模板转换PDF-x2F-图片Linux中文乱码解决" class="headerlink" title="Aspose Cells Excel模板转换PDF&#x2F;图片Linux中文乱码解决"></a>Aspose Cells Excel模板转换PDF&#x2F;图片Linux中文乱码解决</h3><p> 第一步：把 C:\Windows\Fonts目录下字体拷贝到Linux( &#x2F;usr&#x2F;share&#x2F;fonts&#x2F;chinese)目录下，Linux目录可随意指定</p>
+<p>第二步：在Aspose加载WorkBook时配置字体路径</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java">##Java <br><span class="hljs-type">IndividualFontConfigs</span> <span class="hljs-variable">configs</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IndividualFontConfigs</span>();<br>     configs.setFontFolder(<span class="hljs-string">&quot;/usr/share/fonts/chinese&quot;</span>, <span class="hljs-literal">true</span>);<br>     <span class="hljs-type">LoadOptions</span> <span class="hljs-variable">loadOptions</span>  <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">LoadOptions</span>();<br>     loadOptions.setFontConfigs(configs);<br> <span class="hljs-type">FileInputStream</span> <span class="hljs-variable">fi</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileInputStream</span>(<span class="hljs-string">&quot;D://MOBAN.xlsx&quot;</span>);<br> <span class="hljs-type">Workbook</span> <span class="hljs-variable">wb</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Workbook</span>(fi, loadOptions);<br><br>##<span class="hljs-type">Python</span><br><span class="hljs-variable">loadOptions</span> <span class="hljs-operator">=</span> LoadOptions()<br>             configs = IndividualFontConfigs()<br>             configs.setFontFolder(<span class="hljs-string">&quot;/data/fonts/chinese&quot;</span>, True)<br>             loadOptions.setFontConfigs(configs)<br>             workbook = Workbook(excel_file, loadOptions)<br><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="Aspose-Cells-读取不到Excel模板包含公式的数据"><a href="#Aspose-Cells-读取不到Excel模板包含公式的数据" class="headerlink" title="Aspose Cells 读取不到Excel模板包含公式的数据"></a>Aspose Cells 读取不到Excel模板包含公式的数据</h3><p>workbook.calculateFormula()</p>
+<p>增加这一行代码即可</p>
+<h3 id="Aspose-Cells-设置PDF或图片边框大小"><a href="#Aspose-Cells-设置PDF或图片边框大小" class="headerlink" title="Aspose Cells 设置PDF或图片边框大小"></a>Aspose Cells 设置PDF或图片边框大小</h3><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">worksheet = workbook.get<span class="hljs-constructor">Worksheets()</span>.get(<span class="hljs-number">0</span>)<br>worksheet.get<span class="hljs-constructor">PageSetup()</span>.set<span class="hljs-constructor">PrintArea(<span class="hljs-params">excel_rg</span>)</span><br>worksheet.get<span class="hljs-constructor">PageSetup()</span>.set<span class="hljs-constructor">LeftMargin(0)</span><br>worksheet.get<span class="hljs-constructor">PageSetup()</span>.set<span class="hljs-constructor">RightMargin(0)</span><br>worksheet.get<span class="hljs-constructor">PageSetup()</span>.set<span class="hljs-constructor">TopMargin(1)</span><br>worksheet.get<span class="hljs-constructor">PageSetup()</span>.set<span class="hljs-constructor">BottomMargin(0)</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Aspose-Cells-读取指定excel位置的数据"><a href="#Aspose-Cells-读取指定excel位置的数据" class="headerlink" title="Aspose Cells 读取指定excel位置的数据"></a>Aspose Cells 读取指定excel位置的数据</h3><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">worksheet.get<span class="hljs-constructor">PageSetup()</span>.set<span class="hljs-constructor">PrintArea(<span class="hljs-params">excel_rg</span>)</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+              
+            </div>
+            <hr/>
+            
+            <!-- donate -->
+            <div class="reward-container">
+            	
+            		<button id="rewardBtn" class="reward-btn">
+            			 
+            				 Donate
+            				
+            		</button>
+            		<p class="tea">觉得不错的话，给点打赏吧 ୧(๑•̀⌄•́๑)૭</p>
+            		<div id="rewardImgContainer" class="reward-img-container">
+                     	<div class="singleImgContainer">
+                        	<img id="wechatImg" class="reward-img" src="/img/wechatpay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="wechatPay">wechat pay</p>
+                      </div>
+                      <div class="singleImgContainer">
+                           	<img id="alipayImg" class="reward-img" src="/img/alipay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="aliPay">alipay</p>
+                      </div>
+            		</div>
+            	
+            </div>
+            
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python/">#Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>python代码-linux系统读取excel模版转化成图片</div>
+      <div>http://yuting0907.github.io/2022/12/02/linux系统读取excel模版转化成图片/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Echo Yu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年12月2日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/12/05/flink%E4%B8%8A%E7%BA%BF%E5%BC%82%E5%B8%B8%E6%97%A5%E8%AE%B0/" title="flink上线异常日记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">flink上线异常日记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/30/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89-kalmanFilter/" title="计算机视觉-kalmanFilter">
+                        <span class="hidden-mobile">计算机视觉-kalmanFilter</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/reward.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
+
+<!--  -->
+<script type="text/javascript" src="/js/love.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>  
+
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="/js/FunnyTitle.js"></script>

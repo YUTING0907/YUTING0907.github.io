@@ -1,0 +1,819 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon_yt.png">
+  <link rel="icon" href="/img/favicon_yt.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Echo Yu">
+  <meta name="keywords" content="ML">
+  
+    <meta name="description" content="AOP(Aspect Orient Programming),面向切面编程切面：公共的，通用的，重复的功能成为切面，面向切面编程就是将切面提取出来，单独开发，在需要的时候织入。 手写AOP框架​    业务：图书购买业务 ​    切面：事物    1）第一个版本：业务和切面紧耦合在一起，没有拆分    2）第二个版本：使用子类代理的方式拆分业务和切面    3）第三个版本：使用静态代理拆分业务和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring框架-AOP切面编程">
+<meta property="og:url" content="http://yuting0907.github.io/2022/09/16/spring%E6%A1%86%E6%9E%B6-AOP%E5%88%87%E9%9D%A2%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:site_name" content="YUTING">
+<meta property="og:description" content="AOP(Aspect Orient Programming),面向切面编程切面：公共的，通用的，重复的功能成为切面，面向切面编程就是将切面提取出来，单独开发，在需要的时候织入。 手写AOP框架​    业务：图书购买业务 ​    切面：事物    1）第一个版本：业务和切面紧耦合在一起，没有拆分    2）第二个版本：使用子类代理的方式拆分业务和切面    3）第三个版本：使用静态代理拆分业务和">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-09-16T15:28:04.000Z">
+<meta property="article:modified_time" content="2022-10-18T14:33:21.745Z">
+<meta property="article:author" content="Echo Yu">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>spring框架-AOP切面编程 - YUTING</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/reward.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yuting0907.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>EchoYu&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="spring框架-AOP切面编程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Echo Yu
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-09-16 23:28" pubdate>
+          2022年9月16日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          99 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">spring框架-AOP切面编程</h1>
+            
+            <div class="markdown-body">
+              
+              <h3 id="AOP-Aspect-Orient-Programming-面向切面编程"><a href="#AOP-Aspect-Orient-Programming-面向切面编程" class="headerlink" title="AOP(Aspect Orient Programming),面向切面编程"></a>AOP(Aspect Orient Programming),面向切面编程</h3><p>切面：公共的，通用的，重复的功能成为切面，面向切面编程就是将切面提取出来，单独开发，在需要的时候织入。</p>
+<h3 id="手写AOP框架"><a href="#手写AOP框架" class="headerlink" title="手写AOP框架"></a>手写AOP框架</h3><p>​    业务：图书购买业务</p>
+<p>​    切面：事物</p>
+<p>   1）第一个版本：业务和切面紧耦合在一起，没有拆分</p>
+<p>   2）第二个版本：使用子类代理的方式拆分业务和切面</p>
+<p>   3）第三个版本：使用静态代理拆分业务和切面，业务和业务接口已分开，此时切面紧耦合在业务中</p>
+<p>   4）第四个版本：使用静态代理拆分业务和业务接口，切面和切面接口</p>
+<p>   5）第五个版本：使用动态代理完成第四个版本的优化</p>
+<h4 id="第一个版本：业务和切面紧耦合在一起，没有拆分"><a href="#第一个版本：业务和切面紧耦合在一起，没有拆分" class="headerlink" title="第一个版本：业务和切面紧耦合在一起，没有拆分"></a>第一个版本：业务和切面紧耦合在一起，没有拆分</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BookServiceImpl</span>&#123;<br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">buy</span><span class="hljs-params">()</span>&#123;<br>     <span class="hljs-keyword">try</span>&#123;<br>     			System.out.println(<span class="hljs-string">&quot;事务开启。。。。&quot;</span>);<br>     			System.out.println(<span class="hljs-string">&quot;图书购买业务功能实现。。。。&quot;</span>);<br>     			System.out.println(<span class="hljs-string">&quot;事务提交。。。。&quot;</span>);<br>      &#125;<span class="hljs-keyword">catch</span>(Exception e)&#123;<br>          System.out.println(<span class="hljs-string">&quot;事务回滚。。。。&quot;</span>);<br>     &#125;<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="第二个版本：使用子类代理的方式拆分业务和切面"><a href="#第二个版本：使用子类代理的方式拆分业务和切面" class="headerlink" title="第二个版本：使用子类代理的方式拆分业务和切面"></a>第二个版本：使用子类代理的方式拆分业务和切面</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BookServiceImpl</span>&#123;<br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">buy</span><span class="hljs-params">()</span>&#123;<br>     System.out.println(<span class="hljs-string">&quot;图书购买业务功能实现。。。。&quot;</span>);<br>   &#125;<br>&#125;<br><br><span class="hljs-comment">//子类就是代理类，将父类的图书购买功能添加事务切面</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SubBookServiceImpl</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">BookServiceImpl</span>&#123;<br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">buy</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-keyword">try</span>&#123;<br>       <span class="hljs-comment">// 事务切面</span><br>      System.out.println(<span class="hljs-string">&quot;事务开启。。。。&quot;</span>);<br>       <span class="hljs-comment">// 主业务实现</span><br>      <span class="hljs-built_in">super</span>.buy();<br>       <span class="hljs-comment">// 事务切面  </span><br>      System.out.println(<span class="hljs-string">&quot;事务提交。。。。&quot;</span>);<br>    &#125;<span class="hljs-keyword">catch</span>(Exception e)&#123;<br>          System.out.println(<span class="hljs-string">&quot;事务回滚。。。。&quot;</span>);<br>     &#125;<br>  &#125;<br> <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="第三个版本：使用静态代理拆分业务和切面，业务和业务接口已分开，此时切面紧耦合在业务中"><a href="#第三个版本：使用静态代理拆分业务和切面，业务和业务接口已分开，此时切面紧耦合在业务中" class="headerlink" title="第三个版本：使用静态代理拆分业务和切面，业务和业务接口已分开，此时切面紧耦合在业务中"></a>第三个版本：使用静态代理拆分业务和切面，业务和业务接口已分开，此时切面紧耦合在业务中</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Service</span>&#123;<br>  <span class="hljs-comment">//规定业务功能</span><br>  <span class="hljs-keyword">void</span> <span class="hljs-title function_">buy</span><span class="hljs-params">()</span>;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BookSeviceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Service</span>&#123;<br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">buy</span><span class="hljs-params">()</span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;图书购买业务功能实现。。。。&quot;</span>);<br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ProductServiceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Service</span>&#123;<br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">buy</span><span class="hljs-params">()</span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;商品购买业务功能实现。。。。&quot;</span>);<br>  &#125;  <br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Agent</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Service</span>&#123;<br>  <span class="hljs-comment">//设计成员变量的类型为接口，为了灵活切换目标对象</span><br>  <span class="hljs-keyword">public</span> Service target;<br>  <br>  <span class="hljs-comment">//使用构造方法传入目标对象</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-title function_">Agent</span><span class="hljs-params">(Service target)</span>&#123;<br>    <span class="hljs-built_in">this</span>.target = target;<br>  &#125;<br>  <br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">buy</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-keyword">try</span>&#123;<br>       <span class="hljs-comment">// 切面功能</span><br>      System.out.println(<span class="hljs-string">&quot;事务开启。。。。&quot;</span>);<br>       <span class="hljs-comment">// 业务功能</span><br>      <span class="hljs-built_in">super</span>.buy();<br>       <span class="hljs-comment">// 切面功能  </span><br>      System.out.println(<span class="hljs-string">&quot;事务提交。。。。&quot;</span>);<br>    &#125;<span class="hljs-keyword">catch</span>(Exception e)&#123;<br>          System.out.println(<span class="hljs-string">&quot;事务回滚。。。。&quot;</span>);<br>    &#125;<br>  &#125;<br>&#125;<br><br><br># Test<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Mytest</span>&#123;<br>  <span class="hljs-meta">@Test</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test</span><span class="hljs-params">()</span>&#123;<br>		<span class="hljs-type">Service</span> <span class="hljs-variable">agent</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Agent</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">BookSeviceImpl</span>());<br>    agent.buy();<br>    <br>    <span class="hljs-type">Service</span> <span class="hljs-variable">agent</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Agent</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ProductServiceImpl</span>());<br>    agent.buy();<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="第四个版本：使用静态代理拆分业务和业务接口，切面和切面接口"><a href="#第四个版本：使用静态代理拆分业务和业务接口，切面和切面接口" class="headerlink" title="第四个版本：使用静态代理拆分业务和业务接口，切面和切面接口"></a>第四个版本：使用静态代理拆分业务和业务接口，切面和切面接口</h4><p>上个版本只实现了事务切面，如果要换成日志切面实现呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><code class="hljs java">###########################业务接口#####################<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Service</span>&#123;<br>  <span class="hljs-comment">//规定业务功能</span><br>  <span class="hljs-keyword">void</span> <span class="hljs-title function_">buy</span><span class="hljs-params">()</span>;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BookSeviceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Service</span>&#123;<br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">buy</span><span class="hljs-params">()</span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;图书购买业务功能实现。。。。&quot;</span>);<br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ProductServiceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Service</span>&#123;<br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">buy</span><span class="hljs-params">()</span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;商品购买业务功能实现。。。。&quot;</span>);<br>  &#125;  <br>&#125;<br><br>#####################切面接口AOP########################<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">AOP</span>&#123;<br>  <span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">before</span><span class="hljs-params">()</span>&#123;&#125;;<br>  <span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">after</span><span class="hljs-params">()</span>&#123;&#125;;<br>  <span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">exception</span><span class="hljs-params">()</span>&#123;&#125;;<br>&#125;  <br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LogAop</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">AOP</span>&#123;<br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">before</span><span class="hljs-params">()</span>&#123;<br>     System.out.println(<span class="hljs-string">&quot;前置日志输出。。。。&quot;</span>);<br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TransAop</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">AOP</span>&#123;<br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">before</span><span class="hljs-params">()</span>&#123;<br>     System.out.println(<span class="hljs-string">&quot;事务开启。。。。&quot;</span>);<br>  &#125;<br><br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">after</span><span class="hljs-params">()</span>&#123;<br>     System.out.println(<span class="hljs-string">&quot;事务提交。。。。&quot;</span>);<br>  &#125;  <br> <br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">exception</span><span class="hljs-params">()</span>&#123;<br>     System.out.println(<span class="hljs-string">&quot;事务回滚。。。。&quot;</span>);<br>  &#125;    <br>&#125;<br><br>#####################代理对象Agent########################<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Agent</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Service</span>&#123;<br>  <span class="hljs-comment">//传入业务对象，切面对象</span><br>  Service target;<br>  Aop aop;<br>  <br>  <span class="hljs-comment">//使用构造方法初始化业务对象和切面对象</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-title function_">Agent</span><span class="hljs-params">(Service target, AOP aop)</span>&#123;<br>    <span class="hljs-built_in">this</span>.target = target;<br>    <span class="hljs-built_in">this</span>.aop = aop;<br>  &#125;<br>  <br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">buy</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-keyword">try</span>&#123;<br>      <span class="hljs-comment">//切面</span><br>      aop.before(); <span class="hljs-comment">//事务 日志</span><br>      <span class="hljs-comment">//业务</span><br>      target.buy(); <span class="hljs-comment">// 图书 商品</span><br>      <span class="hljs-comment">//切面</span><br>      aop.after();  <span class="hljs-comment">// 事务</span><br>    &#125;<span class="hljs-keyword">catch</span>(Exception e)&#123;<br>      aop.exception();<br>    &#125;<br>  &#125;<br>&#125;<br><br><br>## test<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Mytest</span>&#123;<br>  <span class="hljs-meta">@Test</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> test&#123;<br>   <span class="hljs-type">Serive</span> <span class="hljs-variable">agent</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Agent</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">BookServiceImpl</span>(),<span class="hljs-keyword">new</span> <span class="hljs-title class_">LogAop</span>());<br>   agent.buy();<br>    <br>   <span class="hljs-type">Serive</span> <span class="hljs-variable">agent</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Agent</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ProductServiceImpl</span>(),<span class="hljs-keyword">new</span>            <span class="hljs-title class_">TransAop</span>());<br>   agent.buy();    <br>  &#125;<br>&#125;<br><br>## 切入多个切面<br>## test<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Mytest</span>&#123;<br>  <span class="hljs-meta">@Test</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> test&#123;<br>   <span class="hljs-type">Serive</span> <span class="hljs-variable">agent</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Agent</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">BookServiceImpl</span>(),<span class="hljs-keyword">new</span> <span class="hljs-title class_">LogAop</span>());<br>   agent.buy();<br>    <br>   <span class="hljs-type">Serive</span> <span class="hljs-variable">agent1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Agent</span>(agent,<span class="hljs-keyword">new</span> <span class="hljs-title class_">TransAop</span>());<br>   agent1.buy();    <br>  &#125;<br>&#125;  <br></code></pre></td></tr></table></figure>
+
+<h4 id="第五个版本：使用动态代理完成第四个版本的优化"><a href="#第五个版本：使用动态代理完成第四个版本的优化" class="headerlink" title="第五个版本：使用动态代理完成第四个版本的优化"></a>第五个版本：使用动态代理完成第四个版本的优化</h4><p>业务功能的增加</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><code class="hljs java">###########################业务接口#####################<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Service</span>&#123;<br>  <span class="hljs-comment">//规定业务功能</span><br>  <span class="hljs-keyword">void</span> <span class="hljs-title function_">buy</span><span class="hljs-params">()</span>;<br>  <br>  <span class="hljs-comment">//增加有参返回值的方法测试代理功能</span><br>  <span class="hljs-keyword">default</span> String <span class="hljs-title function_">show</span><span class="hljs-params">(<span class="hljs-type">int</span> age)</span>&#123;<span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>&#125;;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BookSeviceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Service</span>&#123;<br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">buy</span><span class="hljs-params">()</span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;图书购买业务功能实现。。。。&quot;</span>);<br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ProductServiceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Service</span>&#123;<br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">buy</span><span class="hljs-params">()</span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;商品购买业务功能实现。。。。&quot;</span>);<br>  &#125;  <br>  <br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> String <span class="hljs-title function_">show</span><span class="hljs-params">(<span class="hljs-type">int</span> age)</span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;这是show()方法调用。。。。&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;abcd&quot;</span>;<br>  &#125; <br>&#125;<br><br>#####################切面接口AOP########################<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">AOP</span>&#123;<br>  <span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">before</span><span class="hljs-params">()</span>&#123;&#125;;<br>  <span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">after</span><span class="hljs-params">()</span>&#123;&#125;;<br>  <span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">exception</span><span class="hljs-params">()</span>&#123;&#125;;<br>&#125;  <br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LogAop</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">AOP</span>&#123;<br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">before</span><span class="hljs-params">()</span>&#123;<br>     System.out.println(<span class="hljs-string">&quot;前置日志输出。。。。&quot;</span>);<br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TransAop</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">AOP</span>&#123;<br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">before</span><span class="hljs-params">()</span>&#123;<br>     System.out.println(<span class="hljs-string">&quot;事务开启。。。。&quot;</span>);<br>  &#125;<br><br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">after</span><span class="hljs-params">()</span>&#123;<br>     System.out.println(<span class="hljs-string">&quot;事务提交。。。。&quot;</span>);<br>  &#125;  <br> <br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">exception</span><span class="hljs-params">()</span>&#123;<br>     System.out.println(<span class="hljs-string">&quot;事务回滚。。。。&quot;</span>);<br>  &#125;    <br>&#125;<br><br>####################动态代理####################<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ProxyFactory</span>&#123;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Object <span class="hljs-title function_">getAgent</span><span class="hljs-params">(Service target,Aop aop)</span>&#123;<br>    <span class="hljs-comment">//返回的是生成的动态代理对象</span><br>    <span class="hljs-keyword">return</span> Proxy.newProxyInstance(<br>       <span class="hljs-comment">//类加载器</span><br>      target.getClass().getClassLoader(),<br>      <span class="hljs-comment">// 目标对象实现的所有的接口</span><br>      target.getClass().getInterfaces(),<br>      <span class="hljs-comment">//代理功能实现</span><br>      <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvocationHandler</span>()&#123;<br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">invoke</span><span class="hljs-params">(</span><br><span class="hljs-params">               //生成的代理对象</span><br><span class="hljs-params">               Object proxy</span><br><span class="hljs-params">               //正在被调用的目标方法buy()</span>,show()<br>               ,Method method<br>               <span class="hljs-comment">//目标方法的参数</span><br>               ,Object[] args) <span class="hljs-keyword">throws</span> Throwable&#123;<br>            <span class="hljs-comment">//切面</span><br>            aop.before();<span class="hljs-comment">//事务 日志</span><br>            <span class="hljs-comment">//业务</span><br>            <span class="hljs-type">Object</span> <span class="hljs-variable">obj</span> <span class="hljs-operator">=</span> method.invoke(target,args);<br>            <span class="hljs-comment">//切面</span><br>            aop.after();<br>            <span class="hljs-comment">//切面</span><br>          <span class="hljs-keyword">return</span> obj;<span class="hljs-comment">//目标方法的返回值</span><br>        &#125;<br>      &#125;<br>    )<br>  &#125;    <br>&#125;<br><br>#test<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Mytest</span>&#123;<br>  <span class="hljs-meta">@Test</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-type">Service</span> <span class="hljs-variable">agent</span> <span class="hljs-operator">=</span> ProxyFactory.getAgent(<span class="hljs-keyword">new</span> <span class="hljs-title class_">BookServiceImpl</span>(),<span class="hljs-keyword">new</span> <span class="hljs-title class_">TransAop</span>());<br>    agent.buy();<br>    <span class="hljs-type">String</span> <span class="hljs-variable">s</span> <span class="hljs-operator">=</span> agent.show(<span class="hljs-number">22</span>);<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h3 id="AspectJ框架"><a href="#AspectJ框架" class="headerlink" title="AspectJ框架"></a>AspectJ框架</h3><p>AspectJ中常用的通知有几种类型：</p>
+<p>0）@Aspect:作用是把当前类标识为一个切面供容器读取</p>
+<p>1）前置通知@Before</p>
+<p>2）后置通知@AfterReturning</p>
+<p>3）环绕通知@Around</p>
+<p>4）最终通知@After</p>
+<p>5）定义切入点@Pointcut</p>
+<p> 使用@Pointcut注解，创建一个空方法，此方法的名称就是别名</p>
+<p>@Pointcut：Pointcut是植入Advice的触发条件。每个Pointcut的定义包括2部分，一是表达式，二是方法签名。方法签名必须是 public及void型。可以将Pointcut中的方法看作是一个被Advice引用的助记符，因为表达式不直观，因此我们可以通过方法签名的方式为 此表达式命名。因此Pointcut中的方法只需要方法签名，而不需要在方法体内编写实际代码。</p>
+<p>使用pointcut代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> SomeServiceImpl <span class="hljs-keyword">implements</span> <span class="hljs-title class_">SomeService</span>&#123;<br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> String <span class="hljs-title function_">doSome</span><span class="hljs-params">(String name,<span class="hljs-type">int</span> age)</span>&#123;<br>     System.out.println(<span class="hljs-string">&quot;doSome业务方法执行.......&quot;</span>+name);<br>     <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;abcd&quot;</span>;<br>  &#125;<br>&#125;<br><br><br><br><span class="hljs-meta">@Aspect</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyAspect</span>&#123;<br>  <span class="hljs-comment">/*</span><br><span class="hljs-comment">  前置通知切面方法规范</span><br><span class="hljs-comment">  1）访问权限是public</span><br><span class="hljs-comment">  2）方法的返回值是void</span><br><span class="hljs-comment">  3）方法名称自定义</span><br><span class="hljs-comment">  4）方法没有参数，如果有也只能是JoinPoint类型</span><br><span class="hljs-comment">  5）必须使用@Before注解来声明切入的时机</span><br><span class="hljs-comment">     参数：value 指定切入点表达式</span><br><span class="hljs-comment">  */</span><br>  <span class="hljs-meta">@Before(value = &quot;execution(public String com.yuting.SomeSeriveImpl.dosome(String,int))&quot;)</span><br>  # <span class="hljs-meta">@Around(value=&quot;myCut()&quot;)</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">myBefore</span><span class="hljs-params">()</span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;切面方法中的前置通知&quot;</span>);<br>  &#125;<br>  <span class="hljs-comment">/*</span><br><span class="hljs-comment">  后置通知切面方法规范</span><br><span class="hljs-comment">  1）访问权限是public</span><br><span class="hljs-comment">  2）方法的返回值是void</span><br><span class="hljs-comment">  3）方法名称自定义</span><br><span class="hljs-comment">  4）方法没有参数，如果有也只能是JoinPoint类型</span><br><span class="hljs-comment">  5）必须使用@After注解表明是最终通知</span><br><span class="hljs-comment">     参数：value 指定切入点表达式</span><br><span class="hljs-comment">  */</span><br>  <span class="hljs-meta">@After(value=&quot;execution(* com.yuting.s01.*.*(..))&quot;)</span><br>  # <span class="hljs-meta">@Around(value=&quot;myCut()&quot;)</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">myAfter</span><span class="hljs-params">()</span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;切面方法中的最终通知&quot;</span>);<br>  &#125;<br>  <br>  <br>  <span class="hljs-meta">@AfterReturning(value=&quot;execution(* com.yuting.s01.*.*(..))&quot;,returning=&quot;obj&quot;)</span><br>  # <span class="hljs-meta">@Around(value=&quot;myCut()&quot;)</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">myAfterReturning</span><span class="hljs-params">(Object obj)</span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;后置通知的功能&quot;</span>);<br>  &#125;<br>  <br>  <span class="hljs-comment">/*</span><br><span class="hljs-comment">  环绕通知切面方法规范</span><br><span class="hljs-comment">  1）访问权限是public</span><br><span class="hljs-comment">  2）方法的返回值是目标方法的返回值</span><br><span class="hljs-comment">  3）方法名称自定义</span><br><span class="hljs-comment">  4）方法有参数，此参数就是目标方法</span><br><span class="hljs-comment">  5）必须使用@Around注解表明是环绕通知</span><br><span class="hljs-comment">     参数：value 指定切入点表达式</span><br><span class="hljs-comment">  */</span>  <br>  <span class="hljs-meta">@Around(value=&quot;execution(* com.yuting.s01.*.*(...))&quot;)</span><br>  # <span class="hljs-meta">@Around(value=&quot;myCut()&quot;)</span><br>  <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">myAround</span><span class="hljs-params">(ProceedingJoinPoint pjp)</span> <span class="hljs-keyword">throws</span> Throwable&#123;<br>    System.out.println(<span class="hljs-string">&quot;环绕通知中的前置通知功能&quot;</span>);<br>    <span class="hljs-type">Object</span> <span class="hljs-variable">obj</span> <span class="hljs-operator">=</span> pjp.proceed(pjp.getArgs());<br>    System.out.println(<span class="hljs-string">&quot;环绕通知中的后置通知功能&quot;</span>);<br>    <span class="hljs-keyword">return</span> obj.toString().toUpperCase(); # 改变了目标方法的返回值<br>  &#125;<br>&#125;<br><br>  <span class="hljs-meta">@PointCut(value = &quot;execution(* com.yuting.s01.*.*(...))&quot;)</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">myCut</span><span class="hljs-params">()</span>&#123;<br><br>  &#125;<br> <br><br>注解配置<br>applicationContext.xml<br>&lt;!--基于注解的访问要添加包扫描--&gt;  <br> &lt;context:component-scan base-<span class="hljs-keyword">package</span>=<span class="hljs-string">&quot;com.yuting&quot;</span>&gt;&lt;/context:component-scan&gt; <br>&lt;!--绑定--&gt;  <br>&lt;aop:aspectj-autoproxy&gt;&lt;/aop:aspectj-autoproxy&gt;<br>   <br>   <br></code></pre></td></tr></table></figure>
+
+
+
+<p>使用annotation代码：</p>
+<p>@annotation: 元注解的作用就是负责注解其他注解。Java5.0定义了4个标准的meta-annotation类型，它们被用来提供对其它 annotation类型作说明。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-number">1.</span><span class="hljs-meta">@Target</span><br>说明了Annotation所修饰的对象范围：Annotation可被用于 packages、types（类、接口、枚举、Annotation类型）、类型成员（方法、构造方法、成员变量、枚举值）、方法参数和本地变量（如循环变量、<span class="hljs-keyword">catch</span>参数）。在Annotation类型的声明中使用了target可更加明晰其修饰的目标<br><br><span class="hljs-number">2.</span><span class="hljs-meta">@Retention</span><br>  <span class="hljs-meta">@Retention</span>定义了该Annotation被保留的时间长短==：某些Annotation仅出现在源代码中，而被编译器丢弃；而另一些却被编译在<span class="hljs-class"><span class="hljs-keyword">class</span>文件中；编译在<span class="hljs-title">class</span>文件中的<span class="hljs-title">Annotation</span>可能会被虚拟机忽略，而另一些在<span class="hljs-title">class</span>被装载时将被读取（请注意并不影响<span class="hljs-title">class</span>的执行，因为<span class="hljs-title">Annotation</span>与<span class="hljs-title">class</span>在使用上是被分离的）。使用这个<span class="hljs-title">meta</span>-<span class="hljs-title">Annotation</span>可以对 <span class="hljs-title">Annotation</span>的“生命周期”限制。</span><br><span class="hljs-class"></span><br><span class="hljs-class">3.@<span class="hljs-title">Documented</span></span><br><span class="hljs-class">  @<span class="hljs-title">Documented</span>：用于描述其它类型的<span class="hljs-title">annotation</span>应该被作为被标注的程序成员的公共<span class="hljs-title">API</span>，因此可以被例如<span class="hljs-title">javadoc</span>此类的工具文档化。<span class="hljs-title">Documented</span>是一个标记注解，没有成员</span><br><span class="hljs-class">  </span><br><span class="hljs-class">4.@<span class="hljs-title">Inherited</span></span><br><span class="hljs-class">  @<span class="hljs-title">Inherited</span> ：元注解是一个标记注解，@<span class="hljs-title">Inherited</span>阐述了某个被标注的类型是被继承的。如果一个使用了@<span class="hljs-title">Inherited</span>修饰的<span class="hljs-title">annotation</span>类型被用于一个<span class="hljs-title">class</span>，则这个<span class="hljs-title">annotation</span>将被用于该<span class="hljs-title">class</span>的子类。</span><br><span class="hljs-class">  </span><br><span class="hljs-class">5.自定义注解</span><br><span class="hljs-class">  使用@<span class="hljs-title">interface</span>自定义注解时，自动继承了<span class="hljs-title">java</span>.<span class="hljs-title">lang</span>.<span class="hljs-title">annotation</span>.<span class="hljs-title">Annotation</span>接口，由编译程序自动完成其他细节。在定义注解时，不能继承其他的注解或接口。@<span class="hljs-title">interface</span>用来声明一个注解，其中的每一个方法实际上是声明了一个配置参数。方法的名称就是参数的名称，返回值类型就是参数的类型（返回值类型只能是基本类型、<span class="hljs-title">Class</span>、<span class="hljs-title">String</span>、<span class="hljs-title">enum</span>）。可以通过<span class="hljs-title">default</span>来声明参数的默认值。</span><br><span class="hljs-class"></span><br><span class="hljs-class">  定义注解格式：</span><br><span class="hljs-class"><span class="hljs-title">public</span> @<span class="hljs-title">interface</span> 注解名 </span>&#123;定义体&#125;<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//注解实体类</span><br><span class="hljs-keyword">package</span> com.trip.demo;<br> <br><span class="hljs-keyword">import</span> java.lang.annotation.ElementType;<br><span class="hljs-keyword">import</span> java.lang.annotation.Retention;<br><span class="hljs-keyword">import</span> java.lang.annotation.RetentionPolicy;<br><span class="hljs-keyword">import</span> java.lang.annotation.Target;<br> <br> <br><span class="hljs-meta">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="hljs-meta">@Target(&#123; ElementType.METHOD &#125;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> SMSAndMailSender &#123;<br>    <span class="hljs-comment">/*短信模板String格式化串*/</span><br>    String <span class="hljs-title function_">value</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-string">&quot;&quot;</span>;<br> <br>    String <span class="hljs-title function_">smsContent</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-string">&quot;&quot;</span>;<br> <br>    String <span class="hljs-title function_">mailContent</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-string">&quot;&quot;</span>;<br>    <span class="hljs-comment">/*是否激活发送功能*/</span><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">isActive</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-literal">true</span>;<br>    <span class="hljs-comment">/*主题*/</span><br>    String <span class="hljs-title function_">subject</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> <span class="hljs-string">&quot;&quot;</span>;<br>&#125;<br> <br> <br><span class="hljs-comment">//切面类</span><br><span class="hljs-meta">@Aspect</span><br><span class="hljs-meta">@Component(&quot;smsAndMailSenderMonitor&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SMSAndMailSenderMonitor</span> &#123;<br> <br>    <span class="hljs-keyword">private</span> <span class="hljs-type">Logger</span> <span class="hljs-variable">logger</span> <span class="hljs-operator">=</span> LoggerFactory.getLogger(SMSAndMailSenderMonitor.class);<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 在所有标记了<span class="hljs-doctag">@SMSAndMailSender</span>的方法中切入</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> joinPoint</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> result</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@AfterReturning(value=&quot;@annotation(com.trip.demo.SMSAndMailSender)&quot;, returning=&quot;result&quot;)</span><span class="hljs-comment">//有注解标记的方法，执行该后置返回</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">afterReturning</span><span class="hljs-params">(JoinPoint joinPoint , Object result//注解标注的方法返回值)</span> &#123;<br>        <span class="hljs-type">MethodSignature</span> <span class="hljs-variable">ms</span> <span class="hljs-operator">=</span> (MethodSignature) joinPoint.getSignature();<br>        <span class="hljs-type">Method</span> <span class="hljs-variable">method</span> <span class="hljs-operator">=</span> ms.getMethod();<br>        <span class="hljs-type">boolean</span> <span class="hljs-variable">active</span> <span class="hljs-operator">=</span> method.getAnnotation(SMSAndMailSender.class).isActive();<br>        <span class="hljs-keyword">if</span> (!active) &#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">smsContent</span> <span class="hljs-operator">=</span> method.getAnnotation(SMSAndMailSender.class).smsContent();<br>        <span class="hljs-type">String</span> <span class="hljs-variable">mailContent</span> <span class="hljs-operator">=</span> method.getAnnotation(SMSAndMailSender.class).mailContent();<br>        <span class="hljs-type">String</span> <span class="hljs-variable">subject</span> <span class="hljs-operator">=</span> method.getAnnotation(SMSAndMailSender.class).subject();<br>       <br>    &#125;<br>    <br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 在抛出异常时使用</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> joinPoint</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> ex</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@AfterThrowing(value=&quot;@annotation(com.trip.order.monitor.SMSAndMailSender)&quot;,throwing = &quot;ex&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">afterThrowing</span><span class="hljs-params">(JoinPoint joinPoint, Throwable ex//注解标注的方法抛出的异常)</span> &#123;<br>        <span class="hljs-type">MethodSignature</span> <span class="hljs-variable">ms</span> <span class="hljs-operator">=</span> (MethodSignature) joinPoint.getSignature();<br>        <span class="hljs-type">Method</span> <span class="hljs-variable">method</span> <span class="hljs-operator">=</span> ms.getMethod();<br>        <span class="hljs-type">String</span> <span class="hljs-variable">subject</span> <span class="hljs-operator">=</span> method.getAnnotation(SMSAndMailSender.class).subject();<br>        <br>    &#125;<br>&#125;<br><span class="hljs-comment">//实体类中使用该注解标注方法</span><br><span class="hljs-meta">@Service(&quot;testService &quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TestService</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-meta">@SMSAndMailSender(smsContent = &quot;MODEL_SUBMIT_SMS&quot;, mailContent =     </span><br><span class="hljs-meta">    &quot;MODEL_SUPPLIER_EMAIL&quot;, subject = &quot;MODEL_SUBJECT_EMAIL&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">test</span><span class="hljs-params">(String param)</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;success&quot;</span>;<br>    &#125;<br>｝<br><br></code></pre></td></tr></table></figure>
+
+<p>记得在配置文件中加上：</p>
+<p><code>&lt;aop:aspectj-autoproxy proxy-target-class=&quot;true&quot;/&gt;</code></p>
+
+              
+            </div>
+            <hr/>
+            
+            <!-- donate -->
+            <div class="reward-container">
+            	
+            		<button id="rewardBtn" class="reward-btn">
+            			 
+            				 Donate
+            				
+            		</button>
+            		<p class="tea">觉得不错的话，给点打赏吧 ୧(๑•̀⌄•́๑)૭</p>
+            		<div id="rewardImgContainer" class="reward-img-container">
+                     	<div class="singleImgContainer">
+                        	<img id="wechatImg" class="reward-img" src="/img/wechatpay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="wechatPay">wechat pay</p>
+                      </div>
+                      <div class="singleImgContainer">
+                           	<img id="alipayImg" class="reward-img" src="/img/alipay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="aliPay">alipay</p>
+                      </div>
+            		</div>
+            	
+            </div>
+            
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Java/">#Java</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>spring框架-AOP切面编程</div>
+      <div>http://yuting0907.github.io/2022/09/16/spring框架-AOP切面编程/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Echo Yu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年9月16日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/09/22/IDEA%E9%87%8C%E8%BF%90%E8%A1%8C%E4%BB%A3%E7%A0%81%E6%B2%A1%E9%97%AE%E9%A2%98but%E7%94%9F%E6%88%90jar%E8%BF%90%E8%A1%8C%E6%8A%A5java-lang-NoClassDefFoundError%E9%94%99%E8%AF%AF/" title="IDEA里运行代码没问题but生成jar运行报java.lang.NoClassDefFoundError错误">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">IDEA里运行代码没问题but生成jar运行报java.lang.NoClassDefFoundError错误</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/09/15/spring%E6%A1%86%E6%9E%B6-IOC%E6%B3%A8%E5%85%A5/" title="spring框架-IOC注入">
+                        <span class="hidden-mobile">spring框架-IOC注入</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/reward.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
+
+<!--  -->
+<script type="text/javascript" src="/js/love.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>  
+
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="/js/FunnyTitle.js"></script>

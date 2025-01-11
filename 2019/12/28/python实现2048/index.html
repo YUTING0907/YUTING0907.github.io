@@ -1,0 +1,835 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon_yt.png">
+  <link rel="icon" href="/img/favicon_yt.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yuting">
+  <meta name="keywords" content="ML">
+  
+    <meta name="description" content="本篇文章是利用python 实现2048小游戏目的：为了提高自己的编程思路 环境：win8+python3.6+curses模块 Pycharm适用人群：python入门+想用python做点事情的朋友们 大家可能都玩过2048，我记得那时候还蛮火的。不过那个时候我还没有接触编程，根本想不到自己今天还会写代码。。 正文游戏规则：玩家通过 w s a d 控制数字移动方向，达成 2048 这个数字">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python-应用-实现2048">
+<meta property="og:url" content="http://yuting0907.github.io/2019/12/28/python%E5%AE%9E%E7%8E%B02048/index.html">
+<meta property="og:site_name" content="YUTING">
+<meta property="og:description" content="本篇文章是利用python 实现2048小游戏目的：为了提高自己的编程思路 环境：win8+python3.6+curses模块 Pycharm适用人群：python入门+想用python做点事情的朋友们 大家可能都玩过2048，我记得那时候还蛮火的。不过那个时候我还没有接触编程，根本想不到自己今天还会写代码。。 正文游戏规则：玩家通过 w s a d 控制数字移动方向，达成 2048 这个数字">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-12-28T13:29:38.000Z">
+<meta property="article:modified_time" content="2022-05-28T01:10:03.645Z">
+<meta property="article:author" content="Echo Yu">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>python-应用-实现2048 - YUTING</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/reward.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yuting0907.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>EchoYu&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="python-应用-实现2048"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        yuting
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-12-28 21:29" pubdate>
+          2019年12月28日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          105 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">python-应用-实现2048</h1>
+            
+            <div class="markdown-body">
+              
+              <hr>
+<p>本篇文章是利用python 实现2048小游戏<br>目的：为了提高自己的编程思路</p>
+<p>环境：win8+python3.6+curses模块 Pycharm<br>适用人群：python入门+想用python做点事情的朋友们</p>
+<p>大家可能都玩过2048，我记得那时候还蛮火的。不过那个时候我还没有接触编程，根本想不到自己今天还会写代码。。</p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p><strong>游戏规则</strong>：玩家通过 w s a d 控制数字移动方向，达成 2048 这个数字即获胜。</p>
+<p>每次可以选择一个方向移动，数字便会朝这个方向移动，如果遇到相同数字就相加，遇到不同数字或者边界就停止移动。同时会在空白的地方生成 2 或者 4 的随机数字。通过不断相撞、相加，最后达成 2048 这个数字。</p>
+<p><strong>编程思路：</strong></p>
+<p><strong>1.首先想象一下游戏的几个状态：</strong></p>
+<p>状态1：初始化状态(也就是刚开始游戏）<br>状态2：游戏中(Game ing……)<br>状态3：你赢了(Win)<br>状态4：你输了(Game Over)</p>
+<p><strong>2.用户行为</strong></p>
+<p>用户通过行为(action)改变来完成一个游戏状态到另一个游戏状态的该表，比如用户上移，下移，左移，右移，重置和退出。</p>
+<p><strong>3.由一个状态转化到另一个状态</strong></p>
+<p>分析一下从一个状态到下一个状态的所有可能性：<br>1.当上一个状态是初始化(Init)状态时，下一个状态肯定是游戏中(Game ing…)的状态。</p>
+<p>2.当上一个状态为游戏中(Game ing…)的状态时，下一个状态要根据用户的输入来判断，如用户输入Restart,则下一个状态返回为初始化状态(Init)，如用户输入Exit的时候，下一个状态转换为退出游戏(Exit),</p>
+<p>用户还可以上下左右移动，这时候下一个状态可能是你输了(Game Over)或者你赢了(Win)，再或者继续游戏。</p>
+<p>3.当上一个状态为你输了(Game Over)，用户输入Restart，下一个状态可能为初始化(Init)状态，用户输入Exit的时候，下一个状态转换为退出游戏(Exit)。</p>
+<p>4.当上一个状态为你赢了(Win)，用户输入Restart，下一个状态可能为初始化(Init)状态，用户输入Exit的时候，下一个状态转换为退出游戏(Exit)。</p>
+<p>其中3和4神似，可以合并起来得到not_game的功能。</p>
+<p>上述文字用图表示如下：</p>
+<p>! [ 图片来自实验楼] ( <a target="_blank" rel="noopener" href="http://m.qpic.cn/psc?/V10c1VbY1Y4Fvm/3pY6KhS62k*1Vm7UATlxq*dT9N4M9SFdcoa2exyDwTjMQRzdwgQxzI3eywPjhcCPWMtBAbo8u2e.zNSVqh5WGr9RvKTwx9YMevj37h84A.s!/b&amp;bo=ZgKCAQAAAAADF9U!&amp;rf=viewer_4&amp;t=5">http://m.qpic.cn/psc?/V10c1VbY1Y4Fvm/3pY6KhS62k*1Vm7UATlxq*dT9N4M9SFdcoa2exyDwTjMQRzdwgQxzI3eywPjhcCPWMtBAbo8u2e.zNSVqh5WGr9RvKTwx9YMevj37h84A.s!/b&amp;bo=ZgKCAQAAAAADF9U!&amp;rf=viewer_4&amp;t=5</a> )</p>
+<p><strong>另外除非用户按代表退出的按键(Exit)或者游戏被玩死了,否则游戏一直被挂起。</strong></p>
+<p>根据以上分析，下面可以初略的搭建程序大致的框架：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>(<span class="hljs-params">stdscr</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">init</span>():<br>        <span class="hljs-comment"># 重置游戏棋盘</span><br>        game_field.reset()<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Game&#x27;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">game</span>():<br>        <span class="hljs-comment"># 画出 GameOver 或者 Win 的界面</span><br>        game_field.draw(stdscr)<br>        <span class="hljs-comment"># 读取用户输入得到action，判断是重启游戏还是结束游戏</span><br>        action = get_user_action(stdscr)<br><br>        <span class="hljs-keyword">if</span> action ==<span class="hljs-string">&#x27;Restart&#x27;</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Init&#x27;</span><br>        <span class="hljs-keyword">if</span> action==<span class="hljs-string">&#x27;Exit&#x27;</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Exit&#x27;</span><br>        <span class="hljs-keyword">if</span> game_field.move(action):<br>            <span class="hljs-keyword">if</span> game_field.is_win():<br>                <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Win&#x27;</span><br>            <span class="hljs-keyword">if</span> game_field.is_gameover():<br>                <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Gameover&#x27;</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Game&#x27;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">not_game</span>(<span class="hljs-params">state</span>):<br>        <span class="hljs-comment"># 画出 GameOver 或者 Win 的界面</span><br>        game_field.draw(stdscr)<br>        <span class="hljs-comment"># 读取用户输入得到action，判断是重启游戏还是结束游戏</span><br>        action = get_user_action(stdscr)<br>        responses = defaultdict(<span class="hljs-keyword">lambda</span>:state)<br>        responses[<span class="hljs-string">&#x27;Restart&#x27;</span>], responses[<span class="hljs-string">&#x27;Exit&#x27;</span>] = <span class="hljs-string">&#x27;Init&#x27;</span>,<span class="hljs-string">&#x27;Exit&#x27;</span><br>        <span class="hljs-keyword">return</span> responses[action]<br><br><span class="hljs-comment"># 游戏盘的四种状态</span><br>    state_actions=&#123;<br>        <span class="hljs-string">&#x27;Init&#x27;</span>:init,<br>        <span class="hljs-string">&#x27;Win&#x27;</span>:<span class="hljs-keyword">lambda</span>:not_game(<span class="hljs-string">&#x27;Win&#x27;</span>),<br>        <span class="hljs-string">&#x27;Gameover&#x27;</span>:<span class="hljs-keyword">lambda</span>:not_game(<span class="hljs-string">&#x27;Gameover&#x27;</span>),<br>        <span class="hljs-string">&#x27;Game&#x27;</span>:game<br>    &#125;<br><br>    game_field = GameField(win=<span class="hljs-number">2048</span>)<br>    state = <span class="hljs-string">&#x27;Init&#x27;</span><br>    <span class="hljs-keyword">while</span> state!=<span class="hljs-string">&#x27;Exit&#x27;</span>:<br>        state = state_actions[state]()<br></code></pre></td></tr></table></figure>
+
+
+<p>4.丰富框架<br>大体的骨架搭好了，下面让它完善起来。</p>
+<p>分为两类：<br>第一类，把它叫做通用工具类。</p>
+<p>这两个操作主要是用户在操作游戏之后对棋盘状态的变化以及修改，拥有这两个函数能够节省不少的代码量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">transpose</span>(<span class="hljs-params">field</span>):<br>    <span class="hljs-keyword">return</span> [<span class="hljs-built_in">list</span>(row) <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(*field)]<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">invert</span>(<span class="hljs-params">field</span>):<br>    <span class="hljs-keyword">return</span> [row[::-<span class="hljs-number">1</span>] <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> field]<br></code></pre></td></tr></table></figure>
+<p>如下为用户输入函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">actions = [<span class="hljs-string">&#x27;Up&#x27;</span>, <span class="hljs-string">&#x27;Left&#x27;</span>, <span class="hljs-string">&#x27;Down&#x27;</span>, <span class="hljs-string">&#x27;Right&#x27;</span>, <span class="hljs-string">&#x27;Restart&#x27;</span>, <span class="hljs-string">&#x27;Exit&#x27;</span>]<br><span class="hljs-comment"># 分别用 W（上），A（左），S（下），D（右），R（重置），Q（退出），进行输入来操作游戏，这里考虑到大写锁定键锁定的情况：</span><br>letter_codes = [<span class="hljs-built_in">ord</span>(c) <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> <span class="hljs-string">&#x27;WASDRQwasdrq&#x27;</span>]<br>actions_dict = <span class="hljs-built_in">dict</span>(<span class="hljs-built_in">zip</span>(letter_codes, actions*<span class="hljs-number">2</span>))<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_user_action</span>(<span class="hljs-params">keyboard</span>):<br>    char = <span class="hljs-string">&#x27;N&#x27;</span><br>    <span class="hljs-comment">#阻塞＋循环，直到获得用户有效输入才返回对应行为：</span><br>    <span class="hljs-keyword">while</span> char <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> actions_dict:<br>        char = keyboard.getch()<br>    <span class="hljs-keyword">return</span> actions_dict[char]<br></code></pre></td></tr></table></figure>
+
+<p>第二大类：棋盘类<br>包含重置棋盘、棋盘走一步、判断输赢、绘制游戏界面、随机生成一个 2 或者 4、判断能否移动的功能。</p>
+<p>重置棋盘</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#重置棋盘</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">reset</span>(<span class="hljs-params">self</span>):<br>    <span class="hljs-keyword">if</span> self.score&gt;self.highscore:<br>        self.highscore = self.score<br>    self.score = <span class="hljs-number">0</span><br>    self.field = [[<span class="hljs-number">0</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.width)] <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.height)]<br>    self.spawn()<br>    self.spawn()<br></code></pre></td></tr></table></figure>
+
+<p>棋盘走一步</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">move</span>(<span class="hljs-params">self,direction</span>):<br>    <span class="hljs-comment">#一行相左合并</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">move_row_left</span>(<span class="hljs-params">row</span>):<br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">tighten</span>(<span class="hljs-params">row</span>): <span class="hljs-comment">#把零散的非零单元挤到一块</span><br>            new_row = [i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> row <span class="hljs-keyword">if</span> i!=<span class="hljs-number">0</span>]<br>            new_row+=[<span class="hljs-number">0</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(row)-<span class="hljs-built_in">len</span>(new_row))]<br>            <span class="hljs-keyword">return</span> new_row<br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">merge</span>(<span class="hljs-params">row</span>):<br>            pair=<span class="hljs-literal">False</span><br>            new_row=[]<br>            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(row)):<br>                <span class="hljs-keyword">if</span> pair:<br>                    <span class="hljs-comment"># 合并后，加入乘 2 后的元素在 0 元素后面</span><br>                    new_row.append(<span class="hljs-number">2</span>*row[i])<br>                    self.score+=<span class="hljs-number">2</span>*row[i]<br>                    pair=<span class="hljs-literal">False</span><br>                <span class="hljs-keyword">else</span>:<br>                    <span class="hljs-keyword">if</span> i+<span class="hljs-number">1</span>&lt;<span class="hljs-built_in">len</span>(row) <span class="hljs-keyword">and</span> row[i]==row[i+<span class="hljs-number">1</span>]:<br>                        pair=<span class="hljs-literal">True</span><br>                        <span class="hljs-comment"># 不能合并，新列表中加入该元素</span><br>                        new_row.append(<span class="hljs-number">0</span>)<br>                    <span class="hljs-keyword">else</span>:<br>                        new_row.append(row[i])<br>            <span class="hljs-keyword">assert</span> <span class="hljs-built_in">len</span>(new_row)==<span class="hljs-built_in">len</span>(row)<br>            <span class="hljs-keyword">return</span> new_row<br>        <span class="hljs-comment"># 先挤到一块再合并再挤到一块</span><br>        <span class="hljs-keyword">return</span> tighten(merge(tighten(row)))<br><br>    <span class="hljs-comment"># 创建 moves 字典，把不同的棋盘操作作为不同的 key，对应不同的方法函数</span><br>    moves=&#123;&#125;<br>    moves[<span class="hljs-string">&#x27;Left&#x27;</span>] = <span class="hljs-keyword">lambda</span> filed:[move_row_left(row) <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> filed]<br>    moves[<span class="hljs-string">&#x27;Right&#x27;</span>] = <span class="hljs-keyword">lambda</span> filed:invert(moves[<span class="hljs-string">&#x27;Left&#x27;</span>](invert(filed)))<br>    moves[<span class="hljs-string">&#x27;Up&#x27;</span>] = <span class="hljs-keyword">lambda</span> field:transpose(moves[<span class="hljs-string">&#x27;Left&#x27;</span>](transpose(field)))<br>    moves[<span class="hljs-string">&#x27;Down&#x27;</span>] = <span class="hljs-keyword">lambda</span> field:transpose((moves[<span class="hljs-string">&#x27;Right&#x27;</span>](transpose(field))))<br><br>    <span class="hljs-keyword">if</span> direction <span class="hljs-keyword">in</span> moves:<br>        <span class="hljs-keyword">if</span> self.move_is_possible(direction):<br>            self.field = moves[direction](self.field)<br>            <span class="hljs-comment">#生成一个随机2或者4</span><br>            self.spawn()<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br></code></pre></td></tr></table></figure>
+<p>判断输赢</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 判断输赢</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_win</span>(<span class="hljs-params">self</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">any</span>(<span class="hljs-built_in">any</span>(i&gt;=self.win_value <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> row) <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> self.field)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_gameover</span>(<span class="hljs-params">self</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">not</span> <span class="hljs-built_in">any</span>(self.move_is_possible(move) <span class="hljs-keyword">for</span> move <span class="hljs-keyword">in</span> actions)<br></code></pre></td></tr></table></figure>
+<p>绘制游戏界面</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">draw</span>(<span class="hljs-params">self, screen</span>):<br>     help_string1 = <span class="hljs-string">&#x27;(W)Up (S)Down (A)Left (D)Right&#x27;</span><br>     help_string2 = <span class="hljs-string">&#x27;     (R)Restart (Q)Exit&#x27;</span><br>     gameover_string = <span class="hljs-string">&#x27;           GAME OVER&#x27;</span><br>     win_string = <span class="hljs-string">&#x27;          YOU WIN!&#x27;</span><br>     <span class="hljs-keyword">def</span> <span class="hljs-title function_">cast</span>(<span class="hljs-params">string</span>):<br>         screen.addstr(string+<span class="hljs-string">&#x27;\n&#x27;</span>)<br><br>     <span class="hljs-comment"># 绘制水平分割线</span><br>     <span class="hljs-keyword">def</span> <span class="hljs-title function_">draw_hor_separator</span>():<br>         line = <span class="hljs-string">&#x27;+&#x27;</span>+(<span class="hljs-string">&#x27;+------&#x27;</span> * self.width + <span class="hljs-string">&#x27;+&#x27;</span>)[<span class="hljs-number">1</span>:]<br>         <span class="hljs-comment"># defaultdict传入为函数时，可以实现value为某个常量，使用lambda可以使得代码更为简洁</span><br>         separator = defaultdict(<span class="hljs-keyword">lambda</span>: line)<br>         <span class="hljs-comment">#hasattr(object, name) 判断object对象中是否存在name属性</span><br>         <span class="hljs-comment"># python中的函数是一种对象，它有属于对象的属性。函数还可以自定义自己的属性。注意，属性是和对象相关的，和作用域无关。</span><br>         <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-built_in">hasattr</span>(draw_hor_separator,<span class="hljs-string">&#x27;counter&#x27;</span>):<br>             draw_hor_separator.counter=<span class="hljs-number">0</span><br>         cast(separator[draw_hor_separator.counter])<br>         draw_hor_separator.counter+=<span class="hljs-number">1</span><br><br>     <span class="hljs-keyword">def</span> <span class="hljs-title function_">draw_row</span>(<span class="hljs-params">row</span>):<br>         cast(<span class="hljs-string">&#x27;&#x27;</span>.join(<span class="hljs-string">&#x27;|&#123;: ^5&#125; &#x27;</span>.<span class="hljs-built_in">format</span>(num) <span class="hljs-keyword">if</span> num &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;|      &#x27;</span> <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> row) + <span class="hljs-string">&#x27;|&#x27;</span>)<br><br>     screen.clear()<br><br>     cast(<span class="hljs-string">&#x27;SCORE: &#x27;</span> + <span class="hljs-built_in">str</span>(self.score))<br>     <span class="hljs-keyword">if</span> <span class="hljs-number">0</span> != self.highscore:<br>         cast(<span class="hljs-string">&#x27;HGHSCORE: &#x27;</span> + <span class="hljs-built_in">str</span>(self.highscore))<br><br>     <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> self.field:<br>         draw_hor_separator()<br>         draw_row(row)<br>     draw_hor_separator()<br><br>     <span class="hljs-keyword">if</span> self.is_win():<br>         cast(win_string)<br>     <span class="hljs-keyword">else</span>:<br>         <span class="hljs-keyword">if</span> self.is_gameover():<br>             cast(gameover_string)<br>         <span class="hljs-keyword">else</span>:<br>             cast(help_string1)<br>     cast(help_string2)<br><br></code></pre></td></tr></table></figure>
+<p>随机生成一个 2 或者 4</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">spawn</span>(<span class="hljs-params">self</span>):<br>    new_element = <span class="hljs-number">4</span> <span class="hljs-keyword">if</span> randrange(<span class="hljs-number">100</span>) &gt; <span class="hljs-number">89</span> <span class="hljs-keyword">else</span> <span class="hljs-number">2</span><br>    (i, j) = choice([(i, j) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.width) <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.height) <span class="hljs-keyword">if</span> self.field[i][j] == <span class="hljs-number">0</span>])<br>    self.field[i][j] = new_element<br></code></pre></td></tr></table></figure>
+<p>判断能否移动</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 判断是否能移动</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">move_is_possible</span>(<span class="hljs-params">self, dictions</span>):<br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">row_is_left_moveable</span>(<span class="hljs-params">row</span>):<br>            <span class="hljs-keyword">def</span> <span class="hljs-title function_">change</span>(<span class="hljs-params">i</span>):<br>                <span class="hljs-comment"># 当左边有空位（0），右边有数字时，可以向左移动</span><br>                <span class="hljs-keyword">if</span> row[i] == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> row[i + <span class="hljs-number">1</span>] != <span class="hljs-number">0</span>:<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br>                <span class="hljs-comment"># 当左边有一个数和右边的数相等时，可以向左合并</span><br>                <span class="hljs-keyword">if</span> row[i] != <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> row[i + <span class="hljs-number">1</span>] == row[i]:<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br><br>            <span class="hljs-keyword">return</span> <span class="hljs-built_in">any</span>(change(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(row) - <span class="hljs-number">1</span>))<br><br>        check = &#123;&#125;<br>        <span class="hljs-comment"># 判断矩阵每一行有没有可以左移动的元素</span><br>        check[<span class="hljs-string">&#x27;Left&#x27;</span>] = <span class="hljs-keyword">lambda</span> field: <span class="hljs-built_in">any</span>(row_is_left_moveable(row) <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> field)<br>        <span class="hljs-comment"># 判断矩阵每一行有没有可以右移动的元素。这里只用进行判断，所以矩阵变换之后，不用再变换复原</span><br>        check[<span class="hljs-string">&#x27;Right&#x27;</span>] = <span class="hljs-keyword">lambda</span> field: check[<span class="hljs-string">&#x27;Left&#x27;</span>](invert(field))<br><br>        check[<span class="hljs-string">&#x27;Up&#x27;</span>] = <span class="hljs-keyword">lambda</span> field: check[<span class="hljs-string">&#x27;Left&#x27;</span>](transpose(field))<br><br>        check[<span class="hljs-string">&#x27;Down&#x27;</span>] = <span class="hljs-keyword">lambda</span> field: check[<span class="hljs-string">&#x27;Right&#x27;</span>](transpose(field))<br><br>        <span class="hljs-keyword">if</span> dictions <span class="hljs-keyword">in</span> check:<br>            <span class="hljs-keyword">return</span> check[dictions](self.field)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br><br></code></pre></td></tr></table></figure>
+
+<p>附录：</p>
+<ul>
+<li>附所有源代码</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!user/bin/env/python3</span><br><span class="hljs-comment"># -*- coding:utf-8 -*-</span><br><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> defaultdict<br><span class="hljs-keyword">from</span> random <span class="hljs-keyword">import</span> randrange, choice<br><span class="hljs-keyword">import</span> curses<br><br>actions = [<span class="hljs-string">&#x27;Up&#x27;</span>, <span class="hljs-string">&#x27;Left&#x27;</span>, <span class="hljs-string">&#x27;Down&#x27;</span>, <span class="hljs-string">&#x27;Right&#x27;</span>, <span class="hljs-string">&#x27;Restart&#x27;</span>, <span class="hljs-string">&#x27;Exit&#x27;</span>]<br><span class="hljs-comment"># 分别用 W（上），A（左），S（下），D（右），R（重置），Q（退出），进行输入来操作游戏，这里考虑到大写锁定键锁定的情况：</span><br>letter_codes = [<span class="hljs-built_in">ord</span>(c) <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> <span class="hljs-string">&#x27;WASDRQwasdrq&#x27;</span>]<br>actions_dict = <span class="hljs-built_in">dict</span>(<span class="hljs-built_in">zip</span>(letter_codes, actions*<span class="hljs-number">2</span>))<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_user_action</span>(<span class="hljs-params">keyboard</span>):<br>    char = <span class="hljs-string">&#x27;N&#x27;</span><br>    <span class="hljs-comment">#阻塞＋循环，直到获得用户有效输入才返回对应行为：</span><br>    <span class="hljs-keyword">while</span> char <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> actions_dict:<br>        char = keyboard.getch()<br>    <span class="hljs-keyword">return</span> actions_dict[char]<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">transpose</span>(<span class="hljs-params">field</span>):<br>    <span class="hljs-keyword">return</span> [<span class="hljs-built_in">list</span>(row) <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(*field)]<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">invert</span>(<span class="hljs-params">field</span>):<br>    <span class="hljs-keyword">return</span> [row[::-<span class="hljs-number">1</span>] <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> field]<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">GameField</span>(<span class="hljs-title class_ inherited__">object</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,height=<span class="hljs-number">4</span>, width=<span class="hljs-number">4</span>, win=<span class="hljs-number">2048</span></span>):<br>        self.height = height<br>        self.width = width<br>        self.win_value =win <span class="hljs-comment">#过关分数</span><br>        self.score = <span class="hljs-number">0</span>      <span class="hljs-comment">#当前分数</span><br>        self.highscore =<span class="hljs-number">0</span>   <span class="hljs-comment">#最高分数</span><br>        self.reset()        <span class="hljs-comment">#棋盘重置</span><br><br>    <span class="hljs-comment">#重置棋盘</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">reset</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">if</span> self.score&gt;self.highscore:<br>            self.highscore = self.score<br>        self.score = <span class="hljs-number">0</span><br>        self.field = [[<span class="hljs-number">0</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.width)] <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.height)]<br>        self.spawn()<br>        self.spawn()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">move</span>(<span class="hljs-params">self,direction</span>):<br>        <span class="hljs-comment">#一行相左合并</span><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">move_row_left</span>(<span class="hljs-params">row</span>):<br>            <span class="hljs-keyword">def</span> <span class="hljs-title function_">tighten</span>(<span class="hljs-params">row</span>): <span class="hljs-comment">#把零散的非零单元挤到一块</span><br>                new_row = [i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> row <span class="hljs-keyword">if</span> i!=<span class="hljs-number">0</span>]<br>                new_row+=[<span class="hljs-number">0</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(row)-<span class="hljs-built_in">len</span>(new_row))]<br>                <span class="hljs-keyword">return</span> new_row<br>            <span class="hljs-keyword">def</span> <span class="hljs-title function_">merge</span>(<span class="hljs-params">row</span>):<br>                pair=<span class="hljs-literal">False</span><br>                new_row=[]<br>                <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(row)):<br>                    <span class="hljs-keyword">if</span> pair:<br>                        <span class="hljs-comment"># 合并后，加入乘 2 后的元素在 0 元素后面</span><br>                        new_row.append(<span class="hljs-number">2</span>*row[i])<br>                        self.score+=<span class="hljs-number">2</span>*row[i]<br>                        pair=<span class="hljs-literal">False</span><br>                    <span class="hljs-keyword">else</span>:<br>                        <span class="hljs-keyword">if</span> i+<span class="hljs-number">1</span>&lt;<span class="hljs-built_in">len</span>(row) <span class="hljs-keyword">and</span> row[i]==row[i+<span class="hljs-number">1</span>]:<br>                            pair=<span class="hljs-literal">True</span><br>                            <span class="hljs-comment"># 不能合并，新列表中加入该元素</span><br>                            new_row.append(<span class="hljs-number">0</span>)<br>                        <span class="hljs-keyword">else</span>:<br>                            new_row.append(row[i])<br>                <span class="hljs-keyword">assert</span> <span class="hljs-built_in">len</span>(new_row)==<span class="hljs-built_in">len</span>(row)<br>                <span class="hljs-keyword">return</span> new_row<br>            <span class="hljs-comment"># 先挤到一块再合并再挤到一块</span><br>            <span class="hljs-keyword">return</span> tighten(merge(tighten(row)))<br><br>        <span class="hljs-comment"># 创建 moves 字典，把不同的棋盘操作作为不同的 key，对应不同的方法函数</span><br>        moves=&#123;&#125;<br>        moves[<span class="hljs-string">&#x27;Left&#x27;</span>] = <span class="hljs-keyword">lambda</span> filed:[move_row_left(row) <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> filed]<br>        moves[<span class="hljs-string">&#x27;Right&#x27;</span>] = <span class="hljs-keyword">lambda</span> filed:invert(moves[<span class="hljs-string">&#x27;Left&#x27;</span>](invert(filed)))<br>        moves[<span class="hljs-string">&#x27;Up&#x27;</span>] = <span class="hljs-keyword">lambda</span> field:transpose(moves[<span class="hljs-string">&#x27;Left&#x27;</span>](transpose(field)))<br>        moves[<span class="hljs-string">&#x27;Down&#x27;</span>] = <span class="hljs-keyword">lambda</span> field:transpose((moves[<span class="hljs-string">&#x27;Right&#x27;</span>](transpose(field))))<br><br>        <span class="hljs-keyword">if</span> direction <span class="hljs-keyword">in</span> moves:<br>            <span class="hljs-keyword">if</span> self.move_is_possible(direction):<br>                self.field = moves[direction](self.field)<br>                <span class="hljs-comment">#生成一个随机2或者4</span><br>                self.spawn()<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br>            <span class="hljs-keyword">else</span>:<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br><br>    <span class="hljs-comment"># 判断输赢</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">is_win</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">any</span>(<span class="hljs-built_in">any</span>(i&gt;=self.win_value <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> row) <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> self.field)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">is_gameover</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">not</span> <span class="hljs-built_in">any</span>(self.move_is_possible(move) <span class="hljs-keyword">for</span> move <span class="hljs-keyword">in</span> actions)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">draw</span>(<span class="hljs-params">self, screen</span>):<br>        help_string1 = <span class="hljs-string">&#x27;(W)Up (S)Down (A)Left (D)Right&#x27;</span><br>        help_string2 = <span class="hljs-string">&#x27;     (R)Restart (Q)Exit&#x27;</span><br>        gameover_string = <span class="hljs-string">&#x27;           GAME OVER&#x27;</span><br>        win_string = <span class="hljs-string">&#x27;          YOU WIN!&#x27;</span><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">cast</span>(<span class="hljs-params">string</span>):<br>            screen.addstr(string+<span class="hljs-string">&#x27;\n&#x27;</span>)<br><br>        <span class="hljs-comment"># 绘制水平分割线</span><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">draw_hor_separator</span>():<br>            line = <span class="hljs-string">&#x27;+&#x27;</span>+(<span class="hljs-string">&#x27;+------&#x27;</span> * self.width + <span class="hljs-string">&#x27;+&#x27;</span>)[<span class="hljs-number">1</span>:]<br>            <span class="hljs-comment"># defaultdict传入为函数时，可以实现value为某个常量，使用lambda可以使得代码更为简洁</span><br>            separator = defaultdict(<span class="hljs-keyword">lambda</span>: line)<br>            <span class="hljs-comment">#hasattr(object, name) 判断object对象中是否存在name属性</span><br>            <span class="hljs-comment"># python中的函数是一种对象，它有属于对象的属性。函数还可以自定义自己的属性。注意，属性是和对象相关的，和作用域无关。</span><br>            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-built_in">hasattr</span>(draw_hor_separator,<span class="hljs-string">&#x27;counter&#x27;</span>):<br>                draw_hor_separator.counter=<span class="hljs-number">0</span><br>            cast(separator[draw_hor_separator.counter])<br>            draw_hor_separator.counter+=<span class="hljs-number">1</span><br><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">draw_row</span>(<span class="hljs-params">row</span>):<br>            cast(<span class="hljs-string">&#x27;&#x27;</span>.join(<span class="hljs-string">&#x27;|&#123;: ^5&#125; &#x27;</span>.<span class="hljs-built_in">format</span>(num) <span class="hljs-keyword">if</span> num &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;|      &#x27;</span> <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> row) + <span class="hljs-string">&#x27;|&#x27;</span>)<br><br>        screen.clear()<br><br>        cast(<span class="hljs-string">&#x27;SCORE: &#x27;</span> + <span class="hljs-built_in">str</span>(self.score))<br>        <span class="hljs-keyword">if</span> <span class="hljs-number">0</span> != self.highscore:<br>            cast(<span class="hljs-string">&#x27;HGHSCORE: &#x27;</span> + <span class="hljs-built_in">str</span>(self.highscore))<br><br>        <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> self.field:<br>            draw_hor_separator()<br>            draw_row(row)<br>        draw_hor_separator()<br><br>        <span class="hljs-keyword">if</span> self.is_win():<br>            cast(win_string)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">if</span> self.is_gameover():<br>                cast(gameover_string)<br>            <span class="hljs-keyword">else</span>:<br>                cast(help_string1)<br>        cast(help_string2)<br><br>    <span class="hljs-comment"># 随机生成一个 2 或者 4</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">spawn</span>(<span class="hljs-params">self</span>):<br>        new_element = <span class="hljs-number">4</span> <span class="hljs-keyword">if</span> randrange(<span class="hljs-number">100</span>) &gt; <span class="hljs-number">89</span> <span class="hljs-keyword">else</span> <span class="hljs-number">2</span><br>        (i, j) = choice([(i, j) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.width) <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.height) <span class="hljs-keyword">if</span> self.field[i][j] == <span class="hljs-number">0</span>])<br>        self.field[i][j] = new_element<br><br>    <span class="hljs-comment"># 判断是否能移动</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">move_is_possible</span>(<span class="hljs-params">self, dictions</span>):<br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">row_is_left_moveable</span>(<span class="hljs-params">row</span>):<br>            <span class="hljs-keyword">def</span> <span class="hljs-title function_">change</span>(<span class="hljs-params">i</span>):<br>                <span class="hljs-comment"># 当左边有空位（0），右边有数字时，可以向左移动</span><br>                <span class="hljs-keyword">if</span> row[i] == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> row[i + <span class="hljs-number">1</span>] != <span class="hljs-number">0</span>:<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br>                <span class="hljs-comment"># 当左边有一个数和右边的数相等时，可以向左合并</span><br>                <span class="hljs-keyword">if</span> row[i] != <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> row[i + <span class="hljs-number">1</span>] == row[i]:<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br><br>            <span class="hljs-keyword">return</span> <span class="hljs-built_in">any</span>(change(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(row) - <span class="hljs-number">1</span>))<br><br>        check = &#123;&#125;<br>        <span class="hljs-comment"># 判断矩阵每一行有没有可以左移动的元素</span><br>        check[<span class="hljs-string">&#x27;Left&#x27;</span>] = <span class="hljs-keyword">lambda</span> field: <span class="hljs-built_in">any</span>(row_is_left_moveable(row) <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> field)<br>        <span class="hljs-comment"># 判断矩阵每一行有没有可以右移动的元素。这里只用进行判断，所以矩阵变换之后，不用再变换复原</span><br>        check[<span class="hljs-string">&#x27;Right&#x27;</span>] = <span class="hljs-keyword">lambda</span> field: check[<span class="hljs-string">&#x27;Left&#x27;</span>](invert(field))<br><br>        check[<span class="hljs-string">&#x27;Up&#x27;</span>] = <span class="hljs-keyword">lambda</span> field: check[<span class="hljs-string">&#x27;Left&#x27;</span>](transpose(field))<br><br>        check[<span class="hljs-string">&#x27;Down&#x27;</span>] = <span class="hljs-keyword">lambda</span> field: check[<span class="hljs-string">&#x27;Right&#x27;</span>](transpose(field))<br><br>        <span class="hljs-keyword">if</span> dictions <span class="hljs-keyword">in</span> check:<br>            <span class="hljs-keyword">return</span> check[dictions](self.field)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>(<span class="hljs-params">stdscr</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">init</span>():<br>        <span class="hljs-comment"># 重置游戏棋盘</span><br>        game_field.reset()<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Game&#x27;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">game</span>():<br>        <span class="hljs-comment"># 画出 GameOver 或者 Win 的界面</span><br>        game_field.draw(stdscr)<br>        <span class="hljs-comment"># 读取用户输入得到action，判断是重启游戏还是结束游戏</span><br>        action = get_user_action(stdscr)<br><br>        <span class="hljs-keyword">if</span> action ==<span class="hljs-string">&#x27;Restart&#x27;</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Init&#x27;</span><br>        <span class="hljs-keyword">if</span> action==<span class="hljs-string">&#x27;Exit&#x27;</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Exit&#x27;</span><br>        <span class="hljs-keyword">if</span> game_field.move(action):<br>            <span class="hljs-keyword">if</span> game_field.is_win():<br>                <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Win&#x27;</span><br>            <span class="hljs-keyword">if</span> game_field.is_gameover():<br>                <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Gameover&#x27;</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Game&#x27;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">not_game</span>(<span class="hljs-params">state</span>):<br>        <span class="hljs-comment"># 画出 GameOver 或者 Win 的界面</span><br>        game_field.draw(stdscr)<br>        <span class="hljs-comment"># 读取用户输入得到action，判断是重启游戏还是结束游戏</span><br>        action = get_user_action(stdscr)<br>        responses = defaultdict(<span class="hljs-keyword">lambda</span>:state)<br>        responses[<span class="hljs-string">&#x27;Restart&#x27;</span>], responses[<span class="hljs-string">&#x27;Exit&#x27;</span>] = <span class="hljs-string">&#x27;Init&#x27;</span>,<span class="hljs-string">&#x27;Exit&#x27;</span><br>        <span class="hljs-keyword">return</span> responses[action]<br><br><span class="hljs-comment"># 游戏盘的四种状态</span><br>    state_actions=&#123;<br>        <span class="hljs-string">&#x27;Init&#x27;</span>:init,<br>        <span class="hljs-string">&#x27;Win&#x27;</span>:<span class="hljs-keyword">lambda</span>:not_game(<span class="hljs-string">&#x27;Win&#x27;</span>),<br>        <span class="hljs-string">&#x27;Gameover&#x27;</span>:<span class="hljs-keyword">lambda</span>:not_game(<span class="hljs-string">&#x27;Gameover&#x27;</span>),<br>        <span class="hljs-string">&#x27;Game&#x27;</span>:game<br>    &#125;<br><br>    curses.use_default_colors()<br><br>    game_field = GameField(win=<span class="hljs-number">2048</span>)<br>    state = <span class="hljs-string">&#x27;Init&#x27;</span><br>    <span class="hljs-keyword">while</span> state!=<span class="hljs-string">&#x27;Exit&#x27;</span>:<br>        state = state_actions[state]()<br><br>curses.wrapper(main)<br></code></pre></td></tr></table></figure>
+<ul>
+<li>curses包的安装：<br>问题：windows系统如果直接用pip install下载会报错<br>解决办法：<br>去网址下载<a target="_blank" rel="noopener" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#curses">http://www.lfd.uci.edu/~gohlke/pythonlibs/#curses</a>(如果点击下载出现file not find，请fq下载)</li>
+</ul>
+<p>在下载目录运行如下命令：<br>pip install –upgrade curses-2.2+utf8-cp36-cp36m-win_amd64.whl</p>
+<ul>
+<li>可视化游戏网址：<a target="_blank" rel="noopener" href="https://play2048.co/">https://play2048.co/</a></li>
+</ul>
+<hr>
+<iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 
+" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  
+frameborder="0" scrolling="no"></iframe>
+
+              
+            </div>
+            <hr/>
+            
+            <!-- donate -->
+            <div class="reward-container">
+            	
+            		<button id="rewardBtn" class="reward-btn">
+            			 
+            				 Donate
+            				
+            		</button>
+            		<p class="tea">觉得不错的话，给点打赏吧 ୧(๑•̀⌄•́๑)૭</p>
+            		<div id="rewardImgContainer" class="reward-img-container">
+                     	<div class="singleImgContainer">
+                        	<img id="wechatImg" class="reward-img" src="/img/wechatpay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="wechatPay">wechat pay</p>
+                      </div>
+                      <div class="singleImgContainer">
+                           	<img id="alipayImg" class="reward-img" src="/img/alipay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="aliPay">alipay</p>
+                      </div>
+            		</div>
+            	
+            </div>
+            
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python/">#Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>python-应用-实现2048</div>
+      <div>http://yuting0907.github.io/2019/12/28/python实现2048/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yuting</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年12月28日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/05/22/hexo%E5%8D%9A%E5%AE%A2%E4%BB%8Ewin8%E8%BF%81%E7%A7%BB%E5%88%B0mac/" title="hexo博客从win8迁移到mac">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">hexo博客从win8迁移到mac</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/07/20/%E5%8F%82%E5%8A%A0%E5%B8%82%E5%8C%97-GMIS%202019%E7%9A%84%E6%84%9F%E6%82%9F/" title="参加市北-GMIS 2019的感悟">
+                        <span class="hidden-mobile">参加市北-GMIS 2019的感悟</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/reward.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
+
+<!--  -->
+<script type="text/javascript" src="/js/love.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>  
+
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="/js/FunnyTitle.js"></script>

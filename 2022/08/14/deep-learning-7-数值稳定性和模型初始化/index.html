@@ -1,0 +1,823 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon_yt.png">
+  <link rel="icon" href="/img/favicon_yt.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Echo Yu">
+  <meta name="keywords" content="ML">
+  
+    <meta name="description" content="到目前为止，我们实现的每个模型都是根据某个预先指定的分布来初始化模型的参数。这样比较容易忽略模型初始值对训练的影响。 选择哪个函数以及如何初始化参数可以决定优化算法收敛的速度有多快。 糟糕选择可能会导致我们在训练时遇到梯度爆炸或梯度消失。 梯度消失和梯度爆炸当初始值选取的点不一样时，就会造成梯度消失或者是梯度爆炸的情况 所谓梯度消失是指，梯度的值在很小的范围内变化，导数接近于平滑的直线。 梯度爆炸">
+<meta property="og:type" content="article">
+<meta property="og:title" content="deep_learning_7.数值稳定性和模型初始化">
+<meta property="og:url" content="http://yuting0907.github.io/2022/08/14/deep-learning-7-%E6%95%B0%E5%80%BC%E7%A8%B3%E5%AE%9A%E6%80%A7%E5%92%8C%E6%A8%A1%E5%9E%8B%E5%88%9D%E5%A7%8B%E5%8C%96/index.html">
+<meta property="og:site_name" content="YUTING">
+<meta property="og:description" content="到目前为止，我们实现的每个模型都是根据某个预先指定的分布来初始化模型的参数。这样比较容易忽略模型初始值对训练的影响。 选择哪个函数以及如何初始化参数可以决定优化算法收敛的速度有多快。 糟糕选择可能会导致我们在训练时遇到梯度爆炸或梯度消失。 梯度消失和梯度爆炸当初始值选取的点不一样时，就会造成梯度消失或者是梯度爆炸的情况 所谓梯度消失是指，梯度的值在很小的范围内变化，导数接近于平滑的直线。 梯度爆炸">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-14T13:27:52.000Z">
+<meta property="article:modified_time" content="2022-10-06T16:39:15.346Z">
+<meta property="article:author" content="Echo Yu">
+<meta property="article:tag" content="Deep Learning">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>deep_learning_7.数值稳定性和模型初始化 - YUTING</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/reward.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yuting0907.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>EchoYu&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="deep_learning_7.数值稳定性和模型初始化"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Echo Yu
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-14 21:27" pubdate>
+          2022年8月14日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          24 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">deep_learning_7.数值稳定性和模型初始化</h1>
+            
+            <div class="markdown-body">
+              
+              <p>到目前为止，我们实现的每个模型都是根据某个预先指定的分布来初始化模型的参数。这样比较容易忽略模型初始值对训练的影响。</p>
+<p>选择哪个函数以及如何初始化参数可以决定优化算法收敛的速度有多快。 糟糕选择可能会导致我们在训练时遇到梯度爆炸或梯度消失。</p>
+<h2 id="梯度消失和梯度爆炸"><a href="#梯度消失和梯度爆炸" class="headerlink" title="梯度消失和梯度爆炸"></a>梯度消失和梯度爆炸</h2><p>当初始值选取的点不一样时，就会造成梯度消失或者是梯度爆炸的情况</p>
+<p>所谓梯度消失是指，梯度的值在很小的范围内变化，导数接近于平滑的直线。</p>
+<p>梯度爆炸是指，导数斜率很大导致w更新的时候超出了浮点数所能表示的范围</p>
+<h4 id="1-梯度消失"><a href="#1-梯度消失" class="headerlink" title="1.梯度消失"></a>1.梯度消失</h4><p>曾经sigmoid函数1&#x2F;(1+exp⁡(−x))很流行， 因为它类似于阈值函数。 由于早期的人工神经网络受到生物神经网络的启发， 神经元要么完全激活要么完全不激活（就像生物神经元）的想法很有吸引力。 然而，它却是导致梯度消失问题的一个常见的原因， 让我们仔细看看sigmoid函数为什么会导致梯度消失。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">%matplotlib inline<br><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">from</span> d2l <span class="hljs-keyword">import</span> torch <span class="hljs-keyword">as</span> d2l<br><br>x = torch.arange(-<span class="hljs-number">8.0</span>, <span class="hljs-number">8.0</span>, <span class="hljs-number">0.1</span>, requires_grad=<span class="hljs-literal">True</span>)<br>y = torch.sigmoid(x)<br>y.backward(torch.ones_like(x))<br><br>d2l.plot(x.detach().numpy(), [y.detach().numpy(), x.grad.numpy()],<br>         legend=[<span class="hljs-string">&#x27;sigmoid&#x27;</span>, <span class="hljs-string">&#x27;gradient&#x27;</span>], figsize=(<span class="hljs-number">4.5</span>, <span class="hljs-number">2.5</span>))<br></code></pre></td></tr></table></figure>
+
+<p>![](<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img%E6%88%AA%E5%B1%8F2022-10-06">https://raw.githubusercontent.com/YUTING0907/PicGo/main/img截屏2022-10-06</a> 下午11.41.35.png)</p>
+<p>当sigmoid函数的输入很大或是很小时，它的梯度都会消失。 此外，当反向传播通过许多层时，除非我们在刚刚好的地方， 这些地方sigmoid函数的输入接近于零，否则整个乘积的梯度可能会消失。 当我们的网络有很多层时，除非我们很小心，否则在某一层可能会切断梯度。 事实上，这个问题曾经困扰着深度网络的训练。 因此，更稳定的ReLU系列函数已经成为从业者的默认选择（虽然在神经科学的角度看起来不太合理）。</p>
+<h4 id="2-梯度爆炸"><a href="#2-梯度爆炸" class="headerlink" title="2.梯度爆炸"></a>2.梯度爆炸</h4><p>梯度爆炸可能同样令人烦恼。 为了更好地说明这一点，我们生成100个高斯随机矩阵，并将它们与某个初始矩阵相乘。 对于我们选择的尺度（方差σ2&#x3D;1），矩阵乘积发生爆炸。 当这种情况是由于深度网络的初始化所导致时，我们没有机会让梯度下降优化器收敛。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python">M = torch.normal(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, size=(<span class="hljs-number">4</span>,<span class="hljs-number">4</span>))<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;一个矩阵 \n&#x27;</span>,M)<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">100</span>):<br>    M = torch.mm(M,torch.normal(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, size=(<span class="hljs-number">4</span>, <span class="hljs-number">4</span>)))<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;乘以100个矩阵后\n&#x27;</span>, M)<br><br><br>一个矩阵<br> tensor([[ <span class="hljs-number">0.4382</span>, -<span class="hljs-number">0.7687</span>,  <span class="hljs-number">0.2731</span>, -<span class="hljs-number">0.2587</span>],<br>        [-<span class="hljs-number">0.1789</span>, -<span class="hljs-number">0.2395</span>,  <span class="hljs-number">1.4915</span>,  <span class="hljs-number">0.2634</span>],<br>        [-<span class="hljs-number">0.5272</span>,  <span class="hljs-number">0.2403</span>,  <span class="hljs-number">2.4397</span>, -<span class="hljs-number">0.7587</span>],<br>        [ <span class="hljs-number">0.9805</span>,  <span class="hljs-number">0.4166</span>, -<span class="hljs-number">0.1906</span>, -<span class="hljs-number">0.2581</span>]])<br>乘以<span class="hljs-number">100</span>个矩阵后<br> tensor([[ <span class="hljs-number">7.6616e+22</span>,  <span class="hljs-number">4.2587e+22</span>, -<span class="hljs-number">5.8065e+22</span>,  <span class="hljs-number">1.2980e+23</span>],<br>        [-<span class="hljs-number">2.3790e+21</span>, -<span class="hljs-number">1.3224e+21</span>,  <span class="hljs-number">1.8030e+21</span>, -<span class="hljs-number">4.0304e+21</span>],<br>        [-<span class="hljs-number">1.3796e+23</span>, -<span class="hljs-number">7.6687e+22</span>,  <span class="hljs-number">1.0456e+23</span>, -<span class="hljs-number">2.3373e+23</span>],<br>        [ <span class="hljs-number">8.5987e+20</span>,  <span class="hljs-number">4.7795e+20</span>, -<span class="hljs-number">6.5167e+20</span>,  <span class="hljs-number">1.4567e+21</span>]])<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="解决数值不稳定"><a href="#解决数值不稳定" class="headerlink" title="解决数值不稳定"></a>解决数值不稳定</h3><p><strong>目标：让梯度值在合理的范围内，例如【1e-6，1e3】</strong></p>
+<p><strong>1.合理的权重初始化和激活函数</strong></p>
+<p>合理化的权重是要把权重的在均值和方差保持在一个范围</p>
+<p>Xavier初始化方法</p>
+<p>一般采用Xavier初始化方法来进行初始化，意味着说激活函数应该近似是y&#x3D;x</p>
+<p>常用激活函数</p>
+<p>sigmoid(X) &#x3D; 1&#x2F;2 + x&#x2F;4 - x^3 &#x2F;48 + O(x^5)</p>
+<p>tanh(x) &#x3D; 0+x-x^3&#x2F;3 + O(x^5)</p>
+<p>Relu(x) &#x3D; 0 + x </p>
+<p>调整sigmoid：</p>
+<p>4*sigmoid(x) - 2</p>
+<p>注：Relu：max(0,x)</p>
+<p><strong>2.将乘法变加法</strong></p>
+<p>   ResNet、LSTM</p>
+<p><strong>3.归一化</strong></p>
+<p>  梯度归一化，梯度裁剪</p>
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><p>1.nan和inf是怎么产生的？</p>
+<p>nan是➗0导致的，inf是值太大了炸掉了。可以把学习率减少，合理的初始化权重，激活函数不要选错，简单的做法是lr调小，直到不出现nan或者inf为止，还有就是初始化权重的时候，可以方差取小一点，均值为0，方差可以取小点</p>
+<p>2.训练过程中，如果网络层的输出的中间层特征元素的值突然变成nanle，是发生了梯度爆炸了嘛？</p>
+<p>一般是梯度爆炸造成的</p>
+<p>3.遇到复杂的数学公式，看文字描述也没什么感觉，怎么突破？</p>
+<p>上数学课hhh，线形代数学一学概率论学一学呗，虽然深度学习没有用到太多的数学知识，但是你如果要去看别的模型，数学不好你可能就看不懂，也就玩不了别的模型</p>
+<p>4.梯度消失可以说是因为使用了sigmoid激活函数引起的吗？所以我们可以用ReLU替换sigmoid解决梯度消失的问题？</p>
+<p>sigmoid确实是会造成梯度消失，但不能说是梯度消失就是sigmoid造成的，还可能有其他原因。用ReLU可以代替sigmoid有可能解决这个问题，但是不能保证一定能解决</p>
+<p>5.梯度爆炸是由什么激活函数引起的？</p>
+<p>激活函数相对都是比较平滑的曲线，它的梯度一般不会有太大的问题。梯度爆炸的产生是每层输出的值太大，n个很大的数相乘会导致梯度爆炸</p>
+<p>6.山地图可以可视化出来吗？我们可以把损失函数可视化出来来指导训练吗？</p>
+<p>没有特别好的方法，但是有一些研究正在做</p>
+<p>7.强制似的每一层的输出特征均值为0，方差为1，是不是损失了网络的表达能力？会降低学到的模型的准确率？</p>
+<p>其实没有损失网络的表达能力，只是把它们拉到一个合理数值区间，只是让硬件更好处理和计算，从数学上来讲无论拉到什么区间都不会影响模型的可表达性</p>
+<p>8.为什么4*sigmoid(x)-2可以提高稳定性？</p>
+<p>其实是sigmoid做这样的处理后，它在0点附近的区间近视与y&#x3D;x</p>
+<p>9.激活函数选择有什么建议吗？</p>
+<p>用ReLU</p>
+<p>10.一般权重是在每个epoch结束后更新的吧？</p>
+<p>权重更新是在每个data_iter每个batch，每个epoch结束后是已经更新过很多次了</p>
+
+              
+            </div>
+            <hr/>
+            
+            <!-- donate -->
+            <div class="reward-container">
+            	
+            		<button id="rewardBtn" class="reward-btn">
+            			 
+            				 Donate
+            				
+            		</button>
+            		<p class="tea">觉得不错的话，给点打赏吧 ୧(๑•̀⌄•́๑)૭</p>
+            		<div id="rewardImgContainer" class="reward-img-container">
+                     	<div class="singleImgContainer">
+                        	<img id="wechatImg" class="reward-img" src="/img/wechatpay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="wechatPay">wechat pay</p>
+                      </div>
+                      <div class="singleImgContainer">
+                           	<img id="alipayImg" class="reward-img" src="/img/alipay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="aliPay">alipay</p>
+                      </div>
+            		</div>
+            	
+            </div>
+            
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Deep-Learning/" class="category-chain-item">Deep Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Deep-Learning/">#Deep Learning</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>deep_learning_7.数值稳定性和模型初始化</div>
+      <div>http://yuting0907.github.io/2022/08/14/deep-learning-7-数值稳定性和模型初始化/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Echo Yu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月14日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/15/Doris%E7%B4%A2%E5%BC%95/" title="Doris索引">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Doris索引</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/14/deep-learning-6-%E8%BF%87%E6%8B%9F%E5%90%88-%E6%9A%82%E9%80%80%E6%B3%95-Dropout/" title="deep_learning_6.过拟合-暂退法(Dropout)">
+                        <span class="hidden-mobile">deep_learning_6.过拟合-暂退法(Dropout)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/reward.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
+
+<!--  -->
+<script type="text/javascript" src="/js/love.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>  
+
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="/js/FunnyTitle.js"></script>

@@ -1,0 +1,931 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon_yt.png">
+  <link rel="icon" href="/img/favicon_yt.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="yuting">
+  <meta name="keywords" content="ML">
+  
+    <meta name="description" content="【1】前言 XGBoost, 全名(eXtreme Gradient Boosting)，Kaggle大杀器，在数据挖掘比赛上，Everybody knows it！！！ XGBoost作者：陈天奇（华盛顿大学） XGBoost前身:XGBoost是Boosting算法的其中一种,是在GBDT的基础上进行改进，使之更强大，适用于更大范围. 算法发布时间在2014年   本文适用对象：1.了解决策树">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning-笔记 -XGBoost教程">
+<meta property="og:url" content="http://yuting0907.github.io/2019/03/31/Machine-Learning-%E7%AC%94%E8%AE%B0-XGBoost%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="YUTING">
+<meta property="og:description" content="【1】前言 XGBoost, 全名(eXtreme Gradient Boosting)，Kaggle大杀器，在数据挖掘比赛上，Everybody knows it！！！ XGBoost作者：陈天奇（华盛顿大学） XGBoost前身:XGBoost是Boosting算法的其中一种,是在GBDT的基础上进行改进，使之更强大，适用于更大范围. 算法发布时间在2014年   本文适用对象：1.了解决策树">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/aOr8BZHt*q6uyFpj2aEFCLoBAyu*6MYDD*iL8zMnsK8!/b/dDQBAAAAAAAA&bo=ZQEYAQAAAAADF08!&rf=viewer_4&t=5">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/TLeI9lRonq7NAgF68hz5M8bI.ExHoesibyN39nBmL2w!/b/dL8AAAAAAAAA&bo=PQJ0AAAAAAADF3k!&rf=viewer_4&t=5">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/y8Dm0rNkvvoO4EXLCTQT*qSCvZwyBYPBvkZweT7h6ok!/b/dL4AAAAAAAAA&bo=EgQ3AgAAAAADFxE!&rf=viewer_4&t=5">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/0lHqHpsTCuA8173eyPQ7KXVLsk6NQI*DZPFBixu8APk!/b/dDYBAAAAAAAA&bo=HARvAgAAAAADF0c!&rf=viewer_4&t=5">
+<meta property="article:published_time" content="2019-03-31T06:48:17.000Z">
+<meta property="article:modified_time" content="2022-05-24T01:02:04.237Z">
+<meta property="article:author" content="Echo Yu">
+<meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/aOr8BZHt*q6uyFpj2aEFCLoBAyu*6MYDD*iL8zMnsK8!/b/dDQBAAAAAAAA&bo=ZQEYAQAAAAADF08!&rf=viewer_4&t=5">
+  
+  
+  
+  <title>Machine Learning-笔记 -XGBoost教程 - YUTING</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/reward.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yuting0907.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>EchoYu&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Machine Learning-笔记 -XGBoost教程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        yuting
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-03-31 14:48" pubdate>
+          2019年3月31日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          112 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Machine Learning-笔记 -XGBoost教程</h1>
+            
+            <div class="markdown-body">
+              
+              <h3 id="【1】前言"><a href="#【1】前言" class="headerlink" title="【1】前言"></a>【1】前言</h3><ul>
+<li>XGBoost, 全名(eXtreme Gradient Boosting)，Kaggle大杀器，在数据挖掘比赛上，Everybody knows it！！！</li>
+<li>XGBoost作者：陈天奇（华盛顿大学）</li>
+<li>XGBoost前身:XGBoost是Boosting算法的其中一种,是在GBDT的基础上进行改进，使之更强大，适用于更大范围.</li>
+<li>算法发布时间在2014年</li>
+</ul>
+<hr>
+<p>本文适用对象：<br>1.了解决策树族群：决策森林，Adaboost，GBDT等<br>2.了解bagging，boosting<br>3.准备在机器学习道路上越走越远的朋友<br>4.高能数学预警：泰勒公式、梯度下降法了解一下下，但是我是不愿意看这些深奥的数学公式。</p>
+<p>链接：<br><a target="_blank" rel="noopener" href="https://github.com/YUTING0907/Markdown_pic/blob/master/xgboost/BoostedTree.pdf">【天奇大神PPT传送门】</a></p>
+<hr>
+<h3 id="【2】算法原理简述"><a href="#【2】算法原理简述" class="headerlink" title="【2】算法原理简述"></a>【2】算法原理简述</h3><h5 id="1-Review-of-key-concepts-of-supervised-learning-监督学习到底在学什么"><a href="#1-Review-of-key-concepts-of-supervised-learning-监督学习到底在学什么" class="headerlink" title="(1)Review of key concepts of supervised learning | 监督学习到底在学什么"></a><strong>(1)Review of key concepts of supervised learning | 监督学习到底在学什么</strong></h5><ul>
+<li>label(标签)<br>根据带有标签的数据学习出一套规则，给另外没有标签的测试集打上标签。</li>
+<li>假设函数(Hypothesis)</li>
+<li>目标函数（Objective Function）&#x3D; 损失函数(Cost Function) + 正则化（Regularization）</li>
+<li>minimize Objective Function 最小化目标函数</li>
+</ul>
+<p>在监督学习算法学习的过程中，其实就是最小化目标函数的过程，找到让目标函数最小化的一组参数。其中：</p>
+<ul>
+<li>损失函数表示模型对训练数据的拟合程度，loss越小，代表模型预测的越准.</li>
+<li>正则化项衡量模型的复杂度，regularization越小，代表模型模型的复杂度越低。</li>
+<li>目标函数越小，代表模型越好</li>
+</ul>
+<h5 id="2-Regression-Tree-and-Ensemble-决策树在做什么"><a href="#2-Regression-Tree-and-Ensemble-决策树在做什么" class="headerlink" title="(2) Regression Tree and Ensemble | 决策树在做什么"></a><strong>(2) Regression Tree and Ensemble | 决策树在做什么</strong></h5><ul>
+<li>一种模仿人类做决定的思维方式构建的算法</li>
+<li>信息增益（Information Gain）：决定分裂节点，主要是为了减少损失loss</li>
+<li>最大深度：会影响模型复杂度</li>
+<li>树的剪枝：主要为了减少模型复杂度，而复杂度被‘树枝的数量’影响</li>
+<li>回归树不止用于做回归，还可以做分类、排序等，主要依赖于目标函数的定义</li>
+</ul>
+<h5 id="3-Gradient-Boosting-How-do-we-learn"><a href="#3-Gradient-Boosting-How-do-we-learn" class="headerlink" title="(3) Gradient Boosting(How do we learn)"></a><strong>(3) Gradient Boosting(How do we learn)</strong></h5><p>XGBoost 与前身 GBDT比较优势在于</p>
+<ul>
+<li><strong>1.损失函数</strong>：GBDT是一阶，XGB是二阶泰勒展开</li>
+<li><strong>2.XGB的损失函数可以自定义</strong></li>
+<li><strong>3.XGB加入正则</strong>：XGB的目标函数进行了优化，有正则项，减少过拟合，控制模型复杂度</li>
+<li><strong>4.XGB运行速度快</strong>：决策树的学习最耗时的一个步骤就是对特征的值进行排序,在进行节点的分裂的时候，需要计算每个特征的增益。Xgboost在训练之前，预先对数据进行了排序，然后保存为block结构，后面的迭代中重复使用这个结构，大大减小计算量。各个特征的增益计算就可以开多线程进行。</li>
+<li><strong>5.内置交叉验证</strong>: 允许每轮boosting迭代中用交叉检验，以便获取最优 Boosting_n_round 迭代次数，可利用网格搜索grid search和交叉检验cross validation进行调参。</li>
+<li><strong>6.预剪枝：</strong><br>GBDT：分裂到负损失，分裂停止;<br> XGB：一直分裂到指定的最大深度（max_depth），然后回过头剪枝。如某个点之后不再正值，去除这个分裂。优点是，当一个负损失(-2)后存在一个正损失(+10)，(-2+10&#x3D;8&gt;0)求和为正，保留这个分裂。</li>
+</ul>
+<h3 id="【3】参数说明"><a href="#【3】参数说明" class="headerlink" title="【3】参数说明"></a>【3】参数说明</h3><p>  XGBoost的参数多到让人发指，下面只列举部分常用参数，所有参数的官方说明文档，请点击<a target="_blank" rel="noopener" href="https://xgboost.readthedocs.io/en/latest/parameter.html">官方文档说明</a><br>  XGBoost的参数可以归为3类：</p>
+<h5 id="1-General-parameters-通用参数"><a href="#1-General-parameters-通用参数" class="headerlink" title="(1) General parameters 通用参数"></a><strong>(1) General parameters 通用参数</strong></h5><p>该参数控制在提升（boosting）过程中使用哪种booster，常用的booster有树模型（tree）和线性模型（linear model）</p>
+<ul>
+<li><strong>booster [default&#x3D;gbtree]</strong><br> 有两种模型可以选择gbtree和gblinear。gbtree使用基于树的模型进行提升计算，gblinear使用线性模型进行提升计算。缺省值为gbtree</li>
+<li><strong>silent [default&#x3D;0]</strong><br>取0时表示打印出运行时信息，取1时表示以缄默方式运行，不打印运行时的信息。缺省值为0</li>
+<li><strong>nthread</strong> [default to maximum number of threads available if not set] <ul>
+<li>XGBoost运行时的线程数。缺省值是当前系统可以获得的最大线程数。</li>
+<li>如果你希望以最大速度运行，建议不设置这个参数，模型将自动获得最大线程</li>
+</ul>
+</li>
+<li><strong>num_pbuffer</strong> [set automatically by xgboost, no need to be set by user]<br>size of prediction buffer, normally set to number of training instances. The buffers are used to save the prediction results of last boosting step.</li>
+<li><strong>num_feature</strong> [set automatically by xgboost, no need to be set by user]<br>  boosting过程中用到的特征维数，设置为特征个数。XGBoost	 	会自动设置，不需要手工设置</li>
+</ul>
+<h5 id="2-Booster-parameters参数"><a href="#2-Booster-parameters参数" class="headerlink" title="(2) Booster parameters参数"></a><strong>(2) Booster parameters参数</strong></h5><ul>
+<li><strong>Parameters for Tree Booster</strong><br> - <strong>eta [default&#x3D;0.3]</strong><br>     - 为了防止过拟合，更新过程中用到的收缩步长。在每次提升计算之后，算法会直接获得新特征的权重。 eta通过缩减特征的权重使提升计算过程更加保守。<br> 通常最后设置eta为0.01~0.2<br>     - 取值范围为：[0,1]<ul>
+<li><strong>gamma [default&#x3D;0]</strong><br>  - minimum loss reduction required to make a further partition on a leaf node of the tree. the larger, the more conservative the algorithm will be <strong>；</strong><br>  - range: [0,∞] <strong>；</strong><br>   -  模型在默认情况下，对于一个节点的划分只有在其loss function 得到结果大于0的情况下才进行，而gamma 给定了所需的最低loss function的值 <strong>；</strong><br>     - gamma值使得算法更conservation，且其值依赖于loss function ，在模型中应该进行调参 <strong>。</strong></li>
+<li><strong>max_depth [default&#x3D;6]</strong><br>  - 树的最大深度。缺省值为6 <strong>；</strong><br>  - 取值范围为：[1,∞] <strong>；</strong><br>  - 指树的最大深度 <strong>；</strong><br>  - 树的深度越大，则对数据的拟合程度越高（过拟合程度也越高）。即该参数也是控制过拟合 <strong>；</strong><br>   - 建议通过交叉验证（xgb.cv ) 进行调参 <strong>；</strong><br>  通常取值：3-10 <strong>；</strong></li>
+<li><strong>min_child_weight [default&#x3D;1]</strong><br>-  孩子节点中最小的样本权重和。如果一个叶子节点的样本权重和小于min_child_weight则拆分过程结束。在现行回归模型中，这个参数是指建立每个模型所需要的最小样本数。该成熟越大算法越conservative。即调大这个参数能够控制过拟合 <strong>;</strong><ul>
+<li>取值范围为: [0,∞]</li>
+</ul>
+</li>
+<li><strong>max_delta_step [default&#x3D;0]</strong> <ul>
+<li>如果取值为0，那么意味着无限制。如果取为正数，则其使得xgboost更新过程更加保守。</li>
+<li>取值范围为：[0,∞]</li>
+<li>通常不需要设置这个值，但在使用logistics 回归时，若类别极度不平衡，则调整该参数可能有效果</li>
+</ul>
+</li>
+<li>subsample [default&#x3D;1] <ul>
+<li>用于训练模型的子样本占整个样本集合的比例。如果设置为0.5则意味着XGBoost将随机的从整个样本集合中抽取出50%的子样本建立树模型，这能够防止过拟合。</li>
+<li>取值范围为：(0,1]</li>
+</ul>
+</li>
+<li>colsample_bytree [default&#x3D;1]<br>  在建立树时对特征随机采样的比例。缺省值为1</li>
+<li>colsample_bylevel[default&#x3D;1]<br> 通常不使用，因为subsample和colsample_bytree已经可以起到相同的作用了</li>
+</ul>
+</li>
+<li><strong>Parameters for Linear Booster and Tweedie Regression</strong><ul>
+<li><strong>lambda [default&#x3D;0]</strong><br>  L2 正则的惩罚系数<br>  用于处理XGBoost的正则化部分。通常不使用，但可以用来降低过拟合</li>
+<li><strong>alpha [default&#x3D;0]</strong><br>  L1 正则的惩罚系数<br>  当数据维度极高时可以使用，使得算法运行更快。</li>
+<li><strong>lambda_bias</strong><br>  在偏置上的L2正则。缺省值为0（在L1上没有偏置项的正则，因为L1时偏置不重要）</li>
+</ul>
+</li>
+</ul>
+<h5 id="3-Learning-Task-parameters"><a href="#3-Learning-Task-parameters" class="headerlink" title="(3) Learning Task parameters"></a><strong>(3) Learning Task parameters</strong></h5><ul>
+<li><p><strong>objective [ default&#x3D;reg:linear ]</strong></p>
+<ul>
+<li>“reg:linear” –线性回归。</li>
+<li>“reg:logistic” –逻辑回归。</li>
+<li>“binary:logistic” –二分类的逻辑回归问题，输出为概率。</li>
+<li>“binary:logitraw” –二分类的逻辑回归问题，输出的结果为wTx。</li>
+<li>“count:poisson” –计数问题的poisson回归，输出结果为poisson分布。<br>   在poisson回归中，max_delta_step的缺省值为0.7。(used to safeguard optimization)</li>
+<li>“multi:softmax” –让XGBoost采用softmax目标函数处理多分类问题，同时需要设置参数num_class（类别个数）</li>
+<li>“multi:softprob” –和softmax一样，但是输出的是ndata * nclass的向量，可以将该向量reshape成ndata行nclass列的矩阵。每行数据表示样本所属于每个类别的概率。</li>
+<li>“rank:pairwise” –set XGBoost to do ranking task by minimizing the pairwise loss</li>
+</ul>
+</li>
+<li><p><strong>base_score [ default&#x3D;0.5 ]</strong><br>the initial prediction score of all instances, global bias</p>
+</li>
+<li><p><strong>eval_metric [ default according to objective ]</strong><br>  校验数据所需要的评价指标，不同的目标函数将会有缺省的评价指标（rmse for regression, and error for classification, mean average precision for ranking）</p>
+<ul>
+<li>“rmse”: root mean square error</li>
+<li>“logloss”: negative log-likelihood</li>
+<li>“error”: Binary classification error rate. It is calculated as #(wrong cases)&#x2F;#(all cases). For the predictions, the evaluation will regard the instances with prediction value larger than 0.5 as positive instances, and the others as negative instances.</li>
+<li>“merror”: Multiclass classification error rate. It is calculated as #(wrong cases)&#x2F;#(all cases).</li>
+<li>“mlogloss”: Multiclass logloss</li>
+<li>“auc”: Area under the curve for ranking evaluation</li>
+<li>“ndcg”:Normalized Discounted Cumulative Gain</li>
+<li>“map”:Mean average precision</li>
+</ul>
+</li>
+<li><p><strong>seed [ default&#x3D;0 ]</strong><br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/aOr8BZHt*q6uyFpj2aEFCLoBAyu*6MYDD*iL8zMnsK8!/b/dDQBAAAAAAAA&bo=ZQEYAQAAAAADF08!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+<hr>
+<h3 id="【4】代码实现：python"><a href="#【4】代码实现：python" class="headerlink" title="【4】代码实现：python"></a>【4】代码实现：python</h3><h5 id="1-API接口说明"><a href="#1-API接口说明" class="headerlink" title="(1)API接口说明"></a><strong>(1)API接口说明</strong></h5><p>目前为止，xgb model 有两个接口</p>
+<ul>
+<li>import xgboost </li>
+<li>from xgboost import XGBClassifier</li>
+</ul>
+<h5 id="2-XGBoost调参"><a href="#2-XGBoost调参" class="headerlink" title="(2) XGBoost调参"></a><strong>(2) XGBoost调参</strong></h5><ul>
+<li>方法一：直接调参，调用 xgboost包 的 XGBClassifier()<br>可以对其参数进行手动修改，default参数如下<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/TLeI9lRonq7NAgF68hz5M8bI.ExHoesibyN39nBmL2w!/b/dL8AAAAAAAAA&bo=PQJ0AAAAAAADF3k!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload></li>
+<li>方法二： 随机调参。<br>使用 xgb.cv，这里同样可以使用KFold()</li>
+</ul>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">from sklearn.cross_validation import KFold<br>kf = <span class="hljs-constructor">KFold(<span class="hljs-params">len</span>(<span class="hljs-params">train_feat</span>)</span>, n_folds=<span class="hljs-number">5</span>, shuffle=True, random_state=<span class="hljs-number">520</span>)<br><span class="hljs-keyword">for</span> i, (train_index, test_index) <span class="hljs-keyword">in</span> enumerate(kf):<br>        # 将测试集均分 取一份当测试集<br>	xgb_train = xgb.<span class="hljs-constructor">DMatrix(<span class="hljs-params">train_feat</span>[<span class="hljs-params">predictors</span>].<span class="hljs-params">iloc</span>[<span class="hljs-params">train_index</span>], <span class="hljs-params">train_feat</span>[<span class="hljs-params">label</span>].<span class="hljs-params">iloc</span>[<span class="hljs-params">train_index</span>])</span><br>	xgb_eval = xgb.<span class="hljs-constructor">DMatrix(<span class="hljs-params">train_feat</span>[<span class="hljs-params">predictors</span>].<span class="hljs-params">iloc</span>[<span class="hljs-params">test_index</span>], <span class="hljs-params">train_feat</span>[<span class="hljs-params">label</span>].<span class="hljs-params">iloc</span>[<span class="hljs-params">test_index</span>])</span><br>	print(<span class="hljs-string">&quot;..........开始第&#123;&#125;轮训练&quot;</span>.format(i))<br></code></pre></td></tr></table></figure>
+<p>注: xgb.cv()这里的cv()函数是进行了k折叠交叉验证，它不是一个参数搜索功能</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> xgboost <span class="hljs-keyword">as</span> xgb<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> random<br><span class="hljs-keyword">from</span> ggplot <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> accuracy_score, f1_score, precision_score, recall_score, classification_report, confusion_matrix,mean_squared_error<br><br>train_path = <span class="hljs-string">&#x27;D:/Pywork/Titanic/train.csv&#x27;</span><br>test_path = <span class="hljs-string">&#x27;D:/Pywork/Titanic/test.csv&#x27;</span><br>train = pd.read_csv(train_path)<br>test = pd.read_csv(test_path)<br><br><br>best_param = <span class="hljs-built_in">list</span>()<br>best_logloss = np.Inf<br>best_logloss_index = <span class="hljs-number">0</span><br>X_hote = pd.get_dummies(X_train)<br><span class="hljs-built_in">print</span>(X_hote.info())<br>dtrain = xgb.DMatrix(X_hote, y_train)<br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">50</span>):<br>    xgb_params = &#123;<br>        <span class="hljs-string">&#x27;objective&#x27;</span>: <span class="hljs-string">&quot;binary:logistic&quot;</span>,<br>        <span class="hljs-string">&#x27;max_depth&#x27;</span>: np.random.randint(<span class="hljs-number">6</span>, <span class="hljs-number">11</span>), <span class="hljs-comment"># 构建树的深度，越大越容易过拟合</span><br>        <span class="hljs-string">&#x27;eta&#x27;</span>: np.random.uniform(<span class="hljs-number">.01</span>, <span class="hljs-number">.3</span>), <span class="hljs-comment"># 如同学习率</span><br>        <span class="hljs-string">&#x27;gamma&#x27;</span>: np.random.uniform(<span class="hljs-number">0.0</span>, <span class="hljs-number">0.2</span>),<span class="hljs-comment"># gamma最小损失调节范围</span><br>        <span class="hljs-string">&#x27;subsample&#x27;</span>: np.random.uniform(<span class="hljs-number">.6</span>, <span class="hljs-number">.9</span>), <span class="hljs-comment"># 随机采样训练样本</span><br>        <span class="hljs-string">&#x27;colsample_bytree&#x27;</span>: np.random.uniform(<span class="hljs-number">.5</span>, <span class="hljs-number">.8</span>), <span class="hljs-comment"># 生成树时进行的列采样</span><br>        <span class="hljs-string">&#x27;min_child_weight&#x27;</span>: np.random.randint(<span class="hljs-number">1</span>, <span class="hljs-number">41</span>),<br>        <span class="hljs-string">&#x27;max_delta_step&#x27;</span>: np.random.randint(<span class="hljs-number">1</span>, <span class="hljs-number">11</span>),<br>        <span class="hljs-string">&#x27;silent&#x27;</span>: <span class="hljs-number">1</span><br>    &#125;<br>    cv_nfold = <span class="hljs-number">5</span><br>    cv_nround = <span class="hljs-number">50</span><br>    bst_cv1 = xgb.cv(params=xgb_params,  <span class="hljs-comment"># 这是一个字典，里面包含着训练中的参数关键字和对应的值</span><br>                     dtrain=dtrain, <span class="hljs-comment"># 训练的数据</span><br>                     num_boost_round=cv_nround, <span class="hljs-comment"># 这是指提升迭代的个数</span><br>                      <span class="hljs-comment"># evals  这是一个列表，用于对训练过程中进行评估列表中的元素 evals = [(dtrain,’train’)]</span><br>                     <span class="hljs-comment"># feval,自定义评估函数</span><br>                     <span class="hljs-comment"># verbose_eval(可以输入布尔型或数值型)，也要求evals 里至少有 一个元素。</span><br>                     <span class="hljs-comment"># 如果为True ,则对evals中元素的评估结果会输出在结果中；如果输入数字，假设为5，则每隔5个迭代输出一次</span><br>                     nfold=cv_nfold,<br>                     seed=<span class="hljs-number">0</span>,<br>                     metrics=[<span class="hljs-string">&quot;auc&quot;</span>, <span class="hljs-string">&quot;rmse&quot;</span>, <span class="hljs-string">&quot;error&quot;</span>, <span class="hljs-string">&quot;logloss&quot;</span>],<br>                     maximize=<span class="hljs-literal">False</span>, <span class="hljs-comment"># 是否对评估函数进行最大化</span><br>                     early_stopping_rounds=<span class="hljs-number">10</span>,<br>                     verbose_eval=<span class="hljs-literal">None</span>,<br>                     )<br><br>    min_logloss = <span class="hljs-built_in">min</span>(bst_cv1[<span class="hljs-string">&#x27;test-logloss-mean&#x27;</span>])<br>    min_logloss_index = bst_cv1.index[bst_cv1[<span class="hljs-string">&#x27;test-logloss-mean&#x27;</span>] == <span class="hljs-built_in">min</span>(bst_cv1[<span class="hljs-string">&#x27;test-logloss-mean&#x27;</span>])][<span class="hljs-number">0</span>]<br><br>    <span class="hljs-keyword">if</span> min_logloss &lt; best_logloss:<br>        best_logloss = min_logloss<br>        best_logloss_index = min_logloss_index<br>        best_param = xgb_params<br><br>nround = best_logloss_index<br><span class="hljs-built_in">print</span>(best_logloss)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;best_round = %d&#x27;</span> % (nround))<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;best_param : ------------------------------&#x27;</span>)<br><span class="hljs-built_in">print</span>(best_param)  <span class="hljs-comment"># 显示最佳参数组合，到后面真正的模型要用</span><br>plt.figure()<br>plt.plot(bst_cv1[<span class="hljs-string">&#x27;train-logloss-mean&#x27;</span>], <span class="hljs-string">&#x27;g&#x27;</span>, label=<span class="hljs-string">&#x27;train&#x27;</span>)<br>plt.plot(bst_cv1[<span class="hljs-string">&#x27;test-logloss-mean&#x27;</span>], <span class="hljs-string">&#x27;r&#x27;</span>, label=<span class="hljs-string">&#x27;test&#x27;</span>)<br><span class="hljs-built_in">print</span>(plt.show())<br></code></pre></td></tr></table></figure>
+<ul>
+<li>方法三：使用 gridsearch 和 cross validation</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs stylus">from sklearn<span class="hljs-selector-class">.grid_search</span> import GridSearchCV<br>params = &#123;<span class="hljs-string">&#x27;max_depth&#x27;</span>:<span class="hljs-selector-attr">[i for i in range(2,7)]</span>,<span class="hljs-string">&#x27;n_estimators&#x27;</span>:<span class="hljs-selector-attr">[j for j in range(100,1100,200)]</span>,<span class="hljs-string">&#x27;learning_rate&#x27;</span>:<span class="hljs-selector-attr">[0.05,0.1,0.25,0.5,0.1]</span><br>         &#125;<br>xgbc_best = <span class="hljs-built_in">XGBClassifier</span>()<br>gs = <span class="hljs-built_in">GridSearchCV</span>(xgbc_best,params,n_jobs=-<span class="hljs-number">1</span>,cv=<span class="hljs-number">5</span>,verbose=<span class="hljs-number">1</span>)<br>gs<span class="hljs-selector-class">.fit</span>(X_train,y_train)<br></code></pre></td></tr></table></figure>
+<h5 id="3-绘制-train-x2F-test-的-auc-x2F-rmse-x2F-error"><a href="#3-绘制-train-x2F-test-的-auc-x2F-rmse-x2F-error" class="headerlink" title="(3) 绘制 train&#x2F;test 的 auc&#x2F;rmse&#x2F;error"></a><strong>(3) 绘制 train&#x2F;test 的 auc&#x2F;rmse&#x2F;error</strong></h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs routeros">def xgb_plot(input, output):<br>    history = input<br>    train_history = history.iloc[:, 8:16].assign(id=[i+1 <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> history.index])<br>    train_history[<span class="hljs-string">&#x27;Class&#x27;</span>] = <span class="hljs-string">&#x27;train&#x27;</span><br>    test_history = history.iloc[:, 0:8].assign(id=[i+1 <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> history.index])<br>    test_history[<span class="hljs-string">&#x27;Class&#x27;</span>] = <span class="hljs-string">&#x27;test&#x27;</span><br>    train_history.columns = [<span class="hljs-string">&quot;auc_mean&quot;</span>, <span class="hljs-string">&quot;auc_std&quot;</span>, <span class="hljs-string">&quot;error_mean&quot;</span>, <span class="hljs-string">&quot;error_std&quot;</span>, <span class="hljs-string">&quot;logloss_mean&quot;</span>, <span class="hljs-string">&quot;logloss_std&quot;</span>, <span class="hljs-string">&quot;rmse_mean&quot;</span>, <span class="hljs-string">&quot;rmse_std&quot;</span>, <span class="hljs-string">&quot;id&quot;</span>, <span class="hljs-string">&quot;Class&quot;</span>]<br>    test_history.columns = [<span class="hljs-string">&quot;auc_mean&quot;</span>, <span class="hljs-string">&quot;auc_std&quot;</span>, <span class="hljs-string">&quot;error_mean&quot;</span>, <span class="hljs-string">&quot;error_std&quot;</span>, <span class="hljs-string">&quot;logloss_mean&quot;</span>, <span class="hljs-string">&quot;logloss_std&quot;</span>, <span class="hljs-string">&quot;rmse_mean&quot;</span>, <span class="hljs-string">&quot;rmse_std&quot;</span>, <span class="hljs-string">&quot;id&quot;</span>, <span class="hljs-string">&quot;Class&quot;</span>]<br>    his = pd.concat([train_history, test_history])<br><br>    <span class="hljs-keyword">if</span> output == <span class="hljs-string">&quot;auc&quot;</span>:<br>        his[<span class="hljs-string">&#x27;y_min_auc&#x27;</span>] = his[<span class="hljs-string">&#x27;auc_mean&#x27;</span>]-his[<span class="hljs-string">&#x27;auc_std&#x27;</span>]<br>        his[<span class="hljs-string">&#x27;y_man_auc&#x27;</span>] = his[<span class="hljs-string">&#x27;auc_mean&#x27;</span>]+his[<span class="hljs-string">&#x27;auc_std&#x27;</span>]<br>        auc = ggplot(his, aes(<span class="hljs-attribute">x</span>=<span class="hljs-string">&#x27;id&#x27;</span>, <span class="hljs-attribute">y</span>=<span class="hljs-string">&#x27;auc_mean&#x27;</span>, <span class="hljs-attribute">ymin</span>=<span class="hljs-string">&#x27;y_min_auc&#x27;</span>, <span class="hljs-attribute">ymax</span>=<span class="hljs-string">&#x27;y_man_auc&#x27;</span>, <span class="hljs-attribute">fill</span>=<span class="hljs-string">&#x27;Class&#x27;</span>))+geom_line()+geom_ribbon(alpha=0.5)+labs(x=&quot;nround&quot;,y=&#x27;&#x27;,title = <span class="hljs-string">&quot;XGB Cross Validation AUC&quot;</span>)<br>        return auc<br>    <span class="hljs-keyword">if</span> output == <span class="hljs-string">&quot;rmse&quot;</span>:<br>        his[<span class="hljs-string">&#x27;y_min_rmse&#x27;</span>] = his[<span class="hljs-string">&#x27;rmse_mean&#x27;</span>] - his[<span class="hljs-string">&#x27;rmse_std&#x27;</span>]<br>        his[<span class="hljs-string">&#x27;y_man_rmse&#x27;</span>] = his[<span class="hljs-string">&#x27;rmse_mean&#x27;</span>] + his[<span class="hljs-string">&#x27;rmse_std&#x27;</span>]<br>        rmse = ggplot(his, aes(<span class="hljs-attribute">x</span>=<span class="hljs-string">&#x27;id&#x27;</span>, <span class="hljs-attribute">y</span>=<span class="hljs-string">&#x27;rmse_mean&#x27;</span>, <span class="hljs-attribute">ymin</span>=<span class="hljs-string">&#x27;y_min_rmse&#x27;</span>, <span class="hljs-attribute">ymax</span>=<span class="hljs-string">&#x27;y_man_rmse&#x27;</span>, <span class="hljs-attribute">fill</span>=<span class="hljs-string">&#x27;Class&#x27;</span>)) + geom_line() + geom_ribbon(<span class="hljs-attribute">alpha</span>=0.5) + labs(<span class="hljs-attribute">x</span>=<span class="hljs-string">&quot;nround&quot;</span>, <span class="hljs-attribute">y</span>=<span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-attribute">title</span>=<span class="hljs-string">&quot;XGB Cross Validation RMSE&quot;</span>)<br>        return (rmse)<br>    <span class="hljs-keyword">if</span> output == <span class="hljs-string">&quot;error&quot;</span>:<br>        his[<span class="hljs-string">&#x27;y_min_error&#x27;</span>] = his[<span class="hljs-string">&#x27;error_mean&#x27;</span>] - his[<span class="hljs-string">&#x27;error_std&#x27;</span>]<br>        his[<span class="hljs-string">&#x27;y_man_error&#x27;</span>] = his[<span class="hljs-string">&#x27;error_mean&#x27;</span>] + his[<span class="hljs-string">&#x27;error_std&#x27;</span>]<br>        <span class="hljs-built_in">error</span> = ggplot(his, aes(<span class="hljs-attribute">x</span>=<span class="hljs-string">&#x27;id&#x27;</span>, <span class="hljs-attribute">y</span>=<span class="hljs-string">&#x27;error_mean&#x27;</span>, <span class="hljs-attribute">ymin</span>=<span class="hljs-string">&#x27;y_min_error&#x27;</span>, <span class="hljs-attribute">ymax</span>=<span class="hljs-string">&#x27;y_man_error&#x27;</span>, <span class="hljs-attribute">fill</span>=<span class="hljs-string">&#x27;Class&#x27;</span>)) + geom_line() + geom_ribbon(<span class="hljs-attribute">alpha</span>=0.5) + labs(<span class="hljs-attribute">x</span>=<span class="hljs-string">&quot;nround&quot;</span>, <span class="hljs-attribute">y</span>=<span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-attribute">title</span>=<span class="hljs-string">&quot;XGB Cross Validation ERROR&quot;</span>)<br>        return (error)<br></code></pre></td></tr></table></figure>
+<ul>
+<li>横坐标是迭代次数</li>
+<li>train曲线和test曲线的相差程度，可以侧面反映模型复杂度，检验是否过拟合</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">xgb_plot</span><span class="hljs-params">(bst_cv1, <span class="hljs-string">&#x27;auc&#x27;</span>)</span></span><br></code></pre></td></tr></table></figure>
+<p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/y8Dm0rNkvvoO4EXLCTQT*qSCvZwyBYPBvkZweT7h6ok!/b/dL4AAAAAAAAA&bo=EgQ3AgAAAAADFxE!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">xgb_plot</span><span class="hljs-params">(bst_cv1,<span class="hljs-string">&#x27;rmse&#x27;</span>)</span></span><br></code></pre></td></tr></table></figure>
+<p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/0lHqHpsTCuA8173eyPQ7KXVLsk6NQI*DZPFBixu8APk!/b/dDYBAAAAAAAA&bo=HARvAgAAAAADF0c!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload></p>
+<h5 id="4-建模，进行预测，打印评估指标"><a href="#4-建模，进行预测，打印评估指标" class="headerlink" title="(4) 建模，进行预测，打印评估指标"></a><strong>(4) 建模，进行预测，打印评估指标</strong></h5><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"># 利用上面调参结果： best_param<br><br>md_1 = xgb.train(best_param, dtrain, num_boost_round=nround)<br>dtest = xgb.<span class="hljs-constructor">DMatrix(X_test)</span><br>xgbc_y_predict = <span class="hljs-literal">[<span class="hljs-number">1</span> <span class="hljs-identifier">if</span> <span class="hljs-identifier">value</span> &gt;= <span class="hljs-number">0.5</span> <span class="hljs-identifier">else</span> <span class="hljs-number">0</span> <span class="hljs-identifier">for</span> <span class="hljs-identifier">value</span> <span class="hljs-identifier">in</span> <span class="hljs-identifier">md_1</span>.<span class="hljs-identifier">predict</span>(<span class="hljs-identifier">dtest</span>)]</span><br><br>accuracy = accuracy<span class="hljs-constructor">_score(<span class="hljs-params">y_test</span>, <span class="hljs-params">xgbc_y_predict</span> )</span><br>f1_score = f1<span class="hljs-constructor">_score(<span class="hljs-params">y_test</span>,<span class="hljs-params">predictions</span>)</span><br>print(<span class="hljs-string">&quot;Accuracy: %.2f%%&quot;</span> %(accuracy<span class="hljs-operator"> * </span><span class="hljs-number">100.0</span>))<br>print(<span class="hljs-string">&quot;F1 Score: %.2f%%&quot;</span> %(f1_score<span class="hljs-operator"> * </span><span class="hljs-number">100.0</span>))<br><br># save model<br>md_1.save<span class="hljs-constructor">_model(&#x27;<span class="hljs-params">xgb</span>.<span class="hljs-params">model</span>&#x27;)</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>方法二： 使用 XGBClassifier()</li>
+</ul>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">md_2 = <span class="hljs-constructor">XGBClassifier(<span class="hljs-operator">**</span><span class="hljs-params">best_param</span>)</span>                   # <span class="hljs-number">2</span>个*号，允许直接填入字典格式的param<br>md_2.fit(X_train, y_train)  <br><br>ypred = md_2.predict(X_test)<br>predictions = <span class="hljs-literal">[<span class="hljs-identifier">round</span>(<span class="hljs-identifier">value</span>) <span class="hljs-identifier">for</span> <span class="hljs-identifier">value</span> <span class="hljs-identifier">in</span> <span class="hljs-identifier">ypred</span>]</span><br><br># 打印评估指标<br>MSE = mean<span class="hljs-constructor">_squared_error(<span class="hljs-params">y_test</span>, <span class="hljs-params">predictions</span>)</span><br>print(<span class="hljs-string">&quot;MSE: %.2f%%&quot;</span> % (MSE<span class="hljs-operator"> * </span><span class="hljs-number">100.0</span>))  <br>accuracy = accuracy<span class="hljs-constructor">_score(<span class="hljs-params">y_test</span>, <span class="hljs-params">predictions</span>)</span><br>print(<span class="hljs-string">&quot;Accuracy: %.2f%%&quot;</span> % (accuracy<span class="hljs-operator"> * </span><span class="hljs-number">100.0</span>))<br>f1_score = f1<span class="hljs-constructor">_score(<span class="hljs-params">y_test</span>, <span class="hljs-params">predictions</span>)</span><br>print(<span class="hljs-string">&quot;F1 Score: %.2f%%&quot;</span> % (f1_score<span class="hljs-operator"> * </span><span class="hljs-number">100.0</span>))<br></code></pre></td></tr></table></figure>
+<h5 id="5-绘制Importance排序图"><a href="#5-绘制Importance排序图" class="headerlink" title="(5) 绘制Importance排序图"></a><strong>(5) 绘制Importance排序图</strong></h5><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">ax</span> = xgb.plot_importance(md_1, height=<span class="hljs-number">0</span>.<span class="hljs-number">5</span>)<br><span class="hljs-attribute">fig</span> = ax.figure<br><span class="hljs-attribute">fig</span>.set_size_inches(<span class="hljs-number">25</span>,<span class="hljs-number">20</span>)                  # 可调节图片尺寸和紧密程度<br><span class="hljs-attribute">plt</span>.show()<br></code></pre></td></tr></table></figure>
+<h5 id="6-根据Importance进行特征筛选"><a href="#6-根据Importance进行特征筛选" class="headerlink" title="(6) 根据Importance进行特征筛选"></a><strong>(6) 根据Importance进行特征筛选</strong></h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># sorted(list(selection_model.booster().get_score(importance_type=&#x27;weight&#x27;).values()),reverse = True)</span><br><br>importance_plot = pd.DataFrame(&#123;<span class="hljs-string">&#x27;feature&#x27;</span>:list(X_train.columns),<span class="hljs-string">&#x27;importance&#x27;</span>:md_2.feature_importances_&#125;)<br>importance_plot = importance_plot.sort_values(<span class="hljs-attribute">by</span>=<span class="hljs-string">&#x27;importance&#x27;</span>)<br>importance_plot = importance_plot.reset.index(<span class="hljs-attribute">drop</span>=<span class="hljs-literal">True</span>)<br>thresholds = importance_plot.importance<br>thresholds_valid = np.unique(thresholds[thresholds != 0])<br><br><br><span class="hljs-keyword">for</span> thresh <span class="hljs-keyword">in</span> thresholds_valid:<br><br>	# select features using threshold<br>	selection = SelectFromModel(md_2, <span class="hljs-attribute">threshold</span>=thresh, <span class="hljs-attribute">prefit</span>=<span class="hljs-literal">True</span>)<br>	select_X_train = selection.transform(X_train)<br>	# train model<br>	selection_model = XGBClassifier(*<span class="hljs-number">*be</span>st_param)<br>	selection_model.fit(select_X_train, y_train)<br>	# eval model<br>	select_X_test = selection.transform(X_test)<br>	y_pred = selection_model.predict(select_X_test)<br>	predictions = [round(value) <span class="hljs-keyword">for</span> value <span class="hljs-keyword">in</span> y_pred]<br>	accuracy = accuracy_score(y_test, predictions)<br>	<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Thresh=%.4f, n=%d, Accuracy: %.2f%%&quot;</span> % (thresh, select_X_train.shape[1], accuracy<span class="hljs-number">*100</span>.0))<br><br><br>thresh = 0.034<br>selected_features = list(importance_plot[importance_plot.importance &gt; thresh][<span class="hljs-string">&#x27;feature&#x27;</span>])<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;selected features are :\n %s&#x27;</span>%selected_features)<br>select_X_train = X_train[selected_features]                        # 筛选Importance符合阈值的特征集<br><br>n_features = selected_X_train.shape[1]<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;total: %d features are selected&#x27;</span> %n_features)<br><br>selection_model = XGBClassifier(*<span class="hljs-number">*be</span>st_param)                                   <br>selection_model.fit(select_X_train, y_train)<br><br>select_X_test = X_test[selected_features]<br>y_pred = selection_model.predict(select_X_test)<br>predictions = [round(value) <span class="hljs-keyword">for</span> value <span class="hljs-keyword">in</span> y_pred]<br>accuracy = accuracy_score(y_test, predictions)<br>f1_score = f1_score(y_test, predictions)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Accuracy: %.2f%%&quot;</span> % (accuracy * 100.0))<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;F1 Score: %.2f%%&quot;</span> % (f1_score * 100.0))<br></code></pre></td></tr></table></figure>
+<p>至于是先调参，再做变量筛选，还是先筛选后调参，或是反复调参反复筛选，纯凭个人喜号。</p>
+<h5 id="7-绘制决策树"><a href="#7-绘制决策树" class="headerlink" title="(7)绘制决策树"></a><strong>(7)绘制决策树</strong></h5><p>参考:<a target="_blank" rel="noopener" href="http://codewithzhangyi.com/2018/06/01/XGBOOST%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">codewithzhangyi.com</a><br>这里我没有绘制决策树，参考一个很棒的小姐姐个人网站，她的这篇文章中有写。</p>
+<hr>
+<p>参考：<br><a target="_blank" rel="noopener" href="https://xgboost.readthedocs.io/en/latest/">官方使用手册</a><br><a target="_blank" rel="noopener" href="http://codewithzhangyi.com/">codewithzhangyi.com</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wj-1314/p/9402324.html">Python机器学习笔记：XgBoost算法</a></p>
+<hr>
+<iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 
+" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  
+frameborder="0" scrolling="no"></iframe>
+
+
+
+              
+            </div>
+            <hr/>
+            
+            <!-- donate -->
+            <div class="reward-container">
+            	
+            		<button id="rewardBtn" class="reward-btn">
+            			 
+            				 Donate
+            				
+            		</button>
+            		<p class="tea">觉得不错的话，给点打赏吧 ୧(๑•̀⌄•́๑)૭</p>
+            		<div id="rewardImgContainer" class="reward-img-container">
+                     	<div class="singleImgContainer">
+                        	<img id="wechatImg" class="reward-img" src="/img/wechatpay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="wechatPay">wechat pay</p>
+                      </div>
+                      <div class="singleImgContainer">
+                           	<img id="alipayImg" class="reward-img" src="/img/alipay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="aliPay">alipay</p>
+                      </div>
+            		</div>
+            	
+            </div>
+            
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Machine-Learning/">#Machine Learning</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Machine Learning-笔记 -XGBoost教程</div>
+      <div>http://yuting0907.github.io/2019/03/31/Machine-Learning-笔记-XGBoost教程/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>yuting</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年3月31日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/04/13/Python%20-%E7%AC%94%E8%AE%B0%20-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F(Singleton)%E5%AE%9E%E7%8E%B0/" title="Python -笔记 -单例模式(Singleton)实现">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Python -笔记 -单例模式(Singleton)实现</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/03/23/Machine-Learning-%E5%AE%9E%E6%88%98-Titanic%E7%94%9F%E5%AD%98%E9%A2%84%E6%B5%8B/" title="Machine Learning-实战 Titanic生存预测">
+                        <span class="hidden-mobile">Machine Learning-实战 Titanic生存预测</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/reward.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
+
+<!--  -->
+<script type="text/javascript" src="/js/love.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>  
+
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="/js/FunnyTitle.js"></script>
