@@ -287,7 +287,7 @@
             
             <div class="markdown-body">
               
-              <h3 id="场景描述："><a href="#场景描述：" class="headerlink" title="场景描述："></a>场景描述：</h3><p>利用Flinkcdc从mysql中抓取数据到kafka，再写到doris数据库里</p>
+              <div id="readmore-container"><h3 id="场景描述："><a href="#场景描述：" class="headerlink" title="场景描述："></a>场景描述：</h3><p>利用Flinkcdc从mysql中抓取数据到kafka，再写到doris数据库里</p>
 <p>mysql表结构如下：</p>
 <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">CREATE</span> TABLE <span class="hljs-symbol">`goods_aspects_relation_detail`</span> (<br>  <span class="hljs-symbol">`id`</span> varchar(<span class="hljs-number">32</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-symbol">`GOODS_UID`</span> varchar(<span class="hljs-number">32</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> COMMENT <span class="hljs-string">&#x27;商品ID&#x27;</span>,<br>  <span class="hljs-symbol">`COM_UID`</span> varchar(<span class="hljs-number">32</span>) DEFAULT <span class="hljs-literal">NULL</span> COMMENT <span class="hljs-string">&#x27;公司&#x27;</span>,<br>  <span class="hljs-symbol">`site`</span> varchar(<span class="hljs-number">32</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> COMMENT <span class="hljs-string">&#x27;站点&#x27;</span>,<br>  <span class="hljs-symbol">`out_category_id`</span> varchar(<span class="hljs-number">32</span>) DEFAULT <span class="hljs-literal">NULL</span> COMMENT <span class="hljs-string">&#x27;品类id&#x27;</span>,<br>  <span class="hljs-symbol">`localized_aspect_name`</span> varchar(<span class="hljs-number">82</span>) DEFAULT <span class="hljs-literal">NULL</span> COMMENT <span class="hljs-string">&#x27;名称&#x27;</span>,<br>  <span class="hljs-symbol">`localized_aspect_values`</span> varchar(<span class="hljs-number">512</span>) DEFAULT <span class="hljs-literal">NULL</span> COMMENT <span class="hljs-string">&#x27;值&#x27;</span>,<br>  <span class="hljs-symbol">`aspect_data_type`</span> varchar(<span class="hljs-number">32</span>) DEFAULT <span class="hljs-literal">NULL</span> COMMENT <span class="hljs-string">&#x27;数据类型&#x27;</span>,<br>  <span class="hljs-symbol">`aspect_enabled_for_variations`</span> tinyint(<span class="hljs-number">1</span>) DEFAULT <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-symbol">`aspect_format`</span> varchar(<span class="hljs-number">32</span>) DEFAULT <span class="hljs-literal">NULL</span> COMMENT <span class="hljs-string">&#x27;格式&#x27;</span>,<br>  <span class="hljs-symbol">`aspect_max_length`</span> bigint(<span class="hljs-number">20</span>) DEFAULT <span class="hljs-literal">NULL</span> COMMENT <span class="hljs-string">&#x27;最大长度&#x27;</span>,<br>  <span class="hljs-symbol">`aspect_mode`</span> varchar(<span class="hljs-number">32</span>) DEFAULT <span class="hljs-literal">NULL</span> COMMENT <span class="hljs-string">&#x27;功能&#x27;</span>,<br>  <span class="hljs-symbol">`aspect_required`</span> tinyint(<span class="hljs-number">1</span>) DEFAULT <span class="hljs-literal">NULL</span> COMMENT <span class="hljs-string">&#x27;是否必须&#x27;</span>,<br>  <span class="hljs-symbol">`aspect_usage`</span> varchar(<span class="hljs-number">32</span>) DEFAULT <span class="hljs-literal">NULL</span> COMMENT <span class="hljs-string">&#x27;使用&#x27;</span>,<br>  <span class="hljs-symbol">`expected_required_by_date`</span> varchar(<span class="hljs-number">32</span>) DEFAULT <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-symbol">`item_to_aspect_cardinality`</span> varchar(<span class="hljs-number">32</span>) DEFAULT <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-symbol">`aspect_applicable_to`</span> varchar(<span class="hljs-number">255</span>) DEFAULT <span class="hljs-literal">NULL</span>,<br>  <span class="hljs-symbol">`aspect_values`</span> longtext,<br>  <span class="hljs-symbol">`is_active`</span> tinyint(<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> DEFAULT <span class="hljs-string">&#x27;1&#x27;</span> COMMENT <span class="hljs-string">&#x27; 数据是否已被逻辑删除,0 已删除，1 未删除&#x27;</span>,<br>  <span class="hljs-symbol">`creator`</span> varchar(<span class="hljs-number">32</span>) DEFAULT <span class="hljs-literal">NULL</span> COMMENT <span class="hljs-string">&#x27;创建人&#x27;</span>,<br>  <span class="hljs-symbol">`modifier`</span> varchar(<span class="hljs-number">32</span>) DEFAULT <span class="hljs-literal">NULL</span> COMMENT <span class="hljs-string">&#x27;修改人&#x27;</span>,<br>  <span class="hljs-symbol">`create_time`</span> datetime DEFAULT <span class="hljs-literal">NULL</span> COMMENT <span class="hljs-string">&#x27;创建时间&#x27;</span>,<br>  <span class="hljs-symbol">`modify_time`</span> datetime DEFAULT <span class="hljs-literal">NULL</span> COMMENT <span class="hljs-string">&#x27;修改时间&#x27;</span>,<br>  <span class="hljs-keyword">PRIMARY</span> <span class="hljs-keyword">KEY</span> (<span class="hljs-symbol">`id`</span>) <span class="hljs-keyword">USING</span> BTREE,<br>  <span class="hljs-keyword">KEY</span> <span class="hljs-symbol">`GOODS_UID_site_out_category_id_com_id`</span> (<span class="hljs-symbol">`GOODS_UID`</span>,<span class="hljs-symbol">`site`</span>,<span class="hljs-symbol">`out_category_id`</span>,<span class="hljs-symbol">`COM_UID`</span>) <span class="hljs-keyword">USING</span> BTREE<br>) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=<span class="hljs-string">&#x27;商品Aspect明细表&#x27;</span><br></code></pre></td></tr></table></figure>
 
@@ -325,7 +325,37 @@
 <p>个人理解下来是减小每次拉取的数量，这是在内存不足的情况下可以尝试减小fetch size，chunk size的大小数量。但是我这内存充足就没进行相应的调优</p>
 <p>参考官网：<a target="_blank" rel="noopener" href="https://ververica.github.io/flink-cdc-connectors/master/content/connectors/mysql-cdc.html#">https://ververica.github.io/flink-cdc-connectors/master/content/connectors/mysql-cdc.html#</a></p>
 <p>还可以调整并行度和slot数量观察数据抽取速度</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

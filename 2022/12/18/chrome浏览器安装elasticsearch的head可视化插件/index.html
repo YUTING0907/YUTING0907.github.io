@@ -285,7 +285,7 @@
             
             <div class="markdown-body">
               
-              <h2 id="head插件简介"><a href="#head插件简介" class="headerlink" title="head插件简介"></a>head插件简介</h2><p>elasticsearch-head被称为是弹性搜索集群的web前端，head插件主要是用来和elastic Cluster交互的Web前端<img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20221218150033.png" srcset="/img/loading.gif" lazyload></p>
+              <div id="readmore-container"><h2 id="head插件简介"><a href="#head插件简介" class="headerlink" title="head插件简介"></a>head插件简介</h2><p>elasticsearch-head被称为是弹性搜索集群的web前端，head插件主要是用来和elastic Cluster交互的Web前端<img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20221218150033.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="chrome浏览器下的head插件安装"><a href="#chrome浏览器下的head插件安装" class="headerlink" title="chrome浏览器下的head插件安装"></a>chrome浏览器下的head插件安装</h2><p>用chrome浏览器集成head插件,操作比较简单, 可再不用单独运行服务, 简化了head插件的安装.</p>
 <h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><p>1.下载es-head.crx文件<br>插件下载地址: <a target="_blank" rel="noopener" href="https://github.com/mikewuhao/es-head">https://github.com/mikewuhao/es-head</a></p>
 <p>2.把下载好的es-head.crx文件扩展名改为.zip的压缩包文件, 如:es-head.zip</p>
@@ -300,7 +300,37 @@
 
 
 
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

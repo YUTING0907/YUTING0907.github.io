@@ -281,7 +281,7 @@
             
             <div class="markdown-body">
               
-              <h3 id="添加鼠标点击爱心效果"><a href="#添加鼠标点击爱心效果" class="headerlink" title="添加鼠标点击爱心效果"></a>添加鼠标点击爱心效果</h3><p>在 \themes\fluid\source\js （其中fluid为你主题的文件夹名，即在自己的主题中进行操作）下新建文件 love.js，在 love.js 文件中添加以下代码：</p>
+              <div id="readmore-container"><h3 id="添加鼠标点击爱心效果"><a href="#添加鼠标点击爱心效果" class="headerlink" title="添加鼠标点击爱心效果"></a>添加鼠标点击爱心效果</h3><p>在 \themes\fluid\source\js （其中fluid为你主题的文件夹名，即在自己的主题中进行操作）下新建文件 love.js，在 love.js 文件中添加以下代码：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">!<span class="hljs-keyword">function</span>(<span class="hljs-params">e,t,a</span>)&#123;<span class="hljs-keyword">function</span> <span class="hljs-title function_">n</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-title function_">c</span>(<span class="hljs-string">&quot;.heart&#123;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);&#125;.heart:after,.heart:before&#123;content: &#x27;&#x27;;width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 500%;-moz-border-radius: 50%;position: fixed;&#125;.heart:after&#123;top: -5px;&#125;.heart:before&#123;left: -5px;&#125;&quot;</span>),<span class="hljs-title function_">o</span>(),<span class="hljs-title function_">r</span>()&#125;<span class="hljs-keyword">function</span> <span class="hljs-title function_">r</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> e=<span class="hljs-number">0</span>;e&lt;d.<span class="hljs-property">length</span>;e++)d[e].<span class="hljs-property">alpha</span>&lt;=<span class="hljs-number">0</span>?(t.<span class="hljs-property">body</span>.<span class="hljs-title function_">removeChild</span>(d[e].<span class="hljs-property">el</span>),d.<span class="hljs-title function_">splice</span>(e,<span class="hljs-number">1</span>)):(d[e].<span class="hljs-property">y</span>--,d[e].<span class="hljs-property">scale</span>+=<span class="hljs-number">.004</span>,d[e].<span class="hljs-property">alpha</span>-=<span class="hljs-number">.013</span>,d[e].<span class="hljs-property">el</span>.<span class="hljs-property">style</span>.<span class="hljs-property">cssText</span>=<span class="hljs-string">&quot;left:&quot;</span>+d[e].<span class="hljs-property">x</span>+<span class="hljs-string">&quot;px;top:&quot;</span>+d[e].<span class="hljs-property">y</span>+<span class="hljs-string">&quot;px;opacity:&quot;</span>+d[e].<span class="hljs-property">alpha</span>+<span class="hljs-string">&quot;;transform:scale(&quot;</span>+d[e].<span class="hljs-property">scale</span>+<span class="hljs-string">&quot;,&quot;</span>+d[e].<span class="hljs-property">scale</span>+<span class="hljs-string">&quot;) rotate(45deg);background:&quot;</span>+d[e].<span class="hljs-property">color</span>+<span class="hljs-string">&quot;;z-index:99999&quot;</span>);<span class="hljs-title function_">requestAnimationFrame</span>(r)&#125;<span class="hljs-keyword">function</span> <span class="hljs-title function_">o</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-keyword">var</span> t=<span class="hljs-string">&quot;function&quot;</span>==<span class="hljs-keyword">typeof</span> e.<span class="hljs-property">onclick</span>&amp;&amp;e.<span class="hljs-property">onclick</span>;e.<span class="hljs-property">onclick</span>=<span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>)&#123;t&amp;&amp;<span class="hljs-title function_">t</span>(),<span class="hljs-title function_">i</span>(e)&#125;&#125;<span class="hljs-keyword">function</span> <span class="hljs-title function_">i</span>(<span class="hljs-params">e</span>)&#123;<span class="hljs-keyword">var</span> a=t.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&quot;div&quot;</span>);a.<span class="hljs-property">className</span>=<span class="hljs-string">&quot;heart&quot;</span>,d.<span class="hljs-title function_">push</span>(&#123;<span class="hljs-attr">el</span>:a,<span class="hljs-attr">x</span>:e.<span class="hljs-property">clientX</span>-<span class="hljs-number">5</span>,<span class="hljs-attr">y</span>:e.<span class="hljs-property">clientY</span>-<span class="hljs-number">5</span>,<span class="hljs-attr">scale</span>:<span class="hljs-number">1</span>,<span class="hljs-attr">alpha</span>:<span class="hljs-number">1</span>,<span class="hljs-attr">color</span>:<span class="hljs-title function_">s</span>()&#125;),t.<span class="hljs-property">body</span>.<span class="hljs-title function_">appendChild</span>(a)&#125;<span class="hljs-keyword">function</span> <span class="hljs-title function_">c</span>(<span class="hljs-params">e</span>)&#123;<span class="hljs-keyword">var</span> a=t.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&quot;style&quot;</span>);a.<span class="hljs-property">type</span>=<span class="hljs-string">&quot;text/css&quot;</span>;<span class="hljs-keyword">try</span>&#123;a.<span class="hljs-title function_">appendChild</span>(t.<span class="hljs-title function_">createTextNode</span>(e))&#125;<span class="hljs-keyword">catch</span>(t)&#123;a.<span class="hljs-property">styleSheet</span>.<span class="hljs-property">cssText</span>=e&#125;t.<span class="hljs-title function_">getElementsByTagName</span>(<span class="hljs-string">&quot;head&quot;</span>)[<span class="hljs-number">0</span>].<span class="hljs-title function_">appendChild</span>(a)&#125;<span class="hljs-keyword">function</span> <span class="hljs-title function_">s</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-keyword">return</span><span class="hljs-string">&quot;rgb(&quot;</span>+~~(<span class="hljs-number">255</span>*<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">random</span>())+<span class="hljs-string">&quot;,&quot;</span>+~~(<span class="hljs-number">255</span>*<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">random</span>())+<span class="hljs-string">&quot;,&quot;</span>+~~(<span class="hljs-number">255</span>*<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">random</span>())+<span class="hljs-string">&quot;)&quot;</span>&#125;<span class="hljs-keyword">var</span> d=[];e.<span class="hljs-property">requestAnimationFrame</span>=<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<span class="hljs-keyword">return</span> e.<span class="hljs-property">requestAnimationFrame</span>||e.<span class="hljs-property">webkitRequestAnimationFrame</span>||e.<span class="hljs-property">mozRequestAnimationFrame</span>||e.<span class="hljs-property">oRequestAnimationFrame</span>||e.<span class="hljs-property">msRequestAnimationFrame</span>||<span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>)&#123;<span class="hljs-built_in">setTimeout</span>(e,<span class="hljs-number">1e3</span>/<span class="hljs-number">60</span>)&#125;&#125;(),<span class="hljs-title function_">n</span>()&#125;(<span class="hljs-variable language_">window</span>,<span class="hljs-variable language_">document</span>);<br></code></pre></td></tr></table></figure>
 
 <p>在 \themes\fluid\layout\layout.ejs 文件末尾添加以下代码：</p>
@@ -319,7 +319,37 @@
 <p>之后就可以看见效果了。</p>
 <p>更多参考：</p>
 <p><a target="_blank" rel="noopener" href="https://tothefor.com/DragonOne/325206433.html">https://tothefor.com/DragonOne/325206433.html</a></p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

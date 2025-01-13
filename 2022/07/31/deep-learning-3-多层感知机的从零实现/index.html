@@ -284,7 +284,7 @@
             
             <div class="markdown-body">
               
-              <p><strong>单层感知机模型</strong>，给定输入x，权重w，和偏移b，感知机输出：</p>
+              <div id="readmore-container"><p><strong>单层感知机模型</strong>，给定输入x，权重w，和偏移b，感知机输出：</p>
 <p>o &#x3D; O(&lt;w,x&gt; + b )   O(i) &#x3D; {1, if x&gt;0; -1 otherwise}</p>
 <p>感知机模型为二分类：-1或1</p>
 <ul>
@@ -373,7 +373,37 @@
 <li>模型深度和宽度哪个更影响性能，怎么根据输入空间选择最优的深度或者宽度？</li>
 </ol>
 <p>没有最优，哪有最优哈哈哈，慢慢尝试，比如说128到2，首先不要隐藏层，第二次加一个隐藏层，比如试下16，32，64，第三次可以再试下加两个隐藏层。这些就是老中医要自己试手感</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

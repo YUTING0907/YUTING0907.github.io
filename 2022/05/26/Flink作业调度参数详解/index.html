@@ -281,7 +281,7 @@
             
             <div class="markdown-body">
               
-              <p>本篇文章介绍Flink作业调度命令，以及调度参数的解释</p>
+              <div id="readmore-container"><p>本篇文章介绍Flink作业调度命令，以及调度参数的解释</p>
 <h3 id="flink-yarn-cluster-模式"><a href="#flink-yarn-cluster-模式" class="headerlink" title="flink yarn-cluster 模式"></a>flink yarn-cluster 模式</h3><figure class="highlight plaintext"><figcaption><span>是否使用分离模式</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs -d,–detached">-m,–jobmanager 指定提交的jobmanager<br>-yat,–yarnapplicationType 设置yarn应用的类型<br>-yD &lt;property=value&gt; 使用给定属性的值<br>-yd,–yarndetached 使用yarn分离模式<br>-yh,–yarnhelp yarn session的帮助<br>-yid,–yarnapplicationId 挂到正在运行的yarnsession上<br>-yj,–yarnjar Flink jar文件的路径<br>-yjm,–yarnjobManagerMemory jobmanager的内存(单位M)<br>-ynl,–yarnnodeLabel 指定 YARN 应用程序 YARN 节点标签<br>-ynm,–yarnname 自定义yarn应用名称<br>-yq,–yarnquery 显示yarn的可用资源<br>-yqu,–yarnqueue 指定yarn队列<br>-ys,–yarnslots 指定每个taskmanager的slots数<br>-yt,–yarnship 在指定目录中传输文件<br>-ytm,–yarntaskManagerMemory 每个taskmanager的内存<br>-yz,–yarnzookeeperNamespace 用来创建ha的zk子路径的命名空间<br>-z,–zookeeperNamespace 用来创建ha的zk子路径的命名空间<br></code></pre></td></tr></table></figure>
 
 <p>举个最近项目中实际用到的例子</p>
@@ -320,7 +320,37 @@
 <p>提交作业后，还需要1个JobManager，所以总共需要</p>
 <p>container为3 &#x3D; 1(AppMaster + JobManger) +2 (parallelism.default &#x2F; taskmanager.numberOfTaskSlots ) </p>
 <p>Flink 中每一个 worker(也就是 TaskManager)都是一个JVM进程，它可以启动多个独立的线程，来并行执行多个子任务（subtask）</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

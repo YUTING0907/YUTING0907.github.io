@@ -282,7 +282,7 @@
             
             <div class="markdown-body">
               
-              <h3 id="认识刻意练习"><a href="#认识刻意练习" class="headerlink" title="认识刻意练习"></a>认识刻意练习</h3><p>   有没有那么一本书里的内容让你觉得相见恨晚？《刻意练习》是我觉得相见恨晚的一本书，里面的学习方法对我的触动很大。</p>
+              <div id="readmore-container"><h3 id="认识刻意练习"><a href="#认识刻意练习" class="headerlink" title="认识刻意练习"></a>认识刻意练习</h3><p>   有没有那么一本书里的内容让你觉得相见恨晚？《刻意练习》是我觉得相见恨晚的一本书，里面的学习方法对我的触动很大。</p>
 <p>   我们都听过一万小时定律，意思是说要成为一个领域的专家，需要一万个小时，这被很多人误解我只要花够一万个小时在某个领域，我就可以成为那个领域的专家。其实这种为了完成任务式的一万个小时根本没有用。我想格拉德威尔先生在《异类》一书中提出一万小时定律的本意并不是为了强调那一万个小时。</p>
 <p>   接下来看看一万个小时究竟有什么问题，驳斥1万小时定律可以玩一个巧妙的思想游戏，这就是古希腊哲学家欧布里德<br>（Eubulides）提出的沙堆悖论（Sorites paradox）：<br>1粒沙子不是堆。如果1粒沙子不是堆，那么2粒沙子也不是堆；如果2粒沙子不是堆，那么3粒沙子也不是堆；以此类推，9999粒沙子也不是堆；因此，1万粒沙子还不是堆。<strong>“破解”沙堆悖论时，我们经常不得不设定一个固定的边界</strong>。如果我们说“1万粒沙粒是一堆沙”，那么少于1万粒沙粒组成的就不能称之为一堆沙。那么这样区分9999粒沙和10001粒沙就有点不合理。这样不得不设定一个可变的边界，但是这个边界是多少呢？我们现在并不知道。那么最初设定的“1万粒沙粒是一堆沙”作为知识的价值就被削减了。<strong>练习的成果并不与时间呈正相关，这一点，也取决于练习方法</strong>。<strong>刻意练习是成为某一个领域专家的正确练习方式，而并不是时间量的达标</strong>。</p>
 <h3 id="刻意练习的必要条件-—有目的的练习"><a href="#刻意练习的必要条件-—有目的的练习" class="headerlink" title="刻意练习的必要条件 —有目的的练习"></a>刻意练习的必要条件 —有目的的练习</h3><p><strong>有目的的练习</strong>是我们迈向<strong>刻意练习</strong>的第一步，有目的的练习具有以下四个特征：</p>
@@ -311,7 +311,37 @@
 " style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  
 frameborder="0" scrolling="no"></iframe>
 
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

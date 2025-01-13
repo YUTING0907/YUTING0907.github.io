@@ -284,7 +284,7 @@
             
             <div class="markdown-body">
               
-              <h3 id="问题1-Exceeded-checkpoint-tolerable-failure-threshold"><a href="#问题1-Exceeded-checkpoint-tolerable-failure-threshold" class="headerlink" title="问题1:Exceeded checkpoint tolerable failure threshold"></a>问题1:Exceeded checkpoint tolerable failure threshold</h3><p>Flink任务失败，检查点失效：Exceeded checkpoint tolerable failure threshold.</p>
+              <div id="readmore-container"><h3 id="问题1-Exceeded-checkpoint-tolerable-failure-threshold"><a href="#问题1-Exceeded-checkpoint-tolerable-failure-threshold" class="headerlink" title="问题1:Exceeded checkpoint tolerable failure threshold"></a>问题1:Exceeded checkpoint tolerable failure threshold</h3><p>Flink任务失败，检查点失效：Exceeded checkpoint tolerable failure threshold.</p>
 <p>最近实时平台flink任务频繁失败，报检查点方面的错误，初步排查是因为flinkcdc在同步mysql数据的时候，mysql表存有大json的数据，并且数据量达到2千万，所以导致flink作业在checkpoint的时候会变得异常缓慢。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-number">2022</span>-<span class="hljs-number">12</span>-<span class="hljs-number">04</span> <span class="hljs-number">16</span>:<span class="hljs-number">26</span>:<span class="hljs-number">46</span>,<span class="hljs-number">566</span> INFO  org.apache.flink.runtime.checkpoint.CheckpointCoordinator    [] - Checkpoint <span class="hljs-number">670223</span> of job 61103d713243c4a71befb436fa3f32ee expired before completing.<br><span class="hljs-number">2022</span>-<span class="hljs-number">07</span>-<span class="hljs-number">16</span> <span class="hljs-number">06</span>:<span class="hljs-number">26</span>:<span class="hljs-number">46</span>,<span class="hljs-number">571</span> INFO  org.apache.flink.runtime.jobmaster.JobMaster                 [] - Trying to recover from a global failure.<br>org.apache.flink.util.FlinkRuntimeException: Exceeded checkpoint tolerable failure threshold.<br>	at org.apache.flink.runtime.checkpoint.CheckpointFailureManager.handleCheckpointException(CheckpointFailureManager.java:<span class="hljs-number">98</span>) ~[flink-dist_2<span class="hljs-number">.11</span>-<span class="hljs-number">1.13</span><span class="hljs-number">.1</span>.jar:<span class="hljs-number">1.13</span><span class="hljs-number">.1</span>]<br>	at org.apache.flink.runtime.checkpoint.CheckpointFailureManager.handleJobLevelCheckpointException(CheckpointFailureManager.java:<span class="hljs-number">67</span>) ~[flink-dist_2<span class="hljs-number">.11</span>-<span class="hljs-number">1.13</span><span class="hljs-number">.1</span>.jar:<span class="hljs-number">1.13</span><span class="hljs-number">.1</span>]<br>	at org.apache.flink.runtime.checkpoint.CheckpointCoordinator.abortPendingCheckpoint(CheckpointCoordinator.java:<span class="hljs-number">1934</span>) ~[flink-dist_2<span class="hljs-number">.11</span>-<span class="hljs-number">1.13</span><span class="hljs-number">.1</span>.jar:<span class="hljs-number">1.13</span><span class="hljs-number">.1</span>]<br>	at org.apache.flink.runtime.checkpoint.CheckpointCoordinator.abortPendingCheckpoint(CheckpointCoordinator.java:<span class="hljs-number">1906</span>) ~[flink-dist_2<span class="hljs-number">.11</span>-<span class="hljs-number">1.13</span><span class="hljs-number">.1</span>.jar:<span class="hljs-number">1.13</span><span class="hljs-number">.1</span>]<br>	at org.apache.flink.runtime.checkpoint.CheckpointCoordinator.access$<span class="hljs-number">600</span>(CheckpointCoordinator.java:<span class="hljs-number">96</span>) ~[flink-dist_2<span class="hljs-number">.11</span>-<span class="hljs-number">1.13</span><span class="hljs-number">.1</span>.jar:<span class="hljs-number">1.13</span><span class="hljs-number">.1</span>]<br>	at org.apache.flink.runtime.checkpoint.CheckpointCoordinator$CheckpointCanceller.run(CheckpointCoordinator.java:<span class="hljs-number">1990</span>) ~[flink-dist_2<span class="hljs-number">.11</span>-<span class="hljs-number">1.13</span><span class="hljs-number">.1</span>.jar:<span class="hljs-number">1.13</span><span class="hljs-number">.1</span>]<br>	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:<span class="hljs-number">511</span>) ~[?:<span class="hljs-number">1.8</span><span class="hljs-number">.0_201</span>]<br>	at java.util.concurrent.FutureTask.run(FutureTask.java:<span class="hljs-number">266</span>) ~[?:<span class="hljs-number">1.8</span><span class="hljs-number">.0_201</span>]<br>	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$<span class="hljs-number">201</span>(ScheduledThreadPoolExecutor.java:<span class="hljs-number">180</span>) ~[?:<span class="hljs-number">1.8</span><span class="hljs-number">.0_201</span>]<br>	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:<span class="hljs-number">293</span>) ~[?:<span class="hljs-number">1.8</span><span class="hljs-number">.0_201</span>]<br>	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:<span class="hljs-number">1149</span>) ~[?:<span class="hljs-number">1.8</span><span class="hljs-number">.0_201</span>]<br>	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:<span class="hljs-number">624</span>) ~[?:<span class="hljs-number">1.8</span><span class="hljs-number">.0_201</span>]<br>	at java.lang.Thread.run(Thread.java:<span class="hljs-number">748</span>) ~[?:<span class="hljs-number">1.8</span><span class="hljs-number">.0_201</span>]<br><br></code></pre></td></tr></table></figure>
 
@@ -318,7 +318,37 @@
 <p>1、分布式物理机网络失联，这种原因一般情况下failover后作业能正常恢复，如果出现的不频繁可以不用关注；</p>
 <p>2、failover的节点对应TM的内存设置太小，GC严重导致心跳超时，建议调大对应节点的内存值</p>
 <h3 id="解决方案：-1"><a href="#解决方案：-1" class="headerlink" title="解决方案："></a>解决方案：</h3><p>加大flink程序的运行内存</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

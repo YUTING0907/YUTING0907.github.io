@@ -281,13 +281,43 @@
             
             <div class="markdown-body">
               
-              <p>数据质量治理</p>
+              <div id="readmore-container"><p>数据质量治理</p>
 <p>数据质量是数据治理的核心，也是基础工作。数据质量通常会从及时性、真实性、唯一性、完整性、有效性、一致性等六个维度来衡量。</p>
 <p>对于数据质量的监控，主要包括三个环节：</p>
 <p>第一，结合数据质量衡量的六个维度以及日常工作中发现的数据质量问题，配置相关规则。</p>
 <p>第二，在数据加工的各个环节设置检查点，比如从ODS到DW，从DW到DM等环节。如在ODS检查点设置中，可能会包括数据源抽取记录的检查；在基础层会有空值、编码值、一致性、重复性等问题的检查</p>
 <p>第三，输出异常结果，进行告警处理。</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

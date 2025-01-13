@@ -287,7 +287,7 @@
             
             <div class="markdown-body">
               
-              <h1 id="01-学习方法：建立你的大数据知识网络"><a href="#01-学习方法：建立你的大数据知识网络" class="headerlink" title="01|学习方法：建立你的大数据知识网络"></a>01|学习方法：建立你的大数据知识网络</h1><p>在了解了大数据论文之间的脉络后，接下来，我们就要进入精读论文的学习当中了。不过，在具体解读一篇篇的论文之前，我想先带你来一起看一看，这些大数据论文到底涵盖了哪些知识点，这些知识点又是来自于大数据系统中的哪一个组件。通过梳理这些组件涵盖了什么知识点，你就能更好地理解和掌握大数据领域相关的知识全貌。</p>
+              <div id="readmore-container"><h1 id="01-学习方法：建立你的大数据知识网络"><a href="#01-学习方法：建立你的大数据知识网络" class="headerlink" title="01|学习方法：建立你的大数据知识网络"></a>01|学习方法：建立你的大数据知识网络</h1><p>在了解了大数据论文之间的脉络后，接下来，我们就要进入精读论文的学习当中了。不过，在具体解读一篇篇的论文之前，我想先带你来一起看一看，这些大数据论文到底涵盖了哪些知识点，这些知识点又是来自于大数据系统中的哪一个组件。通过梳理这些组件涵盖了什么知识点，你就能更好地理解和掌握大数据领域相关的知识全貌。</p>
 <p>毕竟，相比于某一门计算机课程、某一门编程语言或者某一个开源框架，“大数据”涉及到的知识点多而繁杂。所以这里，我就整理了一份知识地图，好让涉及到的知识点有迹可循。</p>
 <p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230402224203.png" srcset="/img/loading.gif" lazyload></p>
 <p>从这张图可以看出，要想了解和学习“大数据”领域的相关知识，我们可以从三个维度来切入。</p>
@@ -340,7 +340,37 @@
 <p>论文索引</p>
 <p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230402225725.png" srcset="/img/loading.gif" lazyload></p>
 <p>还有许许多多值得一读的论文，比如针对 Bigtable，你就可以还去读一下 Cassandra 和 Dynamo，这样思路略有不同的分布式数据的论文；针对 Borg 和 Kubernetes，你可以去看看 Mesos 这个调度系统的论文又是什么样的。网上更有“开源大数据架构的 100 篇论文”这样的文章，如果你想深耕大数据领域，也可以有选择地多读一些其中的论文。</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

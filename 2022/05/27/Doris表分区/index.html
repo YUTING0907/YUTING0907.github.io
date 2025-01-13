@@ -281,7 +281,7 @@
             
             <div class="markdown-body">
               
-              <h3 id="Doris创建动态分区表"><a href="#Doris创建动态分区表" class="headerlink" title="Doris创建动态分区表"></a>Doris创建动态分区表</h3><p>动态分区仅仅支持range分区</p>
+              <div id="readmore-container"><h3 id="Doris创建动态分区表"><a href="#Doris创建动态分区表" class="headerlink" title="Doris创建动态分区表"></a>Doris创建动态分区表</h3><p>动态分区仅仅支持range分区</p>
 <p>DDL建表语句如下：</p>
 <figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">CREATE TABLE dwd.`dwd_cdc_t_fin_trade_record_detail` (<br> `trade_id` varchar(<span class="hljs-number">200</span>) NULL COMMENT <span class="hljs-string">&quot;流水号&quot;</span>,<br> `merchant_code` varchar(<span class="hljs-number">200</span>) <span class="hljs-literal">NOT</span> NULL COMMENT <span class="hljs-string">&quot;&quot;</span>,<br> `order_no_business` varchar(<span class="hljs-number">800</span>) NULL COMMENT <span class="hljs-string">&quot;订单业务字段(包材费时存包材号，仓储费时存批次号,操作费存冻结记录id)&quot;</span>,<br> `trade_date` date NULL COMMENT <span class="hljs-string">&quot;变动时间&quot;</span>,<br> `trade_type` int(<span class="hljs-number">11</span>) NULL COMMENT <span class="hljs-string">&quot;交易类型,1-线下充值,2-操作费,3-仓储费,4-包材,5调账,6线上充值,7贴标服务费,8-退仓存储费&quot;</span>,<br> `cost_name` varchar(<span class="hljs-number">200</span>) NULL COMMENT <span class="hljs-string">&quot;费用名称&quot;</span>,<br> `merchant_name` varchar(<span class="hljs-number">400</span>) NULL COMMENT <span class="hljs-string">&quot;卖家名称&quot;</span>,<br> `source` varchar(<span class="hljs-number">200</span>) NULL COMMENT <span class="hljs-string">&quot;来源&quot;</span>,<br> `trade_amount` decimal(<span class="hljs-number">20</span>, <span class="hljs-number">2</span>) NULL COMMENT <span class="hljs-string">&quot;变动金额(充值未正，扣费为负)&quot;</span>,<br> `currency_code` varchar(<span class="hljs-number">40</span>) NULL COMMENT <span class="hljs-string">&quot;&quot;</span>,<br> `packing_material_name` varchar(<span class="hljs-number">1020</span>) <span class="hljs-literal">NOT</span> NULL COMMENT <span class="hljs-string">&quot;包材名称&quot;</span>,<br> `is_active` int(<span class="hljs-number">11</span>) NULL COMMENT <span class="hljs-string">&quot;数据是否已被逻辑删除,0是已删除，1是未删除&quot;</span>,<br> `etl_time` datetime NULL COMMENT <span class="hljs-string">&quot;跑批日期&quot;</span><br>) ENGINE=OLAP<br>DUPLICATE KEY(`trade_id`,`merchant_code`)<br>COMMENT <span class="hljs-string">&quot;商户余额变动流水表&quot;</span><br>PARTITION BY RANGE(`trade_date`)()<br>DISTRIBUTED BY HASH(`merchant_code`) BUCKETS <span class="hljs-number">3</span><br>PROPERTIES (<br><span class="hljs-string">&quot;replication_allocation&quot;</span> = <span class="hljs-string">&quot;tag.location.default: 3&quot;</span>,<br><span class="hljs-string">&quot;dynamic_partition.enable&quot;</span> = <span class="hljs-string">&quot;true&quot;</span>,<br><span class="hljs-string">&quot;dynamic_partition.time_unit&quot;</span> = <span class="hljs-string">&quot;MONTH&quot;</span>,<br><span class="hljs-string">&quot;dynamic_partition.time_zone&quot;</span> = <span class="hljs-string">&quot;Asia/Shanghai&quot;</span>,<br><span class="hljs-string">&quot;dynamic_partition.start&quot;</span> = <span class="hljs-string">&quot;-2147483648&quot;</span>,<br><span class="hljs-string">&quot;dynamic_partition.end&quot;</span> = <span class="hljs-string">&quot;2&quot;</span>,<br><span class="hljs-string">&quot;dynamic_partition.prefix&quot;</span> = <span class="hljs-string">&quot;p&quot;</span>,<br><span class="hljs-string">&quot;dynamic_partition.replication_allocation&quot;</span> = <span class="hljs-string">&quot;tag.location.default: 3&quot;</span>,<br><span class="hljs-string">&quot;dynamic_partition.buckets&quot;</span> = <span class="hljs-string">&quot;4&quot;</span>,<br><span class="hljs-string">&quot;dynamic_partition.create_history_partition&quot;</span> = <span class="hljs-string">&quot;true&quot;</span>,<br><span class="hljs-string">&quot;dynamic_partition.history_partition_num&quot;</span> = <span class="hljs-string">&quot;24&quot;</span>,<br><span class="hljs-string">&quot;dynamic_partition.hot_partition_num&quot;</span> = <span class="hljs-string">&quot;0&quot;</span>,<br><span class="hljs-string">&quot;dynamic_partition.reserved_history_periods&quot;</span> = <span class="hljs-string">&quot;NULL&quot;</span>,<br><span class="hljs-string">&quot;dynamic_partition.start_day_of_month&quot;</span> = <span class="hljs-string">&quot;1&quot;</span>,<br><span class="hljs-string">&quot;in_memory&quot;</span> = <span class="hljs-string">&quot;false&quot;</span>,<br><span class="hljs-string">&quot;storage_format&quot;</span> = <span class="hljs-string">&quot;V2&quot;</span><br>)<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
 
@@ -321,7 +321,37 @@
 
 <p>也可以指定List</p>
 <figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs lisp">PARTITION BY LIST(`id`, `city`)<br>(<br>        <span class="hljs-name">PARTITION</span> `p1_city` VALUES IN ((<span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;Beijing&quot;</span>), (<span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;Shanghai&quot;</span>)),<br>        PARTITION `p2_city` VALUES IN ((<span class="hljs-string">&quot;2&quot;</span>, <span class="hljs-string">&quot;Beijing&quot;</span>), (<span class="hljs-string">&quot;2&quot;</span>, <span class="hljs-string">&quot;Shanghai&quot;</span>)),<br>        PARTITION `p3_city` VALUES IN ((<span class="hljs-string">&quot;3&quot;</span>, <span class="hljs-string">&quot;Beijing&quot;</span>), (<span class="hljs-string">&quot;3&quot;</span>, <span class="hljs-string">&quot;Shanghai&quot;</span>))<br>)<br></code></pre></td></tr></table></figure>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

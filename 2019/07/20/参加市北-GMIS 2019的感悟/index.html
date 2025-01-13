@@ -281,7 +281,7 @@
             
             <div class="markdown-body">
               
-              <hr>
+              <div id="readmore-container"><hr>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><strong>市北-GMIS-2019全球数据智能峰会</strong>，由机器之心主办，上海市市北高新技术服务业园区承办。 </p>
 <p> 大会以【拥抱数智经济，赋能产业生态】为主题，共进行24场主题演讲、2个主论坛、2个圆桌论坛、4个session、1场AI画展，举行了为期2天的行业峰会。不仅带来联邦学习、认知智能、AutoML等前瞻技术，同时关注技术的落地工程运用。</p>
 <p><strong>1day AM：主论坛-Data That Empowers</strong><br>[外链图片转存失败(img-BZe2nmqa-1563797092570)(<a target="_blank" rel="noopener" href="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/hcNHN.1Ba57CNGmcrIvPH*7obf64Bf2lB5dkBTgDCHc!/b/dL4AAAAAAAAA&amp;bo=*gc4BAAAAAARF.U!&amp;rf=viewer_4&amp;t=5)%5D">http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/hcNHN.1Ba57CNGmcrIvPH*7obf64Bf2lB5dkBTgDCHc!/b/dL4AAAAAAAAA&amp;bo=*gc4BAAAAAARF.U!&amp;rf=viewer_4&amp;t=5)]</a></p>
@@ -346,7 +346,37 @@
 <hr>
 <iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 
 " style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  
-frameborder="0" scrolling="no"></iframe>
+frameborder="0" scrolling="no"></iframe></div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

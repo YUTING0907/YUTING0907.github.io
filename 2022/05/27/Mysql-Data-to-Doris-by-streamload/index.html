@@ -281,7 +281,7 @@
             
             <div class="markdown-body">
               
-              <p><strong>导出mysql数据到csv文件</strong></p>
+              <div id="readmore-container"><p><strong>导出mysql数据到csv文件</strong></p>
 <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">mysql -e &quot;<span class="hljs-keyword">select</span> tracking_number,order_created_time <span class="hljs-keyword">from</span> datamart.t_wide_table_waybill <span class="hljs-keyword">where</span> waybill_submit_time &gt;= <span class="hljs-string">&#x27;2021-04-01&#x27;</span> <span class="hljs-keyword">and</span> waybill_submit_time &lt; <span class="hljs-string">&#x27;2021-07-01&#x27;</span><span class="hljs-string">&quot; &gt; /opt/tmpdata/wide_table_6.csv</span><br></code></pre></td></tr></table></figure>
 
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">tar -zcvf <span class="hljs-regexp">/opt/</span>tmpdata<span class="hljs-regexp">/wide_table_6.csv.tar.gz /</span>opt<span class="hljs-regexp">/tmpdata/</span>wide_table_6.csv<br><br></code></pre></td></tr></table></figure>
@@ -300,7 +300,37 @@
 <p><strong>由FE节点来分配</strong></p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">curl --location-trusted -u root: -T <span class="hljs-regexp">/data/</span>tmpdata<span class="hljs-regexp">/after_split_wide_table_6.csv -H &quot;label:wide_table_001&quot; -H &quot;max_filter_ratio:1&quot;http:/</span><span class="hljs-regexp">/10.63.40.20:8030/</span>api<span class="hljs-regexp">/dwd/</span>dwd_spk_t_wide_table_waybill/_stream_load<br></code></pre></td></tr></table></figure>
 
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

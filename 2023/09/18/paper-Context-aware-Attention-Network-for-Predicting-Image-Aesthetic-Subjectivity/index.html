@@ -284,7 +284,7 @@
             
             <div class="markdown-body">
               
-              <p>论文发表在ACM Multimedia Conference 2020，ACM MM是CCF A类会议</p>
+              <div id="readmore-container"><p>论文发表在ACM Multimedia Conference 2020，ACM MM是CCF A类会议</p>
 <h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1.Introduction"></a>1.Introduction</h2><p>提出了一种有效的基于上下文感知注意力的模型来预测美学分数分布，该模型将强调局部特征与上下文信息联系起来，并捕获了美学的主观性。</p>
 <p>提出了一个注意力模块，通过多级细节和远程感知来提供丰富的上下文依赖。它建立在<strong>层级和空间</strong>两个维度上。</p>
 <p>引入一种新的基于<strong>Bhattacharyya距离的损失函数</strong>来衡量客观预测分布与主观真实分布之间的相似性。</p>
@@ -303,7 +303,37 @@
 <p>与最近大多数使用注意力机制裁剪或聚合图斑的工作不同，本文的方法通过学习上下文感知的注意力来增强部分特征，从而保留局部视图和整体视图之间的上下文关系。</p>
 <p>此外，采用计算复杂度较低的Bhattacharyya距离来度量与感知人类视觉相关性较好的客观预测分布和主观评分分布之间的相似性。实验结果证明了所提方法的性能。</p>
 <h2 id="6-Personal-Thinking"><a href="#6-Personal-Thinking" class="headerlink" title="6.Personal Thinking"></a>6.Personal Thinking</h2><p>膨胀卷积Dilated convolution，中文叫做空洞卷积或者扩张卷积，起源于语义分割。</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

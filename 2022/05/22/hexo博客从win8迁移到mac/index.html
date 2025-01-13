@@ -283,7 +283,7 @@
             
             <div class="markdown-body">
               
-              <p>本文介绍：如何从hexo博客从win8迁移到mac</p>
+              <div id="readmore-container"><p>本文介绍：如何从hexo博客从win8迁移到mac</p>
 <p>最近换电脑，然后看到同组大佬的hexo博客已经写到130+，在大佬的刺激下准备把之前荒废的博客重新打理起来。</p>
 <h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p><strong>1.安装brew</strong></p>
 <p><code>/bin/zsh -c &quot;$(curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh)&quot;</code></p>
@@ -343,7 +343,37 @@
 <p>多系统混合编写导致的问题</p>
 <p><code>cd进.deploy_git文件夹，输入git config –global core.autocrlf false</code></p>
 <p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/soyawww/article/details/118147820">https://blog.csdn.net/soyawww/article/details/118147820</a></p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

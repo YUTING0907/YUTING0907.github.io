@@ -281,7 +281,7 @@
             
             <div class="markdown-body">
               
-              <h3 id="第一章-概述"><a href="#第一章-概述" class="headerlink" title="第一章 概述"></a>第一章 概述</h3><h4 id="1-什么是计算机视觉"><a href="#1-什么是计算机视觉" class="headerlink" title="1.什么是计算机视觉"></a>1.什么是计算机视觉</h4><p>采集来的图像或者视频，对场景进行识别和表达，理解感知分析的能力</p>
+              <div id="readmore-container"><h3 id="第一章-概述"><a href="#第一章-概述" class="headerlink" title="第一章 概述"></a>第一章 概述</h3><h4 id="1-什么是计算机视觉"><a href="#1-什么是计算机视觉" class="headerlink" title="1.什么是计算机视觉"></a>1.什么是计算机视觉</h4><p>采集来的图像或者视频，对场景进行识别和表达，理解感知分析的能力</p>
 <h4 id="2-人类感知与计算机视觉"><a href="#2-人类感知与计算机视觉" class="headerlink" title="2. 人类感知与计算机视觉"></a>2. 人类感知与计算机视觉</h4><p>人脑解析</p>
 <p>计算机视觉算法推断景物含义</p>
 <p>图像处理  计算机视觉  图形学(3D重建)</p>
@@ -352,7 +352,37 @@
 </ul>
 <p>​    结合自己学到的知识点 想到了新思路</p>
 <p>新-查顶级期刊（CCF）</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

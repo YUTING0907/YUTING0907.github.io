@@ -281,7 +281,7 @@
             
             <div class="markdown-body">
               
-              <h2 id="将深度学习代码同时运行在多个GPU显卡上"><a href="#将深度学习代码同时运行在多个GPU显卡上" class="headerlink" title="将深度学习代码同时运行在多个GPU显卡上"></a>将深度学习代码同时运行在多个GPU显卡上</h2><h3 id="步骤1"><a href="#步骤1" class="headerlink" title="步骤1"></a>步骤1</h3><p>设置os.environ[‘CUDA_VISIBLE_DEVICES’] 指定GPU</p>
+              <div id="readmore-container"><h2 id="将深度学习代码同时运行在多个GPU显卡上"><a href="#将深度学习代码同时运行在多个GPU显卡上" class="headerlink" title="将深度学习代码同时运行在多个GPU显卡上"></a>将深度学习代码同时运行在多个GPU显卡上</h2><h3 id="步骤1"><a href="#步骤1" class="headerlink" title="步骤1"></a>步骤1</h3><p>设置os.environ[‘CUDA_VISIBLE_DEVICES’] 指定GPU</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 将import torch放在os.environ[&#x27;CUDA_VISIBLE_DEVICES&#x27;] = &#x27;0,1&#x27;后面</span><br><span class="hljs-keyword">import</span> os<br>os.environ[<span class="hljs-string">&#x27;CUDA_VISIBLE_DEVICES&#x27;</span>] = <span class="hljs-string">&#x27;0,1&#x27;</span><br><span class="hljs-keyword">import</span> torch<br><span class="hljs-built_in">print</span>(torch.cuda.device_count()) <span class="hljs-comment">#2说明指令生效</span><br><br><span class="hljs-comment"># 不能将import torch放在前面</span><br></code></pre></td></tr></table></figure>
 
 <h3 id="步骤2-任选其一"><a href="#步骤2-任选其一" class="headerlink" title="步骤2(任选其一)"></a>步骤2(任选其一)</h3><p>1.使用DataParallel(适合PyTorch)</p>
@@ -299,7 +299,37 @@
 </li>
 </ol>
 <h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>确保每个 GPU 的内存足够，特别是分布式训练时。<br>对于 DistributedDataParallel 和 MirroredStrategy，可能需要调整 batch size 以平衡每个 GPU 的负载。</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

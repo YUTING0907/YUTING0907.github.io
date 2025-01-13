@@ -287,7 +287,7 @@
             
             <div class="markdown-body">
               
-              <h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1.Introduction"></a>1.Introduction</h2><p>发表在2021 IEEE（ICME）</p>
+              <div id="readmore-container"><h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1.Introduction"></a>1.Introduction</h2><p>发表在2021 IEEE（ICME）</p>
 <p>据知乎说是毕业神会，两篇保博士毕业，CCF B</p>
 <p>regular paper 的 正文 + 引用 &#x3D; 6页</p>
 <p>2021 IEEE International Conference on Multimedia and Expo (ICME)</p>
@@ -337,7 +337,37 @@
 <p>( i )基于通道注意力机制，提出了一种轻量级的循环通道注意力块( RRCAB )用于轻量级图像超分辨率任务，可以在更小的内存消耗下提高重建图像的质量。</p>
 <p>( ii )基于这些RRCAB，我们开发了多尺度特征交互模块，该模块可以充分利用来自不同尺度的信息特征和交互连接，以更好地恢复生成图像的细节。 </p>
 <p>模型在DIV2K数据集[ 18 ]来训练模型，该数据集有800张高质量的RGB训练图像，并在Set5 [ 19 ]，Set14 [ 20 ]，BSDS100 [ 21 ]和Urban100 [ 22 ]做了基准测试，采用峰值信噪比( PSNR )和结构相似度( SSIM ) [ 23 ]两个指标来验证SR的性能。</p>
-<h3 id="6-个人感悟"><a href="#6-个人感悟" class="headerlink" title="6. 个人感悟"></a>6. 个人感悟</h3>
+<h3 id="6-个人感悟"><a href="#6-个人感悟" class="headerlink" title="6. 个人感悟"></a>6. 个人感悟</h3></div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

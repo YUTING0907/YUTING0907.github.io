@@ -289,7 +289,7 @@
             
             <div class="markdown-body">
               
-              <p>本文是机器学习实战片,例子是kaggle上老经典的例子了，Titanic生存预测<br>目的是了解机器学习的大体流程。文末百度网盘链接中包含本文用到的数据集和代码。</p>
+              <div id="readmore-container"><p>本文是机器学习实战片,例子是kaggle上老经典的例子了，Titanic生存预测<br>目的是了解机器学习的大体流程。文末百度网盘链接中包含本文用到的数据集和代码。</p>
 <p><strong>环境</strong><br>win8, python3,jupyter notebook</p>
 <p><strong>目录</strong></p>
 <ul>
@@ -396,7 +396,7 @@
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment">#使用经过超参数配置的XGBClassfier对测试数据的预测结果存储在文件xgbc_best_submission中</span><br>xgbc_best_y_predict = gs.predict(X_test)<br>xgbc_best_submission = pd.DataFrame(&#123;<span class="hljs-string">&#x27;PassengerId&#x27;</span>:test[<span class="hljs-string">&#x27;PassengerId&#x27;</span>],<span class="hljs-string">&#x27;Survived&#x27;</span>:xgbc_best_y_predict&#125;)<br><span class="hljs-comment">#将默认配置的RandomForestClassifier对测试数据的预测结果存储在文件rfc_submission.csv中。</span><br>xgbc_best_submission.to_csv(<span class="hljs-string">&#x27;D:\\Pywork\\Titanic\\xgbc_best_submission.csv&#x27;</span>,<span class="hljs-attribute">index</span>=<span class="hljs-literal">False</span>)<br></code></pre></td></tr></table></figure>
 
 
-<p>想要以上涉及到的源代码可以联系我<br>邮箱:<a href="mailto:&#x79;&#x75;&#x74;&#x69;&#110;&#x67;&#57;&#x35;&#57;&#55;&#64;&#x31;&#54;&#x33;&#x2e;&#x63;&#111;&#x6d;">&#x79;&#x75;&#x74;&#x69;&#110;&#x67;&#57;&#x35;&#57;&#55;&#64;&#x31;&#54;&#x33;&#x2e;&#x63;&#111;&#x6d;</a><br>百度网盘：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1vGq4Et2gReM58Dr_1O-v3Q">https://pan.baidu.com/s/1vGq4Et2gReM58Dr_1O-v3Q</a> 密码：uoqv</p>
+<p>想要以上涉及到的源代码可以联系我<br>邮箱:<a href="mailto:&#121;&#x75;&#x74;&#105;&#x6e;&#x67;&#57;&#x35;&#x39;&#55;&#64;&#49;&#54;&#51;&#46;&#x63;&#x6f;&#x6d;">&#121;&#x75;&#x74;&#105;&#x6e;&#x67;&#57;&#x35;&#x39;&#55;&#64;&#49;&#54;&#51;&#46;&#x63;&#x6f;&#x6d;</a><br>百度网盘：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1vGq4Et2gReM58Dr_1O-v3Q">https://pan.baidu.com/s/1vGq4Et2gReM58Dr_1O-v3Q</a> 密码：uoqv</p>
 <p>参考文章：</p>
 <hr>
 <iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 
@@ -406,7 +406,37 @@ frameborder="0" scrolling="no"></iframe>
 
 
 
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

@@ -289,7 +289,7 @@
 
 <article class="about-content page-content mt-5">
   <div class="markdown-body">
-    <h1 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h1><p>一个想拍出好照片的95后-程序媛.</p>
+    <div id="readmore-container"><h1 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h1><p>一个想拍出好照片的95后-程序媛.</p>
 <p>对世界充满好奇</p>
 <h3 id="❤️爱好："><a href="#❤️爱好：" class="headerlink" title="❤️爱好："></a>❤️<strong>爱好：</strong></h3><p>Photography &#x2F; Reading &#x2F; Movie &#x2F; swimming&#x2F;coding<br>看别人写代码 &#x2F; 散步 &#x2F; 聊天儿</p>
 <h3 id="🔧技能："><a href="#🔧技能：" class="headerlink" title="🔧技能："></a>🔧<strong>技能：</strong></h3><p><strong>深度学习、大模型应用、大数据应用平台研发</strong></p>
@@ -351,9 +351,39 @@
 <p>还需要再忍受一下，分别在得意的时候和失意的时候。<br>在海浪涌起和退却的时候<br>在憧憬，或失望之际。<br>在生意人中间坐下<br>在酒徒的呕吐、厮打之间保持清醒<br>你是梦中仅存的浮标，而眼下<br>你所置身的，是一片再浮肿不过的大海……</p>
 <p>笼子里，镜中的野兽已奄奄一息<br>就在你获胜之际，你再次被痛击<br>像被一个预言精确命中——<br>“谁都会倒下，在那一天到来之际”<br>一个可笑的老人踱步过来，告诉你<br>在大街上颓然倒下也是生活的一部分<br>“</p>
 <hr>
-<p>有什么想问我的&amp;和我分享的<br>邮箱： <a href="mailto:&#50;&#x35;&#48;&#55;&#x38;&#x39;&#52;&#x31;&#49;&#64;&#x71;&#x71;&#x2e;&#99;&#x6f;&#109;">&#50;&#x35;&#48;&#55;&#x38;&#x39;&#52;&#x31;&#49;&#64;&#x71;&#x71;&#x2e;&#99;&#x6f;&#109;</a> 或 <a href="mailto:&#x79;&#x75;&#116;&#x69;&#110;&#103;&#x39;&#53;&#x39;&#x37;&#64;&#49;&#54;&#x33;&#46;&#99;&#111;&#109;">&#x79;&#x75;&#116;&#x69;&#110;&#103;&#x39;&#53;&#x39;&#x37;&#64;&#49;&#54;&#x33;&#46;&#99;&#111;&#109;</a></p>
+<p>有什么想问我的&amp;和我分享的<br>邮箱： <a href="mailto:&#50;&#53;&#48;&#55;&#56;&#x39;&#x34;&#49;&#x31;&#x40;&#113;&#113;&#x2e;&#x63;&#x6f;&#x6d;">&#50;&#53;&#48;&#55;&#56;&#x39;&#x34;&#49;&#x31;&#x40;&#113;&#113;&#x2e;&#x63;&#x6f;&#x6d;</a> 或 <a href="mailto:&#121;&#117;&#x74;&#x69;&#110;&#x67;&#x39;&#x35;&#57;&#x37;&#x40;&#49;&#x36;&#51;&#46;&#x63;&#111;&#x6d;">&#121;&#117;&#x74;&#x69;&#110;&#x67;&#x39;&#x35;&#57;&#x37;&#x40;&#49;&#x36;&#51;&#46;&#x63;&#111;&#x6d;</a></p>
 <p>公众号：YutingNotFound</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
   </div>
 
   

@@ -282,12 +282,42 @@
             
             <div class="markdown-body">
               
-              <h4 id="键入main之后，按tab键补全"><a href="#键入main之后，按tab键补全" class="headerlink" title="键入main之后，按tab键补全"></a>键入main之后，按tab键补全</h4><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-function">def <span class="hljs-title">main</span><span class="hljs-params">(args: Array[<span class="hljs-type">String</span>])</span>: Unit =</span> &#123;<br>  <br>&#125;<br></code></pre></td></tr></table></figure>
+              <div id="readmore-container"><h4 id="键入main之后，按tab键补全"><a href="#键入main之后，按tab键补全" class="headerlink" title="键入main之后，按tab键补全"></a>键入main之后，按tab键补全</h4><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-function">def <span class="hljs-title">main</span><span class="hljs-params">(args: Array[<span class="hljs-type">String</span>])</span>: Unit =</span> &#123;<br>  <br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h4 id="按住command-点击，查看源代码"><a href="#按住command-点击，查看源代码" class="headerlink" title="按住command + 点击，查看源代码"></a>按住command + 点击，查看源代码</h4><p>当然这里会显示不全，可以去官网把源码包下载下来，然后点击idea右上角的Attach Sources去做一个绑定</p>
 <h4 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h4><p>tab操作默认整体向右👉移动</p>
 <p>用shift+tab整体向左移</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

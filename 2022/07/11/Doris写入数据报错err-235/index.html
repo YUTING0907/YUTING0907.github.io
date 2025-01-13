@@ -283,7 +283,7 @@
             
             <div class="markdown-body">
               
-              <h3 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h3><ul>
+              <div id="readmore-container"><h3 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h3><ul>
 <li>Flinkcdc抽取数据写入到doris报错，err: tablet writer write failed, tablet_id&#x3D;8165971, txn_id&#x3D;122211550, err&#x3D;-235, see more in null</li>
 </ul>
 <p>具体截图如下：</p>
@@ -302,7 +302,37 @@
 <p>1.降低dorisBatchSize大小</p>
 <p>2.增大tablet的数据版本数据版本最大限制，我们是将默认的调大到了3000，修改be.conf 中max_tablet_version_num &#x3D; 3000</p>
 <p>我们项目组出线这个问题是因为，当天几台doris全挂了，重启后max_tablet_version_num之前设置的实效了，导致doris启动后积压了很多数据的需要compaction，一下子就达到了默认值versionCount&#x3D;500，导致的报错</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

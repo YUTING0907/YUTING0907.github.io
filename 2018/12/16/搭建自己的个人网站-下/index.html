@@ -286,7 +286,7 @@
             
             <div class="markdown-body">
               
-              <p>本篇个人网站搭建系列博文是基于:GitHub+Hexo。<br>难度指数：♥♥<br>系统环境：win8</p>
+              <div id="readmore-container"><p>本篇个人网站搭建系列博文是基于:GitHub+Hexo。<br>难度指数：♥♥<br>系统环境：win8</p>
 <p>修饰上篇搭建的个人网站框架(包括theme主题设置、头像的设置、以及图片的显示、链接上自己的RSS)</p>
 <h2 id="Hexo克隆主题"><a href="#Hexo克隆主题" class="headerlink" title="Hexo克隆主题"></a>Hexo克隆主题</h2><p>在初始化hexo后，也就是执行hexo init 命令后会给一个默认的主题：landscape。里面还有一篇写好的示例文章：Hello World</p>
 <h4 id="选择喜欢的主题"><a href="#选择喜欢的主题" class="headerlink" title="选择喜欢的主题"></a>选择喜欢的主题</h4><p>觉得不喜欢可以换主题，以下链接可以供你挑选自己喜欢的主题<br><a target="_blank" rel="noopener" href="https://hexo.io/themes">Themes</a></p>
@@ -311,7 +311,7 @@ author: Echo Yu
 language: zh-CN
 timezone: Asia/Shanghai
 </code></pre>
-<p>​<br>    # custom Site settings<br>    # more detail check out docs<br>    SEOTitle: YUTING’s blog<br>    header-img: &#x2F;&#x2F;o7bkkhiex.bkt.clouddn.com&#x2F;lion-blur-bg.jpg<br>    email: <a href="mailto:&#x59;&#x55;&#x54;&#x49;&#x4e;&#71;&#57;&#53;&#57;&#x37;&#x40;&#x31;&#54;&#51;&#x2e;&#99;&#x6f;&#109;">&#x59;&#x55;&#x54;&#x49;&#x4e;&#71;&#57;&#53;&#57;&#x37;&#x40;&#x31;&#54;&#51;&#x2e;&#99;&#x6f;&#109;</a></p>
+<p>​<br>    # custom Site settings<br>    # more detail check out docs<br>    SEOTitle: YUTING’s blog<br>    header-img: &#x2F;&#x2F;o7bkkhiex.bkt.clouddn.com&#x2F;lion-blur-bg.jpg<br>    email: <a href="mailto:&#89;&#85;&#84;&#73;&#x4e;&#71;&#57;&#x35;&#57;&#55;&#64;&#x31;&#54;&#51;&#46;&#99;&#x6f;&#x6d;">&#89;&#85;&#84;&#73;&#x4e;&#71;&#57;&#x35;&#57;&#55;&#64;&#x31;&#54;&#51;&#46;&#99;&#x6f;&#x6d;</a></p>
 <pre><code class="hljs">favicon: # your favicon png
 # custom end
 </code></pre>
@@ -507,7 +507,37 @@ frameborder="0" scrolling="no"></iframe>
 
 
 
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

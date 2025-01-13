@@ -281,7 +281,7 @@
             
             <div class="markdown-body">
               
-              <h2 id="暂退法（Dropout）"><a href="#暂退法（Dropout）" class="headerlink" title="暂退法（Dropout）"></a>暂退法（Dropout）</h2><p>模型的泛化性越强，要求模型对其输入的微小变化越不敏感，也就是对噪声的适应能力越强。</p>
+              <div id="readmore-container"><h2 id="暂退法（Dropout）"><a href="#暂退法（Dropout）" class="headerlink" title="暂退法（Dropout）"></a>暂退法（Dropout）</h2><p>模型的泛化性越强，要求模型对其输入的微小变化越不敏感，也就是对噪声的适应能力越强。</p>
 <p>那么关键是如何加入这种噪声，一种想法是<strong>无偏差（unbiased）</strong>的方式注入噪声。这样在固定住其他层时，每一层的期望值等于没有噪声时的值。我们把这种方法叫做暂退法。</p>
 <p>暂退法其实就是在训练过程中丢弃（drop out）一些神经元。 在整个训练过程的每一次迭代中，标准暂退法包括在计算下一层之前将当前层中的一些节点置零。</p>
 <p>无偏差的加入噪音</p>
@@ -337,7 +337,37 @@
 <p>dropout其实没有权重衰减常用，dropout是在全连接层使用，权重衰减对于卷积层啊之后的transformer都可以用。至于为什么效果更好，其实是dropout更好调参一点，权重衰减的weight没那么好调。</p>
 <p>9.在同样的学习率lr上，dropout的介入会不会造成参数手链更慢，需要比没有dropout的情况下适当调大lr？</p>
 <p>lr主要是对期望和方差敏感一点，dropout不改变期望，没有说dropout的情况下一定要调大lr，但你也可以试试。但会收敛变慢是可能的，等于是说你每次你更小的数量在更新梯度</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

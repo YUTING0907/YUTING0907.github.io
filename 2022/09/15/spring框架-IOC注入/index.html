@@ -281,7 +281,7 @@
             
             <div class="markdown-body">
               
-              <h3 id="Spring框架"><a href="#Spring框架" class="headerlink" title="Spring框架"></a>Spring框架</h3><h4 id="1-是什么："><a href="#1-是什么：" class="headerlink" title="1.是什么："></a>1.是什么：</h4><p>它是一个容器，是整合其他框架的框架，它的核心是IOC和AOP，它由20个模块构成，在很多领域都提供优秀的解决方案</p>
+              <div id="readmore-container"><h3 id="Spring框架"><a href="#Spring框架" class="headerlink" title="Spring框架"></a>Spring框架</h3><h4 id="1-是什么："><a href="#1-是什么：" class="headerlink" title="1.是什么："></a>1.是什么：</h4><p>它是一个容器，是整合其他框架的框架，它的核心是IOC和AOP，它由20个模块构成，在很多领域都提供优秀的解决方案</p>
 <h4 id="2-特性："><a href="#2-特性：" class="headerlink" title="2.特性："></a>2.特性：</h4><h5 id="轻量级"><a href="#轻量级" class="headerlink" title="轻量级"></a>轻量级</h5><p> 由20多个模块构成，每个jar包都很小，小于1M，核心包也就3M左右</p>
 <h5 id="AOP（面向切面编程）"><a href="#AOP（面向切面编程）" class="headerlink" title="AOP（面向切面编程）"></a>AOP（面向切面编程）</h5><p>  将公共的，通用的，重复的代码单独开发，在需要的时候反织回去，底层的原理是动态代理（例如持久层，业务逻辑层，view层都需要输出打印日志，日志就可以做成公共的，需要的时候调用）</p>
 <h5 id="IOC-（控制反转）"><a href="#IOC-（控制反转）" class="headerlink" title="IOC （控制反转）"></a>IOC （控制反转）</h5><p>   由spring容器进行对象的创建和依赖的注入，程序员在使用时直接取出来使用</p>
@@ -398,7 +398,37 @@
 
 
 
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

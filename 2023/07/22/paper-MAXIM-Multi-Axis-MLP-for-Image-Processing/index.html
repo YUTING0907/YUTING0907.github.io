@@ -290,7 +290,7 @@
             
             <div class="markdown-body">
               
-              <h3 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h3><p>论文发表在2022CVPR</p>
+              <div id="readmore-container"><h3 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h3><p>论文发表在2022CVPR</p>
 <p>image processing tasks: including denoising, deblurring, deraining, dehazing, restoration,and enhancement </p>
 <p>图像处理：降噪，去模糊，去雾，去雨，图像修复，图像增强。</p>
 <p>中文视频讲解：（非常详细，有很多背景介绍，新手友好型）</p>
@@ -362,7 +362,37 @@
 <p>2.A multi-axis gated MLP module tailored for low-level vision tasks, which always enjoys a global receptive field, with <strong>linear complexity</strong> relative to image size. </p>
 <p>3.A cross gating block that cross-conditions two separate features, which is also global and fully-convolutional. </p>
 <p>4.Extensive experiments show that MAXIM achieves SOTA results on more than 10 datasets including denoising, deblurring, deraining, dehazing, and enhancement.</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

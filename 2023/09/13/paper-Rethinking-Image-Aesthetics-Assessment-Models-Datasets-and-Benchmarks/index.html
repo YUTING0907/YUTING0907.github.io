@@ -288,7 +288,7 @@
             
             <div class="markdown-body">
               
-              <h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>本文构建了一个名为”主题与美学数据集”的大规模数据集( TAD66K )，该数据集是专门为IAA设计的。</p>
+              <div id="readmore-container"><h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>本文构建了一个名为”主题与美学数据集”的大规模数据集( TAD66K )，该数据集是专门为IAA设计的。</p>
 <p>1 )它是一个面向主题的数据集，包含66K张图片，涵盖了47个流行主题。所有图片均根据主题手工精心挑选。</p>
 <p>2 )除了共同的审美标准外，为47个主题提供了47个标准。每个主题的图像都是独立标注的，每个图像至少包含1200个有效标注(迄今为止最丰富的注释)。这些高质量的注释可以帮助我们更深入地了解模型的性能。</p>
 <p>其次，提出了一个基线模型，称为主题和美学网络( TANet )，它可以保持对美学的恒定感知，以有效应对注意力分散问题。此外，TANet可以根据识别的主题自适应地学习预测美学的规则。</p>
@@ -329,7 +329,37 @@
 <p>此外，RGBNet模型中提出的注意力机制并没有显著降低网络的速度。我们还与标准的自注意力进行了对比测试，发现由于其过高的计算复杂度，不能以同样的方式正常工作，这表明提出的架构比传统的架构计算效率更高。</p>
 <p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230913235521.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="5-Conclusion"><a href="#5-Conclusion" class="headerlink" title="5.Conclusion"></a>5.Conclusion</h2><p>本文讨论了IAA中主题变化的长期被忽视的影响。为了实现这一目标，我们创建了一个面向主题的TAD66K数据集(包含47个主题)，构建了一个完整的基准(包括排名前17位的SOTA模型)，并开发了一个名为TANet的基线模型。与现有的数据集相比，TAD66K更具有挑战性，注释更密集；此外，所提出的TANet引入自适应感知方法来提取主题特征，并在三个具有代表性的数据集上实现了SOTA性能。我们希望我们的贡献将激励社会各界重新思考IAA，并以更广阔的视角推动研究。</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

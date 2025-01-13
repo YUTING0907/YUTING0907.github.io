@@ -292,7 +292,7 @@
             
             <div class="markdown-body">
               
-              <p>本文介绍的是SVM算法原理(NG的ML课程笔记)</p>
+              <div id="readmore-container"><p>本文介绍的是SVM算法原理(NG的ML课程笔记)</p>
 <p>适应人群：想了解SVM原理的</p>
 <p>为了好好理解SVM算法的原理，我们先从逻辑回归开始。</p>
 <p>逻辑函数的假设函数(Hypothesis)如下图：<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/HVBY*luEKsAWFVFT6oee4DGr*VkgUwIb*0y4kuaN.x0!/b/dDcBAAAAAAAA&bo=nAJlAQAAAAADF8g!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload><br>下面将用Z代替等号右边</p>
@@ -335,7 +335,37 @@
 <iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 
 " style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  
 frameborder="0" scrolling="no"></iframe>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

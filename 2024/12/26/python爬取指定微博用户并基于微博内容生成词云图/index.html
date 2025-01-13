@@ -283,7 +283,7 @@
             
             <div class="markdown-body">
               
-              <p>😄程序用途</p>
+              <div id="readmore-container"><p>😄程序用途</p>
 <p>该程序用来对感兴趣的微博博主进行分析，根据微博内容生成词云图,效果如下：</p>
 <p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20241226162349.png" srcset="/img/loading.gif" lazyload></p>
 <p>📌一.爬取指定博主的微博内容</p>
@@ -303,7 +303,37 @@
 
 <p>将以上函数合并起来就是整个词云生成程序了～</p>
 <p>整体代码：<a target="_blank" rel="noopener" href="https://github.com/YUTING0907/pythonTools/tree/main/WordCloud">https://github.com/YUTING0907/pythonTools/tree/main/WordCloud</a></p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

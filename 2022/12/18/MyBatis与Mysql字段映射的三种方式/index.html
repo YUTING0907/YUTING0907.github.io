@@ -281,7 +281,7 @@
             
             <div class="markdown-body">
               
-              <p>Java中属性命名一般使用驼峰命名法，mysql中的字段一般使用“_”来连接两个单词。这样就需要中间有一层转换，使两边能够对应起来。下面是三种不同的实现方式，根据情况做出合理的选择。</p>
+              <div id="readmore-container"><p>Java中属性命名一般使用驼峰命名法，mysql中的字段一般使用“_”来连接两个单词。这样就需要中间有一层转换，使两边能够对应起来。下面是三种不同的实现方式，根据情况做出合理的选择。</p>
 <h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p>数据库中表结构：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs mysql">CREATE TABLE `t_user` (<br>  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,<br>  `user_name` varchar(20) DEFAULT NULL,<br>  `user_age` tinyint(3) unsigned DEFAULT NULL,<br>  PRIMARY KEY (`id`)<br>) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8<br><br></code></pre></td></tr></table></figure>
 
@@ -298,7 +298,37 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">settings</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">setting</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;mapUnderscoreToCamelCase&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;true&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">settings</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>mapUnderscoreToCamelCase字面意思是转换下划线为驼峰命名，实际上真的如此吗？实验得出的结论是，被忽悠了。假如Model在的属性名不便，把mysql中的user_name改为use_rname、use_r_name，把user_age改为userag_e、uSerAge，实验的结果得出依然自动映射了。所以mapUnderscoreToCamelCase实际的操作是去掉了下划线，并把大写字母转换成小写字母。</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

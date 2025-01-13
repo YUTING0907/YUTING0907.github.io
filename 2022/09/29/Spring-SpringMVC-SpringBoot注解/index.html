@@ -282,7 +282,7 @@
             
             <div class="markdown-body">
               
-              <h3 id="创建对象的"><a href="#创建对象的" class="headerlink" title="创建对象的"></a>创建对象的</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@Controller</span>：放在类的上面，创建控制器对象，注入到容器中<br><br><span class="hljs-variable">@RestController</span>：放在类的上面，创建控制对象，注入到容器中，使用这个注解类的，里面的控制器方法的返回值都是数据<br>              是<span class="hljs-variable">@Controller</span>和<span class="hljs-variable">@ResponseBody</span>的复合注解<br><br><span class="hljs-variable">@Service</span>：放在业务层的实现上面，创建Service对象，注入到容器中<br><br><span class="hljs-variable">@Repository</span>:放在dao层的实现类上面，创建dao对象，放入到容器，没有使用这个注解是因为现在使用MyBatis框架，dao对象是MyBatis通过代理生成的，不需要Repository，所以没有使用<br><br><span class="hljs-variable">@Component</span>：放在类的上面，创建此类的对象，放入容器中<br></code></pre></td></tr></table></figure>
+              <div id="readmore-container"><h3 id="创建对象的"><a href="#创建对象的" class="headerlink" title="创建对象的"></a>创建对象的</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@Controller</span>：放在类的上面，创建控制器对象，注入到容器中<br><br><span class="hljs-variable">@RestController</span>：放在类的上面，创建控制对象，注入到容器中，使用这个注解类的，里面的控制器方法的返回值都是数据<br>              是<span class="hljs-variable">@Controller</span>和<span class="hljs-variable">@ResponseBody</span>的复合注解<br><br><span class="hljs-variable">@Service</span>：放在业务层的实现上面，创建Service对象，注入到容器中<br><br><span class="hljs-variable">@Repository</span>:放在dao层的实现类上面，创建dao对象，放入到容器，没有使用这个注解是因为现在使用MyBatis框架，dao对象是MyBatis通过代理生成的，不需要Repository，所以没有使用<br><br><span class="hljs-variable">@Component</span>：放在类的上面，创建此类的对象，放入容器中<br></code></pre></td></tr></table></figure>
 
 <h3 id="赋值的"><a href="#赋值的" class="headerlink" title="赋值的"></a>赋值的</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@Value</span>：简单类型的赋值，例如在属性上面使用<br>        <span class="hljs-variable">@Value</span>(<span class="hljs-string">&quot;李四&quot;</span>)private String name<br>        还可以使用<span class="hljs-variable">@Value</span>，获取配置文件的数量（properties或者yml）<br>        <span class="hljs-variable">@Value</span>(<span class="hljs-string">&quot;$&#123;server.port&#125;&quot;</span>)private Interger port<br>        <br><span class="hljs-variable">@Autowired</span>:引用类型赋值自动注入的，支持byName，byType，默认是byType，放在属性的上面，也可以放在构造方法的上面，推荐是放在构造方法上面<br><br><span class="hljs-variable">@Qualifer</span>：给引用类型赋值，使用byName方式<br>           <span class="hljs-variable">@Autowired</span>，<span class="hljs-variable">@Qualifer</span>都是spring框架提供的<br>           <br><span class="hljs-variable">@Resource</span>：来自jdk中的定义，实现引用类型的自动注入，支持byName，byType，默认是byName，如果byName失败，再使用byType注入，在属性上面使用           <br></code></pre></td></tr></table></figure>
 
@@ -373,7 +373,37 @@ public class IntegralGradeController &#123;
 </code></pre>
 <p>4.swagger只部署在测试环境，生产环境不部署（暴露接口容易被攻击）</p>
 <p>参考：swagger使用教程 <a target="_blank" rel="noopener" href="https://blog.csdn.net/YR_112233/article/details/122630446">https://blog.csdn.net/YR_112233/article/details/122630446</a></p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

@@ -284,7 +284,7 @@
             
             <div class="markdown-body">
               
-              <p>在还没接触大数据的时候，着实被那么多技术组件和平台架构吓到了，以下列举一些</p>
+              <div id="readmore-container"><p>在还没接触大数据的时候，着实被那么多技术组件和平台架构吓到了，以下列举一些</p>
 <p>Druid、Kudu、ClickHouse、Flink、Spark 、Storm、Impala、Presto、Hive、Kafka、RabbitMQ、Canal、Doris、Apache Airflow、Oozie、Azkaban、DolphinScheduler、HDFS、YARN、MapReduce、Hive、HBase、ZooKeeper</p>
 <p>😜是不是看着有点吓人，不过没关系通过本文可以帮你迅速建立对这些技术组件的概念性认识，分门别类出来就能知道都是干啥的了～</p>
 <h3 id="大数据平台架构"><a href="#大数据平台架构" class="headerlink" title="大数据平台架构"></a>大数据平台架构</h3><p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgwhiteboard_exported_image.png" srcset="/img/loading.gif" lazyload></p>
@@ -405,7 +405,37 @@
 <p>2.大数据平台开发工程师</p>
 <p>搭建数据同步、数据质量、数据服务、数据血缘、元数据管理等平台</p>
 <p>以上使用的编程语言基本都是基于JAVA，JAVA基础是必备的。</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

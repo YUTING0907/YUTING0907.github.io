@@ -281,7 +281,7 @@
             
             <div class="markdown-body">
               
-              <h3 id="现象描述"><a href="#现象描述" class="headerlink" title="现象描述"></a>现象描述</h3><p>在执行SQL语句中有比较两个表的字段时，出现Illegal mix of collations (utf8_unicode_ci,IMPLICIT) and (utf8_general_ci,IMPLICIT)错误。意思是遇到的编码错误。</p>
+              <div id="readmore-container"><h3 id="现象描述"><a href="#现象描述" class="headerlink" title="现象描述"></a>现象描述</h3><p>在执行SQL语句中有比较两个表的字段时，出现Illegal mix of collations (utf8_unicode_ci,IMPLICIT) and (utf8_general_ci,IMPLICIT)错误。意思是遇到的编码错误。</p>
 <p>表a是utf8_unicode_ci，而表b是utf8_general_ci。同样是uft-8编码，不知道这样细分的意义。我的两张表是用Navicat分别从两个xlsx文件中导入的，自动就成了这样。下面说一下解决方法。</p>
 <h4 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h4><p>  如果数据已导入，又不想修改，可以改一下SQL语句，让其在比较字符串时先转换一下：</p>
 <figure class="highlight plaintext"><figcaption><span>b.* from a,b where a.pid</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 原主句：select">修改后语句：select b.* from a,b where a.pid=CONVERT(b.pid USING utf8) COLLATE utf8_unicode_ci <br></code></pre></td></tr></table></figure>
@@ -294,7 +294,37 @@
 <p><code>show variables like &#39;character%&#39;;</code></p>
 <p>从以上信息可知数据库的编码为latin1，需要修改为gbk或者是utf8；其中<br>    character_set_client为客户端编码方式；<br>    character_set_connection为建立连接使用的编码；<br>    character_set_database数据库的编码；<br>    character_set_results结果集的编码；<br>    character_set_server数据库服务器的编码；<br>    只要保证以上四个采用的编码方式一样，就不会出现乱码问题。<br>    另一个查看数据库编码的命令：</p>
 <p><code>show variables like &#39;character%&#39;;</code></p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

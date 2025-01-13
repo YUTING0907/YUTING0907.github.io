@@ -281,7 +281,7 @@
             
             <div class="markdown-body">
               
-              <p>dolphinscheduler的内部可分为四个模块：</p>
+              <div id="readmore-container"><p>dolphinscheduler的内部可分为四个模块：</p>
 <p>MasterServer、WorkerServer、AlertServer、ApiServer</p>
 <h3 id="1-架构说明"><a href="#1-架构说明" class="headerlink" title="1.架构说明"></a>1.架构说明</h3><h4 id="MasterServer"><a href="#MasterServer" class="headerlink" title="MasterServer"></a><strong>MasterServer</strong></h4><p>MasterServer采用分布式无中心设计理念，MasterServer主要负责 DAG 任务切分、任务提交监控，并同时监听其它MasterServer和WorkerServer的健康状态。</p>
 <p>MasterServer服务启动时向Zookeeper注册临时节点，通过监听Zookeeper临时节点变化来进行容错处理。 MasterServer基于netty提供监听服务。</p>
@@ -379,7 +379,37 @@
 <p>– 删除准备停止的实例<br>delete from t_ds_process_instance<br>where state &#x3D;’4’<br>AND name like ‘ads_spk_t_customer_analyze_recharge%’ ;</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>github：<a target="_blank" rel="noopener" href="https://github.com/apache/dolphinscheduler/blob/dev/docs/docs/zh/architecture/design.md">https://github.com/apache/dolphinscheduler/blob/dev/docs/docs/zh/architecture/design.md</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/512387735">https://zhuanlan.zhihu.com/p/512387735</a></p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

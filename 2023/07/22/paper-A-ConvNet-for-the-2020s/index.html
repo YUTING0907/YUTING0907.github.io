@@ -281,7 +281,7 @@
             
             <div class="markdown-body">
               
-              <p>论文发表在2022CVPR</p>
+              <div id="readmore-container"><p>论文发表在2022CVPR</p>
 <p>代码：<a target="_blank" rel="noopener" href="https://github.com/YUTING0907/SubscribePapers/blob/main/papers/cvpr/cvpr2022.md">https://github.com/YUTING0907/SubscribePapers/blob/main/papers/cvpr/cvpr2022.md</a></p>
 <p>A ConvNet for the 2020s</p>
 <p>ConvNeXts由传统的卷积层(ConvNets)组合成的模型，在ImageNet上得到了 top-1 accuracy，87.8% 超过了Transformers，在COCO detection and ADE20K segmentation任务上优于 Swin Transformers 。引发人们重新思考卷积在计算机视觉领域的重要性。</p>
@@ -306,7 +306,37 @@
 <h3 id="1-4-4-BN替换为LN"><a href="#1-4-4-BN替换为LN" class="headerlink" title="1.4.4 BN替换为LN"></a>1.4.4 BN替换为LN</h3><p>根据我们之前的经验，BN[12]经常被用在CNN中，而LN[13]通常是用来解决BN在样本量过少的时候归一化统计量偏差过大的问题的。也有实验结果表明，如果将残差网络中的BN直接替换为LN的话，模型的性能反而会下降。</p>
 <p>但是在ConvNeXt中，因为之前作者做了若干个将卷积网络向Transformer的改进，因此这里也尝试了将ConvNeXt中的BN替换为LN，令人意外的是，LN在ConvNeXt中要比BN表现的好，它将模型的准确率提升至81.5%。</p>
 <p>因为上述改进都是非常小的点的优化，对模型的速度影响并不大，因此ConvNeXt的GFLOPs维持在了4.2没变。上述的所有改进如下面代码片段所示。注意下面的代码中的 1×1 卷积使用的是线性层来实现的。</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

@@ -287,7 +287,7 @@
             
             <div class="markdown-body">
               
-              <h2 id="一个人越过越年轻是喜还是悲"><a href="#一个人越过越年轻是喜还是悲" class="headerlink" title="一个人越过越年轻是喜还是悲"></a><strong>一个人越过越年轻是喜还是悲</strong></h2><p>故事发生一战结束初期，一位名叫Gateau的知名钟表匠受邀为火车站制作一个大钟，他儿子在战争中失去了生命，他希望时间可以倒转，战争没有发生，世界和平，儿子重返家园。所以把大钟做成了倒转的模样。</p>
+              <div id="readmore-container"><h2 id="一个人越过越年轻是喜还是悲"><a href="#一个人越过越年轻是喜还是悲" class="headerlink" title="一个人越过越年轻是喜还是悲"></a><strong>一个人越过越年轻是喜还是悲</strong></h2><p>故事发生一战结束初期，一位名叫Gateau的知名钟表匠受邀为火车站制作一个大钟，他儿子在战争中失去了生命，他希望时间可以倒转，战争没有发生，世界和平，儿子重返家园。所以把大钟做成了倒转的模样。</p>
 <p>就在这时，一个新生儿降临在一个有着124年做纽扣生意历史的家族中，虽是新生儿却没有那般吹弹可破的皮肤，生下来就是充满褶皱的脸，各方面都很糟糕，像极了八十岁的老人。</p>
 <p>它一出生，她妈妈就难产死了，爸爸也因为他奇丑无比而抛弃了他，把他扔在老人院门口，襁褓里只夹带了18美分。</p>
 <p>本杰明被好心的Queenie收养，巧的是跟一群老人生活在一起，他跟周围老人一样坐轮椅，但却像孩子一样对这个世界一无所知。他听着老人们讲述自己的一生。</p>
@@ -302,7 +302,37 @@
 frameborder="0" scrolling="no"></iframe>
 
 
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

@@ -287,7 +287,7 @@
             
             <div class="markdown-body">
               
-              <p><strong>工作中常用到的Java集合有哪些，应用场景是什么？</strong></p>
+              <div id="readmore-container"><p><strong>工作中常用到的Java集合有哪些，应用场景是什么？</strong></p>
 <p>下图是java集合的全家福，可以看到分为两大类，第一类是collection，第二类是map。下面分别介绍：其中List，Set，Queue都是Collection（集合），其每个元素都是单独的一个对象，如List<String>，Set<Integer>等，String和Integer就是单独的一个对象</p>
 <p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgjava%E9%9B%86%E5%90%88.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
@@ -328,7 +328,37 @@
 <p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgset%E9%9B%86%E5%90%88.png" srcset="/img/loading.gif" lazyload></p>
 <p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgset%E9%9B%86%E5%90%88.png" srcset="/img/loading.gif" lazyload></p>
 <p>参考链接： <a target="_blank" rel="noopener" href="https://www.cnblogs.com/Java3y/p/12572288.html">https://www.cnblogs.com/Java3y/p/12572288.html</a></p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

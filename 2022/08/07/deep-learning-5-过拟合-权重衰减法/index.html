@@ -287,7 +287,7 @@
             
             <div class="markdown-body">
               
-              <p>出现过拟合的现象，是数据集的大小不能够支撑现有的模型。除了收集更多的数据外（大多数情况耗时短期内不可能做到），可以引入正则化来处理过拟合的问题。</p>
+              <div id="readmore-container"><p>出现过拟合的现象，是数据集的大小不能够支撑现有的模型。除了收集更多的数据外（大多数情况耗时短期内不可能做到），可以引入正则化来处理过拟合的问题。</p>
 <h2 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h2><p>正则化一般分为两种，一种是L1范数，一种是L2范数。L2正则化线性模型构成经典的<em>岭回归</em>（ridge regression）算法， L1正则化线性回归是统计学中类似的基本模型， 通常被称为<em>套索回归</em>（lasso regression）。 </p>
 <p><strong>为什么我们首先使用L2范数，而不是L1范数？</strong></p>
 <p>使用L2范数的一个原因是它对权重向量的大分量施加了巨大的惩罚。 这使得我们的学习算法偏向于在大量特征上均匀分布权重的模型。 在实践中，这可能使它们对单个变量中的观测误差更为稳定。 相比之下，L1惩罚会导致模型将权重集中在一小部分特征上， 而将其他权重清除为零。 这称为<em>特征选择</em>（feature selection），这可能是其他场景下需要的。</p>
@@ -336,7 +336,37 @@
 <li>λ作为超参数是怎么调优的？</li>
 </ol>
 <p>看验证集和训练集的loss值的差别，上节讲到的k-fold可以帮助调超参数</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

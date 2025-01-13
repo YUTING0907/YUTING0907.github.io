@@ -281,7 +281,7 @@
             
             <div class="markdown-body">
               
-              <p>原本的processBroadcastElement函数逻辑如下：</p>
+              <div id="readmore-container"><p>原本的processBroadcastElement函数逻辑如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">processBroadcastElement</span><span class="hljs-params">(Tuple2&lt;String, String&gt; value, Context ctx, Collector&lt;Tuple2&lt;String, String&gt;&gt; out)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>  <br><span class="hljs-type">String</span> <span class="hljs-variable">tableInfo</span> <span class="hljs-operator">=</span> JSON.parseObject(value.f1).getString(<span class="hljs-string">&quot;data&quot;</span>);<br><span class="hljs-type">FlinkCdcTableInfoBean</span> <span class="hljs-variable">flinkCdcTableInfoBean</span> <span class="hljs-operator">=</span> JSON.parseObject(tableInfo, FlinkCdcTableInfoBean.class);<br> <br><span class="hljs-type">String</span> <span class="hljs-variable">key</span> <span class="hljs-operator">=</span> flinkCdcTableInfoBean.getSourceDb() + <span class="hljs-string">&quot;_&quot;</span> + flinkCdcTableInfoBean.getSourceTableName() + <span class="hljs-string">&quot;_&quot;</span> + flinkCdcTableInfoBean.getId();         <br><br>BroadcastState&lt;String, FlinkCdcTableInfoBean&gt; broadcastState=ctx.getBroadcastState(mapStateDescriptor);<br><br>broadcastState.put(key, flinkCdcTableInfoBean);<br>&#125;<br>&#125;).name(<span class="hljs-string">&quot;MySQL data sync stream&quot;</span>);<br><br></code></pre></td></tr></table></figure>
 
 <p>从checkpoint重启，processBroadcastElement函数被修改掉，等于是广播的状态broadcastState被修改掉了</p>
@@ -292,7 +292,37 @@
 <p>为了保证广播状态数据的一致性，在使用 BroadcastState 时，可以考虑使用以下两种方法：</p>
 <p>对广播状态的修改进行同步：在对广播状态进行修改时，需要确保只有一个线程进行修改，避免并发修改导致数据不一致。可以使用锁或者线程安全的数据结构来实现。</p>
 <p>使用版本号控制状态的变更：在广播状态中加入版本号，每次更新状态时，都更新版本号。在从 checkpoint 恢复状态时，通过比较版本号来判断状态是否一致。如果版本号不一致，说明状态已经被修改，需要重新更新状态。可以使用 ValueState 来存储版本号。</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

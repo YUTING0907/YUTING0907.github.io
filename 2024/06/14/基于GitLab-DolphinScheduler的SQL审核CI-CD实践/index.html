@@ -288,7 +288,7 @@
             
             <div class="markdown-body">
               
-              <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>数据开发在基于DolphinScheduler调度平台进行sql开发，对于需求的迭代和变更，需要在DolphinScheduler上进行sql的变更，但是在DolphinScheduler仅有的是对于sql task任务节点的修改记录的不同版本，只能进行版本的切换，对于sql文件的版本管控缺乏如git对文件变更的直观变化记录。</p>
+              <div id="readmore-container"><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>数据开发在基于DolphinScheduler调度平台进行sql开发，对于需求的迭代和变更，需要在DolphinScheduler上进行sql的变更，但是在DolphinScheduler仅有的是对于sql task任务节点的修改记录的不同版本，只能进行版本的切换，对于sql文件的版本管控缺乏如git对文件变更的直观变化记录。</p>
 <h2 id="工作流"><a href="#工作流" class="headerlink" title="工作流"></a>工作流</h2><p>Developer -&gt; 在Dolpin上创建工作流&amp;sql任务流-&gt; 保存工作流(gitlab在main分支创建对应sql文件,默认内容为select 1)</p>
 <p>-&gt; 拉取gitlab的main分支 -&gt; gitlab创建自己的分支 -&gt; 修改gitlab文件(对应工作流) -&gt; 发起merge request</p>
 <p> -&gt; 触发gitlab CI&#x2F;CD管道进行sql规则校验 -&gt; 飞书通知审核人审核 -&gt; 审核通过merge到主分支 -&gt; 通知成功merge并保存变更的文件内容到dolpin</p>
@@ -314,7 +314,37 @@
 <p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20240614233410.png" srcset="/img/loading.gif" lazyload></p>
 <p>review_result_notification.sh功能：更新变更内容到dolpin指定的task(修改元数据task definition和task definition log表)并进行merge成功的飞书通知。</p>
 <p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20240614233437.png" srcset="/img/loading.gif" lazyload></p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

@@ -286,7 +286,7 @@
             
             <div class="markdown-body">
               
-              <h3 id="【1】前言"><a href="#【1】前言" class="headerlink" title="【1】前言"></a>【1】前言</h3><ul>
+              <div id="readmore-container"><h3 id="【1】前言"><a href="#【1】前言" class="headerlink" title="【1】前言"></a>【1】前言</h3><ul>
 <li>XGBoost, 全名(eXtreme Gradient Boosting)，Kaggle大杀器，在数据挖掘比赛上，Everybody knows it！！！</li>
 <li>XGBoost作者：陈天奇（华盛顿大学）</li>
 <li>XGBoost前身:XGBoost是Boosting算法的其中一种,是在GBDT的基础上进行改进，使之更强大，适用于更大范围.</li>
@@ -440,7 +440,37 @@
 frameborder="0" scrolling="no"></iframe>
 
 
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

@@ -16,12 +16,12 @@
   <meta name="author" content="Echo Yu">
   <meta name="keywords" content="ML">
   
-    <meta name="description" content="问题描述flinkcdc读取mysql-binlog日志写到kafka时出现不能获取kafka metadata的问题  遇到获取不到获取不到metadata的情况，检查kafka集群是否有节点挂了。我们kafka集群为3节点，排查发现其中一个节点由于磁盘写满挂了。">
+    <meta name="description" content="问题描述flinkcdc读取mysql-binlog日志写到kafka时出现不能获取kafka metadata的问题  遇到获取不到获取不到metadata的情况，检查kafka集群是否有节点挂了。我们kafka集群为3节点，排查发现其中一个节点由于磁盘写满挂了。    				 				 				 				var isMobile &#x3D; navigator.userAgent.match(&#x2F;(p">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Flink作业读取mysql-binlog写入kafka报错">
 <meta property="og:url" content="http://yuting0907.github.io/2022/08/31/Flink%E4%BD%9C%E4%B8%9A%E8%AF%BB%E5%8F%96mysql-binlog%E5%86%99%E5%85%A5kafka%E6%8A%A5%E9%94%99/index.html">
 <meta property="og:site_name" content="YUTING">
-<meta property="og:description" content="问题描述flinkcdc读取mysql-binlog日志写到kafka时出现不能获取kafka metadata的问题  遇到获取不到获取不到metadata的情况，检查kafka集群是否有节点挂了。我们kafka集群为3节点，排查发现其中一个节点由于磁盘写满挂了。">
+<meta property="og:description" content="问题描述flinkcdc读取mysql-binlog日志写到kafka时出现不能获取kafka metadata的问题  遇到获取不到获取不到metadata的情况，检查kafka集群是否有节点挂了。我们kafka集群为3节点，排查发现其中一个节点由于磁盘写满挂了。    				 				 				 				var isMobile &#x3D; navigator.userAgent.match(&#x2F;(p">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20220831214337.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20220831214941.png">
@@ -285,12 +285,42 @@
             
             <div class="markdown-body">
               
-              <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>flinkcdc读取mysql-binlog日志写到kafka时出现不能获取kafka metadata的问题</p>
+              <div id="readmore-container"><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>flinkcdc读取mysql-binlog日志写到kafka时出现不能获取kafka metadata的问题</p>
 <p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20220831214337.png" srcset="/img/loading.gif" lazyload></p>
 <p>遇到获取不到获取不到metadata的情况，检查kafka集群是否有节点挂了。我们kafka集群为3节点，排查发现其中一个节点由于磁盘写满挂了。</p>
 <p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20220831214941.png" srcset="/img/loading.gif" lazyload></p>
 <p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20220831214849.png" srcset="/img/loading.gif" lazyload></p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

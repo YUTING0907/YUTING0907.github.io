@@ -286,7 +286,7 @@
             
             <div class="markdown-body">
               
-              <p>本文介绍利用hexo写博客的常用命令和功能</p>
+              <div id="readmore-container"><p>本文介绍利用hexo写博客的常用命令和功能</p>
 <p>包括创建博客，预览文章，部署博客，文章加密，更换主题，免费图床</p>
 <h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><h4 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h4><p>在博客目录下输入以下命令时，会默认使用post布局，然后自动在<code>source\_posts</code>目录生成一个文章名.md文件：</p>
 <p><code>hexo n 文章名 # 例如 hexo n hexo博客使用手册</code></p>
@@ -391,7 +391,37 @@
 <p>综上，操作完成。</p>
 <p>本方案唯一缺点，不能私人。但是考虑到 GitHub 上传的图在列表里没法预览，应该没人会闲着没事翻记录。。</p>
 <p>​     </p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

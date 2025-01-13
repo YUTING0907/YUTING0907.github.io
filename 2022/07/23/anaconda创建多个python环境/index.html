@@ -286,7 +286,7 @@
             
             <div class="markdown-body">
               
-              <p>本文旨在讲怎么用anaconda创建多个python环境，主要是因为在github上看到好玩的项目非得要用python3.10版本，我之前装的python版本比这个低，不然才不会折腾环境的安装呢 :( </p>
+              <div id="readmore-container"><p>本文旨在讲怎么用anaconda创建多个python环境，主要是因为在github上看到好玩的项目非得要用python3.10版本，我之前装的python版本比这个低，不然才不会折腾环境的安装呢 :( </p>
 <h3 id="conda查看目前已有的环境"><a href="#conda查看目前已有的环境" class="headerlink" title="conda查看目前已有的环境"></a>conda查看目前已有的环境</h3><p>关于anaconda的安装可以自己去百度安装下，这里就不赘述安装的过程了。</p>
 <p>当安装完成并设置环境变量之后，就可以在命令行终端查看conda的环境了。</p>
 <p>运行命令<code>conda env list</code> 就可以查看目前conda有哪些环境，如下图是我目前conda的环境，这里有一个是base, 注意base前面有个*，这表示是我们当前的环境，这个是安装anaconda最初时候就产生的。</p>
@@ -310,7 +310,37 @@
 <p><code>conda activate py310(新环境名称)</code></p>
 <p>4.退出当前环境</p>
 <p><code>conda deactivate</code></p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

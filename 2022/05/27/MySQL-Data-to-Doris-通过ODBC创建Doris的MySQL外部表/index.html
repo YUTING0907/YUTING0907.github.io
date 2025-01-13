@@ -285,7 +285,7 @@
             
             <div class="markdown-body">
               
-              <p><strong>注意!!!ODBC版本过新会导致Doris BE服务宕机，目前测试下来 8.0.26及 8.0.28版本均有问题，降为 8.0.11后未出现问题，其余版本请自行测试！</strong></p>
+              <div id="readmore-container"><p><strong>注意!!!ODBC版本过新会导致Doris BE服务宕机，目前测试下来 8.0.26及 8.0.28版本均有问题，降为 8.0.11后未出现问题，其余版本请自行测试！</strong></p>
 <p><strong>1.安装ODBC驱动</strong><br>首先我们安装unixODBC驱动</p>
 <blockquote>
 <p>sudo wget <a href="ftp://ftp.unixodbc.org/pub/unixODBC/unixODBC-2.3.4.tar.gz">ftp://ftp.unixodbc.org/pub/unixODBC/unixODBC-2.3.4.tar.gz</a><br>tar -xvzf unixODBC-2.3.4.tar.gz<br>cd unixODBC-2.3.4&#x2F;<br>sudo .&#x2F;configure –prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;unixODBC-2.3.7 –includedir&#x3D;&#x2F;usr&#x2F;include –libdir&#x3D;&#x2F;usr&#x2F;lib -bindir&#x3D;&#x2F;usr&#x2F;bin –sysconfdir&#x3D;&#x2F;etc<br>make<br>sudo make install</p>
@@ -333,7 +333,37 @@
 </blockquote>
 <p>查看doris是否有数据</p>
 <p><code>select * from ods.ods_esc_goods</code></p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

@@ -281,7 +281,7 @@
             
             <div class="markdown-body">
               
-              <h3 id="迷你定向网页抓取器"><a href="#迷你定向网页抓取器" class="headerlink" title="迷你定向网页抓取器"></a>迷你定向网页抓取器</h3><h4 id="明确要求"><a href="#明确要求" class="headerlink" title="明确要求"></a>明确要求</h4><p>这个迷你定向网页抓取器是基于如下需求来实现的网络爬虫的功能，实现对种子链接的广度优先抓取，并把URL格式符合特定pattern的网页保存到磁盘上。</p>
+              <div id="readmore-container"><h3 id="迷你定向网页抓取器"><a href="#迷你定向网页抓取器" class="headerlink" title="迷你定向网页抓取器"></a>迷你定向网页抓取器</h3><h4 id="明确要求"><a href="#明确要求" class="headerlink" title="明确要求"></a>明确要求</h4><p>这个迷你定向网页抓取器是基于如下需求来实现的网络爬虫的功能，实现对种子链接的广度优先抓取，并把URL格式符合特定pattern的网页保存到磁盘上。</p>
 <p>要求：</p>
 <ol>
 <li><p>需要支持命令行参数处理。具体包含: -h(帮助)、-v(版本)、-c(配置文件)</p>
@@ -381,7 +381,37 @@
 <p>派生类中重写父类threading.Thread的run()方法，其他方法（除了构造函数)都不应在子类中被重写，换句话说，在子类中只有_init_()和run()方法被重写。使用线程的时候先生成一个子线程类的对象，然后对象调用start()方法就可以运行线程啦（start调用run）</p>
 <p>参考Github：<a target="_blank" rel="noopener" href="https://github.com/DrCubic/MiniSpider">https://github.com/DrCubic/MiniSpider</a></p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>文章中介绍了python程序通过配置文件传参数，多线程广度优先爬取符合要求的网页</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>

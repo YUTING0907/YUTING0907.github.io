@@ -286,7 +286,7 @@
             
             <div class="markdown-body">
               
-              <h3 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h3><h4 id="😊Anaconda"><a href="#😊Anaconda" class="headerlink" title="😊Anaconda"></a>😊Anaconda</h4><p>管理python环境，可以做到环境隔离，避免依赖冲突等问题</p>
+              <div id="readmore-container"><h3 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h3><h4 id="😊Anaconda"><a href="#😊Anaconda" class="headerlink" title="😊Anaconda"></a>😊Anaconda</h4><p>管理python环境，可以做到环境隔离，避免依赖冲突等问题</p>
 <ol>
 <li>创建一个虚拟环境（比如叫tuduipytorch)</li>
 </ol>
@@ -384,7 +384,37 @@
 <p>5.输入torch.cuda.is_available()</p>
 <p>6.如果显示True，就说明我们这个PyTorch安装成功了</p>
 <p>参考：b站 小土堆</p>
-
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
               
             </div>
             <hr/>
