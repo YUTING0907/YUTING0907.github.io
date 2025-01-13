@@ -209,22 +209,6 @@
 </div>
 
 </div>
-
-<div id="Loadanimation" style="z-index:999999;">
-<div id="Loadanimation-center">
-   <div id="Loadanimation-center-absolute">
-       <div class="xccx_object" id="xccx_four"></div>
-       <div class="xccx_object" id="xccx_three"></div>
-       <div class="xccx_object" id="xccx_two"></div>
-       <div class="xccx_object" id="xccx_one"></div>
-   </div>
-</div>
-</div>
-<script>
-$(function(){
-   $("#Loadanimation").fadeOut(540);
-});
-</script>
   </header>
 
   <main>
@@ -238,6 +222,46 @@ $(function(){
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2025/01/13/%E4%B8%80%E6%96%87%E8%AF%BB%E6%87%82transform%E5%8E%9F%E7%90%86%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" target="_self">
+          一文读懂transform原理及代码实现
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2025/01/13/%E4%B8%80%E6%96%87%E8%AF%BB%E6%87%82transform%E5%8E%9F%E7%90%86%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" target="_self">
+        <div>
+          
+          0 引言由于之前的模型，例如Seq2Seq模型有如下缺点，所以导致了transformer的诞生～  上下文向量信息压缩 输入序列的全部信息需要被编码成一个固定维度的上下文向量，用这个固定的向量来表示编码器的全部信息，这样会导致信息的损耗。  无法并行 Seq2Seq模型在处理长序列时存在短期记忆限制，难以有效捕获和传递长期依赖性。本质上和RNN&#x2F;LSTM无法并行的原因一样。   Tra
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-01-13 20:27" pubdate>
+              2025-01-13
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">#深度学习</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -751,46 +775,6 @@ $(function(){
             <i class="iconfont icon-date"></i>
             <time datetime="2024-11-06 14:50" pubdate>
               2024-11-06
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">#深度学习</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2024/11/05/pytorch%E5%8A%A0%E8%BD%BD%E6%A8%A1%E5%9E%8Btorch-load-%E9%81%87%E5%88%B0%E9%97%AE%E9%A2%98ModuleNotFoundError-No-module-named-models/" target="_self">
-          pytorch加载模型torch.load()遇到问题ModuleNotFoundError: No module named models
-        </a>
-      </h1>
-
-      <a class="index-excerpt" href="/2024/11/05/pytorch%E5%8A%A0%E8%BD%BD%E6%A8%A1%E5%9E%8Btorch-load-%E9%81%87%E5%88%B0%E9%97%AE%E9%A2%98ModuleNotFoundError-No-module-named-models/" target="_self">
-        <div>
-          
-          问题描述： 在加载自己训练的模型文件时，报错ModuleNotFoundError: No module named ‘models’。 123import torchmodel_tmp &#x3D; torch.load(&amp;#x27;.&#x2F;yolov5s.pt&amp;#x27;)print(model_tmp)  问题分析：写load的这个文件要放到具有yolov5工程的文件夹里运行，因为它会寻找原生yolo5工
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-11-05 11:24" pubdate>
-              2024-11-05
             </time>
           </div>
         
