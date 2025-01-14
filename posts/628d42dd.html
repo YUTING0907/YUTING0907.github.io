@@ -1,0 +1,941 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon_yt.png">
+  <link rel="icon" href="/img/favicon_yt.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Echo Yu">
+  <meta name="keywords" content="ML">
+  
+    <meta name="description" content="该论文发表在IEEE TRANSACTIONS ON NEURAL NETWORKS AND LEARNING SYSTEMS, VOL.XX, NO.XX, JANUARY, 2021，CCF B评级 1.Introducation为了解决统一的输入尺寸约束和真实世界图像的不同尺寸之间的冲突， 本文通过在以填充图像为输入的网络中应用RoM池化，开发了一种名为PRP的新方法。 1.这种方法使我们能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Theme-Aware Aesthetic Distribution Prediction With Full-Resolution Photographs">
+<meta property="og:url" content="http://yuting0907.github.io/posts/628d42dd.html">
+<meta property="og:site_name" content="YUTING">
+<meta property="og:description" content="该论文发表在IEEE TRANSACTIONS ON NEURAL NETWORKS AND LEARNING SYSTEMS, VOL.XX, NO.XX, JANUARY, 2021，CCF B评级 1.Introducation为了解决统一的输入尺寸约束和真实世界图像的不同尺寸之间的冲突， 本文通过在以填充图像为输入的网络中应用RoM池化，开发了一种名为PRP的新方法。 1.这种方法使我们能">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230925225346.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230925213516.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230925214606.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230925214718.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230925214755.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230925214818.png">
+<meta property="article:published_time" content="2023-09-19T14:05:22.000Z">
+<meta property="article:modified_time" content="2025-01-14T14:11:52.965Z">
+<meta property="article:author" content="Echo Yu">
+<meta property="article:tag" content="CV - image aesthetics">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230925225346.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Theme-Aware Aesthetic Distribution Prediction With Full-Resolution Photographs - YUTING</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/reward.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yuting0907.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>EchoYu&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Theme-Aware Aesthetic Distribution Prediction With Full-Resolution Photographs"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Echo Yu
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-09-19 22:05" pubdate>
+          2023年9月19日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          51 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Theme-Aware Aesthetic Distribution Prediction With Full-Resolution Photographs</h1>
+            
+            <div class="markdown-body">
+              
+              <div id="readmore-container"><p>该论文发表在IEEE TRANSACTIONS ON NEURAL NETWORKS AND LEARNING SYSTEMS, VOL.XX, NO.XX, JANUARY, 2021，CCF B评级</p>
+<h2 id="1-Introducation"><a href="#1-Introducation" class="headerlink" title="1.Introducation"></a>1.Introducation</h2><p>为了解决统一的输入尺寸约束和真实世界图像的不同尺寸之间的冲突，</p>
+<p>本文通过在以填充图像为输入的网络中应用RoM池化，开发了一种名为PRP的新方法。</p>
+<p>1.这种方法使我们能够利用填充来保持统一的图像大小，同时消除其副作用。这是AQA中第一个支持端到端批处理的方法。</p>
+<p>2.提出了一种SA模块来弥补RoM池化层中形状信息丢失的问题。对原始图像纵横比进行编码，并与视觉特征进行融合，使模型适应不同的图像形状。</p>
+<p>3.我们发现，在没有主题信息的AVA数据集中对图像进行评价是不准确的，因为存在主题准则偏差。一个主题感知模块被提出来解决这个问题。对主题进行编码，并结合视觉特征，更准确地预测美学质量。</p>
+<p>4.我们提出了一个基于注意力机制的融合模块，将包括<strong>形状特征</strong>和<strong>主题特征</strong>在内的额外特征与图像特征进行融合。该模块有效地挖掘了不同特征之间的关系。</p>
+<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2.Related Work"></a>2.Related Work</h2><p>A.Photo Aesthetic Quality Assessment</p>
+<p>尽管这些基于DNNs的工作已经取得了很大的进展，但它们仍然受到固定输入大小问题的困扰</p>
+<p>因此，研究人员提出了解决这一问题的方法。一些工作[ 11 ]、[ 12 ]、[ 40 ]、[ 45 ]提出从原始图像中<strong>裁剪出多个固定大小的图斑</strong>，并将这些图斑提取的特征进行聚合来预测美学质量</p>
+<p>Ma等人[ 12 ]提出根据一些基于人类感知的标准来选择补丁；因此，<strong>斑块可以更具有代表性</strong>。Sheng等人[ 46 ]提出了一种基于注意力的方法，<strong>动态地学习不同块的权重</strong>，而不是根据预定义的标准来选择块</p>
+<p>另一些工作则试图<strong>保持输入图像的纵横比</strong>；他们采用FCN [ 13 ]或SPP [ 14 ]从任意网络输入生成固定大小的特征[ 16 ]，[ 15 ]，[ 47 ]，[ 17 ]。为了适应更好地在固定输入上运行的深度学习工具，一些人使用多尺寸训练作为近似，但只考虑了1.0和1.5的纵横比[ 15 ]，[ 17 ]。Apostolidis等人[ 16 ]进行了<strong>批大小为1</strong>的实验，以便可以接受任何输入大小。然而，该方法的性能甚至不如图像变换方法，可能是由于训练过程不稳定造成的。Hosu等人[ 26 ]从<strong>ImageNet预训练</strong>的模型中提取特征，无需微调；因此，他们可以在一个<strong>两阶段的训练过程中使用原始照片</strong>。Chen等人[ 48 ]提出了一种不同的思想，即使用分数步幅的卷积来适应扭曲的输入。</p>
+<p>B.Pooling Methods and Multisize Feature Extraction Methods</p>
+<p>池化在降低计算复杂度方面起着至关重要的作用。在最初的池化方法实现中，步长和核大小都是人工固定的</p>
+<p>即池化输入大小和输出大小之间的比例是固定的。He等人[ 14 ]指出这样的性质使得网络不灵活，因为全连接层只能接受固定大小的输入。SPP的设计目的是使池化层能够从任意输入中生成固定大小的特征，并且它还可以提取多尺度信息。这是通过使用自适应池化核和步长来实现的。具体来说，池化尺寸是手动固定的，池化步长和内核尺寸定义为输入尺寸和固定池化尺寸之间的比值。为了将SPP融入到网络中，提出了两种方法。一种使用多尺寸端到端训练策略，具有两个预定义尺寸224和180。另一种采用两阶段训练框架，不需要对主干CNN进行微调，使得图像不需要调整大小。</p>
+<p>在传统池化和SPP中，池化都应用于整个输入特征图。也就是说，池化核的移动范围固定为整个输入。然而，在目标检测任务中，一个物体只占据图像区域的一部分。为了仅从目标区域提取特征而丢弃其他特征，RoI池化在[ 18 ]中被提出。<strong>RoI池化</strong>能够从任意大小和位置的区域中提取固定大小的特征。这意味着可以根据不同的RoI自适应地修改核的移动范围、核的大小和步长。为了校正量化误差，文献[ 52 ]将RoI池化改进为RoI对齐。这种增强显著提高了小目标的检测性能。RoI池化(对齐)变成了st模型[ 53 ]，[ 54 ]，[ 55 ] . SPP和RoI池化都可以使网络接受任意大小的输入图像。为了实现这一目标，去除全连接层和仅使用卷积层也是一种解决方案。这种网络被命名为FCN，最初被用于解决语义分割任务[ 13 ]。</p>
+<p>SPP和RoI池化都可以使网络接受任意大小的输入图像。为了实现这一目标，去除全连接层和仅使用卷积层也是一种解决方案。这种网络被命名为FCN，最初被用于解决语义分割任务</p>
+<h2 id="3-Method"><a href="#3-Method" class="headerlink" title="3.Method"></a>3.Method</h2><p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230925225346.png" srcset="/img/loading.gif" lazyload></p>
+<p>A. RoM Pooling on Padded Full-Resolution Images</p>
+<p>具体来说，我们将数据集中的所有图像填充到相同的尺寸。不管图像是如何填充的，所以我们使用最直接的方法，即<strong>沿着底部和右侧边界垫零</strong>。经过填充后，输入图像变成两个区域的空间可分离的组合：一个区域被填充为0的填充值，另一个区域是原始图像。<strong>原始图像的区域称为RoM</strong>，其空间坐标范围为(0，0 )到( w , h)，其中w和h分别为原始图像宽度和高度。</p>
+<p>然后将填充后的图像送入网络，并通过一些卷积层进行处理。将RoM对应映射到特征图上。因此，RoM池化层的输入特征图也成为填充区域和图像区域( RoM )在空间上可分离的组合。RoM池化层将RoM中的特征池化到手动定义的大小，并将RoM外的特征丢弃。因此，池化后的特征具有相同的大小，并且去除了填充引入的额外信息。形式上，RoM池化的输出位置( b , c , m , n)处的特征给出如下。</p>
+<p>在我们的实现中，我们直接使用文献[ 23 ]中提出的多传感头注意力，并将头数设置为8。由于查询特征长度ft为1，因此不需要进行位置嵌入。注意力层将视觉特征的空间维度变为1，可以看作是一种特殊的全局池化层，根据额外的特征对不同的空间位置赋予不同的权重。该模块挖掘了额外特征与图像空间特征之间的关系。因此，更有效地利用了额外的特征。</p>
+<p>B.Encoding Shape Information</p>
+<p>将连续的纵横比离散化，并将离散值转化为独热码。然后使用两个全连接层从one - hot编码中提取形状特征。最后，将形状特征与视觉特征进行融合，对美学质量进行预测</p>
+<p>C.Theme-aware AQA</p>
+<p>我们将AVA数据集中的1，397个不同主题转化为one - hot编码，并使用两个全连接层来提取主题特征</p>
+<p>D. Attention-Based Feature Fusion</p>
+<p>将RoM得到的视觉特征和形状特征和主题特征融合。基于注意力机制的特征融合，利用<strong>两个注意力层</strong>分别用于处理形状特征和主题特征，另外利用<strong>全局平均池化层来直接池化视觉特征</strong>。最终得到3个特征，包括形状引导的视觉特征、主题引导的视觉特征和纯视觉特征。将这3个特征相加作为融合输出。</p>
+<p>额外的特征被视为查询Q，扁平化的视觉特征被用作键值K和值V。注意力层的架构如图6所示，其中ft和fi分别为额外特征和扁平化的视觉特征。我们直接使用文献[ 23 ]中提出的多传感头注意力，并将头数设置为8。由于查询特征的长度ft为1，因此不需要进行位置嵌入。注意力层将视觉特征的空间维度变为1，可以看作是一种特殊的全局池化层，根据额外的特征对不同的空间位置赋予不同的权重。</p>
+<h2 id="4-Experiment"><a href="#4-Experiment" class="headerlink" title="4.Experiment"></a>4.Experiment</h2><p>我们选择Inception-V3[ 9 ]作为我们的骨干网络，这与之前的工作[ 28 ]，[ 29 ]，[ 26 ]相同。在Inception-V3中插入RoM池化层来代替原来的第一个池化层。我们的模型以填充图像作为输入。这与最初的Inception-V3不同，它将所有的输入大小调整为299 × 299。因此，RoM池化的大小需要进行相应的修改。RoM池化大小是一个超参数，没有简单的方法来寻找最优解。</p>
+<p>因此，我们根据一些经验线索来选择池化规模。我们的主要考虑是保持第一个池化尺寸与原始图像尺寸之间的比例与原始Inception-V3的比例相似。然而，对于不同的图像，其大小可能是不同的。因此，我们选择AVA数据集中比较常见的600大小的图像作为基准。因此，RoM池化尺寸( wout , hout)是通过将基准尺寸600与原始Inception-V3中相应的比率73&#x2F;299相乘得到的，</p>
+<p>wout &#x3D; hout &#x3D; 600 × 73&#x2F;299 ≈ 146,</p>
+<p>73为原始Inception-V3中第1个池化层的池化大小，299为Inception-V3的输入大小。</p>
+<p>在训练阶段，通过对所有预定义质量分数的投票数进行归一化处理，计算训练图像xi的真实感美学分布pi。</p>
+<p>pi k &#x3D; vi k ∑K k&#x3D;1 vi k ,</p>
+<p>其中vi k为质量分数k的投票数，K为最大质量分数。在我们的模型得到预测的美学分布Δ pi后，我们使用分布之间的地球自转距离( EMD ) [ 28 ]作为损失函数。EMD损失基于累积分布密度，当分布有序时效果较好。</p>
+<p><strong>Implementation Details</strong></p>
+<p>我们的所有模型都在ImageNet上进行预训练以加速收敛，并在相应的数据集上进行微调。使用动量为0.9，权重衰减为0.0001的SGD优化器对网络进行训练。学习率每10个epoch除以2，模型训练40个epochs。我们将卷积层的初始学习率设置为4 × 10 - 3；而对于随机初始化的层，学习率要大10倍。我们测试了两种类型的填充实现，并得到了几乎相同的性能。</p>
+<p><strong>Ablation Study</strong></p>
+<p>第一个基线模型将图像缩放到相同大小，由于我们的方法使用了全分辨率图像，为了公平比较，我们将所有图像尺寸调整为800 × 800，这是AVA数据集中最大的图像尺寸。</p>
+<p>第二个基线模型使用填充变换。我们将所有的图像填充到800 × 800。在缩放基线和填充基线中，为了消除其他因素的影响，我们使用与全模型实验相同的数据增强方法和特征图尺寸(第一个池化层的输出大小)。随机裁剪固定大小块的第三条基线，由于大小的原因，需要与图像缩放相结合裁剪后的图像块不能大于数据集中的最小图像尺寸。然而，AVA的最小尺寸仅为160 × 160。</p>
+<h2 id="5-Conclusion"><a href="#5-Conclusion" class="headerlink" title="5.Conclusion"></a>5.Conclusion</h2><p>该论文工作的缺点：</p>
+<p>1.我们的方法在偏态分布上效果很差</p>
+<p>该模型不能预测不常见的分布。这两种分布都是非高斯的，且都有异常值。在第一幅图像中，投票得9分的人数太少。对于第二幅图像，许多用户投票得分为1。它们都是AVA数据集中的非典型分布，如Gamma分布[ 10 ]。这可能是模型不能很好地评估它们的原因。</p>
+<p>2.首先，BERT码在不同主题之间具有较低的区分性。第二，我们的模型不能有效地利用BERT码中的语义信息。我们认为BERT码中的语义信息是有价值的。我们将在未来的工作中进一步研究这种编码方法。</p>
+<h2 id="6-Personal-Thinking"><a href="#6-Personal-Thinking" class="headerlink" title="6.Personal Thinking"></a>6.Personal Thinking</h2><p><strong>SPP(spatial pyramid pooling)金字塔池化</strong>：</p>
+<p>一般而言，对于一个CNN模型，可以将其分为两个部分：</p>
+<ol>
+<li>前面包含卷积层、激活函数层、池化层的特征提取网络，下称CNN_Pre</li>
+<li>后面的全连接网络，下称CNN_Post</li>
+</ol>
+<p>许多CNN模型都对输入的图片大小有要求，实际上CNN_Pre对输入的图片没有要求，可以简单认为其将图片缩小了固定的倍数，而CNN_Post对输入的维度有要求，简而言之，限制输入CNN模型的图片尺寸是为了迁就CNN_Post。</p>
+<p>SPP是为了解决，无论CNN_Pre输出的feature maps尺寸是怎样，都能输出固定的维度传给CNN_Post。</p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230925213516.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>Rol Pooling</strong></p>
+<p>是一种针对于特征图的一种特殊pooling操作，特点是输入的特征图尺寸不固定，但是输出特征图尺寸固定。可以看成是特殊的SPP。</p>
+<p>Rol Pooling最初被提出是在目标检测任务中，在目标检测中提取的候选框中，’候选框（proposal）’的大小是不一样的，所以映射到feature map上的矩阵大小也是不一样的。我们需要将‘候选框’映射到特征图上所产生的的矩阵通过一些操作产生shape相同的vector or matrix，因此使用Rol Pooling的方法。</p>
+<p>Example：</p>
+<p><strong>（考虑一个8*8大小的feature map，一个ROI，以及输出大小为2*2.）：</strong></p>
+<p>1.输入的固定大小的feature map</p>
+<p>2.region proposal 投影在feature map上的位置</p>
+<p>3.将其划分为（2<em>2）个sections（因为输出大小为2</em>2），我们可以得到：</p>
+<p>4.对每个section做max pooling，可以得到：</p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230925214606.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230925214718.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230925214755.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20230925214818.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>注意力机制(Attention mechanism)</strong></p>
+<p>1.单头注意力</p>
+<p>最初注意力机制的提出，是在Transformer中，参考论文Attention is All You Need。</p>
+<p>输入是query和 key-value，注意力机制首先计算query与每个key的关联性（compatibility），每个关联性作为每个value的权重（weight），各个权重与value的乘积相加得到输出。</p>
+<p>Example：</p>
+<p>厨房里有苹果、青菜、西红柿、玛瑙筷子、朱砂碗，每个物品都有一个key（ dk维向量）和value（ dv维向量）。现在有一个“红色”的query（ dq维向量），注意力机制首先计算“红色”的query与苹果的key、青菜的key、西红柿的key、玛瑙筷子的key、朱砂碗的key的<strong>关联性</strong>，再计算得到<strong>每个物品对应的权重</strong>，最终输出 &#x3D;（苹果的权重x苹果的value + 青菜的权重x青菜的value + 西红柿的权重x西红柿的value + 玛瑙筷子的权重x玛瑙筷子的value + 朱砂碗的权重x朱砂碗的value）。</p>
+<p>最终输出包含了每个物品的信息，由于苹果、西红柿的权重较大（因为与“红色”关联性更大），因此最终输出受到苹果、西红柿的value的影响更大。</p>
+<p>2.多头注意力</p>
+<p>上述只求一次注意力的过程可以叫做单头注意力。多头注意力就是对同样的Q, K, V求多次注意力，得到多个不同的output，再把这些不同的output连接起来得到最终的output</p>
+<p>不同头部的output就是从不同层面（representation subspace）考虑关联性而得到的输出。</p>
+<p>例如，以“红色”为query，第一个头部（从食物层面考虑）得到的output受到苹果、西红柿的value的影响更大；第二个头部（从餐具层面考虑）得到的output受到玛瑙筷子、朱砂碗的value的影响更大。相比单头注意力，多头注意力可以考虑到更多层面的信息。</p>
+<p>3.自注意力（self-attention）</p>
+<p>当注意力的query和key、value全部来自于同一堆东西时，就称为自注意力。</p>
+<p>例如，厨房里有苹果、青菜、西红柿、玛瑙筷子、朱砂碗，每个物品都会计算得到一个query（ dq 维向量），以及一个key（ dk维向量）和value（ dv维向量）。“苹果”的query与苹果、青菜、西红柿、玛瑙筷子、朱砂碗的key和value做注意力，得到最终输出。其他物品的query也如此操作。这样，输入5个物品，有5个query，得到5个输出，相当于将这5个物品换了一种表示形式，而这新的表示形式（得到的输出）每个都是是考虑了所有物品的信息的。</p>
+<p>reference：</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/366592542">注意力机制</a></p>
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
+              
+            </div>
+            <hr/>
+            
+            <!--  -->
+            <div class="reward-container">
+            	
+            		<button id="rewardBtn" class="reward-btn">
+            			 
+            				  ❤ 打赏
+            				
+            		</button>
+            		<p class="tea">觉得不错的话，支持一根棒棒糖吧 ୧(๑•̀⌄•́๑)૭</p>
+            		<div id="rewardImgContainer" class="reward-img-container">
+                     	<div class="singleImgContainer">
+                        	<img id="wechatImg" class="reward-img" src="/img/wechatpay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="wechatPay">wechat pay</p>
+                      </div>
+                      <div class="singleImgContainer">
+                           	<img id="alipayImg" class="reward-img" src="/img/alipay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="aliPay">alipay</p>
+                      </div>
+            		</div>
+            	
+            </div>
+            
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" class="category-chain-item">论文阅读</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CV-image-aesthetics/">#CV - image aesthetics</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Theme-Aware Aesthetic Distribution Prediction With Full-Resolution Photographs</div>
+      <div>http://yuting0907.github.io/posts/628d42dd.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Echo Yu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年9月19日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/230496ae.html" title="基于GitLab-DolphinScheduler的SQL审核CI/CD实践">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">基于GitLab-DolphinScheduler的SQL审核CI/CD实践</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/e091457e.html" title="Context-aware Attention Network for Predicting Image Aesthetic Subjectivity">
+                        <span class="hidden-mobile">Context-aware Attention Network for Predicting Image Aesthetic Subjectivity</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.16/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"R7QNfEH5amaZQLZm17hGAbmw-MdYXbMMI","appKey":"sUFrjMTIQtqH2qKITIAxiQf4","path":"window.location.pathname","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false,"enable":true,"appid":"R7QNfEH5amaZQLZm17hGAbmw-MdYXbMMI","appkey":"sUFrjMTIQtqH2qKITIAxiQf4","verify":false,"notify":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/reward.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
+
+<!--  -->
+<script type="text/javascript" src="/js/love.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>  
+
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="/js/FunnyTitle.js"></script>
