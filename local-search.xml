@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Hexo Fluid主题美化之添加Live2D看板娘</title>
+    <link href="/2025/01/14/Fluid-5-%E4%B8%BB%E9%A2%98%E7%BE%8E%E5%8C%96%E4%B9%8B%E6%B7%BB%E5%8A%A0Live2D%E7%9C%8B%E6%9D%BF%E5%A8%98/"/>
+    <url>/2025/01/14/Fluid-5-%E4%B8%BB%E9%A2%98%E7%BE%8E%E5%8C%96%E4%B9%8B%E6%B7%BB%E5%8A%A0Live2D%E7%9C%8B%E6%9D%BF%E5%A8%98/</url>
+    
+    <content type="html"><![CDATA[<div id="readmore-container"><p>此功能将会使得 博客网站上有2D的小漫画人物或者萌宠陪伴～</p><h3 id="安装Live2D插件"><a href="#安装Live2D插件" class="headerlink" title="安装Live2D插件"></a>安装Live2D插件</h3><p>1、进入Hexo根目录</p><p>2、打开Git Bash，输入以下命令进行安装：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">npm install --save hexo-helper-live2d<br></code></pre></td></tr></table></figure><h3 id="添加自定义配置"><a href="#添加自定义配置" class="headerlink" title="添加自定义配置"></a>添加自定义配置</h3><p>1、打开Hexo根目录下的配置文件</p><p> 2、在合适位置处添加以下内容</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Olive2</span><span class="hljs-attr">d</span>:<br><span class="hljs-attr">enable</span>: <span class="hljs-literal">true</span> <br><span class="hljs-attr">scriptFrom</span>: local <br><span class="hljs-attr">pluginRootPath</span>: live2dw/ <br><span class="hljs-attr">pluginJsPath</span>: lib/ <br><span class="hljs-attr">pluginModelPath</span>: assets/ <br><span class="hljs-attr">tagMode</span>: <span class="hljs-literal">false</span> <br><span class="hljs-attr">debug</span>: <span class="hljs-literal">false</span> <br><span class="hljs-attr">model</span>: <br><span class="hljs-attr">use</span>: live2d-widget-model-wanko # live2d-widget-model-hijiki 萝莉 该配置即为要使用的<span class="hljs-title class_">Live2D</span>模型的名字 <br><span class="hljs-attr">scale</span>: <span class="hljs-number">1</span> <br><span class="hljs-attr">hHeadPos</span>: <span class="hljs-number">0.5</span> <br><span class="hljs-attr">vHeadPos</span>: <span class="hljs-number">0.618</span> <br><span class="hljs-attr">display</span>: <br><span class="hljs-attr">superSample</span>: <span class="hljs-number">2</span> <br><span class="hljs-attr">width</span>: <span class="hljs-number">200</span> <br><span class="hljs-attr">height</span>: <span class="hljs-number">350</span> <br><span class="hljs-attr">position</span>: right <br><span class="hljs-attr">hOffset</span>: <span class="hljs-number">0</span> <br><span class="hljs-attr">vOffset</span>: -<span class="hljs-number">20</span> <br><span class="hljs-attr">mobile</span>: <br><span class="hljs-attr">show</span>: <span class="hljs-literal">false</span> <br><span class="hljs-attr">scale</span>: <span class="hljs-number">0.5</span> <br><span class="hljs-attr">react</span>:<br><span class="hljs-attr">opacityDefault</span>: <span class="hljs-number">1</span> <br><span class="hljs-attr">opacityOnHover</span>: <span class="hljs-number">0.5</span><br></code></pre></td></tr></table></figure><h3 id="安装所需模型"><a href="#安装所需模型" class="headerlink" title="安装所需模型"></a>安装所需模型</h3><p>1、从以下链接处找到你所需的模型的名字 </p><p><a href="https://github.com/xiazeyu/live2d-widget-models">https://github.com/xiazeyu/live2d-widget-models</a> </p><p>2、进入Hexo根目录，打开Git Bash，输入以下命令安装模型 npm install live2d-widget-model-wanko </p><p>3、修改自定义配置中要使用的模型，必须要与已安装的模型名称一致</p><h3 id="检查是否配置成功"><a href="#检查是否配置成功" class="headerlink" title="检查是否配置成功"></a>检查是否配置成功</h3><p>使用以下命令检查是否配置成功： </p><p><code>hexo clean</code></p><p><code> hexo g</code></p><p><code> hexo s</code></p><p> 若配置成功，则上传到网站根目录： </p><p><code>hexo d</code></p></div><link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css"><script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script><script>var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);var isEncrypt = document.getElementById('hexo-blog-encrypt');var allowMobile = false;if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {try {var plugin = new ReadmorePlugin();plugin.init({"type": "hexo","id": "readmore-container","name": "YutingNotFound","blogId": "04372-4551209630277-002","qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg","keyword": "验证码","random": "1","height": "auto","expires": "36500","lockToc": "yes","interval": "60","baseUrl": "","tocSelector": ""});} catch(e) {console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);}}</script>]]></content>
+    
+    
+    <categories>
+      
+      <category>博客</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>hexo</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>一文读懂transform原理及代码实现</title>
     <link href="/2025/01/13/%E4%B8%80%E6%96%87%E8%AF%BB%E6%87%82transform%E5%8E%9F%E7%90%86%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/"/>
     <url>/2025/01/13/%E4%B8%80%E6%96%87%E8%AF%BB%E6%87%82transform%E5%8E%9F%E7%90%86%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/</url>
