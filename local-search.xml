@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Fluid-6-导航栏标题添加霓虹灯特效</title>
+    <link href="/posts/e95612a0.html"/>
+    <url>/posts/e95612a0.html</url>
+    
+    <content type="html"><![CDATA[<div id="readmore-container"><p>注意 主题为Fluid!!!!</p><ol><li>修改<code>themes\fluid\source\css\_pages\_base\_widget\header.styl</code>，在里面追加样式(注意缩进)：</li></ol><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.navbar-title</span><br>  <span class="hljs-attribute">outline</span> <span class="hljs-attribute">none</span><br>  <span class="hljs-attr">--c</span> lightseagreen<br>  <span class="hljs-attribute">text-shadow</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">10px</span> <span class="hljs-selector-tag">var</span>(<span class="hljs-attr">--c</span>),<span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">20px</span> <span class="hljs-selector-tag">var</span>(<span class="hljs-attr">--c</span>),<span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">40px</span> <span class="hljs-selector-tag">var</span>(<span class="hljs-attr">--c</span>),<span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">80px</span> <span class="hljs-selector-tag">var</span>(<span class="hljs-attr">--c</span>),<span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">160px</span> <span class="hljs-selector-tag">var</span>(<span class="hljs-attr">--c</span>)<br>  <span class="hljs-attribute">animation</span> animate <span class="hljs-number">5s</span> linear infinite<br><br><span class="hljs-keyword">@keyframes</span> animate&#123;<br>  <span class="hljs-selector-tag">to</span>&#123;<br>      <span class="hljs-attribute">filter</span>: <span class="hljs-built_in">hue-rotate</span>(<span class="hljs-number">360deg</span>)<br>  &#125;<br>&#125;  <br></code></pre></td></tr></table></figure><ol start="2"><li>然后修改<code>themes\fluid\layout\_partials\header\navigation.ejs</code>，给其添加上class属性<br>找到对应导航栏标题的标签内容：<br><code>&lt;strong&gt;&lt;%= theme.navbar.blog_title || config.title %&gt;&lt;/strong&gt;</code><br>修改为：<br><code>&lt;strong class=&quot;navbar-title&quot;&gt;&lt;%= theme.navbar.blog_title || config.title %&gt;&lt;/strong&gt;</code></li></ol><h2 id=""><a href="#" class="headerlink" title=""></a></h2></div><link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css"><script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script><script>var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);var isEncrypt = document.getElementById('hexo-blog-encrypt');var allowMobile = false;if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {try {var plugin = new ReadmorePlugin();plugin.init({"type": "hexo","id": "readmore-container","name": "YutingNotFound","blogId": "04372-4551209630277-002","qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg","keyword": "验证码","random": "1","height": "auto","expires": "36500","lockToc": "yes","interval": "60","baseUrl": "","tocSelector": ""});} catch(e) {console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);}}</script>]]></content>
+    
+    
+    <categories>
+      
+      <category>博客</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>hexo</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Fluid-5-主题美化之添加Live2D看板娘</title>
     <link href="/posts/f6599f80.html"/>
     <url>/posts/f6599f80.html</url>
