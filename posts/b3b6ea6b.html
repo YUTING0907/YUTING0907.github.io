@@ -16,18 +16,21 @@
   <meta name="author" content="Echo Yu">
   <meta name="keywords" content="ML">
   
-    <meta name="description" content="以问题为导向来检验自己学习的效果。以下是一些大模型必知必会的问题，快来检查一下掌握程度吧～ 数据预处理             1.什么是 BPE？它如何工作？                什么是 BPE？它如何工作？Byte Pair Encoding (BPE),又称 digram coding 双字母组合编码，是一种数据压缩 算法，用来在固定大小的词表中实现可变⻓度的子词。该算法简单有效，">
+    <meta name="description" content="以问题为导向来检验自己学习的效果。以下是一些大模型必知必会的问题，快来检查一下掌握程度吧～ 数据预处理             1.什么是 BPE？它如何工作？              Byte Pair Encoding (BPE),又称 digram coding 双字母组合编码，是一种数据压缩 算法，用来在固定大小的词表中实现可变⻓度的子词。该算法简单有效，因而目前它是最流行的方法。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="大模型必知必会的问题及答案">
 <meta property="og:url" content="http://yuting0907.github.io/posts/b3b6ea6b.html">
 <meta property="og:site_name" content="YUTING">
-<meta property="og:description" content="以问题为导向来检验自己学习的效果。以下是一些大模型必知必会的问题，快来检查一下掌握程度吧～ 数据预处理             1.什么是 BPE？它如何工作？                什么是 BPE？它如何工作？Byte Pair Encoding (BPE),又称 digram coding 双字母组合编码，是一种数据压缩 算法，用来在固定大小的词表中实现可变⻓度的子词。该算法简单有效，">
+<meta property="og:description" content="以问题为导向来检验自己学习的效果。以下是一些大模型必知必会的问题，快来检查一下掌握程度吧～ 数据预处理             1.什么是 BPE？它如何工作？              Byte Pair Encoding (BPE),又称 digram coding 双字母组合编码，是一种数据压缩 算法，用来在固定大小的词表中实现可变⻓度的子词。该算法简单有效，因而目前它是最流行的方法。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250116211822.png">
+<meta property="og:image" content="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250116213932.png">
 <meta property="article:published_time" content="2025-01-16T07:46:54.000Z">
-<meta property="article:modified_time" content="2025-01-16T10:32:06.328Z">
+<meta property="article:modified_time" content="2025-01-16T14:24:28.198Z">
 <meta property="article:author" content="Echo Yu">
 <meta property="article:tag" content="NLP">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250116211822.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -230,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          508 字
+          1.8k 字
         
       </span>
     
@@ -241,7 +244,7 @@
         
         
         
-          5 分钟
+          16 分钟
         
       </span>
     
@@ -288,21 +291,24 @@
           </div>
 
 
+<p>Byte Pair Encoding (BPE),又称 digram coding 双字母组合编码，是一种<strong>数据压缩</strong> 算法，用来在固定大小的词表中实现可变⻓度的子词。该算法简单有效，因而目前它是最流行的方法。</p>
+<div class="note note-primary">
+            <p>2.BPE工作原理？</p>
+          </div>
 
-<ol>
-<li><p>什么是 BPE？它如何工作？<br>Byte Pair Encoding (BPE),又称 digram coding 双字母组合编码，是一种<strong>数据压缩</strong> 算法，用来在固定大小的词表中实现可变⻓度的子词。该算法简单有效，因而目前它是最流行的方法。</p>
-</li>
-<li><p>BPE工作原理？</p>
-</li>
-</ol>
-<p>BPE 首先将词分成单个字符，然后依次用另一个字符替换频率最高的<strong>一对字符</strong> ，直到循环次数结束初始化：将每个词拆分为字符序列。<br>合并：找到数据集中最频繁的字符对，将其合并为一个新单元。<br>重复：迭代上述过程，直到达到预设的合并次数。<br>输出：生成固定大小的子词词表，可以覆盖高频词和罕见词。</p>
-<p>算法过程：</p>
-<ol start="3">
-<li>BPE 优缺点？</li>
-</ol>
+<p>合并：找到数据集中最频繁的字符对，将其合并为一个新单元。<br>重复：迭代上述过程，直到达到预设的合并次数。<br>输出：生成固定大小的子词词表，可以覆盖高频词和罕见词。</p>
+<p>过程如下：</p>
+<p>1.将每个词拆分为字符序列，并统计每个字符出现的频次，</p>
+<p>2.将最高频的两个字符组合在一起，形成新的’组合字符’(频次为两个字符同时出现的频次a)，同时原来的两个字符频次减去a.</p>
+<p>3.重复第二个步骤直到，直到词表中单词数达到设定量 或下一个最高频数为 1 ，如果已经打到设定量，其余的词汇直接丢弃。</p>
+<p><img src="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250116211822.png" srcset="/img/loading.gif" lazyload></p>
+<div class="note note-primary">
+            <p>3.BPE 优缺点？</p>
+          </div>
+
 <p>优点</p>
 <ul>
-<li><p>Data-informed tokenisation （理解下来可能是这样分出来的词表具有一定数据启示，因为同时根据字符出现的频率来进行分割）</p>
+<li><p>有效地平衡词典大小和将预料编码所需要的token数量</p>
 </li>
 <li><p>不同语种通用</p>
 </li>
@@ -312,13 +318,60 @@
 <p>缺点</p>
 <ul>
 <li>就是会产生一些不完整的单词（subword）</li>
+<li>适合欧美语言拉丁语系，不适合中文汉字，中文的处理通常只有分词和分字。</li>
 </ul>
-<ol start="4">
-<li><p>什么是 Tokenization？NLP 中常见的 Tokenization 方法有哪些？</p>
-</li>
-<li><p>Tokenization 的选择对模型训练有什么影响？</p>
-</li>
+<div class="note note-primary">
+            <p>4.什么是 Tokenization？NLP 中常见的 Tokenization 方法有哪些？</p>
+          </div>
+
+<p>在解释Tokenization之前，先说说什么是Token。Token，也称为标记或词元，是语言处理中的一个基本单元。它通常代表一个单词、标点符号或一个特定的符号序列。Token是文本的基本组成单元，用于表示文本中的有意义的语言元素。例如，“Hello, world!”这个句子可以被划分为多个Token：“Hello”、“,”、“world”和“!”。</p>
+<p>Tokenization是将连续的文本分割成一个个独立的Token的过程。它是NLP中的一项基础任务，通常在文本预处理阶段完成。Tokenization的目的是将文本分解成更小的、易于处理和分析的单元，以便于后续的词法分析、句法分析等任务。</p>
+<p> <strong>Tokenization 常用方法:</strong></p>
+<p><img src="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250116213932.png" srcset="/img/loading.gif" lazyload></p>
+<p>词粒度：就跟人类平时理解文本原理一样，常常用一些工具来完成，例如英文的NLTK、SpaCy，中文的jieba、LTP等。</p>
+<p>字粒度：英文就是以字母为单位（对于大小写不敏感的任务，甚至可以先转小写再切分），中文就是以字为单位。</p>
+<p>Subword粒度：</p>
+<ul>
+<li>BPE</li>
+<li>WordPiece</li>
+<li>ULM</li>
+</ul>
+<p>ULM算法：</p>
+<p>它不是从一组基本符号开始，而是从一个庞大的词汇量开始，例如所有预处理的单词和最常见的子字符串，并逐步减少。</p>
+<ol>
+<li>准备足够大的语料库</li>
+<li>定义好所需要的词表大小</li>
+<li>给定词序列优化下一个词出现的概率</li>
+<li>计算每个subword的损失</li>
+<li>基于损失对subword排序并保留前X%。为了避免OOV，保留字符级的单元</li>
+<li>重复第3至第5步直到达到第2步设定的subword词表大小或第5步的结果不再变化。</li>
 </ol>
+<p>WordPiece算法：</p>
+<p>WordPiece最初用于解决日语和韩语语音问题。它在许多方面类似于BPE，只是它基于可能性而不是下一个最高频率对来形成一个新的子词。算法步骤如下：</p>
+<ol>
+<li>用文本中的所有字符初始化词单元库。</li>
+<li>使用第一步中的库在训练数据上构建一个语言模型</li>
+<li>通过结合当前词库中的两个单元来生成一个新的词单元，从而使词单元库增加一个</li>
+<li>在所有可能的新词单元中选择一个，当添加到模型中时，它能最大程度地提高训练数据的可能性</li>
+<li>重复第二步，直到达到预定义的词单元限制或可能性增加低于某个阈值。</li>
+<li>重复第5步直到达到第2步设定的subword词表大小或概率增量低于某一阈值</li>
+</ol>
+<h5 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h5><p>简单几句话总结下Subword的三种算法：</p>
+<ul>
+<li>BPE：只需在每次迭代中使用<strong>「出现频率」</strong>来确定最佳匹配，直到达到预定义的词汇表大小；</li>
+<li>Unigram：使用概率模型训练LM，移除提高整体可能性最小的token；然后迭代进行，直到达到预定义的词汇表大小；</li>
+<li>WordPiece：结合BPE与Unigram，使用<strong>「出现频率」</strong>来确定潜在匹配，但根据合并token的概率做出最终决定.</li>
+</ul>
+<p>SentencePiece 是一个由谷歌开发的开源文本处理工具，它主要用于神经网络文本生成系统中的无监督文本分词（tokenization）和合词（detokenization）。这个工具的核心思想是将文本分词问题视为一个无监督学习问题，它不依赖于语言特定的预处理或后处理。</p>
+<div class="note note-primary">
+            <p>5.Tokenization 的选择对模型训练有什么影响？</p>
+          </div>
+
+
+
+
+
+<p>参考：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/448147465">https://zhuanlan.zhihu.com/p/448147465</a></p>
 </div>
 				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
 				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
