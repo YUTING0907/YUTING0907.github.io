@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>大模型必知必会的问题及答案</title>
+    <link href="/posts/b3b6ea6b.html"/>
+    <url>/posts/b3b6ea6b.html</url>
+    
+    <content type="html"><![CDATA[<div id="readmore-container"><p>以问题为导向来检验自己学习的效果。以下是一些大模型必知必会的问题，快来检查一下掌握程度吧～</p><h3 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown">&#123;% note primary %&#125;<br>1.什么是 BPE？它如何工作？<br>&#123;% endnote %&#125;<br></code></pre></td></tr></table></figure><ol><li><p>什么是 BPE？它如何工作？<br>Byte Pair Encoding (BPE),又称 digram coding 双字母组合编码，是一种<strong>数据压缩</strong> 算法，用来在固定大小的词表中实现可变⻓度的子词。该算法简单有效，因而目前它是最流行的方法。</p></li><li><p>BPE工作原理？</p></li></ol><p>BPE 首先将词分成单个字符，然后依次用另一个字符替换频率最高的<strong>一对字符</strong> ，直到循环次数结束初始化：将每个词拆分为字符序列。<br>合并：找到数据集中最频繁的字符对，将其合并为一个新单元。<br>重复：迭代上述过程，直到达到预设的合并次数。<br>输出：生成固定大小的子词词表，可以覆盖高频词和罕见词。</p><p>算法过程：</p><ol start="3"><li>BPE 优缺点？</li></ol><p>优点</p><ul><li><p>Data-informed tokenisation （理解下来可能是这样分出来的词表具有一定数据启示，因为同时根据字符出现的频率来进行分割）</p></li><li><p>不同语种通用</p></li><li><p>对于未知单词也适用</p></li></ul><p>缺点</p><ul><li>就是会产生一些不完整的单词（subword）</li></ul><ol start="4"><li><p>什么是 Tokenization？NLP 中常见的 Tokenization 方法有哪些？</p></li><li><p>Tokenization 的选择对模型训练有什么影响？</p></li></ol></div><link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css"><script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script><script>var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);var isEncrypt = document.getElementById('hexo-blog-encrypt');var allowMobile = false;if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {try {var plugin = new ReadmorePlugin();plugin.init({"type": "hexo","id": "readmore-container","name": "YutingNotFound","blogId": "04372-4551209630277-002","qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg","keyword": "验证码","random": "1","height": "auto","expires": "36500","lockToc": "yes","interval": "60","baseUrl": "","tocSelector": ""});} catch(e) {console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);}}</script>]]></content>
+    
+    
+    <categories>
+      
+      <category>NLP</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>NLP</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Fluid-7-添加星系loading动画</title>
     <link href="/posts/58ed6977.html"/>
     <url>/posts/58ed6977.html</url>
@@ -1083,7 +1108,7 @@
     
     <tags>
       
-      <tag>数据库系统原理与实现</tag>
+      <tag>DB</tag>
       
     </tags>
     
