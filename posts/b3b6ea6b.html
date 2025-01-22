@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250116211822.png">
 <meta property="og:image" content="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250116213932.png">
 <meta property="article:published_time" content="2025-01-16T07:46:54.000Z">
-<meta property="article:modified_time" content="2025-01-16T14:31:33.225Z">
+<meta property="article:modified_time" content="2025-01-22T15:15:16.530Z">
 <meta property="article:author" content="Echo Yu">
 <meta property="article:tag" content="NLP">
 <meta name="twitter:card" content="summary_large_image">
@@ -245,7 +245,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.2k 字
+          3.5k 字
         
       </span>
     
@@ -256,7 +256,7 @@
         
         
         
-          19 分钟
+          29 分钟
         
       </span>
     
@@ -379,9 +379,61 @@
             <p>5.Tokenization 的选择对模型训练有什么影响？</p>
           </div>
 
+<ul>
+<li>词表大小</li>
+</ul>
+<p>大词表（如 Word-based Tokenization）：<br>优点：训练更快，序列长度较短。<br>缺点：内存占用大，OOV 问题严重。<br>小词表（如 Subword 或 Character-based Tokenization）：<br>优点：内存占用小，泛化性更好。<br>缺点：序列长度增加，计算成本提高。</p>
+<ul>
+<li>序列长度</li>
+</ul>
+<p>较短的序列（如 Word-based）：<br>计算效率更高。<br>较长的序列（如 Character-based）：<br>提高对细粒度信息的处理能力，但增加了计算开销。</p>
+<ul>
+<li>OOV 问题</li>
+</ul>
+<p>Word-based Tokenization：<br>对未登录词无法处理，会丢失信息。<br>Subword 或 Character-based Tokenization：<br>通过拆分单词解决 OOV 问题，提高泛化能力。</p>
+<ul>
+<li>训练效率</li>
+</ul>
+<p>复杂的 Tokenization（如 BPE 或 WordPiece）：<br>需要较大的预处理时间，但训练更加稳定。<br>简单的 Tokenization（如 Character-based）：<br>初始处理快，但序列长度显著增加，导致训练时间变长。</p>
+<ul>
+<li>模型泛化能力</li>
+</ul>
+<p>Subword-based Tokenization 通常在泛化能力和训练效率之间实现了较好的平衡。<br>Character-based Tokenization 能够捕获更细粒度的信息，但在小数据集下可能不足以学习高层语义</p>
+<h3 id="模型细节"><a href="#模型细节" class="headerlink" title="模型细节"></a>模型细节</h3><div class="note note-primary">
+            <p>1.多头注意力的时间复杂度？空间复杂度？优化方法？</p>
+          </div>
+
+<p><strong>复杂度</strong></p>
+<p>对于一个由n个单词组成的输入序列，假设有d个维度的特征，那么查询矩阵、键矩阵和值矩阵的维度都将是 n × d。</p>
+<p>阅读 Transformer 相关的论文，在讨论 self-attention 的时间和空间复杂度时，都会提到是<br>$O(N^2)$,其中 $N$ 是序列长度。</p>
+<p>我们来看下 $\textbf{scaled dot-product attention}$ 的时间和空间复杂度：</p>
+<p>$\text{Attention}(Q, K, V) &#x3D; \text{softmax}\left(\frac{Q K^T}{\sqrt{d}}\right)$</p>
+<p>为了分析时间和空间复杂度，我们把上述的计算过程拆分为：<br>$<br>S &#x3D; Q K^T, \quad S &#x3D; \frac{S}{\sqrt{d}}, \quad S V.<br>$</p>
+<p>只要我们分析出每个计算的复杂度，就可以得到整体计算的复杂度。</p>
+<p>我们先来看第一个矩阵乘法 $QK^T$，$Q \in \mathbb{R}^{N \times d}$, $K \in \mathbb{R}^{N \times d}$，矩阵乘法的朴素算法时间复杂度是：<br>$<br>O(N \cdot d \cdot N) &#x3D; O(N^2 \cdot d)<br>$，代码实现其实就是三个for循环。</p>
+<p>至于空间复杂度，只有存储 $QK^T$ 计算结果，复杂度是：<br>$O(N^2)$<br>但是也不要觉得这个数字很大，如果 $N &lt; d$，其实存储 $Q$ 和 $K$ 要比 $QK^T$ 更占内存（显存）。除非序列很长 $N &gt; d$，空间复杂度 $O(N^2)$ 才会是瓶颈。</p>
+<p><strong>优化</strong></p>
+<div class="note note-primary">
+            <p>2.为什么要用位置编码？</p>
+          </div>
+
+<p>位置编码提供了位置信息，使 Transformer 能够捕捉序列的顺序关系，从而更有效地理解上下文依赖</p>
+<div class="note note-primary">
+            <p>3.为什么要用多头注意力？手写多头注意力代码？</p>
+          </div>
 
 
-<h3 id="模型细节"><a href="#模型细节" class="headerlink" title="模型细节"></a>模型细节</h3><p>1.多头注意力的时间复杂度？空间复杂度？<br>2.为什么要用位置编码？<br>3.手写多头注意力代码？<br>4.多头注意力的优化方式？<br>5.各种Norm介绍和解释？<br>6.BERT使用的编码？<br>7.BERT的loss？<br>8.BERT的架构？</p>
+
+<div class="note note-primary">
+            <p>4.多头注意力的优化方式？</p>
+          </div>
+
+<div class="note note-primary">
+            <p>5.各种Norm介绍和解释？</p>
+          </div>
+
+
+<p>6.BERT使用的编码？<br>7.BERT的loss？<br>8.BERT的架构？</p>
 <p>9.BERT，GPT等比较主流大模型，一些细节，比如位置编码，训练loss，激活，架构些许不同这种。自回归重点</p>
 <h3 id="框架相关内容"><a href="#框架相关内容" class="headerlink" title="框架相关内容"></a>框架相关内容</h3><p>各种并行方式，优缺点。DeepSpeed，Megatron可以看看源代码，Flash-Attention等内容。这个点也经常考代码题。</p>
 <h3 id="模型训练"><a href="#模型训练" class="headerlink" title="模型训练"></a>模型训练</h3><p>这个可能主要是工作经验相关，经常问比如训练loss炸掉了，如何解决，一些技巧之类的。面试时有些面试官会问一些很细节的东西，感觉是在确认确实上手跑过基座训练不是吹水。</p>

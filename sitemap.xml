@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yuting0907.github.io/posts/b3b6ea6b.html</loc>
+    
+    <lastmod>2025-01-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://yuting0907.github.io/books/index.html</loc>
     
     <lastmod>2025-01-22</lastmod>
@@ -14,15 +23,6 @@
     <loc>http://yuting0907.github.io/tags/index.html</loc>
     
     <lastmod>2025-01-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://yuting0907.github.io/posts/b3b6ea6b.html</loc>
-    
-    <lastmod>2025-01-16</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
