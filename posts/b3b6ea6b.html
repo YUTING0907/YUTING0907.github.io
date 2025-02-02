@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250116211822.png">
 <meta property="og:image" content="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250116213932.png">
 <meta property="article:published_time" content="2025-01-16T07:46:54.000Z">
-<meta property="article:modified_time" content="2025-01-23T07:14:17.212Z">
+<meta property="article:modified_time" content="2025-02-02T01:48:25.959Z">
 <meta property="article:author" content="Echo Yu">
 <meta property="article:tag" content="NLP">
 <meta name="twitter:card" content="summary_large_image">
@@ -245,7 +245,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.9k 字
+          8.5k 字
         
       </span>
     
@@ -256,7 +256,7 @@
         
         
         
-          50 分钟
+          72 分钟
         
       </span>
     
@@ -400,7 +400,7 @@
 </ul>
 <p>Subword-based Tokenization 通常在泛化能力和训练效率之间实现了较好的平衡。<br>Character-based Tokenization 能够捕获更细粒度的信息，但在小数据集下可能不足以学习高层语义</p>
 <h3 id="模型细节"><a href="#模型细节" class="headerlink" title="模型细节"></a>模型细节</h3><div class="note note-primary">
-            <p>1.多头注意力的时间复杂度？空间复杂度？优化方法？</p>
+            <p>1.多头注意力的时间复杂度？空间复杂度？</p>
           </div>
 
 <p><strong>复杂度</strong></p>
@@ -436,11 +436,74 @@
           </div>
 
 
+
 <p>6.BERT使用的编码？<br>7.BERT的loss？<br>8.BERT的架构？</p>
 <p>9.BERT，GPT等比较主流大模型，一些细节，比如位置编码，训练loss，激活，架构些许不同这种。自回归重点</p>
 <h3 id="框架相关内容"><a href="#框架相关内容" class="headerlink" title="框架相关内容"></a>框架相关内容</h3><p>各种并行方式，优缺点。DeepSpeed，Megatron可以看看源代码，Flash-Attention等内容。这个点也经常考代码题。</p>
+<div class="note note-primary">
+            <p>1.并行方式有哪些？</p>
+          </div>
+
+<ul>
+<li>数据并行</li>
+</ul>
+<p>​		所谓数据并行，就是由于训练数据集太大；因此，将数据集分为N份，每一份分别装载到N个GPU节点中，同时，每个GPU节点持有一个完整的模型副本，分别基于每个GPU中的数据去进行梯度求导。然后，在GPU0上对每个GPU中的梯度进行累加，最后，再将GPU0聚合后的结果广播到其他GPU节点。</p>
+<ul>
+<li><p>流水线并行</p>
+<p>所谓流水线并行，就是由于模型太大，无法将整个模型放置到单张GPU卡中；因此，将模型的不同层放置到不同的计算设备，降低单个计算设备的显存消耗，从而实现超大规模模型训练。 如下图所示，模型共包含四个模型层（如：Transformer层），被切分为三个部分，分别放置到三个不同的计算设备。即第 1 层放置到设备 0，第 2 层和第三 3 层放置到设备 1，第 4 层放置到设备 2。</p>
+</li>
+<li><p>张量并行</p>
+<p>和流水线并行类似，张量并行也是将模型分解放置到不同的GPU上，以解决单块GPU无法储存整个模型的问题。和流水线并行不同的地方在于，张量并行是针对模型中的张量进行拆分，将其放置到不同的GPU上。</p>
+<p>模型并行是不同设备负责单个计算图不同部分的计算。而将计算图中的层内的参数（张量）切分到不同设备（即层内并行），每个设备只拥有模型的一部分，以减少内存负荷，我们称之为张量模型并行</p>
+</li>
+</ul>
+<p><strong>数据并行 vs 张量并行 vs 流水线并行?</strong><br>数据并行、张量并行和流水线并行是在并行计算中常见的三种策略，它们有不同的应用场景和优势：</p>
+<p>1、数据并行（Data Parallelism）：</p>
+<p>概念： 数据并行是指将整个模型复制到每个处理单元上，不同处理单元处理不同的数据子集。每个处理单元独立计算，并通过同步更新模型参数来实现训练。<br>适用场景： 数据并行适用于大型模型和数据集，特别是在深度学习中。每个处理单元负责计算不同数据子集上的梯度，然后同步更新模型参数。<br>优势： 易于实现，适用于大规模数据和模型。<br>2、张量并行（Tensor Parallelism）：</p>
+<p>概念： 张量并行是指将模型分解成多个部分，每个部分在不同处理单元上进行计算。通常，这涉及到在层与层之间划分模型，并在不同的 GPU 或处理单元上执行这些部分。<br>适用场景： 张量并行适用于非常大的模型，其中单个 GPU 的内存容量无法容纳整个模型。它允许将模型的不同部分分配到不同的处理单元上，从而扩展模型的规模。<br>优势： 适用于大型模型的规模扩展，可用于解决内存限制问题。<br>3、流水线并行（Pipeline Parallelism）：</p>
+<p>概念： 流水线并行是指将模型的不同层分配到不同的处理单元上，并通过将不同层的输出传递给下一层来实现计算。每个处理单元负责一个模型层的计算。<br>适用场景： 流水线并行适用于深层次的模型，其中各层之间的计算相对独立。它可以提高模型的整体计算速度，特别是在层之间存在较大的计算延迟时。<br>优势： 适用于深层次模型，减少整体计算时间。<br>这三种并行策略通常可以结合使用，具体取决于应用的场景和问题的性质。在深度学习等领域，常常会使用数据并行和张量并行相结合的方式，以提高模型的训练速度和规模。</p>
+<p>4、3D并行，或者混合并行 (Hybrid Parallelism)</p>
+<p>则是将以上三种策略结合起来使用，达到同时提升存储和计算效率的目的。Megatron-Turing NLG 就是先将 Transformer block 使用流水线和张量 2D 并行，然后再加上数据并行，将训练扩展到更多的GPU。</p>
+<div class="note note-primary">
+            <p>2.如果有N张显存足够大的显卡，怎么加速训练？</p>
+          </div>
+
+<p>数据并行化<strong>：</strong> 在数据并行化中，模型的多个副本在不同的 GPU 上训练相同的数据批次。每个 GPU 计算梯度，并将结果汇总到主 GPU 或进行参数更新。这种方法适用于模型过大而无法完全容纳在单个 GPU 内存中的情况。</p>
+<p>模型并行化<strong>：</strong> 在模型并行化中，模型的不同部分分配到不同的 GPU 上。每个 GPU 负责计算其分配的部分，并将结果传递给其他 GPU。这对于大型模型，特别是具有分层结构的模型（如大型神经网络）是有益的。</p>
+<p>分布式训练<strong>：</strong> 使用分布式框架（例如 TensorFlow 的 tf.distribute 或 PyTorch 的 torch.nn.parallel.DistributedDataParallel）来实现训练任务的分布式执行。这允许将训练任务分配到多个 GPU 或多台机器上进行加速。</p>
+<p>优化批处理大小<strong>：</strong> 增大批处理大小可以提高 GPU 利用率，但需要注意的是，批处理大小的增加也可能导致内存不足或梯度下降不稳定。因此，需要根据模型和硬件配置进行合理的调整。</p>
+<p>混合精度训练<strong>：</strong> 使用半精度浮点数（例如 TensorFlow 的 tf.keras.mixed_precision 或 PyTorch 的 AMP）来减少内存占用，加速训练过程。</p>
+<p>模型剪枝和优化<strong>：</strong> 对模型进行剪枝和优化以减少模型的大小和计算负荷，有助于提高训练速度和效率。</p>
+<div class="note note-primary">
+            <p>3.想要训练1个LLM，如果只想用1张显卡，那么对显卡的要求是什么？</p>
+          </div>
+
+<p>显卡显存足够大，nB模型微调一般最好准备20nGB以上的显存。</p>
+<div class="note note-primary">
+            <p>4.如果显卡的显存不够装下一个完整的模型呢？</p>
+          </div>
+
+<p>最直观想法，需要分层加载，把不同的层加载到不同的GPU上（accelerate的device_map）也就是常见的PP，流水线并行</p>
+<div class="note note-primary">
+            <p>4.常见的分布式训练框架哪一些，都有什么特点？</p>
+          </div>
+<p>1、Megatron-LM</p>
+<p>Megatron 是由 NVIDIA 深度学习应用研究团队开发的大型 Transformer 语言模型，该模型用于研究大规模训练大型语言模型。</p>
+<p>Megatron 支持transformer模型的模型并行（张量、序列和管道）和多节点预训练，同时还支持 BERT、GPT 和 T5 等模型。</p>
+<p>2、DeepSpeed</p>
+<p>DeepSpeed是微软的深度学习库，已被用于训练 Megatron-Turing NLG 530B 和 BLOOM等大型模型。</p>
+<p>DeepSpeed的创新体现在三个方面：</p>
+<p>训练，推理，压缩<br>DeepSpeed具备以下优势：</p>
+<p>训练&#x2F;推理具有数十亿或数万亿个参数的密集或稀疏模型<br>实现出色的系统吞吐量并有效扩展到数千个 GPU<br>在资源受限的 GPU 系统上训练&#x2F;推理<br>为推理实现前所未有的低延迟和高吞吐量<br>以低成本实现极致压缩，实现无与伦比的推理延迟和模型尺寸缩减</p>
+<div class="note note-primary">
+            <p>5.Flash-Attention？</p>
+          </div>
+
+
+
 <h3 id="模型训练"><a href="#模型训练" class="headerlink" title="模型训练"></a>模型训练</h3><p>这个可能主要是工作经验相关，经常问比如训练loss炸掉了，如何解决，一些技巧之类的。面试时有些面试官会问一些很细节的东西，感觉是在确认确实上手跑过基座训练不是吹水。</p>
 <h3 id="模型评估"><a href="#模型评估" class="headerlink" title="模型评估"></a>模型评估</h3><p>如何评估大模型，安全性，有效性，公开数据，个别考过手写eval框架（多选，生成）。</p>
+<p>ChatbotArena：借鉴游戏排位赛机制，让人类对模型两两评价<br>SuperCLUE：中文通用大模型综合性评测基准，尝试全自动测评大模型<br>C-Eval：采用 1.4 万道涵盖 52 个学科的选择题，评估模型中文能力<br>FlagEval：采用“能力—任务—指标”三维评测框架</p>
 <p>参考：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/448147465">https://zhuanlan.zhihu.com/p/448147465</a></p>
 </div>
 				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
