@@ -86,7 +86,7 @@
   <script  src="/js/color-schema.js" ></script>
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 
 <body>
@@ -321,7 +321,7 @@
 </tr>
 </tbody></table>
 <hr>
-<h2 id="Duplicate-明细模型"><a href="#Duplicate-明细模型" class="headerlink" title="Duplicate 明细模型"></a>Duplicate 明细模型</h2><h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs gcode"><span class="hljs-number">1.</span>需要保留原始的数据<span class="hljs-comment">(例如，原始的日志，操作记录等)</span><br><span class="hljs-number">2.</span>分析方式不固定，因为查询方式很灵活，所以传统的预聚合方式难以命中<br><span class="hljs-number">3.</span>数据更新不频繁，产生后就不太会发生变化<br><span class="hljs-number">4.</span>唯一健需要很多个字段组合在一起<br></code></pre></td></tr></table></figure>
+<h2 id="Duplicate-明细模型"><a href="#Duplicate-明细模型" class="headerlink" title="Duplicate 明细模型"></a>Duplicate 明细模型</h2><h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-number">1</span>.需要保留原始的数据(例如，原始的日志，操作记录等)<br><span class="hljs-number">2</span>.分析方式不固定，因为查询方式很灵活，所以传统的预聚合方式难以命中<br><span class="hljs-number">3</span>.数据更新不频繁，产生后就不太会发生变化<br><span class="hljs-number">4</span>.唯一健需要很多个字段组合在一起<br></code></pre></td></tr></table></figure>
 
 <h3 id="模型原理"><a href="#模型原理" class="headerlink" title="模型原理"></a>模型原理</h3><p>Doris根据明细模型制定的key维护排序列，表中的数据会按照排序列进行排序存储</p>
 <p>在查询中，如果有相关排序列的过滤条件时，Doris能够快速地过滤数据，降低整个查询的时间。 DUPLICATE KEY更贴切的名称应该为 “Sorted Column</p>

@@ -89,7 +89,7 @@
   <script  src="/js/color-schema.js" ></script>
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 
 <body>
@@ -298,7 +298,7 @@
             <div class="markdown-body">
               
               <div id="readmore-container"><h3 id="程序用途"><a href="#程序用途" class="headerlink" title="程序用途"></a>程序用途</h3><p>最近看英文原版电子书有点苦恼，很多单词联系上下文能懂个大概意思，不影响整体的阅读，但是看完之后又想巩固学习下陌生的单词。于是乎，就想的是能不能用python写个程序把单词根据单词等级(common,advanced)统计出现的频率并解释单词的意思，所以就有了这篇文章啦～</p>
-<h4 id="1-下载单词书"><a href="#1-下载单词书" class="headerlink" title="1.下载单词书"></a>1.下载单词书</h4><p>首先下载好英文书，这里分享一个免费下载电子书的网站<a target="_blank" rel="noopener" href="https://zh.z-lib.gs/">https://zh.z-lib.gs/</a></p>
+<h4 id="1-下载单词书"><a href="#1-下载单词书" class="headerlink" title="1.下载单词书"></a>1.下载单词书</h4><p>首先下载好英文书，这里分享一个免费下载电子书的网站<a href="https://zh.z-lib.gs/">https://zh.z-lib.gs/</a></p>
 <p>以最近喜欢的Nicholas Sparks的《Message in a Bottle》举个🌰～</p>
 <p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20241226142518.png" srcset="/img/loading.gif" lazyload></p>
 <h4 id="2-从epub文件中提取内容"><a href="#2-从epub文件中提取内容" class="headerlink" title="2.从epub文件中提取内容"></a>2.从epub文件中提取内容</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 提取 epub 内容为纯文本</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">extract_text_from_epub</span>(<span class="hljs-params">file_path</span>):<br>    book = epub.read_epub(file_path)<br>    full_text = <span class="hljs-string">&quot;&quot;</span><br>    <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> book.items:  <span class="hljs-comment"># 直接迭代 book.items</span><br>        <span class="hljs-keyword">if</span> item.media_type == <span class="hljs-string">&quot;application/xhtml+xml&quot;</span>:  <span class="hljs-comment"># 检查 MIME 类型</span><br>            soup = BeautifulSoup(item.get_content(), <span class="hljs-string">&#x27;html.parser&#x27;</span>)<br>            full_text += soup.get_text() + <span class="hljs-string">&quot;\n&quot;</span><br><br>    <span class="hljs-keyword">return</span> full_text<br></code></pre></td></tr></table></figure>
@@ -312,7 +312,7 @@
 <h4 id="5-结果"><a href="#5-结果" class="headerlink" title="5.结果"></a>5.结果</h4><p>程序运行出来的结果就是这样了，分为Common和Advanced两类，英文单词（出现的频次）以及单词的英文解释。</p>
 <p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20241226141626.png" srcset="/img/loading.gif" lazyload></p>
 <p>完整代码链接</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/YUTING0907/pythonTools/blob/main/TranslateAndCounter/extract_words_translate.py">https://github.com/YUTING0907/pythonTools/blob/main/TranslateAndCounter/extract_words_translate.py</a></p>
+<p><a href="https://github.com/YUTING0907/pythonTools/blob/main/TranslateAndCounter/extract_words_translate.py">https://github.com/YUTING0907/pythonTools/blob/main/TranslateAndCounter/extract_words_translate.py</a></p>
 </div>
 				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
 				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>

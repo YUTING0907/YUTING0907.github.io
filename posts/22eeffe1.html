@@ -95,7 +95,7 @@
   <script  src="/js/color-schema.js" ></script>
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 
 <body>
@@ -305,9 +305,9 @@
               
               <div id="readmore-container"><p>本篇个人网站搭建系列博文是基于:GitHub+Hexo。<br>难度指数：♥♥<br>系统环境：win8</p>
 <p><strong>前言：</strong>真正搭建这个网站框架的时间也就花了两个晚上，不需要你有多么深厚的编程基础，可能会遇到一些坑，就需要你遇到问题解决问题的能力了，还有搜功，因为很多你遇到的问题很多人都遇到了，太阳底下没有新鲜事儿，会搜索基本解决了大多数问题。</p>
-<h3 id="第一步：准备必要的软件"><a href="#第一步：准备必要的软件" class="headerlink" title="第一步：准备必要的软件"></a>第一步：准备必要的软件</h3><p><strong>1.Git下载</strong><br>     <a target="_blank" rel="noopener" href="https://git-scm.com/downloads">Git</a>,选择适合自己电脑的环境，一路Next下来就行了。</p>
-<p><strong>2、安装node.js</strong><br>    <a target="_blank" rel="noopener" href="http://nodejs.cn/">node.js</a>,也是基于自己的电脑环境选择下载，下载最新版本，在Windows安装时务必选择全部组件，包括勾选<code>Add to Path</code>。安装完成后，在Windows环境下，打开命令行提示符，输入<code>node -v</code>，看到版本号正常输出，则安装完成。<br>           <img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/rm7.QvW1mxRhb6sdXnYhiskAulDc0JF9F0bBkPmX50s!/b/dFYBAAAAAAAA&bo=4AAqAAAAAAADF*g!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
-<h3 id="第二步：Github注册与配置"><a href="#第二步：Github注册与配置" class="headerlink" title="第二步：Github注册与配置"></a>第二步：Github注册与配置</h3><h4 id="1-注册Github"><a href="#1-注册Github" class="headerlink" title="1.注册Github"></a>1.注册Github</h4><p>点击→<a target="_blank" rel="noopener" href="https://github.com/">https://github.com</a>右上角sign up<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/5x0MOWtEd4jqwAH5TXRe1qhXefHiOiLCsLpl0vLFZ04!/b/dFQBAAAAAAAA&bo=eQRqAgAAAAADFyc!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>注册完成后，记住自己的用户名，因为后续个人网站的网址格式为：username.github.io<br>这个username就是你的github用户名。<br>这里我的GitHub账号是：YUTING0907<br>个人网站：YUTING0907.github.io<br>你后续也可以自己绑定域名，叫个更炫酷的名字XXX.com</p>
+<h3 id="第一步：准备必要的软件"><a href="#第一步：准备必要的软件" class="headerlink" title="第一步：准备必要的软件"></a>第一步：准备必要的软件</h3><p><strong>1.Git下载</strong><br>     <a href="https://git-scm.com/downloads">Git</a>,选择适合自己电脑的环境，一路Next下来就行了。</p>
+<p><strong>2、安装node.js</strong><br>    <a href="http://nodejs.cn/">node.js</a>,也是基于自己的电脑环境选择下载，下载最新版本，在Windows安装时务必选择全部组件，包括勾选<code>Add to Path</code>。安装完成后，在Windows环境下，打开命令行提示符，输入<code>node -v</code>，看到版本号正常输出，则安装完成。<br>           <img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/rm7.QvW1mxRhb6sdXnYhiskAulDc0JF9F0bBkPmX50s!/b/dFYBAAAAAAAA&bo=4AAqAAAAAAADF*g!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h3 id="第二步：Github注册与配置"><a href="#第二步：Github注册与配置" class="headerlink" title="第二步：Github注册与配置"></a>第二步：Github注册与配置</h3><h4 id="1-注册Github"><a href="#1-注册Github" class="headerlink" title="1.注册Github"></a>1.注册Github</h4><p>点击→<a href="https://github.com/">https://github.com</a>右上角sign up<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/5x0MOWtEd4jqwAH5TXRe1qhXefHiOiLCsLpl0vLFZ04!/b/dFQBAAAAAAAA&bo=eQRqAgAAAAADFyc!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>注册完成后，记住自己的用户名，因为后续个人网站的网址格式为：username.github.io<br>这个username就是你的github用户名。<br>这里我的GitHub账号是：YUTING0907<br>个人网站：YUTING0907.github.io<br>你后续也可以自己绑定域名，叫个更炫酷的名字XXX.com</p>
 <h4 id="2-创建Repository"><a href="#2-创建Repository" class="headerlink" title="2.创建Repository"></a>2.创建Repository</h4><p>登陆GitHub，点击右上角的+，会出现New repository创建一个与你博客相关你的Repository进行管理，之后你的博客都会在GitHub的这个Repository里同步更新。<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/*bhCJMsQQlH5*0hTH7p1in230nG62njUjBHVSaqhKn0!/b/dD4BAAAAAAAA&bo=DQVSAgAAAAADF2o!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>Repository的名字是username.github.io，比如我的YUTING0907.github.io。其余可以先不填，点击Create repository</p>
 <h4 id="3-配置SSH-Keys"><a href="#3-配置SSH-Keys" class="headerlink" title="3.配置SSH Keys"></a>3.配置SSH Keys</h4><p>SSH Keys用来使本地git项目与GitHub联系，这样能在GitHub上的博客项目是最新更新的。</p>
@@ -345,10 +345,10 @@ Are you sure you want to continue connecting (yes/no)
 <pre><code class="hljs">$ npm install
 </code></pre>
 <p>这里我踩坑了，<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/95hREaV7iXFGebAzGGu01Ayke2nVXhftPOPm1vntWyg!/b/dL8AAAAAAAAA&bo=rQFfAQAAAAADF8A!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
-<p>然后上百度、google各种找解决办法，后来发现是因为<br>Your versions of node and npm are years old and no longer supported。版本太低了，后来更新node.js版本就好了.<br><a target="_blank" rel="noopener" href="https://github.com/npm/npm/issues/8488">npm install 报错解决办法</a><br>这里放上更新node.js的方法<br>方法一：执行下列代码</p>
+<p>然后上百度、google各种找解决办法，后来发现是因为<br>Your versions of node and npm are years old and no longer supported。版本太低了，后来更新node.js版本就好了.<br><a href="https://github.com/npm/npm/issues/8488">npm install 报错解决办法</a><br>这里放上更新node.js的方法<br>方法一：执行下列代码</p>
 <pre><code class="hljs">npm install npm@latest -g
 </code></pre>
-<p>但我的电脑出现了如下报错，如有朋友出现更新错误，课移步方法二。<br>C:\Users\lenovo\AppData\Roaming\npm\node_modules\npm\bin\npm-cli.js:79<br>      let notifier &#x3D; require(‘update-notifier’)({pkg})<br>      ^^^<br>方法二:<br>1.到node官网（<a target="_blank" rel="noopener" href="https://nodejs.org/en/%EF%BC%89">https://nodejs.org/en/）</a><br>下载最新版或者官网推荐版本，我下载的是10.14.1。</p>
+<p>但我的电脑出现了如下报错，如有朋友出现更新错误，课移步方法二。<br>C:\Users\lenovo\AppData\Roaming\npm\node_modules\npm\bin\npm-cli.js:79<br>      let notifier &#x3D; require(‘update-notifier’)({pkg})<br>      ^^^<br>方法二:<br>1.到node官网（<a href="https://nodejs.org/en/%EF%BC%89">https://nodejs.org/en/）</a><br>下载最新版或者官网推荐版本，我下载的是10.14.1。</p>
 <p>2.将下载的文件安装到之前安装node.js的地方<br>通过where node命令查看node路径<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/IPFuuHtZ8RT5DD1PnwVAUJeaBY3smLyDDB3Yvka.x4g!/b/dL4AAAAAAAAA&bo=AQEoAAAAAAADFxo!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
 <p>将刚刚下载的文件放到上面查到的路径中<br>双击刚刚下载的文件,点击next 具体安装方法和之前第一次安装一样，但是【<strong>注意在选择路径的时候要选成上面查到的node路径中</strong>】</p>
 <p>3.安装完成。通过npm -v和node -v查看当前版本号</p>
@@ -368,9 +368,9 @@ Are you sure you want to continue connecting (yes/no)
 </code></pre>
 <p>冒号后一定要空一格。否则会报FATAL can not read a block mapping entry的错。</p>
 <p>当当当当~~到这里你已经拥有一个属于自己的网站，可能有点简陋，但是整个框架已经搭起来了。期待下一篇把网站拾掇得更好吧。</p>
-<p>搭建参考：<br><a target="_blank" rel="noopener" href="http://codewithzhangyi.com/archives/">如何搭建自己的个人网站</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/H_duolalu/article/details/80215580">更新node</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/npm/npm/issues/8488">npm install错误</a></p>
+<p>搭建参考：<br><a href="http://codewithzhangyi.com/archives/">如何搭建自己的个人网站</a></p>
+<p><a href="https://blog.csdn.net/H_duolalu/article/details/80215580">更新node</a></p>
+<p><a href="https://github.com/npm/npm/issues/8488">npm install错误</a></p>
 <iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 
 " style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  
 frameborder="0" scrolling="no"></iframe>

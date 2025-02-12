@@ -86,7 +86,7 @@
   <script  src="/js/color-schema.js" ></script>
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 
 <body>
@@ -299,7 +299,7 @@
 <li>html + css 创建动画页面</li>
 <li>调用 js 加载 dom 事件来控制加载动画消失</li>
 </ul>
-<h3 id="-1"><a href="#-1" class="headerlink" title=""></a></h3><h3 id="😊实现方法"><a href="#😊实现方法" class="headerlink" title="😊实现方法"></a>😊实现方法</h3><p>动画照搬了一个<a target="_blank" rel="noopener" href="https://www.zywvvd.com/pages/go.html?goUrl=https://blog.csdn.net/m0_66047725/article/details/129896812">示例</a> ~</p>
+<h3 id="-1"><a href="#-1" class="headerlink" title=""></a></h3><h3 id="😊实现方法"><a href="#😊实现方法" class="headerlink" title="😊实现方法"></a>😊实现方法</h3><p>动画照搬了一个<a href="https://www.zywvvd.com/pages/go.html?goUrl=https://blog.csdn.net/m0_66047725/article/details/129896812">示例</a> ~</p>
 <p>新建一个loading样式css<br>将以下代码放进去 然后引用这个文件</p>
 <p>在 bodyBegin 注入了元素代码：</p>
 <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs applescript">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;Loadanimation&quot;</span> style=<span class="hljs-string">&quot;z-index:999999;&quot;</span>&gt;<br>&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;Loadanimation-center&quot;</span>&gt;<br>   &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;Loadanimation-center-absolute&quot;</span>&gt;<br>       &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">&quot;xccx_object&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;xccx_four&quot;</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;<br>       &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">&quot;xccx_object&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;xccx_three&quot;</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;<br>       &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">&quot;xccx_object&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;xccx_two&quot;</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;<br>       &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">&quot;xccx_object&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;xccx_one&quot;</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;<br>   &lt;/<span class="hljs-keyword">div</span>&gt;<br>&lt;/<span class="hljs-keyword">div</span>&gt;<br>&lt;/<span class="hljs-keyword">div</span>&gt;<br></code></pre></td></tr></table></figure>

@@ -86,7 +86,7 @@
   <script  src="/js/color-schema.js" ></script>
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 
 <body>
@@ -370,11 +370,11 @@
 
 
 
-<p>参考：<a target="_blank" rel="noopener" href="https://github.com/peng128/flink-connector-multi-jdbc">https://github.com/peng128/flink-connector-multi-jdbc</a></p>
+<p>参考：<a href="https://github.com/peng128/flink-connector-multi-jdbc">https://github.com/peng128/flink-connector-multi-jdbc</a></p>
 <h3 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h3><p>1.pom文件引入依赖</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pom">&lt;dependency&gt;<br>    &lt;groupId&gt;org.apache.flink&lt;/groupId&gt;<br>    &lt;artifactId&gt;FlinkMultiJdbcConnector&lt;/artifactId&gt;<br>    &lt;version&gt;1.0&lt;/version&gt;<br>&lt;/dependency&gt;<br></code></pre></td></tr></table></figure>
 
-<p>2.将<a target="_blank" rel="noopener" href="https://github.com/peng128/flink-connector-multi-jdbc%E6%89%93%E6%88%90jar%E5%8C%85">https://github.com/peng128/flink-connector-multi-jdbc打成jar包</a></p>
+<p>2.将<a href="https://github.com/peng128/flink-connector-multi-jdbc%E6%89%93%E6%88%90jar%E5%8C%85">https://github.com/peng128/flink-connector-multi-jdbc打成jar包</a></p>
 <p>3.mvn install手动引入FlinkMultiJdbcConnector的jar包</p>
 <p>4.编写EscMysql2DorisBatch类和GoodsEbayCompatibilityModel类</p>
 <p>​    GoodsEbayCompatibilityModel：同步的mysql表字段的映射bean类</p>
@@ -385,7 +385,7 @@
 <p>2.暂时不支持datatime格式作为分割的列，指定的分割字段</p>
 <p>会根据分割字段转换成select where xxx between 0 and 1000 的查询sql，如果xxx为string类型，会存在隐式转换的问题</p>
 <p>3.原理是使用JDBC的方式select查询数据库，可以对比和datax的同步方式，本质是一样的</p>
-<p>   datax的切分策略，参考网页：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1694188">https://cloud.tencent.com/developer/article/1694188</a></p>
+<p>   datax的切分策略，参考网页：<a href="https://cloud.tencent.com/developer/article/1694188">https://cloud.tencent.com/developer/article/1694188</a></p>
 <p>   1）计算并发量（即 needChannelNumber 大小）</p>
 <p>   DataX有流控模式，其中，可以设置 bps 限速，tps 限速：</p>
 <ul>

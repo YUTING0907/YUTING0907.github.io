@@ -86,7 +86,7 @@
   <script  src="/js/color-schema.js" ></script>
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 
 <body>
@@ -319,7 +319,7 @@
 <li>启动sql-client on yarn-session</li>
 </ol>
 <p><code>./sql-client.sh embedded -s yarn-session</code></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql">或者bin<span class="hljs-operator">/</span><span class="hljs-keyword">sql</span><span class="hljs-operator">-</span>client.sh embedded <span class="hljs-operator">-</span>e <span class="hljs-keyword">sql</span><span class="hljs-operator">-</span>env.yaml<br># <span class="hljs-keyword">sql</span><span class="hljs-operator">-</span>env.yaml文件内容为：<br>configuration:<br>  execution.target: yarn<span class="hljs-operator">-</span>session<br></code></pre></td></tr></table></figure>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs nix">或者bin<span class="hljs-symbol">/sql-client.sh</span> embedded <span class="hljs-operator">-</span>e sql-env.yaml<br><span class="hljs-comment"># sql-env.yaml文件内容为：</span><br><span class="hljs-params">configuration:</span><br>  execution.<span class="hljs-params">target:</span> yarn-session<br></code></pre></td></tr></table></figure>
 
 
 
@@ -332,8 +332,8 @@
 
 <p>记录了最近一次提交的yarn session对应的application ID。SQL client如果使用yarn session模式启动，会查找<code>/tmp/.yarn-properties-root</code>文件中指定的application id，将SQL提交到这个yarn session上运行。</p>
 <p>参考：</p>
-<p><a target="_blank" rel="noopener" href="https://nightlies.apache.org/flink/flink-docs-release-1.13/zh/docs/dev/table/sqlclient/">Flink官网</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lsr40/article/details/113398830">CSDN博客</a></p>
+<p><a href="https://nightlies.apache.org/flink/flink-docs-release-1.13/zh/docs/dev/table/sqlclient/">Flink官网</a></p>
+<p><a href="https://blog.csdn.net/lsr40/article/details/113398830">CSDN博客</a></p>
 </div>
 				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
 				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>

@@ -94,7 +94,7 @@
   <script  src="/js/color-schema.js" ></script>
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 
 <body>
@@ -250,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.7k 字
+          4.6k 字
         
       </span>
     
@@ -387,7 +387,7 @@
 <ul>
 <li>Pclass 对于船舱等级, 一等舱是整个船最昂贵奢华的地方, 有钱人才能享受, 想必一等舱的有钱人比三等舱的穷人更容易幸存, 到底是不是呢? 用数据说话</li>
 </ul>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus">sns<span class="hljs-selector-class">.pointplot</span>(x=<span class="hljs-string">&#x27;Pclass&#x27;</span>,y=<span class="hljs-string">&#x27;Survived&#x27;</span>,hue=<span class="hljs-string">&#x27;Sex&#x27;</span>,data=train<br>              ,palette=&#123;<span class="hljs-string">&#x27;male&#x27;</span>:<span class="hljs-string">&#x27;blue&#x27;</span>,<span class="hljs-string">&#x27;female&#x27;</span>:<span class="hljs-string">&#x27;pink&#x27;</span>&#125;,markers=<span class="hljs-selector-attr">[<span class="hljs-string">&#x27;*&#x27;</span>,<span class="hljs-string">&#x27;o&#x27;</span>]</span>,linestyles=<span class="hljs-selector-attr">[<span class="hljs-string">&#x27;-&#x27;</span>,<span class="hljs-string">&#x27;--&#x27;</span>]</span>)<br></code></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus">sns<span class="hljs-selector-class">.pointplot</span>(<span class="hljs-attribute">x</span>=<span class="hljs-string">&#x27;Pclass&#x27;</span>,y=<span class="hljs-string">&#x27;Survived&#x27;</span>,hue=<span class="hljs-string">&#x27;Sex&#x27;</span>,data=train<br>              ,palette=&#123;<span class="hljs-string">&#x27;male&#x27;</span>:<span class="hljs-string">&#x27;blue&#x27;</span>,<span class="hljs-string">&#x27;female&#x27;</span>:<span class="hljs-string">&#x27;pink&#x27;</span>&#125;,markers=<span class="hljs-selector-attr">[<span class="hljs-string">&#x27;*&#x27;</span>,<span class="hljs-string">&#x27;o&#x27;</span>]</span>,linestyles=<span class="hljs-selector-attr">[<span class="hljs-string">&#x27;-&#x27;</span>,<span class="hljs-string">&#x27;--&#x27;</span>]</span>)<br></code></pre></td></tr></table></figure>
 <p><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/ATQPPmZoeVRZ16JcGmjyBXPZ5OtYtLqjCgWWj6P*BlY!/b/dC8BAAAAAAAA&bo=awHjAAAAAAADF7s!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload><br>可以看到一等舱人员的幸存机会远大于三等舱, 果然和船舱等级相关.</p>
 <ul>
 <li><p>Age<br><img src="http://m.qpic.cn/psb?/V10c1VbY1Y4Fvm/O8Bvm6BCCjAFqnEfpKKyP5nODQ0JFDsPgEdDA4HnMSQ!/b/dLYAAAAAAAAA&bo=WAHmAAAAAAADF40!&rf=viewer_4&t=5" srcset="/img/loading.gif" lazyload><br>可以看到女人普遍存活率都很高，男性在0-10岁之间存活率高，显然年龄是有影响的。</p>
@@ -409,7 +409,7 @@
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment">#使用经过超参数配置的XGBClassfier对测试数据的预测结果存储在文件xgbc_best_submission中</span><br>xgbc_best_y_predict = gs.predict(X_test)<br>xgbc_best_submission = pd.DataFrame(&#123;<span class="hljs-string">&#x27;PassengerId&#x27;</span>:test[<span class="hljs-string">&#x27;PassengerId&#x27;</span>],<span class="hljs-string">&#x27;Survived&#x27;</span>:xgbc_best_y_predict&#125;)<br><span class="hljs-comment">#将默认配置的RandomForestClassifier对测试数据的预测结果存储在文件rfc_submission.csv中。</span><br>xgbc_best_submission.to_csv(<span class="hljs-string">&#x27;D:\\Pywork\\Titanic\\xgbc_best_submission.csv&#x27;</span>,<span class="hljs-attribute">index</span>=<span class="hljs-literal">False</span>)<br></code></pre></td></tr></table></figure>
 
 
-<p>想要以上涉及到的源代码可以联系我<br>邮箱:<a href="mailto:&#121;&#117;&#116;&#x69;&#x6e;&#103;&#x39;&#x35;&#57;&#x37;&#x40;&#49;&#54;&#51;&#x2e;&#x63;&#x6f;&#x6d;">&#121;&#117;&#116;&#x69;&#x6e;&#103;&#x39;&#x35;&#57;&#x37;&#x40;&#49;&#54;&#51;&#x2e;&#x63;&#x6f;&#x6d;</a><br>百度网盘：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1vGq4Et2gReM58Dr_1O-v3Q">https://pan.baidu.com/s/1vGq4Et2gReM58Dr_1O-v3Q</a> 密码：uoqv</p>
+<p>想要以上涉及到的源代码可以联系我<br>邮箱:<a href="mailto:&#x79;&#117;&#116;&#105;&#110;&#103;&#57;&#53;&#57;&#x37;&#64;&#49;&#x36;&#51;&#x2e;&#x63;&#111;&#109;">&#x79;&#117;&#116;&#105;&#110;&#103;&#57;&#53;&#57;&#x37;&#64;&#49;&#x36;&#51;&#x2e;&#x63;&#111;&#109;</a><br>百度网盘：<a href="https://pan.baidu.com/s/1vGq4Et2gReM58Dr_1O-v3Q">https://pan.baidu.com/s/1vGq4Et2gReM58Dr_1O-v3Q</a> 密码：uoqv</p>
 <p>参考文章：</p>
 <hr>
 <iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 

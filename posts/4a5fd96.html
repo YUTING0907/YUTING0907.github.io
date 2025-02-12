@@ -91,7 +91,7 @@
   <script  src="/js/color-schema.js" ></script>
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 
 <body>
@@ -366,22 +366,22 @@
 <p>然后在博客目录下创建 <code>_config.fluid.yml</code>，将主题_config.yml内容复制过去</p>
 <p>当同时存在 <code>_config.fluid.yml</code>和<code>_config.yml</code>时，_config.yml配置无效</p>
 <p>  方式2⃣️：（我博客目前是这种方法）</p>
-<p> 下载 <a target="_blank" rel="noopener" href="https://https//github.com/fluid-dev/hexo-theme-fluid/releases">最新 release 版本</a>解压到 themes 目录，并将解压出的文件夹重命名为 <code>fluid</code></p>
+<p> 下载 <a href="https://https//github.com/fluid-dev/hexo-theme-fluid/releases">最新 release 版本</a>解压到 themes 目录，并将解压出的文件夹重命名为 <code>fluid</code></p>
 <p>2.指定主题</p>
 <p>如下修改 Hexo 博客目录中的 <code>_config.yml</code>：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">theme:</span> <span class="hljs-string">fluid</span>  <span class="hljs-comment"># 指定主题</span><br><br><span class="hljs-attr">language:</span> <span class="hljs-string">zh-CN</span>  <span class="hljs-comment"># 指定语言，会影响主题显示的语言，按需修改</span><br></code></pre></td></tr></table></figure>
 
 
 
-<p>参考fluid主题操作手册 <a target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/">https://hexo.fluid-dev.com/</a></p>
+<p>参考fluid主题操作手册 <a href="https://hexo.fluid-dev.com/">https://hexo.fluid-dev.com/</a></p>
 <p>Fluid 是基于 Hexo 的一款 Material Design 风格的主题，由</p>
-<p> <a target="_blank" rel="noopener" href="https://github.com/fluid-dev">Fluid-dev</a>负责开发与维护。</p>
-<p>主题 GitHub: <a target="_blank" rel="noopener" href="https://github.com/fluid-dev/hexo-theme-fluid"></a></p>
-<p>预览网站：<a target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/">Fluid’s blog</a>,   <a target="_blank" rel="noopener" href="https://zkqiang.cn/">zkqiang’s blog</a></p>
+<p> <a href="https://github.com/fluid-dev">Fluid-dev</a>负责开发与维护。</p>
+<p>主题 GitHub: <a href="https://github.com/fluid-dev/hexo-theme-fluid"></a></p>
+<p>预览网站：<a href="https://hexo.fluid-dev.com/">Fluid’s blog</a>,   <a href="https://zkqiang.cn/">zkqiang’s blog</a></p>
 <h3 id="免费图床"><a href="#免费图床" class="headerlink" title="免费图床"></a>免费图床</h3><p>在尝试通过 Coding 持续集成自动将 GitHub 仓库实时同步到 Coding 仓库 失败后，果断采用 PicGo + GitHub 搭建个人图床工具，并且成功了。呜呜呜</p>
 <p>Coding 持续集成我一直构建失败</p>
 <p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgCoding_%E6%9E%84%E5%BB%BA%E5%A4%B1%E8%B4%A5.png" srcset="/img/loading.gif" lazyload></p>
-<p>Coding构建可以参考：<a target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/posts/coding-imagehost/">Coding构建</a>   ,我就不做介绍了，我都没构建成功😩</p>
+<p>Coding构建可以参考：<a href="https://hexo.fluid-dev.com/posts/coding-imagehost/">Coding构建</a>   ,我就不做介绍了，我都没构建成功😩</p>
 <h5 id="PicGo-GitHub-搭建个人图床工具"><a href="#PicGo-GitHub-搭建个人图床工具" class="headerlink" title="PicGo + GitHub 搭建个人图床工具"></a>PicGo + GitHub 搭建个人图床工具</h5><p><strong>1.Github仓库设置</strong></p>
 <p>流程：新建 public 仓库 -&gt; 创建 token -&gt; 复制 token 备用</p>
 <p>​    <strong>新建 public 仓库 ：</strong></p>
@@ -394,7 +394,7 @@
 <p>填 description（也是随心填），勾选复选框 repo ，接着到页面底部 <code>Generate token</code> 就完成了；</p>
 <p>然后复制生成一串字符 token，这个 token 只出现一次，所以要保存一下（我一般记在微信收藏）。</p>
 <p><strong>2.PicGo 客户端配置</strong></p>
-<p><strong>下载&amp;安装</strong>  <a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/PicGo">PicGo</a></p>
+<p><strong>下载&amp;安装</strong>  <a href="https://github.com/Molunerfinn/PicGo">PicGo</a></p>
 <p><strong>配置</strong></p>
 <p>仓库名      即你的仓库名<br>分支名      默认 master<br>Token      就是刚刚复制的那一串字符<br>存储路径 这个可以填也可以不填，填了的话图片就上传到 git 中 data 这个文件夹<br>域名         <code>https://raw.githubusercontent.com/yefcion/cloudimg/master</code></p>
 <p>域名要改一下 格式 <code>https://raw.githubusercontent.com/[username]/[仓库名]/master</code></p>

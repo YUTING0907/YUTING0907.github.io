@@ -86,7 +86,7 @@
   <script  src="/js/color-schema.js" ></script>
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 
 <body>
@@ -308,7 +308,7 @@
 <p><code>hexo c</code> <code>hexo g</code> <code>hexo d</code></p>
 <h2 id="解决方案-三"><a href="#解决方案-三" class="headerlink" title="解决方案(三)"></a>解决方案(三)</h2><p>有可能是你的git repo配置地址不正确,可以将http方式变更为ssh方式</p>
 <p>如果之前hexo d部署都没问题，就不是git repo配置的地址不对了，去解决方案（二）看看</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment">##进入站点根目录</span><br>cd <span class="hljs-regexp">/Users/</span>tingyu<span class="hljs-regexp">/blog/</span><br><br><span class="hljs-comment">##删除git提交内容文件夹</span><br>vim _config.yml<br><br><span class="hljs-comment">##修改</span><br>deploy:<br><br>type: git<br><br>repo: https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/yourname/y</span>ourname.github.io.git -&gt; git@github.com:a956551943/weixiaohui.github.io.git<br><br>branch: master<br><br><span class="hljs-comment">##最后</span><br>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d<br></code></pre></td></tr></table></figure>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs nix"><span class="hljs-comment">##进入站点根目录</span><br>cd <span class="hljs-operator">/</span>Users<span class="hljs-operator">/</span>tingyu<span class="hljs-operator">/</span>blog<span class="hljs-symbol">/</span><br><br><span class="hljs-comment">##删除git提交内容文件夹</span><br>vim _config.yml<br><br><span class="hljs-comment">##修改</span><br><span class="hljs-params">deploy:</span><br><br><span class="hljs-params">type:</span> git<br><br><span class="hljs-params">repo:</span> https:<span class="hljs-symbol">//github.com/yourname/yourname.github.io.git</span> <span class="hljs-operator">-&gt;</span> git@github.com:a956551943<span class="hljs-symbol">/weixiaohui.github.io.git</span><br><br><span class="hljs-params">branch:</span> master<br><br><span class="hljs-comment">##最后</span><br>hexo clean <span class="hljs-operator">&amp;&amp;</span> hexo g <span class="hljs-operator">&amp;&amp;</span> hexo d<br></code></pre></td></tr></table></figure>
 
 </div>
 				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">

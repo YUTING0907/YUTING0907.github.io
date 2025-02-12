@@ -93,7 +93,7 @@
   <script  src="/js/color-schema.js" ></script>
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 
 <body>
@@ -307,7 +307,7 @@
 <li><strong>python3.6</strong></li>
 <li><strong>pandas sklearn xgboost</strong> <h2 id="赛事说明"><a href="#赛事说明" class="headerlink" title="赛事说明"></a>赛事说明</h2></li>
 </ul>
-<p>赛事链接<a target="_blank" rel="noopener" href="https://www.datafountain.cn/competitions/311/details/data-evaluation">面向电信行业存量用户的智能套餐个性化匹配模型</a></p>
+<p>赛事链接<a href="https://www.datafountain.cn/competitions/311/details/data-evaluation">面向电信行业存量用户的智能套餐个性化匹配模型</a></p>
 <p>可以参看链接，里面有详细的训练集数据说明，里面包含了如下信息：<br>数据说明<br>作品要求<br>评分方式</p>
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>我复现了top1的解决方案，以下是top1的解决方案：</p>
 <h3 id="1-数据探查"><a href="#1-数据探查" class="headerlink" title="1.数据探查"></a><strong>1.数据探查</strong></h3><h5 id="分类label"><a href="#分类label" class="headerlink" title="分类label"></a><strong>分类label</strong></h5><p>根据赛事说明，该比赛是一个多分类的问题，对应着有11种套餐，首先看看这11种套餐的分布情况，可以看出它们的分布较为不均。</p>
@@ -358,11 +358,11 @@
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">params</span> = &#123;<span class="hljs-string">&#x27;objective&#x27;</span>: <span class="hljs-string">&#x27;multi:softprob&#x27;</span>, <span class="hljs-meta"># 多分类的问题</span><br>          <span class="hljs-string">&#x27;eta&#x27;</span>: <span class="hljs-number">0.1</span>,                    <span class="hljs-meta"># 如同学习率</span><br>          <span class="hljs-string">&#x27;max_depth&#x27;</span>: <span class="hljs-number">6</span>,                <span class="hljs-meta"># 构建树的深度，越大越容易过拟合</span><br>          <span class="hljs-string">&#x27;silent&#x27;</span>: <span class="hljs-number">1</span>,      <span class="hljs-meta"># 取0时表示打印出运行时信息，取1时表示以缄默方式运行，不打印运行时信息。缺省值为0</span><br>          <span class="hljs-string">&#x27;num_class&#x27;</span>: <span class="hljs-number">11</span>,  <span class="hljs-meta"># 类别数，与 multisoftmax 并用</span><br>          <span class="hljs-string">&#x27;eval_metric&#x27;</span>: <span class="hljs-string">&quot;mlogloss&quot;</span>,  <span class="hljs-meta"># 评价指标 negative log-likelihood</span><br>          <span class="hljs-string">&#x27;min_child_weight&#x27;</span>: <span class="hljs-number">3</span>,<br>          <span class="hljs-string">&#x27;subsample&#x27;</span>: <span class="hljs-number">0.7</span>,   <span class="hljs-meta"># 随机采样训练样本</span><br>          <span class="hljs-string">&#x27;colsample_bytree&#x27;</span>: <span class="hljs-number">0.7</span>,  <span class="hljs-meta"># 生成树时进行的列采样</span><br>          <span class="hljs-string">&#x27;seed&#x27;</span>: <span class="hljs-number">66</span><br>          &#125; <span class="hljs-keyword">if</span> <span class="hljs-keyword">params</span> <span class="hljs-keyword">is</span> None <span class="hljs-keyword">else</span> <span class="hljs-keyword">params</span><br></code></pre></td></tr></table></figure>
 <p><strong>xgb.train(params, xgb_train,num_boost_round&#x3D;3000,<br>evals&#x3D;watchlist, verbose_eval&#x3D;50, early_stopping_rounds&#x3D;50)</strong><br>**params:**训练的参数，上面代码块中有详细的解释<br>**xgb_train:**训练的数据</p>
 <p>测试集的预测结果取5次的平均。</p>
-<p>代码链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1VcY_BWTLPcONr2WGgr7bZA">https://pan.baidu.com/s/1VcY_BWTLPcONr2WGgr7bZA</a><br>密码：idgg</p>
+<p>代码链接：<a href="https://pan.baidu.com/s/1VcY_BWTLPcONr2WGgr7bZA">https://pan.baidu.com/s/1VcY_BWTLPcONr2WGgr7bZA</a><br>密码：idgg</p>
 <p>参考：</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hOjLTNEBAt3DNiT6F-yHCw">机器学习初学者</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/iyuanshuo/article/details/80142730">Xgboost参数</a></li>
+<li><a href="https://mp.weixin.qq.com/s/hOjLTNEBAt3DNiT6F-yHCw">机器学习初学者</a></li>
+<li><a href="https://blog.csdn.net/iyuanshuo/article/details/80142730">Xgboost参数</a></li>
 </ul>
 <hr>
 <iframe src="https://rawcdn.githack.com/YUTING0907/donate-page-yu/df1732a5993401f9d372918c3f7680ca0e1c2ca3/simple/index.html 

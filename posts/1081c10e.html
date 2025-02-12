@@ -16,12 +16,12 @@
   <meta name="author" content="Echo Yu">
   <meta name="keywords" content="ML">
   
-    <meta name="description" content="导出mysql数据到csv文件 1mysql -e &quot;select tracking_number,order_created_time from datamart.t_wide_table_waybill where waybill_submit_time &gt;&#x3D; &amp;#x27;2021-04-01&amp;#x27; and waybill_submit_time &lt; &amp;#x27;2">
+    <meta name="description" content="导出mysql数据到csv文件 1mysql -e &quot;select tracking_number,order_created_time from datamart.t_wide_table_waybill where waybill_submit_time &gt;&#x3D; &#x27;2021-04-01&#x27; and waybill_submit_time &lt; &#x27;2">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mysql Data to Doris by streamload">
 <meta property="og:url" content="http://yuting0907.github.io/posts/1081c10e.html">
 <meta property="og:site_name" content="YUTING">
-<meta property="og:description" content="导出mysql数据到csv文件 1mysql -e &quot;select tracking_number,order_created_time from datamart.t_wide_table_waybill where waybill_submit_time &gt;&#x3D; &amp;#x27;2021-04-01&amp;#x27; and waybill_submit_time &lt; &amp;#x27;2">
+<meta property="og:description" content="导出mysql数据到csv文件 1mysql -e &quot;select tracking_number,order_created_time from datamart.t_wide_table_waybill where waybill_submit_time &gt;&#x3D; &#x27;2021-04-01&#x27; and waybill_submit_time &lt; &#x27;2">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-05-27T14:40:59.000Z">
 <meta property="article:modified_time" content="2025-01-14T14:11:52.950Z">
@@ -86,7 +86,7 @@
   <script  src="/js/color-schema.js" ></script>
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 
 <body>
@@ -297,7 +297,7 @@
               <div id="readmore-container"><p><strong>导出mysql数据到csv文件</strong></p>
 <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">mysql -e &quot;<span class="hljs-keyword">select</span> tracking_number,order_created_time <span class="hljs-keyword">from</span> datamart.t_wide_table_waybill <span class="hljs-keyword">where</span> waybill_submit_time &gt;= <span class="hljs-string">&#x27;2021-04-01&#x27;</span> <span class="hljs-keyword">and</span> waybill_submit_time &lt; <span class="hljs-string">&#x27;2021-07-01&#x27;</span><span class="hljs-string">&quot; &gt; /opt/tmpdata/wide_table_6.csv</span><br></code></pre></td></tr></table></figure>
 
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">tar -zcvf <span class="hljs-regexp">/opt/</span>tmpdata<span class="hljs-regexp">/wide_table_6.csv.tar.gz /</span>opt<span class="hljs-regexp">/tmpdata/</span>wide_table_6.csv<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus">tar -zcvf /opt/tmpdata/wide_table_6<span class="hljs-selector-class">.csv</span><span class="hljs-selector-class">.tar</span><span class="hljs-selector-class">.gz</span> /opt/tmpdata/wide_table_6<span class="hljs-selector-class">.csv</span><br><br></code></pre></td></tr></table></figure>
 
 
 
@@ -308,10 +308,10 @@
 <p><strong>Doris streamload方式导入数据时对数据文件的大小限制为10G，若数据文件&gt;10G,则可按10G来切分</strong></p>
 <p><code>split -b 10240m wide_table_6.csv after_split_wide_table_6.csv</code></p>
 <p>用Streamload方式导入数据,直接导入到具体BE节点</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">curl --location-trusted -u root: -T <span class="hljs-regexp">/data/</span>tmpdata<span class="hljs-regexp">/after_split_wide_table_6.csv -H &quot;label:wide_table_001&quot; -H &quot;max_filter_ratio:1&quot;http:/</span><span class="hljs-regexp">/10.63.40.54:8040/</span>api<span class="hljs-regexp">/dwd/</span>dwd_spk_t_wide_table_waybill/_stream_load<br></code></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">curl <span class="hljs-params">--location-trusted</span> -u root: -T <span class="hljs-string">/data/tmpdata/after_split_wide_table_6.csv</span> -H <span class="hljs-string">&quot;label:wide_table_001&quot;</span> -H <span class="hljs-string">&quot;max_filter_ratio:1&quot;</span>http:<span class="hljs-string">//10.63.40.54</span><span class="hljs-function">:8040</span>/api/dwd/dwd_spk_t_wide_table_waybill/_stream_load<br></code></pre></td></tr></table></figure>
 
 <p><strong>由FE节点来分配</strong></p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">curl --location-trusted -u root: -T <span class="hljs-regexp">/data/</span>tmpdata<span class="hljs-regexp">/after_split_wide_table_6.csv -H &quot;label:wide_table_001&quot; -H &quot;max_filter_ratio:1&quot;http:/</span><span class="hljs-regexp">/10.63.40.20:8030/</span>api<span class="hljs-regexp">/dwd/</span>dwd_spk_t_wide_table_waybill/_stream_load<br></code></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">curl <span class="hljs-params">--location-trusted</span> -u root: -T <span class="hljs-string">/data/tmpdata/after_split_wide_table_6.csv</span> -H <span class="hljs-string">&quot;label:wide_table_001&quot;</span> -H <span class="hljs-string">&quot;max_filter_ratio:1&quot;</span>http:<span class="hljs-string">//10.63.40.20</span><span class="hljs-function">:8030</span>/api/dwd/dwd_spk_t_wide_table_waybill/_stream_load<br></code></pre></td></tr></table></figure>
 
 </div>
 				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">

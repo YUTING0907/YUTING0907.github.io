@@ -88,7 +88,7 @@
   <script  src="/js/color-schema.js" ></script>
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 
 <body>
@@ -303,7 +303,7 @@
 <p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgdoris_235.png" srcset="/img/loading.gif" lazyload></p>
 <hr>
 <h3 id="问题查询和解决"><a href="#问题查询和解决" class="headerlink" title="问题查询和解决"></a>问题查询和解决</h3><p>通过网上查询一圈，发现该问题还挺普遍的，而且还已经记录在了doris官网</p>
-<p>[<a target="_blank" rel="noopener" href="https://doris.apache.org/zh-CN/docs/faq/data-faq.html#q4-tablet-writer-write-failed-tablet-id-27306172-txn-id-28573520-err-235-or-215-or-238]">https://doris.apache.org/zh-CN/docs/faq/data-faq.html#q4-tablet-writer-write-failed-tablet-id-27306172-txn-id-28573520-err-235-or-215-or-238]</a>(tablet writer write failed, tablet_id&#x3D;27306172, txn_id&#x3D;28573520, err&#x3D;-235 or -215 or -238)</p>
+<p>[<a href="https://doris.apache.org/zh-CN/docs/faq/data-faq.html#q4-tablet-writer-write-failed-tablet-id-27306172-txn-id-28573520-err-235-or-215-or-238]">https://doris.apache.org/zh-CN/docs/faq/data-faq.html#q4-tablet-writer-write-failed-tablet-id-27306172-txn-id-28573520-err-235-or-215-or-238]</a>(tablet writer write failed, tablet_id&#x3D;27306172, txn_id&#x3D;28573520, err&#x3D;-235 or -215 or -238)</p>
 <p>这个错误通常发生在数据导入操作中。新版错误码为 -235，老版本错误码可能是 -215。</p>
 <p>这个错误的含义是，对应tablet的数据版本超过了最大限制（默认500，由 BE 参数 <code>max_tablet_version_num</code> 控制），后续写入将被拒绝。</p>
 <p>比如问题中这个错误，即表示 27306172 这个tablet的数据版本超过了限制。</p>

@@ -86,7 +86,7 @@
   <script  src="/js/color-schema.js" ></script>
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 
 <body>
@@ -319,7 +319,7 @@
 <p>11.关于性能优化这方面，与数据类型是否有什么关联，各种数据源中的表联合查询的时候，对于复杂类型的性能优化是从哪方面着手的？</p>
 <p>和数据类型关系还是很大的。比如 Int 类型的性能就会比 String 要好。复杂类型的性能优化我举个 Bitmap 的例子。Bitmap 的聚合函数在 Bitmap 分布相对稠密情况下，会比稀疏的要性能高不少。</p>
 <p>12.请问高吞吐量的即席查询实时性如何，比如1张1亿条数据的表，查出200万条数据，大约需要多少毫秒?</p>
-<p>这个差异可能会非常大，需要结合建表语句、查询 SQL 、机器配置、集群规模等多方面因素综合来看。在 Doris 官网上基于 Star-Schema-Benchmark 标准测试数据集做过性能测试，可以参考一下 <a target="_blank" rel="noopener" href="https://doris.apache.org/zh-CN/benchmark/star-schema-benchmark.html#">https://doris.apache.org/zh-CN/benchmark/star-schema-benchmark.html#</a></p>
+<p>这个差异可能会非常大，需要结合建表语句、查询 SQL 、机器配置、集群规模等多方面因素综合来看。在 Doris 官网上基于 Star-Schema-Benchmark 标准测试数据集做过性能测试，可以参考一下 <a href="https://doris.apache.org/zh-CN/benchmark/star-schema-benchmark.html#">https://doris.apache.org/zh-CN/benchmark/star-schema-benchmark.html#</a></p>
 <p>13.接口性能优化都有哪些好的方案？</p>
 <p>首先要看你的情况是提升 QPS 还是提升单个慢查询。</p>
 <p>先说慢查询：</p>

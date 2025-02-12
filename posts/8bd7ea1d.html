@@ -90,7 +90,7 @@
   <script  src="/js/color-schema.js" ></script>
 
   
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 
 <body>
@@ -300,7 +300,7 @@
               
               <div id="readmore-container"><h2 id="head插件简介"><a href="#head插件简介" class="headerlink" title="head插件简介"></a>head插件简介</h2><p>elasticsearch-head被称为是弹性搜索集群的web前端，head插件主要是用来和elastic Cluster交互的Web前端<img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20221218150033.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="chrome浏览器下的head插件安装"><a href="#chrome浏览器下的head插件安装" class="headerlink" title="chrome浏览器下的head插件安装"></a>chrome浏览器下的head插件安装</h2><p>用chrome浏览器集成head插件,操作比较简单, 可再不用单独运行服务, 简化了head插件的安装.</p>
-<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><p>1.下载es-head.crx文件<br>插件下载地址: <a target="_blank" rel="noopener" href="https://github.com/mikewuhao/es-head">https://github.com/mikewuhao/es-head</a></p>
+<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><p>1.下载es-head.crx文件<br>插件下载地址: <a href="https://github.com/mikewuhao/es-head">https://github.com/mikewuhao/es-head</a></p>
 <p>2.把下载好的es-head.crx文件扩展名改为.zip的压缩包文件, 如:es-head.zip</p>
 <p>3.解压缩es-head.zip文件到es-head文件夹</p>
 <p>4.到chrome的扩展程序里–打开开发者模式—加载已解压的扩展程序–上传刚才的es-head文件夹, 打开浏览器看右上角的es-head图标插件, 即安装成功</p>
@@ -309,7 +309,7 @@
 <p><img src="https://raw.githubusercontent.com/YUTING0907/PicGo/main/img20221218150033.png" srcset="/img/loading.gif" lazyload></p>
 <p>基本可以在浏览器中使用的API：</p>
 <p>1.查询健康状态：<br><code>http://192.168.23.10:9201/_cat/health?v</code><br>2.查询所有节点<br><code>http://192.168.23.10:9201/_cat/nodes?v</code><br>3.查询所有索引<br><code>http://192.168.23.10:9201/_cat/indices?v</code><br>4.查询单个索引的 mapping 和 设置详情<br><code>http://192.168.23.10:9201/索引名称/</code><br>5.根据数据的ID查询数据详情<br><code>http://192.168.23.10:9201/索引名称/类型/id号</code><br>6.查询索引的所有数据</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">23.10</span>:<span class="hljs-number">9201</span><span class="hljs-regexp">/索引名称/</span>_search<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">23.10</span>:<span class="hljs-number">9201</span><span class="hljs-regexp">/索引名称/</span>_search?from=<span class="hljs-number">1</span>&amp;size=<span class="hljs-number">10</span><br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">23.10</span>:<span class="hljs-number">9201</span><span class="hljs-regexp">/索引名称/</span>_search?from=<span class="hljs-number">1</span>&amp;size=<span class="hljs-number">10</span>&amp;_source=mobile,user_id<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">23.10</span>:<span class="hljs-number">9201</span><span class="hljs-regexp">/索引名称/</span>_search?q=city:%E6%B7%B1<br></code></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">http</span>://<span class="hljs-number">192.168.23.10:9201</span>/索引名称/_search<br><span class="hljs-attribute">http</span>://<span class="hljs-number">192.168.23.10:9201</span>/索引名称/_search?from=<span class="hljs-number">1</span>&amp;size=<span class="hljs-number">10</span><br><span class="hljs-attribute">http</span>://<span class="hljs-number">192.168.23.10:9201</span>/索引名称/_search?from=<span class="hljs-number">1</span>&amp;size=<span class="hljs-number">10</span>&amp;_source=mobile,user_id<br><span class="hljs-attribute">http</span>://<span class="hljs-number">192.168.23.10:9201</span>/索引名称/_search?q=city:%E6%B7%B1<br></code></pre></td></tr></table></figure>
 
 
 
