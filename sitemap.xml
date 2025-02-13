@@ -4,7 +4,7 @@
   <url>
     <loc>http://yuting0907.github.io/books/index.html</loc>
     
-    <lastmod>2025-02-12</lastmod>
+    <lastmod>2025-02-13</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -236,7 +236,7 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/posts/5a1e8297.html</loc>
+    <loc>http://yuting0907.github.io/posts/70ced625.html</loc>
     
     <lastmod>2025-01-14</lastmod>
     
@@ -245,7 +245,7 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/posts/70ced625.html</loc>
+    <loc>http://yuting0907.github.io/posts/5a1e8297.html</loc>
     
     <lastmod>2025-01-14</lastmod>
     
@@ -371,7 +371,7 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/posts/22eeffe1.html</loc>
+    <loc>http://yuting0907.github.io/posts/db108317.html</loc>
     
     <lastmod>2025-01-14</lastmod>
     
@@ -380,7 +380,7 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/posts/db108317.html</loc>
+    <loc>http://yuting0907.github.io/posts/22eeffe1.html</loc>
     
     <lastmod>2025-01-14</lastmod>
     
@@ -830,7 +830,7 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/posts/f248611c.html</loc>
+    <loc>http://yuting0907.github.io/posts/6009bd1b.html</loc>
     
     <lastmod>2025-01-14</lastmod>
     
@@ -839,7 +839,7 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/posts/6009bd1b.html</loc>
+    <loc>http://yuting0907.github.io/posts/f248611c.html</loc>
     
     <lastmod>2025-01-14</lastmod>
     
@@ -857,7 +857,7 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/posts/1081c10e.html</loc>
+    <loc>http://yuting0907.github.io/posts/55dc5fbe.html</loc>
     
     <lastmod>2025-01-14</lastmod>
     
@@ -866,7 +866,7 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/posts/55dc5fbe.html</loc>
+    <loc>http://yuting0907.github.io/posts/1081c10e.html</loc>
     
     <lastmod>2025-01-14</lastmod>
     
@@ -884,7 +884,7 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/posts/8bd2f176.html</loc>
+    <loc>http://yuting0907.github.io/posts/525c1d8c.html</loc>
     
     <lastmod>2025-01-14</lastmod>
     
@@ -893,7 +893,7 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/posts/525c1d8c.html</loc>
+    <loc>http://yuting0907.github.io/posts/8bd2f176.html</loc>
     
     <lastmod>2025-01-14</lastmod>
     
@@ -1010,7 +1010,7 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/posts/20ebace3.html</loc>
+    <loc>http://yuting0907.github.io/posts/9d5296cb.html</loc>
     
     <lastmod>2025-01-14</lastmod>
     
@@ -1019,7 +1019,7 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/posts/9d5296cb.html</loc>
+    <loc>http://yuting0907.github.io/posts/20ebace3.html</loc>
     
     <lastmod>2025-01-14</lastmod>
     
@@ -1037,7 +1037,7 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/posts/f6599f80.html</loc>
+    <loc>http://yuting0907.github.io/posts/afbbf2e3.html</loc>
     
     <lastmod>2025-01-14</lastmod>
     
@@ -1046,7 +1046,7 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/posts/afbbf2e3.html</loc>
+    <loc>http://yuting0907.github.io/posts/f6599f80.html</loc>
     
     <lastmod>2025-01-14</lastmod>
     
@@ -1253,13 +1253,6 @@
 
   
   <url>
-    <loc>http://yuting0907.github.io/tags/Doris/</loc>
-    <lastmod>2025-02-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://yuting0907.github.io/tags/life/</loc>
     <lastmod>2025-02-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -1267,7 +1260,7 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/tags/FlinkCDC/</loc>
+    <loc>http://yuting0907.github.io/tags/Doris/</loc>
     <lastmod>2025-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1275,6 +1268,13 @@
   
   <url>
     <loc>http://yuting0907.github.io/tags/ETL/</loc>
+    <lastmod>2025-02-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://yuting0907.github.io/tags/FlinkCDC/</loc>
     <lastmod>2025-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1302,13 +1302,6 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/tags/Hive/</loc>
-    <lastmod>2025-02-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://yuting0907.github.io/tags/Scala/</loc>
     <lastmod>2025-02-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -1330,6 +1323,13 @@
   </url>
   
   <url>
+    <loc>http://yuting0907.github.io/tags/Java/</loc>
+    <lastmod>2025-02-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://yuting0907.github.io/tags/Machine-Learning/</loc>
     <lastmod>2025-02-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -1337,7 +1337,7 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/tags/Java/</loc>
+    <loc>http://yuting0907.github.io/tags/Hive/</loc>
     <lastmod>2025-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1358,14 +1358,14 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/tags/PyTorch/</loc>
+    <loc>http://yuting0907.github.io/tags/Python/</loc>
     <lastmod>2025-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/tags/Python/</loc>
+    <loc>http://yuting0907.github.io/tags/PyTorch/</loc>
     <lastmod>2025-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1379,14 +1379,14 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/tags/spring-cloud/</loc>
+    <loc>http://yuting0907.github.io/tags/elasticsearch/</loc>
     <lastmod>2025-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/tags/elasticsearch/</loc>
+    <loc>http://yuting0907.github.io/tags/spring-cloud/</loc>
     <lastmod>2025-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1407,14 +1407,14 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/tags/Super-Resolution/</loc>
+    <loc>http://yuting0907.github.io/tags/CV-image-aesthetics/</loc>
     <lastmod>2025-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/tags/CV-image-aesthetics/</loc>
+    <loc>http://yuting0907.github.io/tags/Super-Resolution/</loc>
     <lastmod>2025-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1528,13 +1528,6 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/categories/Flink/</loc>
-    <lastmod>2025-02-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://yuting0907.github.io/categories/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/</loc>
     <lastmod>2025-02-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -1542,14 +1535,14 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/categories/%E5%8D%9A%E5%AE%A2/</loc>
+    <loc>http://yuting0907.github.io/categories/Flink/</loc>
     <lastmod>2025-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/</loc>
+    <loc>http://yuting0907.github.io/categories/%E5%8D%9A%E5%AE%A2/</loc>
     <lastmod>2025-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1570,7 +1563,7 @@
   </url>
   
   <url>
-    <loc>http://yuting0907.github.io/categories/Deep-Learning/</loc>
+    <loc>http://yuting0907.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/</loc>
     <lastmod>2025-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1578,6 +1571,13 @@
   
   <url>
     <loc>http://yuting0907.github.io/categories/Python/</loc>
+    <lastmod>2025-02-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://yuting0907.github.io/categories/Deep-Learning/</loc>
     <lastmod>2025-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

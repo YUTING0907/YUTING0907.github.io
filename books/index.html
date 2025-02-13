@@ -16,15 +16,15 @@
   <meta name="author" content="Echo Yu">
   <meta name="keywords" content="ML">
   
-    <meta name="description" content="欢迎来到我的读书记录页面！这里整理了我按年份读过的书籍，希望能与你分享我的阅读历程。 &lt;%- partial(‘reading’) %&gt;  				 				 				 				var isMobile &#x3D; navigator.userAgent.match(&#x2F;(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|I">
+    <meta name="description" content="欢迎来到我的读书记录页面！这里整理了我按年份读过的书籍，希望能与你分享我的阅读历程。 &lt;%- partial(‘_partials&#x2F;reading.ejs’) %&gt;  				 				 				 				var isMobile &#x3D; navigator.userAgent.match(&#x2F;(phone|pad|pod|iPhone|iPod|ios|iPad|Android|">
 <meta property="og:type" content="website">
 <meta property="og:title" content="books">
 <meta property="og:url" content="http://yuting0907.github.io/books/index.html">
 <meta property="og:site_name" content="YUTING">
-<meta property="og:description" content="欢迎来到我的读书记录页面！这里整理了我按年份读过的书籍，希望能与你分享我的阅读历程。 &lt;%- partial(‘reading’) %&gt;  				 				 				 				var isMobile &#x3D; navigator.userAgent.match(&#x2F;(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|I">
+<meta property="og:description" content="欢迎来到我的读书记录页面！这里整理了我按年份读过的书籍，希望能与你分享我的阅读历程。 &lt;%- partial(‘_partials&#x2F;reading.ejs’) %&gt;  				 				 				 				var isMobile &#x3D; navigator.userAgent.match(&#x2F;(phone|pad|pod|iPhone|iPod|ios|iPad|Android|">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-01-22T03:12:15.000Z">
-<meta property="article:modified_time" content="2025-02-12T05:03:22.439Z">
+<meta property="article:modified_time" content="2025-02-13T10:45:15.818Z">
 <meta property="article:author" content="Echo Yu">
 <meta property="article:tag" content="ML">
 <meta name="twitter:card" content="summary_large_image">
@@ -91,7 +91,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 60vh;">
+<div class="header-inner" style="height: 100vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -216,6 +216,10 @@
       </div>
 
       
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
     </div>
   </div>
 </div>
@@ -227,53 +231,268 @@
     
       <div class="container nopadding-x-md">
         <div id="board"
-          >
+          style="margin-top: 0">
           
           <div class="container">
             <div class="row">
               <div class="col-12 col-md-10 m-auto">
                 
 
-
-<article class="page-content">
-  <div id="readmore-container"><p>欢迎来到我的读书记录页面！这里整理了我按年份读过的书籍，希望能与你分享我的阅读历程。</p>
-<p>&lt;%- partial(‘reading’) %&gt;</p>
-</div>
-				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
-				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
-				<script>
-				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
-				var isEncrypt = document.getElementById('hexo-blog-encrypt');
-				var allowMobile = false;
-				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
-					try {
-						var plugin = new ReadmorePlugin();
-						plugin.init({
-							"type": "hexo",
-							"id": "readmore-container",
-							"name": "YutingNotFound",
-							"blogId": "04372-4551209630277-002",
-							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
-							"keyword": "验证码",
-							"random": "1",
-							"height": "auto",
-							"expires": "36500",
-							"lockToc": "yes",
-							"interval": "60",
-							"baseUrl": "",
-							"tocSelector": ""
-						});
-					} catch(e) {
-						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
-					}
-				}
-				</script>
-			
+<div class="reading">
+  <h2></h2>
 
   
+    <div class="year-entry">
+      <button class="year-btn" onclick="toggleBooks('2025')">
+        2025 ( 2 )
+      </button>
 
-</article>
+      <div id="2025" class="book-list" style="display: none;">
+        
+          <div class="book-entry">
+            <div class="book-header">
+              <img src="/img/books/杜拉拉升职记.jpeg" srcset="/img/loading.gif" lazyload alt="《杜拉拉升职记》" class="book-image" />
+              <div class="book-info">
+                <h4 class="book-title">《杜拉拉升职记》</h4>
+                <p><strong></strong>李可</p>
+                <p>
+                  <strong></strong>
+                  2025.02.09 &rarr; 1970.01.01
+                </p>
+                <p><strong></strong>这是一本职场行政办公室成长记事</p>
+                
+                  <p><a href="https://book.douban.com/subject/1728421/" target="_blank"></a></p>
+                
+              </div>
+            </div>
+          </div>
+        
+          <div class="book-entry">
+            <div class="book-header">
+              <img src="/img/books/dear john.jpeg" srcset="/img/loading.gif" lazyload alt="《Dear John》" class="book-image" />
+              <div class="book-info">
+                <h4 class="book-title">《Dear John》</h4>
+                <p><strong></strong>Nicholas Sparks</p>
+                <p>
+                  <strong></strong>
+                  2025.01.10 &rarr; 1970.01.01
+                </p>
+                <p><strong></strong>纯爱小说教父作品系列。</p>
+                
+                  <p><a href="https://book.douban.com/subject/1084336/" target="_blank"></a></p>
+                
+              </div>
+            </div>
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="year-entry">
+      <button class="year-btn" onclick="toggleBooks('2024')">
+        2024 ( 6 )
+      </button>
 
+      <div id="2024" class="book-list" style="display: none;">
+        
+          <div class="book-entry">
+            <div class="book-header">
+              <img src="/img/books/bottle message.jpeg" srcset="/img/loading.gif" lazyload alt="《Message In A Bottle》" class="book-image" />
+              <div class="book-info">
+                <h4 class="book-title">《Message In A Bottle》</h4>
+                <p><strong></strong>Nicholas Sparks</p>
+                <p>
+                  <strong></strong>
+                  2024.12.16 &rarr; 2024.12.28
+                </p>
+                <p><strong></strong>纯爱小说教父作品系列。</p>
+                
+                  <p><a href="https://book.douban.com/subject/1084336/" target="_blank"></a></p>
+                
+              </div>
+            </div>
+          </div>
+        
+          <div class="book-entry">
+            <div class="book-header">
+              <img src="/img/books/非暴力沟通.jpeg" srcset="/img/loading.gif" lazyload alt="《非暴力沟通》" class="book-image" />
+              <div class="book-info">
+                <h4 class="book-title">《非暴力沟通》</h4>
+                <p><strong></strong>马歇尔·卢森堡</p>
+                <p>
+                  <strong></strong>
+                  2024.11.10 &rarr; 2024.11.26
+                </p>
+                <p><strong></strong>观察（客观事实）+ 表达感受 + 挖掘需要 + 请求帮助</p>
+                
+                  <p><a href="https://book.douban.com/subject/1084336/" target="_blank"></a></p>
+                
+              </div>
+            </div>
+          </div>
+        
+          <div class="book-entry">
+            <div class="book-header">
+              <img src="/img/books/高情商聊天术.jpeg" srcset="/img/loading.gif" lazyload alt="《高情商聊天术》" class="book-image" />
+              <div class="book-info">
+                <h4 class="book-title">《高情商聊天术》</h4>
+                <p><strong></strong>张超</p>
+                <p>
+                  <strong></strong>
+                  2024.11.10 &rarr; 2024.11.16
+                </p>
+                <p><strong></strong>描绘了复杂的情感和青春的迷茫。</p>
+                
+                  <p><a href="https://book.douban.com/subject/1084336/" target="_blank"></a></p>
+                
+              </div>
+            </div>
+          </div>
+        
+          <div class="book-entry">
+            <div class="book-header">
+              <img src="/img/books/蛤蟆先生去看心理医生.jpeg" srcset="/img/loading.gif" lazyload alt="《蛤蟆先生去看心理医生》" class="book-image" />
+              <div class="book-info">
+                <h4 class="book-title">《蛤蟆先生去看心理医生》</h4>
+                <p><strong></strong>罗伯特·戴博德</p>
+                <p>
+                  <strong></strong>
+                  2024.11.05 &rarr; 2024.11.09
+                </p>
+                <p><strong></strong>描绘了复杂的情感和青春的迷茫。</p>
+                
+                  <p><a href="https://book.douban.com/subject/1084336/" target="_blank"></a></p>
+                
+              </div>
+            </div>
+          </div>
+        
+          <div class="book-entry">
+            <div class="book-header">
+              <img src="/img/books/被讨厌的勇气.jpeg" srcset="/img/loading.gif" lazyload alt="《被讨厌的勇气》" class="book-image" />
+              <div class="book-info">
+                <h4 class="book-title">《被讨厌的勇气》</h4>
+                <p><strong></strong>岸见一郎和古贺史健</p>
+                <p>
+                  <strong></strong>
+                  2024.07.12 &rarr; 2024.07.30
+                </p>
+                <p><strong></strong>描绘了复杂的情感和青春的迷茫。</p>
+                
+                  <p><a href="https://book.douban.com/subject/1084336/" target="_blank"></a></p>
+                
+              </div>
+            </div>
+          </div>
+        
+          <div class="book-entry">
+            <div class="book-header">
+              <img src="/img/books/女人的胜利.jpeg" srcset="/img/loading.gif" lazyload alt="《女人的胜利》" class="book-image" />
+              <div class="book-info">
+                <h4 class="book-title">《女人的胜利》</h4>
+                <p><strong></strong>余华</p>
+                <p>
+                  <strong></strong>
+                  2024.10.08 &rarr; 2024.11.02
+                </p>
+                <p><strong></strong>描绘了复杂的情感和青春的迷茫。</p>
+                
+                  <p><a href="https://book.douban.com/subject/1084336/" target="_blank"></a></p>
+                
+              </div>
+            </div>
+          </div>
+        
+      </div>
+    </div>
+  
+
+</div>
+
+<script>
+  function toggleBooks(year) {
+    var bookList = document.getElementById(year);
+    if (bookList.style.display === "none") {
+      bookList.style.display = "block";
+    } else {
+      bookList.style.display = "none";
+    }
+  }
+</script>
+
+<style>
+  .year-entry {
+    margin-bottom: 20px;
+  }
+
+  .year-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    width: auto;
+    text-align: left;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px 0;
+  }
+
+  .year-btn:hover {
+    background-color: #45a049;
+  }
+
+  .book-list {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap; /*  */
+    justify-content: space-between; /*  */
+  }
+
+  .book-entry {
+    background-color: #d4f1d4; /*  */
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    width: calc(33.333% - 20px); /*  */
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px; /*  */
+    margin-right: 10px; /*  */
+  }
+
+  .book-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .book-image {
+    max-width: 100px;
+    max-height: 150px;
+    margin-bottom: 10px;
+  }
+
+  .book-title {
+    color: red; /*  */
+    font-size: 16px;
+  }
+
+  .book-info {
+    max-width: none; /*  */
+    padding: 0 10px; /*  */
+  }
+
+  .book-info h4 {
+    margin: 0;
+    font-size: 18px;
+  }
+
+  .book-info p {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+</style>
 
               </div>
             </div>
