@@ -24,7 +24,7 @@
 <meta property="og:description" content="硕士毕业论文latex修改记录自用。不对内容正确性负责。 封面1.preface&#x2F;inner-cover.tex 1234% ~ Line 31 &#123;\textbf&#123;&#123;\xiaosi \MakeUppercase&#123;\degreeENs&#125; DISSERTATION&#125;&#125;&#125;\\改为&#123;\textbf&#123;\xia">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-02-19T04:48:57.000Z">
-<meta property="article:modified_time" content="2025-02-19T04:55:42.681Z">
+<meta property="article:modified_time" content="2025-02-19T04:57:34.226Z">
 <meta property="article:author" content="Echo Yu">
 <meta property="article:tag" content="博客">
 <meta name="twitter:card" content="summary_large_image">
@@ -307,14 +307,12 @@
 
 <figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs latex"><span class="hljs-comment">% ~ line 26 </span><br><span class="hljs-keyword">\begin</span>&#123;tabular&#125;&#123;r&#125;<br>    Department:         <span class="hljs-keyword">\\</span><br>    <span class="hljs-comment">% \\</span><br>    Major:              <span class="hljs-keyword">\\</span><br>    Research Direction: <span class="hljs-keyword">\\</span><br>    Supervisor:         <span class="hljs-keyword">\\</span><br>    Candidate:<br><span class="hljs-keyword">\end</span>&#123;tabular&#125;<br><span class="hljs-comment">% 改为：</span><br><span class="hljs-keyword">\begin</span>&#123;tabular&#125;&#123;r&#125;<br>    Department:         <span class="hljs-keyword">\\</span><br>    <span class="hljs-comment">% \\</span><br>    Category:              <span class="hljs-keyword">\\</span><br>    Field: <span class="hljs-keyword">\\</span><br>    Supervisor:         <span class="hljs-keyword">\\</span><br>    Candidate:<br><span class="hljs-keyword">\end</span>&#123;tabular&#125;<br></code></pre></td></tr></table></figure>
 
-<h4 id="页眉"><a href="#页眉" class="headerlink" title="页眉"></a>页眉</h4><p><code>format/format.tex</code></p>
+<h3 id="页眉"><a href="#页眉" class="headerlink" title="页眉"></a>页眉</h3><p><code>format/format.tex</code></p>
 <figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs latex"><span class="hljs-comment">% ~ Line135 页眉在剧中显示 华东师范大学硕士专业学位论文</span><br>由<br><span class="hljs-keyword">\fancyhead</span>[RO,LE]&#123;<span class="hljs-keyword">\bfseries</span> 华东师范大学&#123;<span class="hljs-keyword">\degreeCN</span>&#125;学位论文&#125;<br><span class="hljs-comment">% 改为：</span><br><span class="hljs-keyword">\fancyhead</span>[C]&#123; 华东师范大学&#123;<span class="hljs-keyword">\degreeCN</span>&#125;学位论文&#125; <span class="hljs-comment">% 在页眉中间显示</span><br></code></pre></td></tr></table></figure>
 
 <figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs latex"><span class="hljs-comment">% ~ Line135 注释掉 页眉章节显示</span><br><span class="hljs-comment">%\fancyhead[LO,RE]&#123;\small\leftmark&#125;</span><br></code></pre></td></tr></table></figure>
 
-
-
-<h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><p><code>main.tex</code></p>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p><code>main.tex</code></p>
 <figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs latex"><span class="hljs-comment">% ~ Line33</span><br><span class="hljs-keyword">\def</span><span class="hljs-keyword">\degreeCN</span>&#123;硕士&#125;<br>改为<br><span class="hljs-keyword">\def</span><span class="hljs-keyword">\degreeCN</span>&#123;硕士专业&#125;<br></code></pre></td></tr></table></figure>
 </div>
 				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
