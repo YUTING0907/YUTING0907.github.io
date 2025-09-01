@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250901172250.png">
 <meta property="og:image" content="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250901202050.png">
 <meta property="article:published_time" content="2025-09-01T04:46:33.000Z">
-<meta property="article:modified_time" content="2025-09-01T12:21:09.891Z">
+<meta property="article:modified_time" content="2025-09-01T13:16:09.417Z">
 <meta property="article:author" content="Echo Yu">
 <meta property="article:tag" content="大数据">
 <meta name="twitter:card" content="summary_large_image">
@@ -248,7 +248,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          11k 字
+          12k 字
         
       </span>
     
@@ -259,7 +259,7 @@
         
         
         
-          92 分钟
+          98 分钟
         
       </span>
     
@@ -431,6 +431,32 @@
 </li>
 </ol>
 <p>总结：</p>
+<p>DataX启动路径为：</p>
+<ul>
+<li><p>启动类Engine.java-&gt; entry() |根据mode初始化 AbstarctContainer（JobContainer&#x2F;TaskGroupContainer）</p>
+</li>
+<li><p>启动容器start()</p>
+<ul>
+<li><p>JobContainer容器会执行preHander()、init()、prepare()、split()、scheduler()、post()、postHandle()、invokeHooks(),它是所有任务的master，负责任务的初始化、拆分、调度、监控和回报，但并不做实际的数据同步</p>
+<ul>
+<li>scheduler()：startAllTaskGroup，启动所有的taskgroup。</li>
+</ul>
+</li>
+<li><p>线程启动后，会启动TaskGroupContainer来运行一个taskgroup里的全部任务。</p>
+</li>
+<li><ul>
+<li><p>根据通道数构建TaskExecutor加入执行队列。</p>
+</li>
+<li><p>TaskExecute是TaskGroupContainer的内部类，是一个基本单位task的具体执行管理的地方。</p>
+<p>初始化一些信息，比如初始化读写线程，实例化存储读数据的管道，获取transformer的参数等。<br>初始化之后开启读写线程，正式开始单个task（一部分数据同步任务）正式启动。</p>
+<p>读操作（ReaderRunner）利用jdbc，把从数据库中读出来的每条数据封装为一个个Record放入Channel中,当数据读完时，结束的时候会写入一个TerminateRecord标识。</p>
+<p>写操作（WriterRunner）不断从Channel中读取Record，直到读到TerminateRecord标识数据以取完，把数据全部读入数据库中</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <p><img src="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250901202050.png" srcset="/img/loading.gif" lazyload></p>
 <p>Reference:</p>
 <p><a href="https://juejin.cn/post/6869755803570536461?from=search-suggest">https://juejin.cn/post/6869755803570536461?from=search-suggest</a></p>
