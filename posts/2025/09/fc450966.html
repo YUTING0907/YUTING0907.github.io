@@ -16,24 +16,29 @@
   <meta name="author" content="Echo Yu">
   <meta name="keywords" content="ML">
   
-    <meta name="description" content="var isMobile &#x3D; navigator.userAgent.match(&#x2F;(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Ph">
+    <meta name="description" content="前言近期在工作中需要用到DataX去作为公司内部离线数据同步引擎，特花了一些时间研究了DataX的整体架构和设计思想，从中吸收了很多优秀的设计思路，作为一款纯Java实现的数据同步工具，相对于市面上已存在的基于大数据框架为背景的数据同步工具有着易部署、易扩展的优点，但不足的地方是alibaba只是开源了DataX单机模式代码，并未开源分布式部分代码，目前在Github中的只是阉割版是DataX。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DataX整体架构">
+<meta property="og:title" content="DataX源码解析-01整体架构">
 <meta property="og:url" content="http://yuting0907.github.io/posts/2025/09/fc450966.html">
 <meta property="og:site_name" content="YUTING">
-<meta property="og:description" content="var isMobile &#x3D; navigator.userAgent.match(&#x2F;(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Ph">
+<meta property="og:description" content="前言近期在工作中需要用到DataX去作为公司内部离线数据同步引擎，特花了一些时间研究了DataX的整体架构和设计思想，从中吸收了很多优秀的设计思路，作为一款纯Java实现的数据同步工具，相对于市面上已存在的基于大数据框架为背景的数据同步工具有着易部署、易扩展的优点，但不足的地方是alibaba只是开源了DataX单机模式代码，并未开源分布式部分代码，目前在Github中的只是阉割版是DataX。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-09-01T03:25:15.000Z">
-<meta property="article:modified_time" content="2025-09-01T09:33:56.068Z">
+<meta property="og:image" content="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250901124943.png">
+<meta property="og:image" content="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250901125237.png">
+<meta property="og:image" content="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250901132528.png">
+<meta property="og:image" content="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250901172250.png">
+<meta property="article:published_time" content="2025-09-01T04:46:33.000Z">
+<meta property="article:modified_time" content="2025-09-01T09:48:07.824Z">
 <meta property="article:author" content="Echo Yu">
-<meta property="article:tag" content="ML">
+<meta property="article:tag" content="大数据">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250901124943.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>DataX整体架构 - YUTING</title>
+  <title>DataX源码解析-01整体架构 - YUTING</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +219,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="DataX整体架构"></span>
+            <span id="subtitle" data-typed-text="DataX源码解析-01整体架构"></span>
           
         </div>
 
@@ -230,8 +235,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-09-01 11:25" pubdate>
-          2025年9月1日 上午
+        <time datetime="2025-09-01 12:46" pubdate>
+          2025年9月1日 下午
         </time>
       </span>
     
@@ -242,7 +247,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          11k 字
         
       </span>
     
@@ -253,7 +258,7 @@
         
         
         
-          1 分钟
+          91 分钟
         
       </span>
     
@@ -290,11 +295,143 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">DataX整体架构</h1>
+            <h1 style="display: none">DataX源码解析-01整体架构</h1>
             
             <div class="markdown-body">
               
-              <div id="readmore-container"></div>
+              <div id="readmore-container"><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>近期在工作中需要用到DataX去作为公司内部离线数据同步引擎，特花了一些时间研究了DataX的整体架构和设计思想，从中吸收了很多优秀的设计思路，作为一款纯Java实现的数据同步工具，相对于市面上已存在的基于大数据框架为背景的数据同步工具有着易部署、易扩展的优点，但不足的地方是alibaba只是开源了DataX单机模式代码，并未开源分布式部分代码，目前在Github中的只是阉割版是DataX。</p>
+<p> DataX 是一个异构数据源离线同步工具，致力于实现包括关系型数据库(MySQL、Oracle等)、HDFS、Hive、ODPS、HBase、FTP等各种异构数据源之间稳定高效的数据同步功能。</p>
+<p><img src="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250901124943.png" srcset="/img/loading.gif" lazyload alt="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250901124943.png"></p>
+<p>DataX本身作为离线数据同步框架，采用Framework + plugin架构构建。将数据源读取和写入抽象成为Reader&#x2F;Writer插件，纳入到整个同步框架中。</p>
+<ul>
+<li>Reader：Reader为数据采集模块，负责采集数据源的数据，将数据发送给Framework。</li>
+<li>Writer： Writer为数据写入模块，负责不断向Framework取数据，并将数据写入到目的端。</li>
+<li>Framework：Framework用于连接reader和writer，作为两者的数据传输通道，并处理缓冲，流控，并发，数据转换等核心技术问题。</li>
+</ul>
+<h3 id="DataX核心架构概览"><a href="#DataX核心架构概览" class="headerlink" title="DataX核心架构概览"></a>DataX核心架构概览</h3><p><img src="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250901125237.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="核心模块介绍："><a href="#核心模块介绍：" class="headerlink" title="核心模块介绍："></a>核心模块介绍：</h4><ol>
+<li>DataX完成单个数据同步的作业，我们称之为Job，<strong>DataX接受到一个Job之后，将启动一个进程来完成整个作业同步过程</strong>。DataX Job模块是单个作业的中枢管理节点，承担了数据清理、子任务切分(将单一作业计算转化为多个子Task)、TaskGroup管理等功能。</li>
+<li>DataXJob启动后，**会根据不同的源端切分策略，将Job切分成多个小的Task(子任务)**，以便于并发执行。Task便是DataX作业的最小单元，每一个Task都会负责一部分数据的同步工作。</li>
+<li>切分多个Task之后，DataX Job会调用Scheduler模块，根据配置的并发数据量，将拆分成的Task重新组合，组装成TaskGroup(任务组)。每一个TaskGroup负责以一定的并发运行完毕分配好的所有Task，默认单个任务组的并发数量为5。</li>
+<li>每一个Task都由TaskGroup负责启动，Task启动后，会固定启动Reader—&gt;Channel—&gt;Writer的线程来完成任务同步工作。</li>
+<li>DataX作业运行起来之后， Job监控并等待多个TaskGroup模块任务完成，等待所有TaskGroup任务完成后Job成功退出。否则，异常退出，进程退出值非0</li>
+</ol>
+<h4 id="DataX运行流程简单举例"><a href="#DataX运行流程简单举例" class="headerlink" title="DataX运行流程简单举例"></a>DataX运行流程简单举例</h4><p>举例来说，用户提交了一个<code>DataX</code>作业，并且配置了<code>20</code>个并发，目的是将一个<code>100</code>张分表的<code>mysql</code>数据同步到<code>doris</code>里面。</p>
+<p>DataX执行的思路为：</p>
+<ul>
+<li>① DataXJob根据表的数量切分成了100个Task。</li>
+<li>② DataX 默认给每个 TaskGroup分配 5 个 Channel，根据20个并发，DataX计算共需要分配20&#x2F;5&#x3D;4个TaskGroup（默认单个任务组的并发数量为5）。</li>
+<li>③ 根据 DataX 的公平分配策略，4个TaskGroup平分切分好100个Task，每一个TaskGroup共计运行100&#x2F;4&#x3D;25个Task(负责以5个并发)。</li>
+</ul>
+<p>由于一个 Channel 对应一个线程执行，因此 DataX 的线程模型可以用如下图表示：</p>
+<p><img src="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250901132528.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="DataX源码解析"><a href="#DataX源码解析" class="headerlink" title="DataX源码解析"></a>DataX源码解析</h3><h4 id="程序入口"><a href="#程序入口" class="headerlink" title="程序入口"></a>程序入口</h4><p>从官网得知，要启动一个简单的数据任务，要经历以下二步：</p>
+<ol>
+<li><p>配置任务json</p>
+</li>
+<li><p>使用DataX自带的Python脚本启动任务</p>
+<p><code>python datax.py job.json</code></p>
+</li>
+</ol>
+<p>在扒了datax.py的源码之后，发现使用python去进行启动的作用是快速构建了DataX的启动命令，尤其是补充了一些有用的jvm参数，实际上最后python拼接出来的命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">java -server $&#123;jvm&#125; %s -classpath %s  $&#123;params&#125; com.alibaba.datax.core.Engine -mode $&#123;mode&#125; -jobid $&#123;jobid&#125; -job $&#123;job&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>我们根据这条命令就会发现入口的主类：<code>com.alibaba.datax.core.Engine</code></p>
+<h4 id="主程序执行流程"><a href="#主程序执行流程" class="headerlink" title="主程序执行流程"></a>主程序执行流程</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs awk">public static void main(String[] args) throws Exception &#123;<br>	int exitCode = <span class="hljs-number">0</span>;<br>	try &#123;<br>		Engine.entry(args);<br>	&#125; catch (Throwable e) &#123;<br>		exitCode = <span class="hljs-number">1</span>;<br>		LOG.error(<span class="hljs-string">&quot;\n\n经DataX智能分析,该任务最可能的错误原因是:\n&quot;</span> + ExceptionTracker.trace(e));<br><br>		<span class="hljs-keyword">if</span> (e instanceof DataXException) &#123;<br>			DataXException tempException = (DataXException) e;<br>			ErrorCode errorCode = tempException.getErrorCode();<br>			<span class="hljs-keyword">if</span> (errorCode instanceof FrameworkErrorCode) &#123;<br>				FrameworkErrorCode tempErrorCode = (FrameworkErrorCode) errorCode;<br>				exitCode = tempErrorCode.toExitValue();<br>			&#125;<br>		&#125;<br><br>		System.<span class="hljs-keyword">exit</span>(exitCode);<br>	&#125;<br>	System.<span class="hljs-keyword">exit</span>(exitCode);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>从上面代码，一切的一切都是从<code>Engine.entry(args)</code>这个方法开始，接下来分析一下这个方法究竟做了哪些工作：</p>
+<p>1.解析命令行参数：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> entry(<span class="hljs-keyword">final</span> String[] args) <span class="hljs-keyword">throws</span> Throwable &#123;<br>	<span class="hljs-comment">// 解析命令行参数</span><br>	<span class="hljs-keyword">Options</span> <span class="hljs-keyword">options</span> = <span class="hljs-keyword">new</span> <span class="hljs-keyword">Options</span>();<br>	<span class="hljs-keyword">options</span>.addOption(<span class="hljs-string">&quot;job&quot;</span>, <span class="hljs-keyword">true</span>, <span class="hljs-string">&quot;Job config.&quot;</span>);<br>	<span class="hljs-keyword">options</span>.addOption(<span class="hljs-string">&quot;jobid&quot;</span>, <span class="hljs-keyword">true</span>, <span class="hljs-string">&quot;Job unique id.&quot;</span>);<br>	<span class="hljs-keyword">options</span>.addOption(<span class="hljs-string">&quot;mode&quot;</span>, <span class="hljs-keyword">true</span>, <span class="hljs-string">&quot;Job runtime mode.&quot;</span>);<br><br>	BasicParser parser = <span class="hljs-keyword">new</span> BasicParser();<br>	CommandLine cl = parser.parse(<span class="hljs-keyword">options</span>, args);<br><br>	<span class="hljs-comment">//获取job json路径</span><br>	String jobPath = cl.getOptionValue(<span class="hljs-string">&quot;job&quot;</span>);<br><br>	<span class="hljs-comment">// 如果用户没有明确指定jobid, 则 datax.py 会指定 jobid 默认值为-1</span><br>	String jobIdString = cl.getOptionValue(<span class="hljs-string">&quot;jobid&quot;</span>);<br>	<span class="hljs-comment">// 获取执行方式 阉割版默认standalone</span><br>	RUNTIME_MODE = cl.getOptionValue(<span class="hljs-string">&quot;mode&quot;</span>);<br>	Configuration configuration = ConfigParser.parse(jobPath);<br>	<span class="hljs-comment">// 绑定i18n信息</span><br>	MessageSource.init(configuration);<br>	MessageSource.reloadResourceBundle(Configuration.<span class="hljs-keyword">class</span>);<br></code></pre></td></tr></table></figure>
+
+<p>‘job’:获取job json路径；</p>
+<p>“jobid”:当前job的id，如果用户未显式指定，那么将会被置为-1；</p>
+<p>“mode”:当前job的运行模式，当前DataX开源版本只支持Standalone模式</p>
+<p>2.解析配置，<code>ConfigParser.parse(jobPath)</code>，往配置中加入系统默认项，用户只提供<code>job</code>部分，补上其余<code>common</code> <code>core</code> <code>entry</code> <code>job</code> <code>plugin</code>配置项</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><code class="hljs xml">&#123;<br>    &quot;common&quot;: &#123;<br>        &quot;column&quot;: &#123;<br>            &quot;dateFormat&quot;: &quot;yyyy-MM-dd&quot;,<br>            &quot;datetimeFormat&quot;: &quot;yyyy-MM-dd HH:mm:ss&quot;,<br>            &quot;encoding&quot;: &quot;utf-8&quot;,<br>            &quot;extraFormats&quot;: [<br>                &quot;yyyyMMdd&quot;<br>            ],<br>            &quot;timeFormat&quot;: &quot;HH:mm:ss&quot;,<br>            &quot;timeZone&quot;: &quot;GMT+8&quot;<br>        &#125;<br>    &#125;,<br>    &quot;core&quot;: &#123;<br>        &quot;container&quot;: &#123;<br>            &quot;job&quot;: &#123;<br>                &quot;id&quot;: -1,<br>                &quot;reportInterval&quot;: 10000<br>            &#125;,<br>            &quot;taskGroup&quot;: &#123;<br>                &quot;channel&quot;: 5<br>            &#125;,<br>            &quot;trace&quot;: &#123;<br>                &quot;enable&quot;: &quot;false&quot;<br>            &#125;<br>        &#125;,<br>        &quot;dataXServer&quot;: &#123;<br>            &quot;address&quot;: &quot;http://localhost:7001/api&quot;,<br>            &quot;reportDataxLog&quot;: false,<br>            &quot;reportPerfLog&quot;: false,<br>            &quot;timeout&quot;: 10000<br>        &#125;,<br>        &quot;statistics&quot;: &#123;<br>            &quot;collector&quot;: &#123;<br>                &quot;plugin&quot;: &#123;<br>                    &quot;maxDirtyNumber&quot;: 10,<br>                    &quot;taskClass&quot;: &quot;com.alibaba.datax.core.statistics.plugin.task.StdoutPluginCollector&quot;<br>                &#125;<br>            &#125;<br>        &#125;,<br>        &quot;transport&quot;: &#123;<br>            &quot;channel&quot;: &#123;<br>                &quot;byteCapacity&quot;: 67108864,<br>                &quot;capacity&quot;: 512,<br>                &quot;class&quot;: &quot;com.alibaba.datax.core.transport.channel.memory.MemoryChannel&quot;,<br>                &quot;flowControlInterval&quot;: 20,<br>                &quot;speed&quot;: &#123;<br>                    &quot;byte&quot;: -1,<br>                    &quot;record&quot;: -1<br>                &#125;<br>            &#125;,<br>            &quot;exchanger&quot;: &#123;<br>                &quot;bufferSize&quot;: 32,<br>                &quot;class&quot;: &quot;com.alibaba.datax.core.plugin.BufferedRecordExchanger&quot;<br>            &#125;<br>        &#125;<br>    &#125;,<br>    &quot;entry&quot;: &#123;<br>        &quot;jvm&quot;: &quot;-Xms1G -Xmx1G&quot;<br>    &#125;,<br>    &quot;job&quot;: &#123;<br>        &quot;content&quot;: [<br>            &#123;<br>                &quot;reader&quot;: &#123;<br>                    &quot;name&quot;: &quot;streamreader&quot;,<br>                    &quot;parameter&quot;: &#123;<br>                        &quot;column&quot;: [<br>                            &#123;<br>                                &quot;type&quot;: &quot;long&quot;,<br>                                &quot;value&quot;: &quot;10&quot;<br>                            &#125;,<br>                            &#123;<br>                                &quot;type&quot;: &quot;string&quot;,<br>                                &quot;value&quot;: &quot;hello，你好，世界-DataX&quot;<br>                            &#125;<br>                        ],<br>                        &quot;sliceRecordCount&quot;: 10<br>                    &#125;<br>                &#125;,<br>                &quot;writer&quot;: &#123;<br>                    &quot;name&quot;: &quot;streamwriter&quot;,<br>                    &quot;parameter&quot;: &#123;<br>                        &quot;encoding&quot;: &quot;UTF-8&quot;,<br>                        &quot;print&quot;: true<br>                    &#125;<br>                &#125;<br>            &#125;<br>        ],<br>        &quot;setting&quot;: &#123;<br>            &quot;speed&quot;: &#123;<br>                &quot;channel&quot;: 5<br>            &#125;<br>        &#125;<br>    &#125;,<br>    &quot;plugin&quot;: &#123;<br>        &quot;reader&quot;: &#123;<br>            &quot;streamreader&quot;: &#123;<br>                &quot;class&quot;: &quot;com.alibaba.datax.plugin.reader.streamreader.StreamReader&quot;,<br>                &quot;description&quot;: &#123;<br>                    &quot;mechanism&quot;: &quot;use datax framework to transport data from stream.&quot;,<br>                    &quot;useScene&quot;: &quot;only for developer test.&quot;,<br>                    &quot;warn&quot;: &quot;Never use it in your real job.&quot;<br>                &#125;,<br>                &quot;developer&quot;: &quot;alibaba&quot;,<br>                &quot;name&quot;: &quot;streamreader&quot;,<br>                &quot;path&quot;: &quot;/home/tyrantlucifer/IdeaProjects/DataX/target/datax/datax/plugin/reader/streamreader&quot;<br>            &#125;<br>        &#125;,<br>        &quot;writer&quot;: &#123;<br>            &quot;streamwriter&quot;: &#123;<br>                &quot;class&quot;: &quot;com.alibaba.datax.plugin.writer.streamwriter.StreamWriter&quot;,<br>                &quot;description&quot;: &#123;<br>                    &quot;mechanism&quot;: &quot;use datax framework to transport data to stream.&quot;,<br>                    &quot;useScene&quot;: &quot;only for developer test.&quot;,<br>                    &quot;warn&quot;: &quot;Never use it in your real job.&quot;<br>                &#125;,<br>                &quot;developer&quot;: &quot;alibaba&quot;,<br>                &quot;name&quot;: &quot;streamwriter&quot;,<br>                &quot;path&quot;: &quot;/home/tyrantlucifer/IdeaProjects/DataX/target/datax/datax/plugin/writer/streamwriter&quot;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>3.打印当前jvm虚拟机信息</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-comment">//打印vmInfo</span><br>VMInfo vmInfo <span class="hljs-punctuation">=</span> VMInfo.getVmInfo<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">;</span><br>if <span class="hljs-punctuation">(</span>vmInfo !<span class="hljs-punctuation">=</span> <span class="hljs-literal">null</span><span class="hljs-punctuation">)</span> &#123; <br>  <span class="hljs-built_in">LOG</span>.info<span class="hljs-punctuation">(</span>vmInfo.toString<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">;</span><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>4.打印当前配置</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">LOG</span>.<span class="hljs-keyword">info</span>(&quot;\n&quot; + Engine.filterJobConfiguration(<span class="hljs-keyword">configuration</span>) + &quot;\n&quot;);<br><br><span class="hljs-keyword">LOG</span>.<span class="hljs-keyword">debug</span>(<span class="hljs-keyword">configuration</span>.toJSON());<br><br></code></pre></td></tr></table></figure>
+
+<p>5.配置校验</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ConfigurationValidate</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">doValidate</span>(<span class="hljs-params"><span class="hljs-title class_">Configuration</span> allConfig</span>) &#123;<br>        <span class="hljs-title class_">Validate</span>.<span class="hljs-title function_">isTrue</span>(allConfig!=<span class="hljs-literal">null</span>, <span class="hljs-string">&quot;&quot;</span>);<br><br>        <span class="hljs-title function_">coreValidate</span>(allConfig);<br><br>        <span class="hljs-title function_">pluginValidate</span>(allConfig);<br><br>        <span class="hljs-title function_">jobValidate</span>(allConfig);<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">coreValidate</span>(<span class="hljs-params"><span class="hljs-title class_">Configuration</span> allconfig</span>) &#123;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">pluginValidate</span>(<span class="hljs-params"><span class="hljs-title class_">Configuration</span> allConfig</span>) &#123;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">jobValidate</span>(<span class="hljs-params"><span class="hljs-title class_">Configuration</span> allConfig</span>) &#123;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>其实毫无校验逻辑，比较敷衍。</p>
+<p>6.启动任务</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abnf">Engine engine <span class="hljs-operator">=</span> new Engine()<span class="hljs-comment">;</span><br>engine.start(configuration)<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="任务执行流程"><a href="#任务执行流程" class="headerlink" title="任务执行流程"></a>任务执行流程</h4><p>此时程序进入到了Engine.start(configuration)的执行流程，在这一步中经历以下环节：</p>
+<p>1.绑定Column转换格式，这一步会在配置中指定以下信息：</p>
+<p>字符串转换格式</p>
+<p>日期转换格式</p>
+<p>字节编码格式</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-built_in">public</span> <span class="hljs-type">void</span> <span class="hljs-keyword">start</span>(<span class="hljs-keyword">Configuration</span> allConf) &#123;<br><br>	// 绑定<span class="hljs-keyword">column</span>转换信息<br>	ColumnCast.bind(allConf);<br></code></pre></td></tr></table></figure>
+
+<p>2.初始化PluginLoader</p>
+<p>PluginLoader可以理解是所有数据同步插件的统一加载器，在这一步中实际上是将当前的任务配置赋值给了PluginLoader一份：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 初始化PluginLoader，可以获取各种插件配置</span><br><span class="hljs-comment"> */</span><br>LoadUtil<span class="hljs-selector-class">.bind</span>(allConf);<br></code></pre></td></tr></table></figure>
+
+<p>3.实例化任务容器</p>
+<p>判断配置中<code>core.container.model</code>是不是taskGroup。</p>
+<p>如果是taskGroup实例化<code>TaskGroupContainer</code>，如果不是，实例化JobContainer。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">boolean</span> <span class="hljs-variable">isJob</span> <span class="hljs-operator">=</span> !(<span class="hljs-string">&quot;taskGroup&quot;</span>.equalsIgnoreCase(allConf<br>		.getString(CoreConstant.DATAX_CORE_CONTAINER_MODEL)));<br><span class="hljs-comment">//JobContainer会在schedule后再行进行设置和调整值</span><br><span class="hljs-type">int</span> <span class="hljs-variable">channelNumber</span> <span class="hljs-operator">=</span><span class="hljs-number">0</span>;<br>AbstractContainer container;<br><span class="hljs-type">long</span> instanceId;<br><span class="hljs-type">int</span> <span class="hljs-variable">taskGroupId</span> <span class="hljs-operator">=</span> -<span class="hljs-number">1</span>;<br><span class="hljs-keyword">if</span> (isJob) &#123;<br>	allConf.set(CoreConstant.DATAX_CORE_CONTAINER_JOB_MODE, RUNTIME_MODE);<br>	container = <span class="hljs-keyword">new</span> <span class="hljs-title class_">JobContainer</span>(allConf);<br>	instanceId = allConf.getLong(<br>			CoreConstant.DATAX_CORE_CONTAINER_JOB_ID, <span class="hljs-number">0</span>);<br><br>&#125; <span class="hljs-keyword">else</span> &#123;<br>	container = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TaskGroupContainer</span>(allConf);<br>	instanceId = allConf.getLong(<br>			CoreConstant.DATAX_CORE_CONTAINER_JOB_ID);<br>	taskGroupId = allConf.getInt(<br>			CoreConstant.DATAX_CORE_CONTAINER_TASKGROUP_ID);<br>	channelNumber = allConf.getInt(<br>			CoreConstant.DATAX_CORE_CONTAINER_TASKGROUP_CHANNEL);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>4.初始化性能追踪器，使用单例模式，一个jvm进程中只存在一个PerfTrace</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//初始化PerfTrace</span><br><span class="hljs-type">PerfTrace</span> <span class="hljs-variable">perfTrace</span> <span class="hljs-operator">=</span> PerfTrace.getInstance(isJob, instanceId, taskGroupId, traceEnable);<br>perfTrace.setJobInfo(jobInfoConfig,perfReportEnable,channelNumber);<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 单实例</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> isJob</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> jobId</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> taskGroupId</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> PerfTrace <span class="hljs-title function_">getInstance</span><span class="hljs-params">(<span class="hljs-type">boolean</span> isJob, <span class="hljs-type">long</span> jobId, <span class="hljs-type">int</span> taskGroupId, <span class="hljs-type">boolean</span> enable)</span> &#123;<br><br>	<span class="hljs-keyword">if</span> (instance == <span class="hljs-literal">null</span>) &#123;<br>		<span class="hljs-keyword">synchronized</span> (lock) &#123;<br>			<span class="hljs-keyword">if</span> (instance == <span class="hljs-literal">null</span>) &#123;<br>				instance = <span class="hljs-keyword">new</span> <span class="hljs-title class_">PerfTrace</span>(isJob, jobId, taskGroupId, enable);<br>			&#125;<br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">return</span> instance;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+
+<p>5.启动第3步实例化好的任务容器</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-attribute">container</span><span class="hljs-selector-class">.start</span>();<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="任务容器执行流程"><a href="#任务容器执行流程" class="headerlink" title="任务容器执行流程"></a>任务容器执行流程</h4><p>任务容器这里是一个抽象类，实现类有JobContainer和TaskGroupContainer。</p>
+<p><img src="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250901172250.png" srcset="/img/loading.gif" lazyload></p>
+<p>任务容器被启动后，会执行任务生命周期的每一个阶段</p>
+<ol>
+<li><p>preHandle：用户可配置任务处理前的前置处理逻辑，这个前置处理逻辑处于writer或者reader中</p>
+</li>
+<li><p>init：任务初始化阶段，初始化reader和writer（使用自定义的classLoader进行类加载），调用reader和writer的init()方法</p>
+</li>
+<li><p>prepare：任务准备阶段，实际上调用reader和writer的prepare()方法</p>
+</li>
+<li><p>split：任务分片，调整channel数，其实也就是任务的并发数</p>
+<ul>
+<li>调整channel数量</li>
+</ul>
+<p>​     判断是否设置了字节限制<code>job.setting.speed.byte</code>，如果是，根据字节限制配置计算channel数量</p>
+<p>​     判断是否设置了条数限制<code>job.setting.speed.record</code>，如果是，根据条数限制配置计算channel数量</p>
+<p>​     取以上1 2步的最小值。</p>
+<p>​     如果1 2步都没有设置，取配置中的<code>job.setting.speed.channel</code>来确定channel数量</p>
+<ul>
+<li>根据channel数量切分configuration，包括readerConfig和writerConfig，切分逻辑在每个插件中具体实现的，在切分好配置之后会将配置覆盖进 <code>job.content</code>中</li>
+</ul>
+</li>
+<li><p>schedule：任务调度执行阶段，根据第四步中确定的并发数进行任务调度工作</p>
+<ul>
+<li><p>根据上面的split中算出的channel数，设置taskGroup的数量，默认一个taskGroup中运行5个channel，切分configuration，为每个taskGroup创建自己的configuration</p>
+</li>
+<li><p>开始对taskGroupConfigurations进行调度，底层使用线程池，通过taskGroup的数量来确定线程池的线程个数</p>
+</li>
+<li><p>启动线程，TaskGroupContainerRunner，每一个TaskGroupContainerRunner中包含了一个TaskGroupContainer，实际上执行任务核心逻辑的容器是TaskGroupContainer，TaskGroupContainer会为每个channel创建TaskExecutor，TaskExecutor是执行子任务的最小单位</p>
+</li>
+<li><p>while循环监控taskGroup运行状态，等待每个子任务完成和数据情况的上报，并收集</p>
+</li>
+</ul>
+</li>
+<li><p>post：任务执行结束后阶段</p>
+</li>
+<li><p>postHandler：任务结束后后置处理逻辑，这个后置处理逻辑处于writer或者reader中</p>
+</li>
+<li><p>invokeHooks：DataX预留的spi接口，用户可自定义spi插件来丰富整个同步任务的生命周期</p>
+</li>
+</ol>
+<p>Reference:</p>
+<p><a href="https://juejin.cn/post/6869755803570536461?from=search-suggest">https://juejin.cn/post/6869755803570536461?from=search-suggest</a></p>
+</div>
 				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
 				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
 				<script>
@@ -353,6 +490,13 @@
               <div class="post-metas my-3">
   
   
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">#大数据</a>
+      
+    </div>
+  
 </div>
 
 
@@ -361,7 +505,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>DataX整体架构</div>
+      <div>DataX源码解析-01整体架构</div>
       <div>http://yuting0907.github.io/posts/2025/09/fc450966.html</div>
     </div>
     <div class="license-meta">
@@ -404,18 +548,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/posts/2025/09/fc450966.html" title="DataX源码解析-01整体架构">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">DataX源码解析-01整体架构</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/posts/2025/06/0.html" title="">
-                        <span class="hidden-mobile"></span>
+                      <a href="/posts/2025/05/ce9e260e.html" title="基于OCR的身份证信息提取">
+                        <span class="hidden-mobile">基于OCR的身份证信息提取</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
