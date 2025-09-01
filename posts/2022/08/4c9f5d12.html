@@ -1,0 +1,920 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon_yt.png">
+  <link rel="icon" href="/img/favicon_yt.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Echo Yu">
+  <meta name="keywords" content="ML">
+  
+    <meta name="description" content="暂退法（Dropout）模型的泛化性越强，要求模型对其输入的微小变化越不敏感，也就是对噪声的适应能力越强。 那么关键是如何加入这种噪声，一种想法是无偏差（unbiased）的方式注入噪声。这样在固定住其他层时，每一层的期望值等于没有噪声时的值。我们把这种方法叫做暂退法。 暂退法其实就是在训练过程中丢弃（drop out）一些神经元。 在整个训练过程的每一次迭代中，标准暂退法包括在计算下一层之前将当">
+<meta property="og:type" content="article">
+<meta property="og:title" content="deep_learning_6.过拟合-暂退法(Dropout)">
+<meta property="og:url" content="http://yuting0907.github.io/posts/2022/08/4c9f5d12.html">
+<meta property="og:site_name" content="YUTING">
+<meta property="og:description" content="暂退法（Dropout）模型的泛化性越强，要求模型对其输入的微小变化越不敏感，也就是对噪声的适应能力越强。 那么关键是如何加入这种噪声，一种想法是无偏差（unbiased）的方式注入噪声。这样在固定住其他层时，每一层的期望值等于没有噪声时的值。我们把这种方法叫做暂退法。 暂退法其实就是在训练过程中丢弃（drop out）一些神经元。 在整个训练过程的每一次迭代中，标准暂退法包括在计算下一层之前将当">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-14T00:57:00.000Z">
+<meta property="article:modified_time" content="2025-09-01T04:21:04.352Z">
+<meta property="article:author" content="Echo Yu">
+<meta property="article:tag" content="Deep Learning">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>deep_learning_6.过拟合-暂退法(Dropout) - YUTING</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/reward.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yuting0907.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+	
+	
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong class="navbar-title">EchoYu&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books/">
+                <i class="iconfont icon-tags-fill"></i>
+                books
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="deep_learning_6.过拟合-暂退法(Dropout)"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Echo Yu
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-14 08:57" pubdate>
+          2022年8月14日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          34 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">deep_learning_6.过拟合-暂退法(Dropout)</h1>
+            
+            <div class="markdown-body">
+              
+              <div id="readmore-container"><h2 id="暂退法（Dropout）"><a href="#暂退法（Dropout）" class="headerlink" title="暂退法（Dropout）"></a>暂退法（Dropout）</h2><p>模型的泛化性越强，要求模型对其输入的微小变化越不敏感，也就是对噪声的适应能力越强。</p>
+<p>那么关键是如何加入这种噪声，一种想法是<strong>无偏差（unbiased）</strong>的方式注入噪声。这样在固定住其他层时，每一层的期望值等于没有噪声时的值。我们把这种方法叫做暂退法。</p>
+<p>暂退法其实就是在训练过程中丢弃（drop out）一些神经元。 在整个训练过程的每一次迭代中，标准暂退法包括在计算下一层之前将当前层中的一些节点置零。</p>
+<p>无偏差的加入噪音</p>
+<ul>
+<li><p>对X加入噪音得到X‘，我们希望</p>
+<p>$E[x’] &#x3D; x$</p>
+</li>
+<li><p>丢弃法对每个元素进行如下的扰动<br>$$<br>x_i’ &#x3D; \begin{cases} 0 \ , with\  probablity\  p  \<br>\frac {x_i}{1-p} \ , otherwise<br>\end{cases}<br>$$</p>
+</li>
+</ul>
+<p>$E[x_i’] &#x3D; p<em>0 + (1-p)</em> \frac {x_i’}{(1-p)} &#x3D; x_i’$ </p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>要实现单层的暂退法函数， 我们从均匀分布U[0,1]中抽取样本，样本数与这层神经网络的维度一致。 然后我们保留那些对应样本大于p的节点，把剩下的丢弃。</p>
+<p>在下面的代码中，我们实现 <code>dropout_layer</code> 函数， 该函数以<code>dropout</code>的概率丢弃张量输入<code>X</code>中的元素， 如上所述重新缩放剩余部分：将剩余部分除以<code>1.0-dropout</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">from</span> torch <span class="hljs-keyword">import</span> nn<br><span class="hljs-keyword">from</span> d2l <span class="hljs-keyword">import</span> torch <span class="hljs-keyword">as</span> d2l<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">dropout_layer</span>(<span class="hljs-params">X, dropout</span>):<br>    <span class="hljs-keyword">assert</span> <span class="hljs-number">0</span> &lt;= dropout &lt;= <span class="hljs-number">1</span><br>    <span class="hljs-comment"># 在本情况中，所有元素都被丢弃</span><br>    <span class="hljs-keyword">if</span> dropout == <span class="hljs-number">1</span>:<br>        <span class="hljs-keyword">return</span> torch.zeros_like(X)<br>    <span class="hljs-comment"># 在本情况中，所有元素都被保留</span><br>    <span class="hljs-keyword">if</span> dropout == <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span> X<br>    mask = (torch.rand(X.shape) &gt; dropout).<span class="hljs-built_in">float</span>()<br>    <span class="hljs-keyword">return</span> mask * X / (<span class="hljs-number">1.0</span> - dropout)<br></code></pre></td></tr></table></figure>
+
+<p>我们可以通过下面几个例子来测试<code>dropout_layer</code>函数。 我们将输入<code>X</code>通过暂退法操作，暂退概率分别为0、0.5和1。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">X = torch.arange(<span class="hljs-number">16</span>,dtype=torch.float32).reshape((<span class="hljs-number">2</span>,<span class="hljs-number">8</span>))<br><span class="hljs-built_in">print</span>(X)<br><span class="hljs-built_in">print</span>(drop_out_layer(X,<span class="hljs-number">0.</span>))<br><span class="hljs-built_in">print</span>(drop_out_layer(X,<span class="hljs-number">0.5</span>))<br><span class="hljs-built_in">print</span>(drop_out_layer(X,<span class="hljs-number">1.</span>))<br><span class="hljs-built_in">print</span>(torch.rand(X.shape) &gt; <span class="hljs-number">0.5</span>)<br><span class="hljs-built_in">print</span>((torch.rand(X.shape) &gt; <span class="hljs-number">0.5</span>).<span class="hljs-built_in">float</span>())<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs lua">tensor(<span class="hljs-string">[[ 0.,  1.,  2.,  3.,  4.,  5.,  6.,  7.],</span><br><span class="hljs-string">        [ 8.,  9., 10., 11., 12., 13., 14., 15.]]</span>)<br>tensor(<span class="hljs-string">[[ 0.,  1.,  2.,  3.,  4.,  5.,  6.,  7.],</span><br><span class="hljs-string">        [ 8.,  9., 10., 11., 12., 13., 14., 15.]]</span>)<br>tensor(<span class="hljs-string">[[ 0.,  0.,  4.,  0.,  8., 10.,  0.,  0.],</span><br><span class="hljs-string">        [ 0., 18., 20., 22.,  0., 26.,  0., 30.]]</span>)<br>tensor(<span class="hljs-string">[[0., 0., 0., 0., 0., 0., 0., 0.],</span><br><span class="hljs-string">        [0., 0., 0., 0., 0., 0., 0., 0.]]</span>)<br>tensor(<span class="hljs-string">[[ True, False,  True, False,  True, False, False,  True],</span><br><span class="hljs-string">        [False,  True, False,  True, False,  True, False, False]]</span>)<br>tensor(<span class="hljs-string">[[0., 0., 1., 1., 1., 0., 0., 0.],</span><br><span class="hljs-string">        [0., 0., 1., 0., 1., 0., 1., 0.]]</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python">num_inputs, num_outputs, num_hiddens1, num_hiddens2 = <span class="hljs-number">784</span>, <span class="hljs-number">10</span>, <span class="hljs-number">256</span>, <span class="hljs-number">256</span><br><br>dropout1, dropout2 = <span class="hljs-number">0.2</span>, <span class="hljs-number">0.5</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Net</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, num_inputs, num_outputs, num_hiddens1, num_hiddens2,</span><br><span class="hljs-params">                 is_training = <span class="hljs-literal">True</span></span>):<br>        <span class="hljs-built_in">super</span>(Net, <span class="hljs-variable language_">self</span>).__init__()<br>        <span class="hljs-variable language_">self</span>.num_inputs = num_inputs<br>        <span class="hljs-variable language_">self</span>.training = is_training<br>        <span class="hljs-variable language_">self</span>.lin1 = nn.Linear(num_inputs, num_hiddens1)<br>        <span class="hljs-variable language_">self</span>.lin2 = nn.Linear(num_hiddens1, num_hiddens2)<br>        <span class="hljs-variable language_">self</span>.lin3 = nn.Linear(num_hiddens2, num_outputs)<br>        <span class="hljs-variable language_">self</span>.relu = nn.ReLU()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, X</span>):<br>        H1 = <span class="hljs-variable language_">self</span>.relu(<span class="hljs-variable language_">self</span>.lin1(X.reshape((-<span class="hljs-number">1</span>, <span class="hljs-variable language_">self</span>.num_inputs))))<br>        <span class="hljs-comment"># 只有在训练模型时才使用dropout</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.training == <span class="hljs-literal">True</span>:<br>            <span class="hljs-comment"># 在第一个全连接层之后添加一个dropout层</span><br>            H1 = dropout_layer(H1, dropout1)<br>        H2 = <span class="hljs-variable language_">self</span>.relu(<span class="hljs-variable language_">self</span>.lin2(H1))<br>        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.training == <span class="hljs-literal">True</span>:<br>            <span class="hljs-comment"># 在第二个全连接层之后添加一个dropout层</span><br>            H2 = dropout_layer(H2, dropout2)<br>        out = <span class="hljs-variable language_">self</span>.lin3(H2)<br>        <span class="hljs-keyword">return</span> out<br><br><br>net = Net(num_inputs, num_outputs, num_hiddens1, num_hiddens2)<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">num_epochs, lr, batch_size = <span class="hljs-number">10</span>, <span class="hljs-number">0.5</span>, <span class="hljs-number">256</span><br>loss = nn.CrossEntropyLoss(reduction=<span class="hljs-string">&#x27;none&#x27;</span>)<br>train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)<br>trainer = torch.optim.SGD(net.parameters(), lr=lr)<br>d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, trainer)<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="简介代码实现"><a href="#简介代码实现" class="headerlink" title="简介代码实现"></a>简介代码实现</h2><p>对于深度学习框架的高级API，我们只需在每个全连接层之后添加一个<code>Dropout</code>层， 将暂退概率作为唯一的参数传递给它的构造函数。 在训练时，<code>Dropout</code>层将根据指定的暂退概率随机丢弃上一层的输出（相当于下一层的输入）。 在测试时，<code>Dropout</code>层仅传递数据。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">net</span> = nn.Sequential(nn.Flatten(),<br>        <span class="hljs-attribute">nn</span>.Linear(<span class="hljs-number">784</span>, <span class="hljs-number">256</span>),<br>        <span class="hljs-attribute">nn</span>.ReLU(),<br>        <span class="hljs-comment"># 在第一个全连接层之后添加一个dropout层</span><br>        <span class="hljs-attribute">nn</span>.Dropout(dropout1),<br>        <span class="hljs-attribute">nn</span>.Linear(<span class="hljs-number">256</span>, <span class="hljs-number">256</span>),<br>        <span class="hljs-attribute">nn</span>.ReLU(),<br>        <span class="hljs-comment"># 在第二个全连接层之后添加一个dropout层</span><br>        <span class="hljs-attribute">nn</span>.Dropout(dropout2),<br>        <span class="hljs-attribute">nn</span>.Linear(<span class="hljs-number">256</span>, <span class="hljs-number">10</span>))<br><br><span class="hljs-attribute">def</span> init_weights(m):<br>    <span class="hljs-attribute">if</span> type(m) == nn.Linear:<br>        <span class="hljs-attribute">nn</span>.init.normal_(m.weight, std=<span class="hljs-number">0</span>.<span class="hljs-number">01</span>)<br><br><span class="hljs-attribute">net</span>.apply(init_weights);<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">trainer = torch.optim.SGD(net.parameters(), lr=lr)<br>d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, trainer)<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><p>1.丢弃法的丢弃依据是什么？如果丢弃不合理对输出的结果影响会很大？</p>
+<p>所谓丢弃不合理，其实就是过大或过小，过小就还是过拟合，太大那么就是欠拟合，慢慢调超参数就好了</p>
+<p>2.dropout随机置0对求梯度和反向传播的影响是什么？</p>
+<p>dropout掉的对应的梯度不会更新</p>
+<p>3.丢弃法是在训练中把神经元丢弃后训练，在预测时网络中的神经元没有丢弃吗？</p>
+<p>是的，dropout其实是正则项，正则项唯一的作用是你在训练模型的时候，让你的模型复杂度变低一点，当你在做推理的时候你不会更新你的模型，这就是为什么在预测的时候不用dropout。</p>
+<p>4.丢弃法是每次迭代一次，随机丢弃一次吗？</p>
+<p>每一个层在调用前项运算的时候，随机丢一次，假如你3个隐藏层就是套3个dropout</p>
+<p>5.dropout会不会让训练的loss曲线方差变大，不够平滑？</p>
+<p>李沐说不care这件事情，没有具体去看过</p>
+<p>6.在解决过拟合问题上，dropout和regularization的主要区别是什么？</p>
+<p>可以认为dropout就是正则regularization</p>
+<p>7.dropout层丢弃的是前一层还是后一层？</p>
+<p>丢弃前一层的输出，后一层的输入</p>
+<p>8.dropout和权重衰减都属于正则，为何dropout效果更好更常用呢？</p>
+<p>dropout其实没有权重衰减常用，dropout是在全连接层使用，权重衰减对于卷积层啊之后的transformer都可以用。至于为什么效果更好，其实是dropout更好调参一点，权重衰减的weight没那么好调。</p>
+<p>9.在同样的学习率lr上，dropout的介入会不会造成参数手链更慢，需要比没有dropout的情况下适当调大lr？</p>
+<p>lr主要是对期望和方差敏感一点，dropout不改变期望，没有说dropout的情况下一定要调大lr，但你也可以试试。但会收敛变慢是可能的，等于是说你每次你更小的数量在更新梯度</p>
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
+              
+            </div>
+            <hr/>
+            
+            <!--  -->
+            <div class="reward-container">
+            	
+            		<button id="rewardBtn" class="reward-btn">
+            			❤ 打赏	
+            		</button>
+            		<p class="tea">觉得不错的话，支持一根棒棒糖吧 ୧(๑•̀⌄•́๑)૭</p>
+            		<div id="rewardImgContainer" class="reward-img-container">
+                     	<div class="singleImgContainer">
+                        	<img id="wechatImg" class="reward-img" src="/img/wechatpay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="wechatPay">wechat pay</p>
+                      </div>
+                      <div class="singleImgContainer">
+                           	<img id="alipayImg" class="reward-img" src="/img/alipay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="aliPay">alipay</p>
+                      </div>
+            		</div>
+            	
+            </div>
+            
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Deep-Learning/" class="category-chain-item">Deep Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Deep-Learning/">#Deep Learning</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>deep_learning_6.过拟合-暂退法(Dropout)</div>
+      <div>http://yuting0907.github.io/posts/2022/08/4c9f5d12.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Echo Yu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月14日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/2022/08/4c9f5d12.html" title="deep_learning_6.过拟合-暂退法(Dropout)">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">deep_learning_6.过拟合-暂退法(Dropout)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/2022/08/7c9e9a40.html" title="Mac电脑重新启动后hexo d需要输入密码">
+                        <span class="hidden-mobile">Mac电脑重新启动后hexo d需要输入密码</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.3.2/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.3.2/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://waline-byfjmhw0k-yuting0907s-projects.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"locale":{"placeholder":"哈，快找个位置随便坐~"}},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/reward.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
+
+<!--  -->
+<script type="text/javascript" src="/js/love.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>  
+
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="/js/FunnyTitle.js"></script>

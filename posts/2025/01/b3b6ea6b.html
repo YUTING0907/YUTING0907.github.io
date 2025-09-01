@@ -1,0 +1,1075 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon_yt.png">
+  <link rel="icon" href="/img/favicon_yt.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Echo Yu">
+  <meta name="keywords" content="ML">
+  
+    <meta name="description" content="以问题为导向来检验自己学习的效果。以下是一些大模型必知必会的问题，快来检查一下掌握程度吧～ 数据预处理             1.什么是 BPE？它如何工作？              Byte Pair Encoding (BPE),又称 digram coding 双字母组合编码，是一种数据压缩 算法，用来在固定大小的词表中实现可变⻓度的子词。该算法简单有效，因而目前它是最流行的方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大模型必知必会的问题及答案">
+<meta property="og:url" content="http://yuting0907.github.io/posts/2025/01/b3b6ea6b.html">
+<meta property="og:site_name" content="YUTING">
+<meta property="og:description" content="以问题为导向来检验自己学习的效果。以下是一些大模型必知必会的问题，快来检查一下掌握程度吧～ 数据预处理             1.什么是 BPE？它如何工作？              Byte Pair Encoding (BPE),又称 digram coding 双字母组合编码，是一种数据压缩 算法，用来在固定大小的词表中实现可变⻓度的子词。该算法简单有效，因而目前它是最流行的方法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250116211822.png">
+<meta property="og:image" content="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250116213932.png">
+<meta property="article:published_time" content="2025-01-16T07:46:54.000Z">
+<meta property="article:modified_time" content="2025-09-01T04:21:04.351Z">
+<meta property="article:author" content="Echo Yu">
+<meta property="article:tag" content="NLP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250116211822.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>大模型必知必会的问题及答案 - YUTING</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/reward.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yuting0907.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+	
+	
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong class="navbar-title">EchoYu&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books/">
+                <i class="iconfont icon-tags-fill"></i>
+                books
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="大模型必知必会的问题及答案"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Echo Yu
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-01-16 15:46" pubdate>
+          2025年1月16日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          72 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">大模型必知必会的问题及答案</h1>
+            
+            <div class="markdown-body">
+              
+              <div id="readmore-container"><p>以问题为导向来检验自己学习的效果。以下是一些大模型必知必会的问题，快来检查一下掌握程度吧～</p>
+<h3 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h3><div class="note note-primary">
+            <p>1.什么是 BPE？它如何工作？</p>
+          </div>
+
+
+<p>Byte Pair Encoding (BPE),又称 digram coding 双字母组合编码，是一种<strong>数据压缩</strong> 算法，用来在固定大小的词表中实现可变⻓度的子词。该算法简单有效，因而目前它是最流行的方法。</p>
+<div class="note note-primary">
+            <p>2.BPE工作原理？</p>
+          </div>
+
+<p>合并：找到数据集中最频繁的字符对，将其合并为一个新单元。<br>重复：迭代上述过程，直到达到预设的合并次数。<br>输出：生成固定大小的子词词表，可以覆盖高频词和罕见词。</p>
+<p>过程如下：</p>
+<p>1.将每个词拆分为字符序列，并统计每个字符出现的频次，</p>
+<p>2.将最高频的两个字符组合在一起，形成新的’组合字符’(频次为两个字符同时出现的频次a)，同时原来的两个字符频次减去a.</p>
+<p>3.重复第二个步骤直到，直到词表中单词数达到设定量 或下一个最高频数为 1 ，如果已经打到设定量，其余的词汇直接丢弃。</p>
+<p><img src="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250116211822.png" srcset="/img/loading.gif" lazyload></p>
+<div class="note note-primary">
+            <p>3.BPE 优缺点？</p>
+          </div>
+
+<p>优点</p>
+<ul>
+<li><p>有效地平衡词典大小和将预料编码所需要的token数量</p>
+</li>
+<li><p>不同语种通用</p>
+</li>
+<li><p>对于未知单词也适用</p>
+</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>就是会产生一些不完整的单词（subword）</li>
+<li>适合欧美语言拉丁语系，不适合中文汉字，中文的处理通常只有分词和分字。</li>
+</ul>
+<div class="note note-primary">
+            <p>4.什么是 Tokenization？NLP 中常见的 Tokenization 方法有哪些？</p>
+          </div>
+
+<p>在解释Tokenization之前，先说说什么是Token。Token，也称为标记或词元，是语言处理中的一个基本单元。它通常代表一个单词、标点符号或一个特定的符号序列。Token是文本的基本组成单元，用于表示文本中的有意义的语言元素。例如，“Hello, world!”这个句子可以被划分为多个Token：“Hello”、“,”、“world”和“!”。</p>
+<p>Tokenization是将连续的文本分割成一个个独立的Token的过程。它是NLP中的一项基础任务，通常在文本预处理阶段完成。Tokenization的目的是将文本分解成更小的、易于处理和分析的单元，以便于后续的词法分析、句法分析等任务。</p>
+<p> <strong>Tokenization 常用方法:</strong></p>
+<p><img src="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20250116213932.png" srcset="/img/loading.gif" lazyload></p>
+<p>词粒度：就跟人类平时理解文本原理一样，常常用一些工具来完成，例如英文的NLTK、SpaCy，中文的jieba、LTP等。</p>
+<p>字粒度：英文就是以字母为单位（对于大小写不敏感的任务，甚至可以先转小写再切分），中文就是以字为单位。</p>
+<p>Subword粒度：</p>
+<ul>
+<li>BPE</li>
+<li>WordPiece</li>
+<li>ULM</li>
+</ul>
+<p>ULM算法：</p>
+<p>它不是从一组基本符号开始，而是从一个庞大的词汇量开始，例如所有预处理的单词和最常见的子字符串，并逐步减少。</p>
+<ol>
+<li>准备足够大的语料库</li>
+<li>定义好所需要的词表大小</li>
+<li>给定词序列优化下一个词出现的概率</li>
+<li>计算每个subword的损失</li>
+<li>基于损失对subword排序并保留前X%。为了避免OOV，保留字符级的单元</li>
+<li>重复第3至第5步直到达到第2步设定的subword词表大小或第5步的结果不再变化。</li>
+</ol>
+<p>WordPiece算法：</p>
+<p>WordPiece最初用于解决日语和韩语语音问题。它在许多方面类似于BPE，只是它基于可能性而不是下一个最高频率对来形成一个新的子词。算法步骤如下：</p>
+<ol>
+<li>用文本中的所有字符初始化词单元库。</li>
+<li>使用第一步中的库在训练数据上构建一个语言模型</li>
+<li>通过结合当前词库中的两个单元来生成一个新的词单元，从而使词单元库增加一个</li>
+<li>在所有可能的新词单元中选择一个，当添加到模型中时，它能最大程度地提高训练数据的可能性</li>
+<li>重复第二步，直到达到预定义的词单元限制或可能性增加低于某个阈值。</li>
+<li>重复第5步直到达到第2步设定的subword词表大小或概率增量低于某一阈值</li>
+</ol>
+<h5 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h5><p>简单几句话总结下Subword的三种算法：</p>
+<ul>
+<li>BPE：只需在每次迭代中使用<strong>「出现频率」</strong>来确定最佳匹配，直到达到预定义的词汇表大小；</li>
+<li>Unigram：使用概率模型训练LM，移除提高整体可能性最小的token；然后迭代进行，直到达到预定义的词汇表大小；</li>
+<li>WordPiece：结合BPE与Unigram，使用<strong>「出现频率」</strong>来确定潜在匹配，但根据合并token的概率做出最终决定.</li>
+</ul>
+<p>SentencePiece 是一个由谷歌开发的开源文本处理工具，它主要用于神经网络文本生成系统中的无监督文本分词（tokenization）和合词（detokenization）。这个工具的核心思想是将文本分词问题视为一个无监督学习问题，它不依赖于语言特定的预处理或后处理。</p>
+<div class="note note-primary">
+            <p>5.Tokenization 的选择对模型训练有什么影响？</p>
+          </div>
+
+<ul>
+<li>词表大小</li>
+</ul>
+<p>大词表（如 Word-based Tokenization）：<br>优点：训练更快，序列长度较短。<br>缺点：内存占用大，OOV 问题严重。<br>小词表（如 Subword 或 Character-based Tokenization）：<br>优点：内存占用小，泛化性更好。<br>缺点：序列长度增加，计算成本提高。</p>
+<ul>
+<li>序列长度</li>
+</ul>
+<p>较短的序列（如 Word-based）：<br>计算效率更高。<br>较长的序列（如 Character-based）：<br>提高对细粒度信息的处理能力，但增加了计算开销。</p>
+<ul>
+<li>OOV 问题</li>
+</ul>
+<p>Word-based Tokenization：<br>对未登录词无法处理，会丢失信息。<br>Subword 或 Character-based Tokenization：<br>通过拆分单词解决 OOV 问题，提高泛化能力。</p>
+<ul>
+<li>训练效率</li>
+</ul>
+<p>复杂的 Tokenization（如 BPE 或 WordPiece）：<br>需要较大的预处理时间，但训练更加稳定。<br>简单的 Tokenization（如 Character-based）：<br>初始处理快，但序列长度显著增加，导致训练时间变长。</p>
+<ul>
+<li>模型泛化能力</li>
+</ul>
+<p>Subword-based Tokenization 通常在泛化能力和训练效率之间实现了较好的平衡。<br>Character-based Tokenization 能够捕获更细粒度的信息，但在小数据集下可能不足以学习高层语义</p>
+<h3 id="模型细节"><a href="#模型细节" class="headerlink" title="模型细节"></a>模型细节</h3><div class="note note-primary">
+            <p>1.多头注意力的时间复杂度？空间复杂度？</p>
+          </div>
+
+<p><strong>复杂度</strong></p>
+<p>对于一个由n个单词组成的输入序列，假设有d个维度的特征，那么查询矩阵、键矩阵和值矩阵的维度都将是 n × d。</p>
+<p>阅读 Transformer 相关的论文，在讨论 self-attention 的时间和空间复杂度时，都会提到是<br>$O(N^2)$,其中 $N$ 是序列长度。</p>
+<p>我们来看下 $\textbf{scaled dot-product attention}$ 的时间和空间复杂度：</p>
+<p>$\text{Attention}(Q, K, V) &#x3D; \text{softmax}\left(\frac{Q K^T}{\sqrt{d}}\right)$</p>
+<p>为了分析时间和空间复杂度，我们把上述的计算过程拆分为：<br>$<br>S &#x3D; Q K^T, \quad S &#x3D; \frac{S}{\sqrt{d}}, \quad S V.<br>$</p>
+<p>只要我们分析出每个计算的复杂度，就可以得到整体计算的复杂度。</p>
+<p>我们先来看第一个矩阵乘法 $QK^T$，$Q \in \mathbb{R}^{N \times d}$, $K \in \mathbb{R}^{N \times d}$，矩阵乘法的朴素算法时间复杂度是：<br>$<br>O(N \cdot d \cdot N) &#x3D; O(N^2 \cdot d)<br>$，代码实现其实就是三个for循环。</p>
+<p>至于空间复杂度，只有存储 $QK^T$ 计算结果，复杂度是：<br>$O(N^2)$<br>但是也不要觉得这个数字很大，如果 $N &lt; d$，其实存储 $Q$ 和 $K$ 要比 $QK^T$ 更占内存（显存）。除非序列很长 $N &gt; d$，空间复杂度 $O(N^2)$ 才会是瓶颈。</p>
+<div class="note note-primary">
+            <p>2.为什么要用位置编码？</p>
+          </div>
+
+<p>位置编码提供了位置信息，使 Transformer 能够捕捉序列的顺序关系，从而更有效地理解上下文依赖</p>
+<div class="note note-primary">
+            <p>3.为什么要用多头注意力？手写多头注意力代码？</p>
+          </div>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> math<br><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><span class="hljs-keyword">import</span> torch.nn.functional <span class="hljs-keyword">as</span> F<br><br><span class="hljs-comment"># 定义一个 MultiHeadAttention 类，它继承自 nn.Module</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MultiHeadAttention</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, heads, d_model, dropout=<span class="hljs-number">0.1</span></span>):<br>        <span class="hljs-comment"># 调用父类的构造函数</span><br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-comment"># 保存模型维度和头数</span><br>        <span class="hljs-variable language_">self</span>.d_model = d_model<br>        <span class="hljs-variable language_">self</span>.d_k = d_model // heads  <span class="hljs-comment"># 每个头对应的维度</span><br>        <span class="hljs-variable language_">self</span>.h = heads  <span class="hljs-comment"># 头的数量</span><br><br>        <span class="hljs-comment"># 初始化线性层，用于将输入转换为查询（Q）、键（K）和值（V）</span><br>        <span class="hljs-variable language_">self</span>.q_linear = nn.Linear(d_model, d_model)<br>        <span class="hljs-variable language_">self</span>.k_linear = nn.Linear(d_model, d_model)<br>        <span class="hljs-variable language_">self</span>.v_linear = nn.Linear(d_model, d_model)<br>        <span class="hljs-comment"># 初始化Dropout层，用于正则化</span><br>        <span class="hljs-variable language_">self</span>.dropout = nn.Dropout(dropout)<br>        <span class="hljs-comment"># 初始化输出线性层，用于将多头注意力输出转换为模型维度</span><br>        <span class="hljs-variable language_">self</span>.out = nn.Linear(d_model, d_model)<br><br>    <span class="hljs-comment"># 定义注意力机制的计算过程</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">attention</span>(<span class="hljs-params">self, q, k, v, mask=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-comment"># 计算Q和K的矩阵乘积，然后除以根号下d_k</span><br>        scores = torch.matmul(q, k.transpose(-<span class="hljs-number">2</span>, -<span class="hljs-number">1</span>)) / math.sqrt(<span class="hljs-variable language_">self</span>.d_k)<br>        <span class="hljs-comment"># 如果提供了掩码，则将掩码对应的位置设置为负无穷，这样在softmax后这些位置的值为0</span><br>        <span class="hljs-keyword">if</span> mask <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            scores = scores.masked_fill(mask == <span class="hljs-number">0</span>, -<span class="hljs-number">1e9</span>)<br>        <span class="hljs-comment"># 应用softmax函数获得注意力权重</span><br>        scores = F.softmax(scores, dim=-<span class="hljs-number">1</span>)<br>        <span class="hljs-comment"># 应用dropout</span><br>        scores = <span class="hljs-variable language_">self</span>.dropout(scores)<br>        <span class="hljs-comment"># 将注意力权重和V相乘得到输出</span><br>        output = torch.matmul(scores, v)<br>        <span class="hljs-keyword">return</span> output<br><br>    <span class="hljs-comment"># 定义前向传播过程</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, q, k, v, mask=<span class="hljs-literal">None</span></span>):<br>        batch_size = q.size(<span class="hljs-number">0</span>)<br>        <span class="hljs-comment"># 将输入Q、K、V通过线性层，并调整形状以进行多头注意力计算</span><br>        q = <span class="hljs-variable language_">self</span>.q_linear(q).view(batch_size, -<span class="hljs-number">1</span>, <span class="hljs-variable language_">self</span>.h, <span class="hljs-variable language_">self</span>.d_k).transpose(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br>        k = <span class="hljs-variable language_">self</span>.k_linear(k).view(batch_size, -<span class="hljs-number">1</span>, <span class="hljs-variable language_">self</span>.h, <span class="hljs-variable language_">self</span>.d_k).transpose(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br>        v = <span class="hljs-variable language_">self</span>.v_linear(v).view(batch_size, -<span class="hljs-number">1</span>, <span class="hljs-variable language_">self</span>.h, <span class="hljs-variable language_">self</span>.d_k).transpose(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br>        <span class="hljs-comment"># 计算注意力输出</span><br>        scores = <span class="hljs-variable language_">self</span>.attention(q, k, v, mask)<br>        <span class="hljs-comment"># 将多头输出合并，并调整形状以匹配模型维度</span><br>        concat = scores.transpose(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>).contiguous().view(batch_size, -<span class="hljs-number">1</span>, <span class="hljs-variable language_">self</span>.d_model)<br>        <span class="hljs-comment"># 通过输出线性层</span><br>        output = <span class="hljs-variable language_">self</span>.out(concat)<br>        <span class="hljs-keyword">return</span> output<br><br><span class="hljs-comment"># 主函数，用于测试 MultiHeadAttention 类</span><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    <span class="hljs-comment"># 初始化模型参数</span><br>    heads = <span class="hljs-number">4</span><br>    d_model = <span class="hljs-number">128</span>  <span class="hljs-comment"># d_model应该是heads的整数倍。</span><br>    dropout = <span class="hljs-number">0.1</span><br><br>    <span class="hljs-comment"># 创建 MultiHeadAttention 实例</span><br>    model = MultiHeadAttention(heads, d_model, dropout)<br><br>    <span class="hljs-comment"># 创建随机数据作为输入</span><br>    batch_size = <span class="hljs-number">2</span><br>    seq_len = <span class="hljs-number">5</span><br>    q = torch.rand(batch_size, seq_len, d_model)  <span class="hljs-comment"># Query</span><br>    k = torch.rand(batch_size, seq_len, d_model)  <span class="hljs-comment"># Key</span><br>    v = torch.rand(batch_size, seq_len, d_model)  <span class="hljs-comment"># Value</span><br><br>    <span class="hljs-comment"># 执行前向传播</span><br>    output = model(q, k, v)<br><br>    <span class="hljs-comment"># 打印输出形状，应该是 [batch_size, seq_len, d_model]</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Output shape:&quot;</span>, output.shape)<br><br>    <span class="hljs-comment"># 检查模型是否可以进行反向传播</span><br>    loss = output.mean()  <span class="hljs-comment"># 创建一个简单的损失函数</span><br>    loss.backward()  <span class="hljs-comment"># 执行反向传播</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Backward pass completed.&quot;</span>)  <span class="hljs-comment"># 如果没有错误，则表示反向传播成功</span><br></code></pre></td></tr></table></figure>
+
+<div class="note note-primary">
+            <p>4.多头注意力的优化方式？</p>
+          </div>
+
+<p><strong>优化</strong></p>
+<p>共用KV Cache（MQA和GQA）:</p>
+<p>MQA（Multi Query Attention）多查询注意力是MHA多头注意力的变体。两者主要区别是MQA中不同头共享一组KV，每个头只保留查询参数Q。KV矩阵只有一份，大幅减少内存。<br>由于MQA改变注意力机制结构，模型需要从训练开始就支持MQA，或通过对已训练好的模型微调支持MQA，仅需约5%的原始数据量即可达到不过效果。Falcon、SantaCoder、StarCoder 等模型都采用了MQA机。</p>
+<p>GQA (Grouped Query Attention，分组查询注意力)，介于MHQ和MQA之间的折中方案。按查询头Q分组，每个组共享一个K和V。表达能力与推理性能兼顾。</p>
+<div class="note note-primary">
+            <p>5.各种Norm介绍和解释？</p>
+          </div>
+
+
+
+<p>6.BERT使用的编码？<br>7.BERT的loss？<br>8.BERT的架构？</p>
+<p>9.BERT，GPT等比较主流大模型，一些细节，比如位置编码，训练loss，激活，架构些许不同这种。自回归重点</p>
+<h3 id="框架相关内容"><a href="#框架相关内容" class="headerlink" title="框架相关内容"></a>框架相关内容</h3><p>各种并行方式，优缺点。DeepSpeed，Megatron可以看看源代码，Flash-Attention等内容。这个点也经常考代码题。</p>
+<div class="note note-primary">
+            <p>1.并行方式有哪些？</p>
+          </div>
+
+<ul>
+<li>数据并行</li>
+</ul>
+<p>​		所谓数据并行，就是由于训练数据集太大；因此，将数据集分为N份，每一份分别装载到N个GPU节点中，同时，每个GPU节点持有一个完整的模型副本，分别基于每个GPU中的数据去进行梯度求导。然后，在GPU0上对每个GPU中的梯度进行累加，最后，再将GPU0聚合后的结果广播到其他GPU节点。</p>
+<ul>
+<li><p>流水线并行</p>
+<p>所谓流水线并行，就是由于模型太大，无法将整个模型放置到单张GPU卡中；因此，将模型的不同层放置到不同的计算设备，降低单个计算设备的显存消耗，从而实现超大规模模型训练。 如下图所示，模型共包含四个模型层（如：Transformer层），被切分为三个部分，分别放置到三个不同的计算设备。即第 1 层放置到设备 0，第 2 层和第三 3 层放置到设备 1，第 4 层放置到设备 2。</p>
+</li>
+<li><p>张量并行</p>
+<p>和流水线并行类似，张量并行也是将模型分解放置到不同的GPU上，以解决单块GPU无法储存整个模型的问题。和流水线并行不同的地方在于，张量并行是针对模型中的张量进行拆分，将其放置到不同的GPU上。</p>
+<p>模型并行是不同设备负责单个计算图不同部分的计算。而将计算图中的层内的参数（张量）切分到不同设备（即层内并行），每个设备只拥有模型的一部分，以减少内存负荷，我们称之为张量模型并行</p>
+</li>
+</ul>
+<p><strong>数据并行 vs 张量并行 vs 流水线并行?</strong><br>数据并行、张量并行和流水线并行是在并行计算中常见的三种策略，它们有不同的应用场景和优势：</p>
+<p>1、数据并行（Data Parallelism）：</p>
+<p>概念： 数据并行是指将整个模型复制到每个处理单元上，不同处理单元处理不同的数据子集。每个处理单元独立计算，并通过同步更新模型参数来实现训练。<br>适用场景： 数据并行适用于大型模型和数据集，特别是在深度学习中。每个处理单元负责计算不同数据子集上的梯度，然后同步更新模型参数。<br>优势： 易于实现，适用于大规模数据和模型。<br>2、张量并行（Tensor Parallelism）：</p>
+<p>概念： 张量并行是指将模型分解成多个部分，每个部分在不同处理单元上进行计算。通常，这涉及到在层与层之间划分模型，并在不同的 GPU 或处理单元上执行这些部分。<br>适用场景： 张量并行适用于非常大的模型，其中单个 GPU 的内存容量无法容纳整个模型。它允许将模型的不同部分分配到不同的处理单元上，从而扩展模型的规模。<br>优势： 适用于大型模型的规模扩展，可用于解决内存限制问题。<br>3、流水线并行（Pipeline Parallelism）：</p>
+<p>概念： 流水线并行是指将模型的不同层分配到不同的处理单元上，并通过将不同层的输出传递给下一层来实现计算。每个处理单元负责一个模型层的计算。<br>适用场景： 流水线并行适用于深层次的模型，其中各层之间的计算相对独立。它可以提高模型的整体计算速度，特别是在层之间存在较大的计算延迟时。<br>优势： 适用于深层次模型，减少整体计算时间。<br>这三种并行策略通常可以结合使用，具体取决于应用的场景和问题的性质。在深度学习等领域，常常会使用数据并行和张量并行相结合的方式，以提高模型的训练速度和规模。</p>
+<p>4、3D并行，或者混合并行 (Hybrid Parallelism)</p>
+<p>则是将以上三种策略结合起来使用，达到同时提升存储和计算效率的目的。Megatron-Turing NLG 就是先将 Transformer block 使用流水线和张量 2D 并行，然后再加上数据并行，将训练扩展到更多的GPU。</p>
+<div class="note note-primary">
+            <p>2.如果有N张显存足够大的显卡，怎么加速训练？</p>
+          </div>
+
+<p>数据并行化<strong>：</strong> 在数据并行化中，模型的多个副本在不同的 GPU 上训练相同的数据批次。每个 GPU 计算梯度，并将结果汇总到主 GPU 或进行参数更新。这种方法适用于模型过大而无法完全容纳在单个 GPU 内存中的情况。</p>
+<p>模型并行化<strong>：</strong> 在模型并行化中，模型的不同部分分配到不同的 GPU 上。每个 GPU 负责计算其分配的部分，并将结果传递给其他 GPU。这对于大型模型，特别是具有分层结构的模型（如大型神经网络）是有益的。</p>
+<p>分布式训练<strong>：</strong> 使用分布式框架（例如 TensorFlow 的 tf.distribute 或 PyTorch 的 torch.nn.parallel.DistributedDataParallel）来实现训练任务的分布式执行。这允许将训练任务分配到多个 GPU 或多台机器上进行加速。</p>
+<p>优化批处理大小<strong>：</strong> 增大批处理大小可以提高 GPU 利用率，但需要注意的是，批处理大小的增加也可能导致内存不足或梯度下降不稳定。因此，需要根据模型和硬件配置进行合理的调整。</p>
+<p>混合精度训练<strong>：</strong> 使用半精度浮点数（例如 TensorFlow 的 tf.keras.mixed_precision 或 PyTorch 的 AMP）来减少内存占用，加速训练过程。</p>
+<p>模型剪枝和优化<strong>：</strong> 对模型进行剪枝和优化以减少模型的大小和计算负荷，有助于提高训练速度和效率。</p>
+<div class="note note-primary">
+            <p>3.想要训练1个LLM，如果只想用1张显卡，那么对显卡的要求是什么？</p>
+          </div>
+
+<p>显卡显存足够大，nB模型微调一般最好准备20nGB以上的显存。</p>
+<div class="note note-primary">
+            <p>4.如果显卡的显存不够装下一个完整的模型呢？</p>
+          </div>
+
+<p>最直观想法，需要分层加载，把不同的层加载到不同的GPU上（accelerate的device_map）也就是常见的PP，流水线并行</p>
+<div class="note note-primary">
+            <p>4.常见的分布式训练框架哪一些，都有什么特点？</p>
+          </div>
+<p>1、Megatron-LM</p>
+<p>Megatron 是由 NVIDIA 深度学习应用研究团队开发的大型 Transformer 语言模型，该模型用于研究大规模训练大型语言模型。</p>
+<p>Megatron 支持transformer模型的模型并行（张量、序列和管道）和多节点预训练，同时还支持 BERT、GPT 和 T5 等模型。</p>
+<p>2、DeepSpeed</p>
+<p>DeepSpeed是微软的深度学习库，已被用于训练 Megatron-Turing NLG 530B 和 BLOOM等大型模型。</p>
+<p>DeepSpeed的创新体现在三个方面：</p>
+<p>训练，推理，压缩<br>DeepSpeed具备以下优势：</p>
+<p>训练&#x2F;推理具有数十亿或数万亿个参数的密集或稀疏模型<br>实现出色的系统吞吐量并有效扩展到数千个 GPU<br>在资源受限的 GPU 系统上训练&#x2F;推理<br>为推理实现前所未有的低延迟和高吞吐量<br>以低成本实现极致压缩，实现无与伦比的推理延迟和模型尺寸缩减</p>
+<div class="note note-primary">
+            <p>5.Flash-Attention？</p>
+          </div>
+
+
+
+<h3 id="模型训练"><a href="#模型训练" class="headerlink" title="模型训练"></a>模型训练</h3><p>这个可能主要是工作经验相关，经常问比如训练loss炸掉了，如何解决，一些技巧之类的。面试时有些面试官会问一些很细节的东西，感觉是在确认确实上手跑过基座训练不是吹水。</p>
+<h3 id="模型评估"><a href="#模型评估" class="headerlink" title="模型评估"></a>模型评估</h3><p>如何评估大模型，安全性，有效性，公开数据，个别考过手写eval框架（多选，生成）。</p>
+<p>ChatbotArena：借鉴游戏排位赛机制，让人类对模型两两评价<br>SuperCLUE：中文通用大模型综合性评测基准，尝试全自动测评大模型<br>C-Eval：采用 1.4 万道涵盖 52 个学科的选择题，评估模型中文能力<br>FlagEval：采用“能力—任务—指标”三维评测框架</p>
+<p>参考：<a href="https://zhuanlan.zhihu.com/p/448147465">https://zhuanlan.zhihu.com/p/448147465</a></p>
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
+              
+            </div>
+            <hr/>
+            
+            <!--  -->
+            <div class="reward-container">
+            	
+            		<button id="rewardBtn" class="reward-btn">
+            			❤ 打赏	
+            		</button>
+            		<p class="tea">觉得不错的话，支持一根棒棒糖吧 ୧(๑•̀⌄•́๑)૭</p>
+            		<div id="rewardImgContainer" class="reward-img-container">
+                     	<div class="singleImgContainer">
+                        	<img id="wechatImg" class="reward-img" src="/img/wechatpay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="wechatPay">wechat pay</p>
+                      </div>
+                      <div class="singleImgContainer">
+                           	<img id="alipayImg" class="reward-img" src="/img/alipay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="aliPay">alipay</p>
+                      </div>
+            		</div>
+            	
+            </div>
+            
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/NLP/" class="category-chain-item">NLP</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/NLP/">#NLP</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>大模型必知必会的问题及答案</div>
+      <div>http://yuting0907.github.io/posts/2025/01/b3b6ea6b.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Echo Yu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年1月16日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/2025/01/b3b6ea6b.html" title="大模型必知必会的问题及答案">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">大模型必知必会的问题及答案</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/2025/01/58ed6977.html" title="Fluid-7-添加星系loading动画">
+                        <span class="hidden-mobile">Fluid-7-添加星系loading动画</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.3.2/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.3.2/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://waline-byfjmhw0k-yuting0907s-projects.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"locale":{"placeholder":"哈，快找个位置随便坐~"}},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/reward.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
+
+<!--  -->
+<script type="text/javascript" src="/js/love.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>  
+
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="/js/FunnyTitle.js"></script>
