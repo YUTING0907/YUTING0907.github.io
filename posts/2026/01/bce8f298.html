@@ -1,0 +1,970 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon_yt.png">
+  <link rel="icon" href="/img/favicon_yt.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Echo Yu">
+  <meta name="keywords" content="ML">
+  
+    <meta name="description" content="1.单例模式1.1 业务场景单例模式，保证一个类仅有一个实例，并提供一个访问它的全局访问点。例如，Windows里面的Task Manager（任务管理器）也是很典型的单例模式。 1.2 单例模式的经典写法单例模式还有有好几种实现方式，如懒汉模式、饿汉模式、双重校验锁，静态内部类，枚举等实现方式。  懒汉:  实例在需要用到的时候，才去创建，存在线程安全的问题，需要加下 synchronized关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="必用的6种JAVA设计模式">
+<meta property="og:url" content="http://yuting0907.github.io/posts/2026/01/bce8f298.html">
+<meta property="og:site_name" content="YUTING">
+<meta property="og:description" content="1.单例模式1.1 业务场景单例模式，保证一个类仅有一个实例，并提供一个访问它的全局访问点。例如，Windows里面的Task Manager（任务管理器）也是很典型的单例模式。 1.2 单例模式的经典写法单例模式还有有好几种实现方式，如懒汉模式、饿汉模式、双重校验锁，静态内部类，枚举等实现方式。  懒汉:  实例在需要用到的时候，才去创建，存在线程安全的问题，需要加下 synchronized关">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-01-05T07:41:06.000Z">
+<meta property="article:modified_time" content="2026-01-06T05:50:41.143Z">
+<meta property="article:author" content="Echo Yu">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>必用的6种JAVA设计模式 - YUTING</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/reward.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yuting0907.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+	
+	
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong class="navbar-title">EchoYu&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books/">
+                <i class="iconfont icon-tags-fill"></i>
+                books
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="必用的6种JAVA设计模式"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Echo Yu
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-01-05 15:41" pubdate>
+          2026年1月5日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          98 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">必用的6种JAVA设计模式</h1>
+            
+            <div class="markdown-body">
+              
+              <div id="readmore-container"><h2 id="1-单例模式"><a href="#1-单例模式" class="headerlink" title="1.单例模式"></a>1.单例模式</h2><h4 id="1-1-业务场景"><a href="#1-1-业务场景" class="headerlink" title="1.1 业务场景"></a>1.1 业务场景</h4><p>单例模式，保证一个类仅有一个实例，并提供一个访问它的全局访问点。例如，Windows里面的Task Manager（任务管理器）也是很典型的单例模式。</p>
+<h4 id="1-2-单例模式的经典写法"><a href="#1-2-单例模式的经典写法" class="headerlink" title="1.2 单例模式的经典写法"></a>1.2 单例模式的经典写法</h4><p>单例模式还有有好几种实现方式，如懒汉模式、饿汉模式、双重校验锁，静态内部类，枚举等实现方式。</p>
+<ul>
+<li><p>懒汉: </p>
+<p>实例在需要用到的时候，才去创建，存在线程安全的问题，需要加下 synchronized关键字。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LanHanSingleton</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> LanHanSingleton instance;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-title function_">LanHanSingleton</span><span class="hljs-params">()</span>&#123;<br><br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> LanHanSingleton <span class="hljs-title function_">getInstance</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">if</span> (instance == <span class="hljs-literal">null</span>) &#123;<br>            instance = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LanHanSingleton</span>();<br>        &#125;<br>        <span class="hljs-keyword">return</span> instance;<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>饿汉: </p>
+<p>实例在初始化的时候就已经建好了, 没有线程安全问题，但是浪费空间。</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EHanSingleton</span> &#123;<br><br>   <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">EHanSingleton</span> <span class="hljs-variable">instance</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">EHanSingleton</span>();<br>   <br>   <span class="hljs-keyword">private</span> <span class="hljs-title function_">EHanSingleton</span><span class="hljs-params">()</span>&#123;      <br>   &#125;<br><br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> EHanSingleton <span class="hljs-title function_">getInstance</span><span class="hljs-params">()</span> &#123;<br>       <span class="hljs-keyword">return</span> instance;<br>   &#125;<br>   <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>双重校验锁</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DoubleCheckSingleton</span> &#123;<br><br>   <span class="hljs-keyword">private</span> <span class="hljs-keyword">volatile</span> <span class="hljs-keyword">static</span> DoubleCheckSingleton instance;<br><br>   <span class="hljs-keyword">private</span> <span class="hljs-title function_">DoubleCheckSingleton</span><span class="hljs-params">()</span> &#123; &#125;<br>   <br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> DoubleCheckSingleton <span class="hljs-title function_">getInstance</span><span class="hljs-params">()</span>&#123;<br>       <span class="hljs-keyword">if</span> (instance == <span class="hljs-literal">null</span>) &#123;<br>           <span class="hljs-keyword">synchronized</span> (DoubleCheckSingleton.class) &#123;<br>               <span class="hljs-keyword">if</span> (instance == <span class="hljs-literal">null</span>) &#123;<br>                   instance = <span class="hljs-keyword">new</span> <span class="hljs-title class_">DoubleCheckSingleton</span>();<br>               &#125;<br>           &#125;<br>       &#125;<br>       <span class="hljs-keyword">return</span> instance;<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-工厂模式"><a href="#2-工厂模式" class="headerlink" title="2.工厂模式"></a>2.工厂模式</h2><p>工厂方法模式是一种创建型设计模式， 其在父类中提供一个创建对象的方法， 允许子类决定实例化对象的类型。</p>
+<h2 id="3-策略模式"><a href="#3-策略模式" class="headerlink" title="3.策略模式"></a>3.策略模式</h2><h4 id="3-1-业务场景"><a href="#3-1-业务场景" class="headerlink" title="3.1.业务场景"></a>3.1.业务场景</h4><p>假设有这样的业务场景，大数据系统把文件推送过来，根据不同类型采取不同的解析方式。多数的小伙伴就会写出以下的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span>(type==<span class="hljs-string">&quot;A&quot;</span>)&#123;<br>   <span class="hljs-comment">//按照A格式解析</span><br> <br>&#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(type==<span class="hljs-string">&quot;B&quot;</span>)&#123;<br>    <span class="hljs-comment">//按B格式解析</span><br>&#125;<span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-comment">//按照默认格式解析</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个代码可能会存在哪些问题呢？</p>
+<p>如果分支变多，这里的代码就会变得臃肿，难以维护，可读性低。<br>如果你需要接入一种新的解析类型，那只能在原有代码上修改。</p>
+<p>说得专业一点的话，就是以上代码，违背了面向对象编程的开闭原则以及单一原则。</p>
+<p><strong>开闭原则</strong>（对于扩展是开放的，但是对于修改是封闭的）：增加或者删除某个逻辑，都需要修改到原来代码<br><strong>单一原则</strong>（规定一个类应该只有一个发生变化的原因）：修改任何类型的分支逻辑代码，都需要改动当前类的代码。</p>
+<p>如果你的代码就是酱紫：有多个if…else等条件分支，并且每个条件分支，可以封装起来替换的，我们就可以使用策略模式来优化。</p>
+<h4 id="3-2-策略模式使用"><a href="#3-2-策略模式使用" class="headerlink" title="3.2.策略模式使用"></a>3.2.策略模式使用</h4><p>策略模式怎么使用呢？</p>
+<ul>
+<li>一个接口或者抽象类，里面两个方法（一个方法匹配类型，一个可替换的逻辑实现方法）</li>
+<li>不同策略的差异化实现(不同策略的实现类)</li>
+<li>使用策略模式</li>
+</ul>
+<h5 id="3-2-1-一个接口，两个方法"><a href="#3-2-1-一个接口，两个方法" class="headerlink" title="3.2.1 一个接口，两个方法"></a>3.2.1 一个接口，两个方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">IFileStrategy</span> &#123;<br>    <br>    <span class="hljs-comment">//属于哪种文件解析类型</span><br>    FileTypeResolveEnum <span class="hljs-title function_">gainFileType</span><span class="hljs-params">()</span>;<br>    <br>    <span class="hljs-comment">//封装的公用算法（具体的解析方法）</span><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">resolve</span><span class="hljs-params">(Object objectparam)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="3-2-2-不同策略的差异化实现"><a href="#3-2-2-不同策略的差异化实现" class="headerlink" title="3.2.2 不同策略的差异化实现"></a>3.2.2 不同策略的差异化实现</h5><ul>
+<li>A 类型策略具体实现</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AFileResolve</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">IFileStrategy</span> &#123;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> FileTypeResolveEnum <span class="hljs-title function_">gainFileType</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> FileTypeResolveEnum.File_A_RESOLVE;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">resolve</span><span class="hljs-params">(Object objectparam)</span> &#123;<br>      logger.info(<span class="hljs-string">&quot;A 类型解析文件，参数：&#123;&#125;&quot;</span>,objectparam);<br>      <span class="hljs-comment">//A类型解析具体逻辑</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>B 类型策略具体实现</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BFileResolve</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">IFileStrategy</span> &#123;<br>   <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> FileTypeResolveEnum <span class="hljs-title function_">gainFileType</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> FileTypeResolveEnum.File_B_RESOLVE;<br>    &#125;<br><br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">resolve</span><span class="hljs-params">(Object objectparam)</span> &#123;<br>      logger.info(<span class="hljs-string">&quot;B 类型解析文件，参数：&#123;&#125;&quot;</span>,objectparam);<br>      <span class="hljs-comment">//B类型解析具体逻辑</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>默认类型策略具体实现</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DefaultFileResolve</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">IFileStrategy</span> &#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> FileTypeResolveEnum <span class="hljs-title function_">gainFileType</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> FileTypeResolveEnum.File_DEFAULT_RESOLVE;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">resolve</span><span class="hljs-params">(Object objectparam)</span> &#123;<br>      logger.info(<span class="hljs-string">&quot;默认类型解析文件，参数：&#123;&#125;&quot;</span>,objectparam);<br>      <span class="hljs-comment">//默认类型解析具体逻辑</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="4-责任链模式"><a href="#4-责任链模式" class="headerlink" title="4.责任链模式"></a>4.责任链模式</h2><h4 id="4-1-业务场景"><a href="#4-1-业务场景" class="headerlink" title="4.1 业务场景"></a>4.1 业务场景</h4><p>常见的一个业务场景下订单，下订单接口，基本的逻辑，一般有参数非空校验、安全校验、黑名单校验、规则拦截等等。很多伙伴会使用异常来实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Order</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">checkNullParam</span><span class="hljs-params">(Object param)</span>&#123;<br>      <span class="hljs-comment">//参数非空校验</span><br>      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>();<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">checkSecurity</span><span class="hljs-params">()</span>&#123;<br>      <span class="hljs-comment">//安全校验</span><br>      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>();<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">checkBackList</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-comment">//黑名单校验</span><br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>();<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">checkRule</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-comment">//规则拦截</span><br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        Order order= <span class="hljs-keyword">new</span> <span class="hljs-title class_">Order</span>();<br>        <span class="hljs-keyword">try</span>&#123;<br>            order.checkNullParam();<br>            order.checkSecurity ();<br>            order.checkBackList();<br>            order2.checkRule();<br>            System.out.println(<span class="hljs-string">&quot;order success&quot;</span>);<br>        &#125;<span class="hljs-keyword">catch</span> (RuntimeException e)&#123;<br>            System.out.println(<span class="hljs-string">&quot;order fail&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这段代码使用了异常来做逻辑条件判断，如果后续逻辑越来越复杂的话，会出现一些问题：</p>
+<p>如异常只能返回异常信息，不能返回更多的字段，这时候需要自定义异常类。</p>
+<p>并且，需要用异常逻辑做判断，而阿里开发手册规定：禁止用异常做逻辑判断。</p>
+<h4 id="4-2-责任链模式使用"><a href="#4-2-责任链模式使用" class="headerlink" title="4.2 责任链模式使用"></a>4.2 责任链模式使用</h4><p>责任链模式怎么使用呢？</p>
+<ul>
+<li>一个接口或者抽象类</li>
+<li>每个对象差异化处理</li>
+<li>对象链（数组）初始化（连起来）</li>
+</ul>
+<h5 id="4-2-1-一个接口或者抽象类"><a href="#4-2-1-一个接口或者抽象类" class="headerlink" title="4.2.1 一个接口或者抽象类"></a>4.2.1 一个接口或者抽象类</h5><p>这个接口或者抽象类，需要：</p>
+<p>有一个指向责任下一个对象的属性<br>一个设置下一个对象的set方法<br>给子类对象差异化实现的方法（如以下代码的doFilter方法）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AbstractHandler</span> &#123;<br><br>    <span class="hljs-comment">//责任链中的下一个对象</span><br>    <span class="hljs-keyword">private</span> AbstractHandler nextHandler;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 责任链的下一个对象</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setNextHandler</span><span class="hljs-params">(AbstractHandler nextHandler)</span>&#123;<br>        <span class="hljs-built_in">this</span>.nextHandler = nextHandler;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 具体参数拦截逻辑,给子类去实现</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">filter</span><span class="hljs-params">(Request request, Response response)</span> &#123;<br>        doFilter(request, response);<br>        <span class="hljs-keyword">if</span> (getNextHandler() != <span class="hljs-literal">null</span>) &#123;<br>            getNextHandler().filter(request, response);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> AbstractHandler <span class="hljs-title function_">getNextHandler</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> nextHandler;<br>    &#125;<br><br>     <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">doFilter</span><span class="hljs-params">(Request filterRequest, Response response)</span>;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="4-2-2-每个对象差异化处理"><a href="#4-2-2-每个对象差异化处理" class="headerlink" title="4.2.2 每个对象差异化处理"></a>4.2.2 每个对象差异化处理</h5><p>责任链上，每个对象的差异化处理，如本小节的业务场景，就有参数校验对象、安全校验对象、黑名单校验对象、规则拦截对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 参数校验对象</span><br><span class="hljs-comment"> **/</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Order(1)</span> <span class="hljs-comment">//顺序排第1，最先校验</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CheckParamFilterObject</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AbstractHandler</span> &#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">doFilter</span><span class="hljs-params">(Request request, Response response)</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;非空参数检查&quot;</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> *  安全校验对象</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Order(2)</span> <span class="hljs-comment">//校验顺序排第2</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CheckSecurityFilterObject</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AbstractHandler</span> &#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">doFilter</span><span class="hljs-params">(Request request, Response response)</span> &#123;<br>        <span class="hljs-comment">//invoke Security check</span><br>        System.out.println(<span class="hljs-string">&quot;安全调用校验&quot;</span>);<br>    &#125;<br>&#125;<br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> *  黑名单校验对象</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Order(3)</span> <span class="hljs-comment">//校验顺序排第3</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CheckBlackFilterObject</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AbstractHandler</span> &#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">doFilter</span><span class="hljs-params">(Request request, Response response)</span> &#123;<br>        <span class="hljs-comment">//invoke black list check</span><br>        System.out.println(<span class="hljs-string">&quot;校验黑名单&quot;</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> *  规则拦截对象</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Order(4)</span> <span class="hljs-comment">//校验顺序排第4</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CheckRuleFilterObject</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AbstractHandler</span> &#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">doFilter</span><span class="hljs-params">(Request request, Response response)</span> &#123;<br>        <span class="hljs-comment">//check rule</span><br>        System.out.println(<span class="hljs-string">&quot;check rule&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="4-3-3-对象链连起来（初始化）-使用"><a href="#4-3-3-对象链连起来（初始化）-使用" class="headerlink" title="4.3.3 对象链连起来（初始化） 使用"></a>4.3.3 对象链连起来（初始化） 使用</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component(&quot;ChainPatternDemo&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ChainPatternDemo</span> &#123;<br><br>    <span class="hljs-comment">//自动注入各个责任链的对象</span><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> List&lt;AbstractHandler&gt; abstractHandleList;<br><br>    <span class="hljs-keyword">private</span> AbstractHandler abstractHandler;<br><br>    <span class="hljs-comment">//spring注入后自动执行，责任链的对象连接起来</span><br>    <span class="hljs-meta">@PostConstruct</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">initializeChainFilter</span><span class="hljs-params">()</span>&#123;<br><br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;i&lt;abstractHandleList.size();i++)&#123;<br>            <span class="hljs-keyword">if</span>(i == <span class="hljs-number">0</span>)&#123;<br>                abstractHandler = abstractHandleList.get(<span class="hljs-number">0</span>);<br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                <span class="hljs-type">AbstractHandler</span> <span class="hljs-variable">currentHander</span> <span class="hljs-operator">=</span> abstractHandleList.get(i - <span class="hljs-number">1</span>);<br>                <span class="hljs-type">AbstractHandler</span> <span class="hljs-variable">nextHander</span> <span class="hljs-operator">=</span> abstractHandleList.get(i);<br>                currentHander.setNextHandler(nextHander);<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">//直接调用这个方法使用</span><br>    <span class="hljs-keyword">public</span> Response <span class="hljs-title function_">exec</span><span class="hljs-params">(Request request, Response response)</span> &#123;<br>        abstractHandler.filter(request, response);<br>        <span class="hljs-keyword">return</span> response;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> AbstractHandler <span class="hljs-title function_">getAbstractHandler</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> abstractHandler;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setAbstractHandler</span><span class="hljs-params">(AbstractHandler abstractHandler)</span> &#123;<br>        <span class="hljs-built_in">this</span>.abstractHandler = abstractHandler;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="5-模板方法模式"><a href="#5-模板方法模式" class="headerlink" title="5.模板方法模式"></a>5.模板方法模式</h2><h4 id="5-1-业务场景"><a href="#5-1-业务场景" class="headerlink" title="5.1 业务场景"></a>5.1 业务场景</h4><p>假设我们有这么一个业务场景：</p>
+<p>内部系统不同商户，调用我们系统接口，去跟外部第三方系统交互（http方式）。走类似这么一个流程，如下：</p>
+<p>Request -&gt; 查询商户信息 -&gt; 加签 -&gt; 发送http请求 -&gt; 验签</p>
+<p>一个请求都会经历这几个流程。</p>
+<p>这里，有的商户可能是走代理出去的，有的是走直连。假设当前有A，B商户接入，不少伙伴可能这么实现，伪代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 商户A处理句柄</span><br>CompanyAHandler <span class="hljs-keyword">implements</span> <span class="hljs-title class_">RequestHandler</span> &#123;<br>   Resp <span class="hljs-title function_">hander</span><span class="hljs-params">(req)</span>&#123;<br>   <span class="hljs-comment">//查询商户信息</span><br>   queryMerchantInfo();<br>   <span class="hljs-comment">//加签</span><br>   signature();<br>   <span class="hljs-comment">//http请求（A商户假设走的是代理）</span><br>   httpRequestbyProxy()<br>   <span class="hljs-comment">//验签</span><br>   verify();<br>   &#125;<br>&#125;<br><span class="hljs-comment">// 商户B处理句柄</span><br>CompanyBHandler <span class="hljs-keyword">implements</span> <span class="hljs-title class_">RequestHandler</span> &#123;<br>   Resp <span class="hljs-title function_">hander</span><span class="hljs-params">(Rreq)</span>&#123;<br>   <span class="hljs-comment">//查询商户信息</span><br>   queryMerchantInfo();<br>   <span class="hljs-comment">//加签</span><br>   signature();<br>   <span class="hljs-comment">// http请求（B商户不走代理，直连）</span><br>   httpRequestbyDirect();<br>   <span class="hljs-comment">// 验签</span><br>   verify(); <br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>假设新加一个C商户接入，你需要再实现一套这样的代码。显然，这样代码就重复了，一些通用的方法，却在每一个子类都重新写了这一方法。</p>
+<p>如何优化呢？可以使用模板方法模式。</p>
+<h4 id="5-2-模板方法模式定义"><a href="#5-2-模板方法模式定义" class="headerlink" title="5.2 模板方法模式定义"></a>5.2 模板方法模式定义</h4><p>定义一个操作中的算法的骨架流程，而将一些步骤延迟到子类中，使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。</p>
+<p>它的核心思想就是：定义一个操作的一系列步骤，对于某些暂时确定不下来的步骤，就留给子类去实现，这样不同的子类就可以定义出不同的步骤。</p>
+<h4 id="5-3-模板方法使用"><a href="#5-3-模板方法使用" class="headerlink" title="5.3 模板方法使用"></a>5.3 模板方法使用</h4><ul>
+<li><p>一个抽象类，定义骨架流程（抽象方法放一起）</p>
+</li>
+<li><p>确定的共同方法步骤，放到抽象类（去除抽象方法标记）</p>
+</li>
+<li><p>不确定的步骤，给子类去差异化实现</p>
+<p>我们继续那以上的举例的业务流程例子，来一起用 模板方法优化一下哈：</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 1.抽象类定义骨架流程（查询商户信息，加签，http请求，验签）</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AbstractMerchantService</span>  &#123; <br>      <span class="hljs-comment">//查询商户信息</span><br>      <span class="hljs-keyword">abstract</span> <span class="hljs-title function_">queryMerchantInfo</span><span class="hljs-params">()</span>;<br>      <span class="hljs-comment">//加签</span><br>      <span class="hljs-keyword">abstract</span> <span class="hljs-title function_">signature</span><span class="hljs-params">()</span>;<br>      <span class="hljs-comment">//http 请求</span><br>      <span class="hljs-keyword">abstract</span> <span class="hljs-title function_">httpRequest</span><span class="hljs-params">()</span>;<br>       <span class="hljs-comment">// 验签</span><br>       <span class="hljs-keyword">abstract</span> <span class="hljs-title function_">verifySinature</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>确定共同方法步骤，放到抽象类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AbstractMerchantService</span>  &#123; <br>     <span class="hljs-comment">//模板方法流程</span><br>     Resp <span class="hljs-title function_">handlerTempPlate</span><span class="hljs-params">(req)</span>&#123;<br>           <span class="hljs-comment">//查询商户信息</span><br>           queryMerchantInfo();<br>           <span class="hljs-comment">//加签</span><br>           signature();<br>           <span class="hljs-comment">//http 请求</span><br>           httpRequest();<br>           <span class="hljs-comment">// 验签</span><br>           verifySinature();<br>     &#125;<br>      <span class="hljs-comment">// Http是否走代理（提供给子类实现）</span><br>      <span class="hljs-keyword">abstract</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isRequestByProxy</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>不确定的步骤，给子类去差异化实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">* 商户A的请求实现</span><br><span class="hljs-comment">*/</span><br>CompanyAServiceImpl <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AbstractMerchantService</span>&#123;<br>    Resp <span class="hljs-title function_">hander</span><span class="hljs-params">(req)</span>&#123;<br>      <span class="hljs-keyword">return</span> handlerTempPlate(req);<br>    &#125;<br>    <span class="hljs-comment">//走http代理的</span><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">isRequestByProxy</span><span class="hljs-params">()</span>&#123;<br>       <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>  <br><span class="hljs-comment">/**</span><br><span class="hljs-comment">* 商户B的请求实现</span><br><span class="hljs-comment">*/</span><br>CompanyBServiceImpl <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AbstractMerchantService</span>&#123;<br>    Resp <span class="hljs-title function_">hander</span><span class="hljs-params">(req)</span>&#123;<br>      <span class="hljs-keyword">return</span> handlerTempPlate(req);<br>    &#125;<br>    <span class="hljs-comment">//公司B是不走代理的</span><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">isRequestByProxy</span><span class="hljs-params">()</span>&#123;<br>       <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="6-观察者模式"><a href="#6-观察者模式" class="headerlink" title="6.观察者模式"></a>6.观察者模式</h2><h4 id="6-1-业务场景"><a href="#6-1-业务场景" class="headerlink" title="6.1 业务场景"></a>6.1 业务场景</h4><p>登陆注册应该是最常见的业务场景了。就拿注册来说事，我们经常会遇到类似的场景，就是用户注册成功后，我们给用户发一条消息，又或者发个邮件等等，因此经常有如下的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">void</span> <span class="hljs-title function_">register</span><span class="hljs-params">(User user)</span>&#123;<br>  insertRegisterUser（user）;<br>  sendIMMessage();<br>  sendEmail()；<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这块代码会有什么问题呢？</p>
+<p>如果产品又加需求：现在注册成功的用户，再给用户发一条短信通知。于是你又得改register方法的代码了。。。这是不是违反了开闭原则啦。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">void</span> <span class="hljs-title function_">register</span><span class="hljs-params">(User user)</span>&#123;<br>  insertRegisterUser（user）;<br>  sendIMMessage();<br>  sendMobileMessage（）;<br>  sendEmail()；<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>并且，如果调发短信的接口失败了，是不是又影响到用户注册了？！这时候，是不是得加个异步方法给通知消息才好。。</p>
+<p>实际上，我们可以使用观察者模式优化。</p>
+<h4 id="6-2-观察者模式定义"><a href="#6-2-观察者模式定义" class="headerlink" title="6.2 观察者模式定义"></a>6.2 观察者模式定义</h4><p>观察者模式属于行为模式，一个对象（被观察者）的状态发生改变，所有的依赖对象（观察者对象）都将得到通知，进行广播通知。它的主要成员就是观察者和被观察者。</p>
+<p>使用场景： 完成某件事情后，异步通知场景。如，登陆成功，发个IM消息等等。</p>
+<ul>
+<li>被观察者（Observerable）：目标对象，状态发生变化时，将通知所有的观察者。</li>
+<li>观察者（observer）：接受被观察者的状态变化通知，执行预先定义的业务。</li>
+</ul>
+<h4 id="6-3-观察者模式使用"><a href="#6-3-观察者模式使用" class="headerlink" title="6.3 观察者模式使用"></a>6.3 观察者模式使用</h4><ul>
+<li>一个被观察者的类Observerable ;</li>
+<li>多个观察者Observer ；</li>
+<li>观察者的差异化实现</li>
+</ul>
+<h5 id="6-3-1-一个被观察者的类Observerable-和-多个观察者Observer"><a href="#6-3-1-一个被观察者的类Observerable-和-多个观察者Observer" class="headerlink" title="6.3.1 一个被观察者的类Observerable 和 多个观察者Observer"></a>6.3.1 一个被观察者的类Observerable 和 多个观察者Observer</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Observerable</span> &#123;<br>   <br>   <span class="hljs-keyword">private</span> List&lt;Observer&gt; observers  = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;Observer&gt;();<br>   <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> state;<br> <br>   <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getState</span><span class="hljs-params">()</span> &#123;<br>      <span class="hljs-keyword">return</span> state;<br>   &#125;<br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setState</span><span class="hljs-params">(<span class="hljs-type">int</span> state)</span> &#123;<br>      notifyAllObservers();<br>   &#125;<br> <br>   <span class="hljs-comment">//添加观察者</span><br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addServer</span><span class="hljs-params">(Observer observer)</span>&#123;<br>      observers.add(observer);      <br>   &#125;<br>   <br>   <span class="hljs-comment">//移除观察者</span><br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">removeServer</span><span class="hljs-params">(Observer observer)</span>&#123;<br>      observers.remove(observer);      <br>   &#125;<br>  <br>   <span class="hljs-comment">//通知</span><br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">notifyAllObservers</span><span class="hljs-params">(<span class="hljs-type">int</span> state)</span>&#123;<br>      <span class="hljs-keyword">if</span>(state!=<span class="hljs-number">1</span>)&#123;<br>          System.out.println(“不是通知的状态”);<br>         <span class="hljs-keyword">return</span> ;<br>      &#125;<br>   <br>      <span class="hljs-keyword">for</span> (Observer observer : observers) &#123;<br>         observer.doEvent();<br>      &#125;<br>   &#125;  <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="6-3-2-观察者的差异化实现"><a href="#6-3-2-观察者的差异化实现" class="headerlink" title="6.3.2 观察者的差异化实现"></a>6.3.2 观察者的差异化实现</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//观察者</span><br> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Observer</span> &#123;  <br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">doEvent</span><span class="hljs-params">()</span>;  <br>&#125;  <br><span class="hljs-comment">//Im消息</span><br>IMMessageObserver <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Observer</span>&#123;<br>    <span class="hljs-keyword">void</span> doEvent（）&#123;<br>       System.out.println(<span class="hljs-string">&quot;发送IM消息&quot;</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">//手机短信</span><br>MobileNoObserver <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Observer</span>&#123;<br>    <span class="hljs-keyword">void</span> doEvent（）&#123;<br>       System.out.println(<span class="hljs-string">&quot;发送短信消息&quot;</span>);<br>    &#125;<br>&#125;<br><span class="hljs-comment">//EmailNo</span><br>EmailObserver <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Observer</span>&#123;<br>    <span class="hljs-keyword">void</span> doEvent（）&#123;<br>       System.out.println(<span class="hljs-string">&quot;发送email消息&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>EventBus实战<br>自己搞一套观察者模式的代码，还是有点小麻烦。实际上，Guava EventBus就封装好了，它 提供一套基于注解的事件总线，api可以灵活的使用。</p>
+<p>我们来看下EventBus的实战代码哈，首先可以声明一个EventBusCenter类，它类似于以上被观察者那种角色Observerable。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 被观察者</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EventBusCenter</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-title function_">EventBusCenter</span><span class="hljs-params">()</span> &#123;<br>    &#125;<br>  <br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">EventBus</span> <span class="hljs-variable">eventBus</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventBus</span>();<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> EventBus <span class="hljs-title function_">getInstance</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> eventBus;<br>    &#125;<br>     <span class="hljs-comment">//添加观察者</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">register</span><span class="hljs-params">(Object obj)</span> &#123;<br>        eventBus.register(obj);<br>    &#125;<br>    <span class="hljs-comment">//移除观察者</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">unregister</span><span class="hljs-params">(Object obj)</span> &#123;<br>        eventBus.unregister(obj);<br>    &#125;<br>    <span class="hljs-comment">//把消息推给观察者</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">post</span><span class="hljs-params">(Object obj)</span> &#123;<br>        eventBus.post(obj);<br>    &#125;<br>&#125;<br><br><br><span class="hljs-comment">//然后再声明观察者EventListener</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EventListener</span> &#123;<br><br>    <span class="hljs-meta">@Subscribe</span> <span class="hljs-comment">//加了订阅，这里标记这个方法是事件处理方法  </span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">handle</span><span class="hljs-params">(NotifyEvent notifyEvent)</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;发送IM消息&quot;</span> + notifyEvent.getImNo());<br>        System.out.println(<span class="hljs-string">&quot;发送短信消息&quot;</span> + notifyEvent.getMobileNo());<br>        System.out.println(<span class="hljs-string">&quot;发送Email消息&quot;</span> + notifyEvent.getEmailNo());<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">//通知事件类</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">NotifyEvent</span>  &#123;<br><br>    <span class="hljs-keyword">private</span> String mobileNo;<br><br>    <span class="hljs-keyword">private</span> String emailNo;<br><br>    <span class="hljs-keyword">private</span> String imNo;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">NotifyEvent</span><span class="hljs-params">(String mobileNo, String emailNo, String imNo)</span> &#123;<br>        <span class="hljs-built_in">this</span>.mobileNo = mobileNo;<br>        <span class="hljs-built_in">this</span>.emailNo = emailNo;<br>        <span class="hljs-built_in">this</span>.imNo = imNo;<br>    &#125;<br> &#125;<br></code></pre></td></tr></table></figure>
+
+<p>demo测试：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EventBusDemoTest</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br><br>        <span class="hljs-type">EventListener</span> <span class="hljs-variable">eventListener</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventListener</span>();<br>        EventBusCenter.register(eventListener);<br>        EventBusCenter.post(<span class="hljs-keyword">new</span> <span class="hljs-title class_">NotifyEvent</span>(<span class="hljs-string">&quot;13372817283&quot;</span>, <span class="hljs-string">&quot;123@qq.com&quot;</span>, <span class="hljs-string">&quot;666&quot;</span>));<br>        &#125;<br>&#125;<br><br><br>发送IM消息<span class="hljs-number">666</span><br>发送短信消息<span class="hljs-number">13372817283</span><br>发送Email消息<span class="hljs-number">123</span><span class="hljs-meta">@qq</span>.com<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="reference"><a href="#reference" class="headerlink" title="reference:"></a>reference:</h3><p><a href="https://mp.weixin.qq.com/s/H-OurMV7I6g5EqW_MIaOww">https://mp.weixin.qq.com/s/H-OurMV7I6g5EqW_MIaOww</a></p>
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
+              
+            </div>
+            <hr/>
+            
+            <!--  -->
+            <div class="reward-container">
+            	
+            		<button id="rewardBtn" class="reward-btn">
+            			❤ 打赏	
+            		</button>
+            		<p class="tea">觉得不错的话，支持一根棒棒糖吧 ୧(๑•̀⌄•́๑)૭</p>
+            		<div id="rewardImgContainer" class="reward-img-container">
+                     	<div class="singleImgContainer">
+                        	<img id="wechatImg" class="reward-img" src="/img/wechatpay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="wechatPay">wechat pay</p>
+                      </div>
+                      <div class="singleImgContainer">
+                           	<img id="alipayImg" class="reward-img" src="/img/alipay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="aliPay">alipay</p>
+                      </div>
+            		</div>
+            	
+            </div>
+            
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">#设计模式</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>必用的6种JAVA设计模式</div>
+      <div>http://yuting0907.github.io/posts/2026/01/bce8f298.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Echo Yu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年1月5日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/2025/09/9b8e12b6.html" title="LLM的训练过程">
+                        <span class="hidden-mobile">LLM的训练过程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.3.2/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.3.2/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://waline-byfjmhw0k-yuting0907s-projects.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"locale":{"placeholder":"哈，快找个位置随便坐~"}},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/reward.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
+
+<!--  -->
+<script type="text/javascript" src="/js/love.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>  
+
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="/js/FunnyTitle.js"></script>
