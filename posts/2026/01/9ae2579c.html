@@ -1,0 +1,970 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon_yt.png">
+  <link rel="icon" href="/img/favicon_yt.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Echo Yu">
+  <meta name="keywords" content="ML">
+  
+    <meta name="description" content="数据结构与算法的脑图 基础数据结构（必掌握） 数组 &amp; 字符串 核心特性：连续内存、随机访问O(1)、增删O(n) 刷题高频点：双指针、滑动窗口、前缀和、差分、字符串匹配(KMP) 经典题型：两数之和、最长回文子串、滑动窗口最大值   链表 核心特性：非连续内存、顺序访问O(n)、增删O(1)（已知节点） 刷题高频点：虚拟头节点、快慢指针、反转链表、环形链表 经典题型：反转链表、合并两个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode hot100">
+<meta property="og:url" content="http://yuting0907.github.io/posts/2026/01/9ae2579c.html">
+<meta property="og:site_name" content="YUTING">
+<meta property="og:description" content="数据结构与算法的脑图 基础数据结构（必掌握） 数组 &amp; 字符串 核心特性：连续内存、随机访问O(1)、增删O(n) 刷题高频点：双指针、滑动窗口、前缀和、差分、字符串匹配(KMP) 经典题型：两数之和、最长回文子串、滑动窗口最大值   链表 核心特性：非连续内存、顺序访问O(n)、增删O(1)（已知节点） 刷题高频点：虚拟头节点、快慢指针、反转链表、环形链表 经典题型：反转链表、合并两个">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20260205103940.png">
+<meta property="article:published_time" content="2026-01-29T09:17:13.000Z">
+<meta property="article:modified_time" content="2026-02-05T02:53:24.263Z">
+<meta property="article:author" content="Echo Yu">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20260205103940.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>LeetCode hot100 - YUTING</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/reward.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yuting0907.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+	
+	
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong class="navbar-title">EchoYu&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books/">
+                <i class="iconfont icon-tags-fill"></i>
+                books
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="LeetCode hot100"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Echo Yu
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-01-29 17:17" pubdate>
+          2026年1月29日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          38 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">LeetCode hot100</h1>
+            
+            <div class="markdown-body">
+              
+              <div id="readmore-container"><p><img src="https://raw.gitmirror.com/YUTING0907/PicGo/main/img20260205103940.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="数据结构与算法的脑图"><a href="#数据结构与算法的脑图" class="headerlink" title="数据结构与算法的脑图"></a>数据结构与算法的脑图</h2><ul>
+<li><strong>基础数据结构（必掌握）</strong><ul>
+<li>数组 &amp; 字符串<ul>
+<li>核心特性：连续内存、随机访问O(1)、增删O(n)</li>
+<li>刷题高频点：双指针、滑动窗口、前缀和、差分、字符串匹配(KMP)</li>
+<li>经典题型：两数之和、最长回文子串、滑动窗口最大值</li>
+</ul>
+</li>
+<li>链表<ul>
+<li>核心特性：非连续内存、顺序访问O(n)、增删O(1)（已知节点）</li>
+<li>刷题高频点：虚拟头节点、快慢指针、反转链表、环形链表</li>
+<li>经典题型：反转链表、合并两个有序链表、环形链表Ⅱ</li>
+</ul>
+</li>
+<li>栈 &amp; 队列<ul>
+<li>栈：先进后出（FILO），核心操作push&#x2F;pop&#x2F;top<ul>
+<li>高频场景：括号匹配、单调栈（接雨水、柱状图最大面积）</li>
+</ul>
+</li>
+<li>队列：先进先出（FIFO），核心操作push&#x2F;pop&#x2F;front<ul>
+<li>高频场景：BFS、单调队列（滑动窗口最大值）</li>
+</ul>
+</li>
+<li>经典题型：有效的括号、用栈实现队列、滑动窗口最大值</li>
+</ul>
+</li>
+<li>哈希表（字典&#x2F;集合）<ul>
+<li>核心特性：键值对存储、查询&#x2F;增删O(1)（理想情况）</li>
+<li>刷题高频点：哈希映射（计数&#x2F;去重）、哈希集合（存在性判断）</li>
+<li>经典题型：两数之和、字母异位词分组、最长连续序列</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>进阶数据结构（高频考点）</strong><ul>
+<li>树 &amp; 二叉树<ul>
+<li>基础概念：根节点、叶子节点、深度&#x2F;高度、遍历方式</li>
+<li>核心遍历：前序&#x2F;中序&#x2F;后序（递归+迭代）、层序遍历（BFS）</li>
+<li>特殊二叉树：二叉搜索树(BST)、平衡二叉树(AVL)、完全二叉树</li>
+<li>经典题型：二叉树的层序遍历、验证二叉搜索树、路径总和</li>
+</ul>
+</li>
+<li>堆（优先队列）<ul>
+<li>核心特性：完全二叉树、大顶堆&#x2F;小顶堆、插入&#x2F;弹出O(logn)</li>
+<li>刷题高频点：topK问题、数据流中位数、贪心策略</li>
+<li>经典题型：数组中的第K个最大元素、数据流的中位数</li>
+</ul>
+</li>
+<li>图<ul>
+<li>基础表示：邻接矩阵、邻接表</li>
+<li>核心遍历：DFS（深度优先）、BFS（广度优先）</li>
+<li>高频算法：最短路径（Dijkstra&#x2F;Floyd）、并查集（连通性）、拓扑排序</li>
+<li>经典题型：岛屿数量、课程表（拓扑排序）、网络延迟时间</li>
+</ul>
+</li>
+<li>单调结构（单调栈&#x2F;单调队列）<ul>
+<li>核心思想：维护有序的栈&#x2F;队列，降低时间复杂度</li>
+<li>适用场景：找下一个更大&#x2F;更小元素、区间最值</li>
+<li>经典题型：每日温度、柱状图中最大的矩形、滑动窗口最大值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>高级数据结构（提升效率）</strong><ul>
+<li>并查集（Disjoint Set Union, DSU）<ul>
+<li>核心操作：查找(find)、合并(union)、路径压缩、按秩合并</li>
+<li>适用场景：连通性问题、分组问题</li>
+<li>经典题型：朋友圈、冗余连接、岛屿数量（进阶）</li>
+</ul>
+</li>
+<li>前缀树（Trie树）<ul>
+<li>核心特性：字符串前缀存储、高效查询前缀&#x2F;单词</li>
+<li>适用场景：单词搜索、前缀匹配</li>
+<li>经典题型：实现Trie树、单词搜索Ⅱ</li>
+</ul>
+</li>
+<li>线段树 &amp; 树状数组<ul>
+<li>线段树：区间查询、区间更新O(logn)，适用复杂区间操作</li>
+<li>树状数组：单点更新、前缀和查询O(logn)，适用简单区间操作</li>
+<li>经典题型：区域和检索 - 数组可修改、逆序对的数量</li>
+</ul>
+</li>
+<li>哈希集合&#x2F;映射进阶<ul>
+<li>布隆过滤器：海量数据存在性判断（有一定误判率）</li>
+<li>LRU缓存：最近最少使用，哈希表+双向链表实现</li>
+<li>经典题型：LRU缓存、LFU缓存</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>刷题策略 &amp; 技巧</strong><ul>
+<li>按类型刷题：先刷基础结构，再攻进阶结构</li>
+<li>高频技巧：双指针、贪心、二分查找、递归&#x2F;回溯、动态规划</li>
+<li>复杂度分析：时间复杂度（重点）、空间复杂度（优化方向）</li>
+<li>易错点：边界条件（空值、单元素）、索引越界、重复计算</li>
+</ul>
+</li>
+</ul>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p><a href="https://leetcode.cn/problems/maximum-subarray/">53. 最大子数组和</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java">示例 <span class="hljs-number">1</span>：<br>输入：nums = [-<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,-<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,-<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,-<span class="hljs-number">5</span>,<span class="hljs-number">4</span>]<br>输出：<span class="hljs-number">6</span><br>解释：连续子数组 [<span class="hljs-number">4</span>,-<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>] 的和最大，为 <span class="hljs-number">6</span> 。<br><br>示例 <span class="hljs-number">2</span>：<br>输入：nums = [<span class="hljs-number">1</span>]<br>输出：<span class="hljs-number">1</span><br><br>示例 <span class="hljs-number">3</span>：<br>输入：nums = [<span class="hljs-number">5</span>,<span class="hljs-number">4</span>,-<span class="hljs-number">1</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>]<br>输出：<span class="hljs-number">23</span><br>  <br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">maxSubArray</span><span class="hljs-params">(<span class="hljs-type">int</span>[] nums)</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">preSum</span> <span class="hljs-operator">=</span><span class="hljs-number">0</span>,maxAns = nums[<span class="hljs-number">0</span>];<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> x:nums)&#123;<br>            preSum = Math.max(preSum+x,x);<br>            maxAns = Math.max(maxAns,preSum);<br>        &#125;<br>        <span class="hljs-keyword">return</span> maxAns;<br>        <br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><a href="https://leetcode.cn/problems/merge-intervals/">56. 合并区间</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs java">示例 <span class="hljs-number">1</span>：<br><br>输入：intervals = [[<span class="hljs-number">1</span>,<span class="hljs-number">3</span>],[<span class="hljs-number">2</span>,<span class="hljs-number">6</span>],[<span class="hljs-number">8</span>,<span class="hljs-number">10</span>],[<span class="hljs-number">15</span>,<span class="hljs-number">18</span>]]<br>输出：[[<span class="hljs-number">1</span>,<span class="hljs-number">6</span>],[<span class="hljs-number">8</span>,<span class="hljs-number">10</span>],[<span class="hljs-number">15</span>,<span class="hljs-number">18</span>]]<br>解释：区间 [<span class="hljs-number">1</span>,<span class="hljs-number">3</span>] 和 [<span class="hljs-number">2</span>,<span class="hljs-number">6</span>] 重叠, 将它们合并为 [<span class="hljs-number">1</span>,<span class="hljs-number">6</span>].<br>示例 <span class="hljs-number">2</span>：<br><br>输入：intervals = [[<span class="hljs-number">1</span>,<span class="hljs-number">4</span>],[<span class="hljs-number">4</span>,<span class="hljs-number">5</span>]]<br>输出：[[<span class="hljs-number">1</span>,<span class="hljs-number">5</span>]]<br>解释：区间 [<span class="hljs-number">1</span>,<span class="hljs-number">4</span>] 和 [<span class="hljs-number">4</span>,<span class="hljs-number">5</span>] 可被视为重叠区间。<br>示例 <span class="hljs-number">3</span>：<br><br>输入：intervals = [[<span class="hljs-number">4</span>,<span class="hljs-number">7</span>],[<span class="hljs-number">1</span>,<span class="hljs-number">4</span>]]<br>输出：[[<span class="hljs-number">1</span>,<span class="hljs-number">7</span>]]<br>解释：区间 [<span class="hljs-number">1</span>,<span class="hljs-number">4</span>] 和 [<span class="hljs-number">4</span>,<span class="hljs-number">7</span>] 可被视为重叠区间。<br>  <br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span>[][] merge(<span class="hljs-type">int</span>[][] intervals) &#123;<br>        <span class="hljs-keyword">if</span>(intervals.length ==<span class="hljs-number">0</span>)&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[<span class="hljs-number">0</span>][<span class="hljs-number">2</span>];<br>        &#125;<br><br>        Arrays.sort(intervals,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Comparator</span>&lt;<span class="hljs-type">int</span>[]&gt;()&#123;<br>            <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">compare</span><span class="hljs-params">(<span class="hljs-type">int</span>[] interval1,<span class="hljs-type">int</span>[] interval2)</span>&#123;<br>                <span class="hljs-keyword">return</span> interval1[<span class="hljs-number">0</span>] - interval2[<span class="hljs-number">0</span>];<br>            &#125;<br>        &#125;);<br>        List&lt;<span class="hljs-type">int</span>[]&gt; merged = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;<span class="hljs-type">int</span>[]&gt;();<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;intervals.length;i++)&#123;<br>            <span class="hljs-type">int</span> L=intervals[i][<span class="hljs-number">0</span>],R= intervals[i][<span class="hljs-number">1</span>];<br>            <span class="hljs-comment">// [1,3] [4,5] 当3&lt;4 直接添加</span><br>            <span class="hljs-keyword">if</span>(merged.size()==<span class="hljs-number">0</span> ||merged.get(merged.size()-<span class="hljs-number">1</span>)[<span class="hljs-number">1</span>]&lt;L)&#123;<br>                merged.add(<span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[]&#123;L,R&#125;);<br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                <span class="hljs-comment">// [1,3] [2,5]-&gt; [1,5]  </span><br>                <span class="hljs-comment">// [1,6] [2,5]-&gt; [1,6]  </span><br>                merged.get(merged.size()-<span class="hljs-number">1</span>)[<span class="hljs-number">1</span>] = <br>                Math.max(merged.get(merged.size() -<span class="hljs-number">1</span>)[<span class="hljs-number">1</span>],R);<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> merged.toArray(<span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[merged.size()][]);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><a href="https://leetcode.cn/problems/rotate-array/">189. 轮转数组</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java">示例 <span class="hljs-number">1</span>:<br>输入: nums = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>], k = <span class="hljs-number">3</span><br>输出: [<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]<br>解释:<br>向右轮转 <span class="hljs-number">1</span> 步: [<span class="hljs-number">7</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>]<br>向右轮转 <span class="hljs-number">2</span> 步: [<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>]<br>向右轮转 <span class="hljs-number">3</span> 步: [<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]<br><br>示例 <span class="hljs-number">2</span>:<br>输入：nums = [-<span class="hljs-number">1</span>,-<span class="hljs-number">100</span>,<span class="hljs-number">3</span>,<span class="hljs-number">99</span>], k = <span class="hljs-number">2</span><br>输出：[<span class="hljs-number">3</span>,<span class="hljs-number">99</span>,-<span class="hljs-number">1</span>,-<span class="hljs-number">100</span>]<br>解释: <br>向右轮转 <span class="hljs-number">1</span> 步: [<span class="hljs-number">99</span>,-<span class="hljs-number">1</span>,-<span class="hljs-number">100</span>,<span class="hljs-number">3</span>]<br>向右轮转 <span class="hljs-number">2</span> 步: [<span class="hljs-number">3</span>,<span class="hljs-number">99</span>,-<span class="hljs-number">1</span>,-<span class="hljs-number">100</span>]<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">rotate</span><span class="hljs-params">(<span class="hljs-type">int</span>[] nums, <span class="hljs-type">int</span> k)</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">n</span> <span class="hljs-operator">=</span> nums.length;<br>        <span class="hljs-type">int</span>[] newArr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[n];<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++)&#123;<br>            newArr[ (i+k)%n ] = nums[i];<br>        &#125;<br>        System.arraycopy(newArr,<span class="hljs-number">0</span>,nums,<span class="hljs-number">0</span>,n);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><a href="https://leetcode.cn/problems/product-of-array-except-self/">238. 除了自身以外数组的乘积</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs java">示例 <span class="hljs-number">1</span>:<br><br>输入: nums = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]<br>输出: [<span class="hljs-number">24</span>,<span class="hljs-number">12</span>,<span class="hljs-number">8</span>,<span class="hljs-number">6</span>]<br>示例 <span class="hljs-number">2</span>:<br><br>输入: nums = [-<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,-<span class="hljs-number">3</span>,<span class="hljs-number">3</span>]<br>输出: [<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">9</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>]<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span>[] productExceptSelf(<span class="hljs-type">int</span>[] nums) &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">n</span> <span class="hljs-operator">=</span> nums.length;<br>        <span class="hljs-type">int</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[n];<br><br>        <span class="hljs-type">int</span>[] L = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[n];<br>        <span class="hljs-type">int</span>[] R = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[n];<br><br>        L[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;n;i++)&#123;<br>            L[i] = nums[i-<span class="hljs-number">1</span>] * L[i-<span class="hljs-number">1</span>];<br>        &#125;<br><br>        R[n -<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=n-<span class="hljs-number">2</span>;i&gt;=<span class="hljs-number">0</span>;i--)&#123;<br>            R[i] = nums[i+<span class="hljs-number">1</span>] * R[i+<span class="hljs-number">1</span>];<br>        &#125;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>            res[i] = L[i] * R[i];<br>        &#125;<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<p>###############################################################<br>核心技巧：双指针（快慢、左右）、滑动窗口、前缀和、模拟法。</p>
+<p>重点题目：移动零、盛最多水的容器、三数之和、无重复字符的最长子串、接雨水。<br>###############################################################</p>
+<p>———0128————数组<br> 53.最大子数组和 -&gt; 动态规划 记录可能性 选A,B<br> 56.合并区间<br>189.轮转数组  取模<br>238.除了自身以外数组的乘积  左边乘积 右边乘积</p>
+<p>———————矩阵<br>73.矩阵置零    - 辅助记录<br>54.螺旋矩阵    -&gt; 注意边界<br>48.旋转图像<br>240.搜索二维矩阵 II</p>
+<p>——————–字符串</p>
+<p>双指针</p>
+<p>###############################################################<br>核心技巧：用空间换时间，快速查找。常与数组、字符串结合。</p>
+<p>重点题目：两数之和、字母异位词分组、最长连续序列。<br>###############################################################</p>
+<p>———————哈希</p>
+<p>###############################################################<br>核心技巧：虚拟头节点、双指针（找环、找中点）、反转链表。</p>
+<p>重点题目：反转链表、环形链表、合并两个有序链表、LRU缓存机制。<br>###############################################################</p>
+<p>———————链表</p>
+<p>栈<br>堆<br>二叉树</p>
+<p>回溯<br>二分查找<br>动态规划</p>
+</div>
+				<link rel="stylesheet" type="text/css" href="https://qiniu.techgrow.cn/readmore/dist/hexo.css">
+				<script src="https://qiniu.techgrow.cn/readmore/dist/readmore.js" type="text/javascript"></script>
+				<script>
+				var isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+				var isEncrypt = document.getElementById('hexo-blog-encrypt');
+				var allowMobile = false;
+				if (!isEncrypt && (!isMobile || (isMobile && allowMobile))) {
+					try {
+						var plugin = new ReadmorePlugin();
+						plugin.init({
+							"type": "hexo",
+							"id": "readmore-container",
+							"name": "YutingNotFound",
+							"blogId": "04372-4551209630277-002",
+							"qrcode": "https://raw.githubusercontent.com/YUTING0907/PicGo/main/imgYUTING__PHOTO_.jpg",
+							"keyword": "验证码",
+							"random": "1",
+							"height": "auto",
+							"expires": "36500",
+							"lockToc": "yes",
+							"interval": "60",
+							"baseUrl": "",
+							"tocSelector": ""
+						});
+					} catch(e) {
+						console.warn("readmore plugin occurred error: " + e.name + " | " + e.message);
+					}
+				}
+				</script>
+			
+              
+            </div>
+            <hr/>
+            
+            <!--  -->
+            <div class="reward-container">
+            	
+            		<button id="rewardBtn" class="reward-btn">
+            			❤ 打赏	
+            		</button>
+            		<p class="tea">觉得不错的话，支持一根棒棒糖吧 ୧(๑•̀⌄•́๑)૭</p>
+            		<div id="rewardImgContainer" class="reward-img-container">
+                     	<div class="singleImgContainer">
+                        	<img id="wechatImg" class="reward-img" src="/img/wechatpay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="wechatPay">wechat pay</p>
+                      </div>
+                      <div class="singleImgContainer">
+                           	<img id="alipayImg" class="reward-img" src="/img/alipay.jpg" srcset="/img/loading.gif" lazyload alt="">
+                            <p class="aliPay">alipay</p>
+                      </div>
+            		</div>
+            	
+            </div>
+            
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">#数据结构</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>LeetCode hot100</div>
+      <div>http://yuting0907.github.io/posts/2026/01/9ae2579c.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Echo Yu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年1月29日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/2026/01/bce8f298.html" title="必用的6种JAVA设计模式">
+                        <span class="hidden-mobile">必用的6种JAVA设计模式</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.3.2/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.3.2/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://waline-byfjmhw0k-yuting0907s-projects.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"locale":{"placeholder":"哈，快找个位置随便坐~"}},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/reward.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
+
+<!--  -->
+<script type="text/javascript" src="/js/love.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>  
+
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="/js/FunnyTitle.js"></script>
