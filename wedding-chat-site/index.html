@@ -16,12 +16,12 @@
   <meta name="author" content="Echo Yu">
   <meta name="keywords" content="ML">
   
-    <meta name="description" content="从明天见到每天见                                     故事         日常         表情         图集                        Ting Yu × 许百韬         从“明天见”到“每天见”                    这不是一份冷冰冰的聊天统计，而是 35,129">
+    <meta name="description" content="从明天见到每天见                                          [旺柴]         想你         [吃瓜]         晚安         结婚好处 +1         明天见                       故事         日常         表情         图集">
 <meta property="og:type" content="website">
 <meta property="og:title" content="page.title">
 <meta property="og:url" content="http://yuting0907.github.io/wedding-chat-site/index.html">
 <meta property="og:site_name" content="YUTING">
-<meta property="og:description" content="从明天见到每天见                                     故事         日常         表情         图集                        Ting Yu × 许百韬         从“明天见”到“每天见”                    这不是一份冷冰冰的聊天统计，而是 35,129">
+<meta property="og:description" content="从明天见到每天见                                          [旺柴]         想你         [吃瓜]         晚安         结婚好处 +1         明天见                       故事         日常         表情         图集">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yuting0907.github.io/wedding-chat-site/assets/11_relationship_stage_evolution.png">
 <meta property="og:image" content="http://yuting0907.github.io/wedding-chat-site/assets/05_relationship_timeline.png">
@@ -37,8 +37,8 @@
 <meta property="og:image" content="http://yuting0907.github.io/wedding-chat-site/assets/06_intimacy_keyword_trend.png">
 <meta property="og:image" content="http://yuting0907.github.io/wedding-chat-site/assets/09_daily_starter.png">
 <meta property="og:image" content="http://yuting0907.github.io/wedding-chat-site/assets/10_response_time.png">
-<meta property="article:published_time" content="2026-05-09T03:18:44.258Z">
-<meta property="article:modified_time" content="2026-05-09T03:18:38.906Z">
+<meta property="article:published_time" content="2026-05-09T05:12:10.574Z">
+<meta property="article:modified_time" content="2026-05-09T05:12:05.182Z">
 <meta property="article:author" content="Echo Yu">
 <meta property="article:tag" content="ML">
 <meta name="twitter:card" content="summary_large_image">
@@ -264,7 +264,16 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <div class="scroll-progress" aria-hidden="true"></div>
     <header class="hero" id="top">
+      <div class="emoji-field" aria-hidden="true">
+        <span style="--x: 7%; --y: 18%; --d: 0s">[旺柴]</span>
+        <span style="--x: 78%; --y: 16%; --d: 0.9s">想你</span>
+        <span style="--x: 88%; --y: 42%; --d: 1.7s">[吃瓜]</span>
+        <span style="--x: 11%; --y: 58%; --d: 2.4s">晚安</span>
+        <span style="--x: 63%; --y: 70%; --d: 3.1s">结婚好处 +1</span>
+        <span style="--x: 34%; --y: 24%; --d: 3.8s">明天见</span>
+      </div>
       <nav class="nav" aria-label="页面导航">
         <a href="#story">故事</a>
         <a href="#care">日常</a>
@@ -282,19 +291,19 @@
 
         <div class="metric-grid" aria-label="聊天核心数据">
           <div class="metric">
-            <strong>35,129</strong>
+            <strong data-count="35129">0</strong>
             <span>总消息</span>
           </div>
           <div class="metric">
-            <strong>419</strong>
+            <strong data-count="419">0</strong>
             <span>活跃天数</span>
           </div>
           <div class="metric">
-            <strong>3,661</strong>
+            <strong data-count="3661">0</strong>
             <span>表情符号</span>
           </div>
           <div class="metric">
-            <strong>1,948</strong>
+            <strong data-count="1948">0</strong>
             <span>[旺柴]</span>
           </div>
         </div>
@@ -314,6 +323,18 @@
         <figure class="feature-image">
           <img src="./assets/11_relationship_stage_evolution.png" srcset="/img/loading.gif" lazyload alt="关系阶段进化图" />
         </figure>
+      </section>
+
+      <section class="chat-replay" aria-label="聊天片段回放">
+        <div class="phone-frame">
+          <div class="phone-top">聊天片段回放</div>
+          <div class="bubble left">不好意思，还把你坑下车了</div>
+          <div class="bubble right">哈哈哈 没事</div>
+          <div class="bubble left">明天见，新手求带</div>
+          <div class="bubble right">菜鸡互啄</div>
+          <div class="bubble left heart">主要就是想你，怕两周见不到</div>
+          <div class="bubble right">浪漫的人生阶段，我们这样是不是像项目立项</div>
+        </div>
       </section>
 
       <section class="section split">
@@ -395,6 +416,10 @@
     </main>
 
     <button class="top-button" type="button" aria-label="回到顶部">↑</button>
+    <div class="lightbox" role="dialog" aria-modal="true" aria-label="查看图片">
+      <button class="lightbox-close" type="button" aria-label="关闭">×</button>
+      <img alt="" />
+    </div>
     <script src="./script.js"></script>
   </body>
 </html>
